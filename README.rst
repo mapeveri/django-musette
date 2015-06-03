@@ -4,7 +4,7 @@ Django-Musette
 
 Forum for Django framework.
 
-NOTA: This application is under development. It is not recommended to use in a production environment.
+NOTE: This application is under development. It is not recommended to use in a production environment.
 
 Installing
 ----------
@@ -55,18 +55,18 @@ Quick start:
 
 	python manage.py migrate
 
-7. The application django-musette need a template base of name base.html. Example::
+7. The application django-musette need a template base of name base.html. Example:
 
-https://github.com/mapeveri/django-musette/tests/templates/base.html
+	https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
 
-With the following tags::
-	{% block content %}{% endblock %}
-	{% block hitcount_javascript %}{% endblock %}
-	{% block extra_js %}{% endblock %}
+	With the following tags::
+		{% block content %}{% endblock %}
+		{% block hitcount_javascript %}{% endblock %}
+		{% block extra_js %}{% endblock %}
 
 8. If you need Spanish forum enable internationalization in django.
 
-https://github.com/mapeveri/django-musette/internationalization.rst
+	https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
 How to use?:
 ------------
@@ -89,7 +89,9 @@ Field more importants:
 
 Ready!
 
+
 Execute in the terminal::
+
 	python manage.py runserver
 
 Visit 127.0.0.1:8000/forums you should see the categories and forums.

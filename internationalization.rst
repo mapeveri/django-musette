@@ -32,5 +32,7 @@
 	USE_L10N = True
 	USE_TZ = True
 
+
 2. In the urls.py add this url::
+
 	url(r'^i18n/', include('django.conf.urls.i18n')),
