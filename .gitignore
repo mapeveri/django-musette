@@ -1,0 +1,7 @@
+*.pyc
+settings_local.py
+contenido.txt
+*.mo
+migrations
+/staticfiles/
+/media/

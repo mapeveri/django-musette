@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	{% load static %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/bootstrap.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/material/material.min.css' %}">
+	{% block extra_css %}{% endblock %}
+</head>
+
+<body>
+	<div class="navbar navbar-default">
+
+		<div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Tests</a>
+        </div>
+
+		<div class="container">
+		    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			    <ul class="nav navbar-nav">
+			      <li><a href="/forums/">Forum</a></li>
+			    </ul>
+        	</div>
+		</div>
+
+	</div>
+
+	<section>
+		{% block content %}{% endblock %}
+	</section>
+
+	<hr>
+
+	<footer>
+		<div class="container">
+			<div class="pull-left">
+				<a href="/"><p class="text-muted">Django forum musette</p></a>
+			</div>
+		</div>
+	</footer>
+
+	{% block hitcount_javascript %}{% endblock %}
+
+	<script src="{% static 'js/libs/jquery/jquery-2.1.3.min.js' %}"></script>
+	<script src="{% static 'js/libs/bootstrap/bootstrap.min.js' %}"></script>
+	<script src="{% static 'js/libs/bootstrap/material/material.js' %}"></script>
+	{% block extra_js %}{% endblock %}
+
+</body>
+</html>

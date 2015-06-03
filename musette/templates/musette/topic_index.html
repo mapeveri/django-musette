@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load hitcount_tags %}
+
+{% block extra_js %}
+    {{form_comment.media.js}}
+    <script src="{% static 'js/endless/endless-pagination.js' %}"></script>
+    <script>$.endlessPaginate({paginateOnScroll: true});</script>
+    <script src="{% static 'js/js/forum.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+  {% get_hit_count_js_variables for topic as hitcount %}
+  {% get_hit_count for topic as total_hits %}
+
+  <div class="row">
+    <div class="col-md-12">
+        <h2>{% trans "Forum" %}: <a href="/forum/{{topic.forum.name}}">{{topic.forum.name}}</a></h2>
+        {% if user.id %}
+          {% include "musette/notification.html" %}
+        {% endif %}
+        <p>{{topic.forum.description|safe}}</p>
+        <hr>
+        <section class="comment-list">
+          <!-- First Comment -->
+          <article class="row">
+            <div class="col-md-2 col-sm-2 hidden-xs">
+              <figure class="thumbnail">
+              	{% if field_photo %}
+	                <img src="{{MEDIA_URL}}{{field_photo}}" class="img-responsive" width="150" hegiht="150" />
+	              {% else %}
+	                <img src="{% static 'img/profile.png' %}" class="img-responsive" width="150" hegiht="150" />
+	              {% endif %}
+                <figcaption class="text-center"><a href="{{URL_PROFILE}}{{topic.user.username}}/">{{topic.user.username}}</a></figcaption>
+              </figure>
+              <div style="text-align: center">
+                {% if topic.user.id == user.id %}
+                <a href="/edit_topic/{{topic.forum.name}}/{{topic.idtopic}}/" class="btn btn-success btn-xs">
+                  <i class="glyphicon glyphicon-hand-up"></i>{% trans "Edit" %}</a>
+                <a style="cursor: pointer" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
+                  <i class="glyphicon glyphicon-trash"></i>{% trans "Delete" %}</a>
+                {% endif %}
+              </div>
+              <div style="text-align: center">
+                {% if total_hits|add:"0" > 1 %}
+                  <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "views" %}</p>
+                {% else %}
+                  <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "view" %}</p>
+                {% endif %}
+              </div>
+            </div>
+            <div class="col-md-10 col-sm-10">
+              <div class="panel panel-default arrow left">
+                <div class="panel-body">
+                  <header class="text-left">
+                    <h4><i class="fa fa-clock-o"></i> {{topic.title}}</h4>
+                  </header>
+                  <div class="comment-post">
+                    <p>
+                      {{topic.description|safe}}
+
+                      {% if topic.attachment %}
+                        <img src="{{MEDIA_URL}}{{topic.attachment}}" class="img-responsive" />
+                      {% endif %}
+                    </p>
+                  </div>
+                  <hr>
+                  <p class="pull-right">{{topic.date}}</p>
+                </div>
+              </div>
+            </div>
+          </article>
+        </section>
+    </div>
+  </div>
+
+  <hr>
+
+  <div id="data-template" class="endless_page_template">
+      {% include "forum/topic.html" %}
+  </div>
+
+  {% if comments.count > 0 %}
+  <hr>
+  {% endif %}
+
+  <!-- New comment-->
+  {% if user.id != None %}
+    <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      {% for message in messages %}
+        {% if message.tags != "error" %}
+          <div class="alert alert-success" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            {{ message }}
+          </div>
+        {% else %}
+          <div class="alert alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+            {{ message }}
+          </div>
+        {% endif %}
+      {% endfor %}
+      <form class="form-horizontal" action="/newcomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/" method="POST">{% csrf_token%}
+        <center>
+        {% for field in form_comment %}
+          {% if field.name == "description" %}
+              {{ field }}
+              {% if form_comment.description.errors %}
+                <div style="color: red">{{ form_comment.description.errors }}</div>
+
+              {% endif %}
+          {% endif %}
+        {% endfor %}
+        </center>
+        <br>
+        <button type="submit" class="btn btn-success btn-sm">
+            <i class="glyphicon glyphicon-plus"></i> {% trans "New comment" %}
+        </button>
+      </form>
+    </div>
+    <div class="col-md-2"></div>
+    </div>
+  {% endif %}
+
+
+</div>
+
+{% if topic.user.id == user.id %}
+
+    <!-- Modal remove topic-->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">{% trans "Delete topic" %}</h4>
+          </div>
+          <div class="modal-body">
+            {% trans "Do you want to remove the topic?" %}
+          </div>
+          <div class="modal-footer">
+            <form accept-charset="UTF-8" action="/delete_topic/{{topic.forum.name}}/{{topic.idtopic}}/" method="GET">
+              <button type="submit" class="btn btn-danger">
+                  <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}
+              </button>
+          </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{% endif %}
+
+{% endblock %}
+
+{% block hitcount_javascript %}
+{% insert_hit_count_js_variables for topic %}
+{% endblock %}
