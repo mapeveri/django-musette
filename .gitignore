@@ -5,3 +5,6 @@ contenido.txt
 migrations
 /staticfiles/
 /media/
+/build/
+/dist/
+/django_musette.egg-info/
