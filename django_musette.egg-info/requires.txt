@@ -1,0 +1,1 @@
+django-admin-log==0.2

@@ -1,0 +1,101 @@
+{% load i18n %}
+{% load endless %}
+{% load photo %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        $('body').bind("DOMSubtreeModified", function() {
+          //Set tinymce to textarea
+          for (var i = 0; i < tinymce.editors.length; i++) {
+              var id = i + 1;
+              tinyMCE.execCommand('mceAddControl', true, 'textarea_comment_' + id);
+          }
+      });
+    </script>
+{% endblock %}
+
+<!-- Comments-->
+{% paginate comments  %}
+{% for comment in comments %}
+  <article class="row">
+    <div class="col-md-1 col-sm-1 hidden-xs">
+      <figure class="thumbnail">
+        <img class="img-responsive" src="{{comment.user.id|get_photo}}"/>
+        <figcaption class="text-center"><a href="{{URL_PROFILE}}{{comment.user.username}}">{{comment.user.username}}</a></figcaption>
+      </figure>
+    </div>
+    <div class="col-md-10 col-sm-10">
+      <div class="panel panel-default arrow left">
+        <div class="panel-body">
+          <header class="text-left">
+            <time class="comment-date" datetime="16-12-2014 01:05"><i class="glyphicon glyphicon-time"></i> {{comment.date}}</time>
+          </header>
+          <div class="comment-post">
+            <div class="well" style="margin-top: 5px">
+              {{comment.description|safe}}
+            </div>
+          </div>
+          {% if comment.user.id == user.id %}
+            <div class="span4 offset4 text-right">
+              <a style="cursor: pointer" data-toggle="modal" data-target="#myModal_{{comment.idcomment}}" class="btn btn-default btn-sm">
+                <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</a>
+
+              <a style="cursor: pointer" data-toggle="modal" data-target="#myModal_{{comment.idcomment}}_remove" class="btn btn-default btn-sm">
+                <i class="glyphicon glyphicon-trash"></i> {% trans "Remove" %}</a>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <!-- Modal edit comment -->
+  <div class="modal fade" id="myModal_{{comment.idcomment}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">{% trans "Edit comment" %}</h4>
+        </div>
+        <div class="modal-body">
+
+          <form class="form-horizontal" action="/updatecomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/{{comment.idcomment}}/" method="POST">{% csrf_token%}
+              <textarea name="update_description" id="textarea_comment_{{comment.idcomment}}" style="width: 100%">
+                {{comment.description|safe}}
+              </textarea>
+            <br>
+            <button type="submit" class="btn btn-success btn-sm">
+                <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit comment" %}
+            </button>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal remove comment -->
+  <div class="modal fade" id="myModal_{{comment.idcomment}}_remove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">{% trans "Remove comment" %}</h4>
+        </div>
+        <div class="modal-body">
+          <p>{% trans "Do you want remove this comment?" %}</p>
+        </div>
+        <div class="modal-footer">
+            <form class="form-horizontal" action="/removecomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/{{comment.idcomment}}/" method="POST">{% csrf_token%}
+            <button type="submit" class="btn btn-danger btn-sm">
+              <i class="glyphicon glyphicon-trash"></i> {% trans "Remove comment" %}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endfor %}
+{% show_more %}
+

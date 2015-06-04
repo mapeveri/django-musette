@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'hitcount',
     'endless_pagination',
     'musette',
+    'main',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,7 +119,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 SESSION_SAVE_EVERY_REQUEST = True
 
 # For django musette
-APP_PROFILE = 'profiles' # Application for your profiles
-MODEL_PROFILE = 'Profile' # Model for profiles
+APP_PROFILE = 'main' # Application for your profiles
+MODEL_PROFILE = 'Perfil' # Model for profiles
 FIELD_PHOTO_PROFILE = "photo" # Field that contains url photo
 URL_PROFILE = '/profile/' # Url for profile

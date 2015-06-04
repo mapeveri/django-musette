@@ -1,0 +1,15 @@
+{% load i18n %}
+{% load endless %}
+{% load forum_filter %}
+
+<div class="list-group">
+	{% paginate notifications  %}
+	{% for notification in notifications %}
+	    {% if notification.is_view %}
+			{{notification|get_item_notification|safe}}
+	    {% else %}
+			{{notification|get_item_notification|safe}}
+	    {% endif %}
+    {% endfor %}
+	{% show_more %}
+</div>

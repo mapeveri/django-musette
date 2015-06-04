@@ -1,0 +1,26 @@
+
+.background_gray{
+  background: #F8F8F8;
+  border-color: #E7E7E7;
+  border: 2px solid #E7E7E7;
+}
+
+.item-panel{
+  padding: 10px;
+  border: 1px solid #DDD;
+  border-radius: 0px;
+  list-style-type: none;
+}
+
+.without-style-list{
+  list-style-type: none;
+}
+
+.item-notification{
+  width: 35em;
+  text-transform: none;
+}
+
+.without-text-transform{
+  text-transform: none;
+}

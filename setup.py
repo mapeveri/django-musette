@@ -11,7 +11,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-musette',
-    version='0.1',
+    version='0.4',
     packages=['musette', 'musette.templatetags'],
     include_package_data=True,
     license='MIT',
@@ -33,7 +33,9 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
-    install_requires=['django-admin-log==0.2'],
+    install_requires=[
+        'django-admin-log==0.2',
+    ],
 )
 
 os.system('pip install -e git://github.com/thornomad/django-hitcount.git@602038c445a55db4b9d33a9c1b6929c09539d42f#egg=django_hitcount-master')
