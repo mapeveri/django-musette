@@ -4,7 +4,8 @@ contenido.txt
 *.mo
 migrations
 /staticfiles/
-/media/
+/tests/media/
+*.sqlite3
 /build/
 /dist/
 /django_musette.egg-info/
