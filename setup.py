@@ -21,6 +21,16 @@ setup(
     url='https://github.com/mapeveri/django-musette',
     author='Peveri Martin',
     author_email='martinpeveri@gmail.com',
+    install_requires=[
+        'django-admin-log==0.2',
+        'django-endless-pagination==2.0',
+        'django-hitcount==1.0.1',
+    ],
+    dependency_links=[
+        'https://github.com/webstack/django-endless-pagination/archive/0ed7376fa461345d96ce62541816dd3550bb0d25.zip#egg=django_endless_pagination-2.0',
+        'https://github.com/thornomad/django-hitcount/archive/602038c445a55db4b9d33a9c1b6929c09539d42f.zip#egg=django_hitcount-1.0.1',
+
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Framework :: Django',
@@ -33,10 +43,4 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
     ],
-    install_requires=[
-        'django-admin-log==0.2',
-    ],
 )
-
-os.system('pip install -e git://github.com/thornomad/django-hitcount.git@602038c445a55db4b9d33a9c1b6929c09539d42f#egg=django_hitcount-master')
-os.system('pip install -e git://github.com/webstack/django-endless-pagination.git@0ed7376fa461345d96ce62541816dd3550bb0d25#egg=django_endless_pagination')
