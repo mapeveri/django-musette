@@ -10,12 +10,12 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-musette',
-    version='1.1',
+    version='0.1',
     packages=['musette', 'musette.templatetags'],
     include_package_data=True,
     license='BSD License',
     zip_safe=False,
-    description='Forum for django framework.',
+    description='Forum for Django framework.',
     long_description=README,
     url='https://github.com/mapeveri/django-musette',
     author='Peveri Martin',
@@ -27,7 +27,7 @@ setup(
     ],
     dependency_links=[
         'https://github.com/mapeveri/django-endless-pagination/tarball/master#egg=django_endless_pagination-2.0',
-        'https://github.com/thornomad/django-hitcount/tarball/master#egg=django_hitcount-1.0.1',
+        'https://github.com/mapeveri/django-hitcount/tarball/master#egg=django_hitcount-1.0.1',
     ],
     classifiers=[
         'Environment :: Web Environment',
