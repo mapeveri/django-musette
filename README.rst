@@ -9,7 +9,7 @@ NOTE: This application is under development. It is not recommended to use in a p
 Installing
 ----------
 
-python setup.py install
+pip install django-musette --process-dependency-links
 
 Requirements:
 -------------
