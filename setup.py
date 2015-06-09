@@ -10,7 +10,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='django-musette',
-    version='0.0.2',
+    version='0.0.3',
     packages=['musette', 'musette.templatetags'],
     include_package_data=True,
     license='BSD License',
@@ -23,11 +23,11 @@ setup(
     install_requires=[
         'django-admin-log==0.2',
         'django-endless-pagination==2.1',
-        'django-hitcount==1.0.1',
+        'django-hitcount==1.0.5',
     ],
     dependency_links=[
         'https://github.com/mapeveri/django-endless-pagination/tarball/master#egg=django_endless_pagination-2.1',
-        'https://github.com/mapeveri/django-hitcount/tarball/master#egg=django_hitcount-1.0.1',
+        'https://github.com/mapeveri/django-hitcount/tarball/master#egg=django_hitcount-1.0.5',
     ],
     classifiers=[
         'Environment :: Web Environment',

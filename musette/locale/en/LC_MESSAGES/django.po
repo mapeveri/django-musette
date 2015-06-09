@@ -1,0 +1,327 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-06-08 23:36-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: musette/admin.py:47
+#, python-format
+msgid "Successfully deleted %(count)d record/s."
+msgstr ""
+
+#: musette/admin.py:80
+#, python-format
+msgid "Delete selected %(verbose_name_plural)s"
+msgstr ""
+
+#: musette/models.py:22
+msgid "If checked, this category will be visible only for staff"
+msgstr ""
+
+#: musette/models.py:27 musette/models.py:40
+#: musette/templates/musette/index.html:23
+msgid "Category"
+msgstr ""
+
+#: musette/models.py:28
+msgid "Categories"
+msgstr ""
+
+#: musette/models.py:43
+msgid "Parent forum"
+msgstr ""
+
+#: musette/models.py:46
+msgid "Name"
+msgstr ""
+
+#: musette/models.py:47
+msgid "Position"
+msgstr ""
+
+#: musette/models.py:48 musette/models.py:92 musette/models.py:168
+#: musette/templates/musette/edit_topic.html:45
+#: musette/templates/musette/new_topic.html:45
+msgid "Description"
+msgstr ""
+
+#: musette/models.py:51
+msgid "Moderators"
+msgstr ""
+
+#: musette/models.py:53 musette/models.py:91 musette/models.py:167
+#: musette/templates/musette/forum.html:62
+msgid "Date"
+msgstr ""
+
+#: musette/models.py:54
+msgid "Topics count"
+msgstr ""
+
+#: musette/models.py:56
+msgid "Hidden"
+msgstr ""
+
+#: musette/models.py:58
+msgid "Check topics"
+msgstr ""
+
+#: musette/models.py:62 musette/models.py:86
+#: musette/templates/musette/forum.html:41
+#: musette/templates/musette/topic_index.html:24
+msgid "Forum"
+msgstr ""
+
+#: musette/models.py:63 musette/templates/musette/index.html:20
+msgid "Forums"
+msgstr ""
+
+#: musette/models.py:88 musette/models.py:165
+msgid "User"
+msgstr ""
+
+#: musette/models.py:90 musette/templates/musette/edit_topic.html:36
+#: musette/templates/musette/forum.html:58
+#: musette/templates/musette/new_topic.html:36
+msgid "Title"
+msgstr ""
+
+#: musette/models.py:95
+msgid "File"
+msgstr ""
+
+#: musette/models.py:98
+msgid "Moderate"
+msgstr ""
+
+#: musette/models.py:102 musette/models.py:162
+msgid "Topic"
+msgstr ""
+
+#: musette/models.py:103 musette/templates/musette/forum.html:85
+msgid "Topics"
+msgstr ""
+
+#: musette/models.py:172
+msgid "Comment"
+msgstr ""
+
+#: musette/models.py:173
+msgid "Comments"
+msgstr ""
+
+#: musette/templates/musette/admin/confirm_delete.html:7
+msgid "Home"
+msgstr ""
+
+#: musette/templates/musette/admin/confirm_delete.html:15
+msgid "Delete multiple objects"
+msgstr ""
+
+#: musette/templates/musette/admin/confirm_delete.html:23
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would result in deleting related "
+"objects, but your account doesn't have permission to delete the following "
+"types of objects:"
+msgstr ""
+
+#: musette/templates/musette/admin/confirm_delete.html:33
+#, python-format
+msgid ""
+"Deleting the selected %(objects_name)s would require deleting the following "
+"protected related objects:"
+msgstr ""
+
+#: musette/templates/musette/admin/confirm_delete.html:45
+msgid "Confirm deletion"
+msgstr ""
+
+#: musette/templates/musette/admin/confirm_delete.html:47
+#, python-format
+msgid ""
+"Are you sure you want to delete the selected %(objects_name)s? All of the "
+"following objects and their related items will be deleted:"
+msgstr ""
+
+#: musette/templates/musette/admin/confirm_delete.html:59
+msgid "Yes, I'm sure"
+msgstr ""
+
+#: musette/templates/musette/all_notification_index.html:17
+#: musette/templates/musette/notification.html:9
+msgid "Notifications"
+msgstr ""
+
+#: musette/templates/musette/edit_topic.html:29
+msgid "Edit topic"
+msgstr ""
+
+#: musette/templates/musette/edit_topic.html:54
+#: musette/templates/musette/new_topic.html:54
+msgid "Attachment"
+msgstr ""
+
+#: musette/templates/musette/edit_topic.html:63
+#: musette/templates/musette/new_topic.html:63
+msgid "Save"
+msgstr ""
+
+#: musette/templates/musette/forum.html:32
+msgid "The forum "
+msgstr ""
+
+#: musette/templates/musette/forum.html:32
+msgid "is pending moderations"
+msgstr ""
+
+#: musette/templates/musette/forum.html:43
+#: musette/templates/musette/forum.html:45
+msgid "This forum has"
+msgstr ""
+
+#: musette/templates/musette/forum.html:43
+#: musette/templates/musette/topic_index.html:52
+msgid "views"
+msgstr ""
+
+#: musette/templates/musette/forum.html:45
+#: musette/templates/musette/topic_index.html:54
+msgid "view"
+msgstr ""
+
+#: musette/templates/musette/forum.html:52
+msgid "New topic"
+msgstr ""
+
+#: musette/templates/musette/forum.html:59
+msgid "Users"
+msgstr ""
+
+#: musette/templates/musette/forum.html:60
+msgid "Responses"
+msgstr ""
+
+#: musette/templates/musette/forum.html:61
+#: musette/templates/musette/forum.html:70
+msgid "Views"
+msgstr ""
+
+#: musette/templates/musette/forum.html:88
+msgid "Missing for moderate"
+msgstr ""
+
+#: musette/templates/musette/forum.html:92
+msgid "Created"
+msgstr ""
+
+#: musette/templates/musette/forum.html:113
+msgid "Page"
+msgstr ""
+
+#: musette/templates/musette/forum.html:113
+msgid "of"
+msgstr ""
+
+#: musette/templates/musette/index.html:35
+#: musette/templates/musette/index.html:39
+msgid "Please, you add forums and categories in the administrator."
+msgstr ""
+
+#: musette/templates/musette/new_topic.html:29
+msgid "Add"
+msgstr ""
+
+#: musette/templates/musette/notification.html:26
+msgid "No notifications"
+msgstr ""
+
+#: musette/templates/musette/notification.html:32
+msgid "All"
+msgstr ""
+
+#: musette/templates/musette/topic.html:41
+#: musette/templates/musette/topic_index.html:45
+msgid "Edit"
+msgstr ""
+
+#: musette/templates/musette/topic.html:44
+msgid "Remove"
+msgstr ""
+
+#: musette/templates/musette/topic.html:58
+#: musette/templates/musette/topic.html:68
+msgid "Edit comment"
+msgstr ""
+
+#: musette/templates/musette/topic.html:83
+#: musette/templates/musette/topic.html:91
+msgid "Remove comment"
+msgstr ""
+
+#: musette/templates/musette/topic.html:86
+msgid "Do you want remove this comment?"
+msgstr ""
+
+#: musette/templates/musette/topic_index.html:47
+#: musette/templates/musette/topic_index.html:152
+msgid "Delete"
+msgstr ""
+
+#: musette/templates/musette/topic_index.html:52
+#: musette/templates/musette/topic_index.html:54
+msgid "This topic has"
+msgstr ""
+
+#: musette/templates/musette/topic_index.html:125
+msgid "New comment"
+msgstr ""
+
+#: musette/templates/musette/topic_index.html:144
+msgid "Delete topic"
+msgstr ""
+
+#: musette/templates/musette/topic_index.html:147
+msgid "Do you want to remove the topic?"
+msgstr ""
+
+#: musette/utils.py:157 musette/utils.py:159
+msgid "ago"
+msgstr ""
+
+#: musette/utils.py:167
+msgid "days ago"
+msgstr ""
+
+#: musette/validators.py:15
+msgid "Files allowed"
+msgstr ""
+
+#: musette/views.py:175 musette/views.py:255
+msgid "Form invalid"
+msgstr ""
+
+#: musette/views.py:328
+msgid "Field required"
+msgstr ""
+
+#: tests/settings.py:113
+msgid "English"
+msgstr ""
+
+#: tests/settings.py:114
+msgid "Spanish"
+msgstr ""

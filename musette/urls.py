@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.conf.urls import include, url
 from django.contrib.auth.decorators import login_required
 
 from .views import (
@@ -9,6 +9,10 @@ from .views import (
 )
 
 urlpatterns = [
+	# Url for django-hitcount
+	url(r'hitcount/', include('hitcount.urls', namespace='hitcount')),
+
+	# Url's Django-musette
 	url(
 		r'^forums/$', ForumsView.as_view(), name='forums'
 	),

@@ -2,3 +2,4 @@ include README.rst
 include requirements.txt
 recursive-include musette/static *
 recursive-include musette/templates *
+recursive-include musette/locale *

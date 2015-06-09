@@ -22,6 +22,8 @@
 		            </span>
 		        </span>
 		    </li>
+      {% empty %}
+          <center><p class="without-text-transform">{% trans "No notifications" %}</p></center>
   		{% endfor %}
         <li class="divider"></li>
         <li><a class="text-center" href="/forum_all_notification/">

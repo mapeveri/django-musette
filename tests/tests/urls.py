@@ -17,14 +17,11 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 
-from hitcount.views import update_hit_count_ajax
-
 from .views import IndexView
 
 urlpatterns = [
 	url(r'^$', IndexView.as_view(), name='index_tests'),
-    url(r'^ajax/hit/$', update_hit_count_ajax,
-        name='hitcount_update_ajax'),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
 	url(r'^' , include('musette.urls')),
 	url(r'^admin/', include(admin.site.urls)),
 ]

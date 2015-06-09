@@ -23,19 +23,15 @@ Quick start:
 1. Add application 'musette' and dependencies to INSTALLED_APPS::
 
 	INSTALLED_APPS = (
-			...
-			'log',
-    		'hitcount',
-    		'endless_pagination',
-    		'musette',
+		...
+		'log',
+		'hitcount',
+		'endless_pagination',
+		'musette',
 	)
 
 2. Add this urls to file urls.py::
 
-	from hitcount.views import update_hit_count_ajax
-
-	url(r'^ajax/hit/$', update_hit_count_ajax,
-        name='hitcount_update_ajax'),
 	url(r'^' , include('musette.urls')),
 
 3. And in settings.py add this variable::
@@ -48,7 +44,7 @@ Quick start:
 
 	APP_PROFILE = 'profiles' # Application for your profiles
 	MODEL_PROFILE = 'Profile' # Model for profiles
-	FIELD_PHOTO_PROFILE = "photo" # Field that contains url photo
+	FIELD_PHOTO_PROFILE = "photo" # Field that contains url the profile photo
 	URL_PROFILE = '/profile/' # Url for profile
 
 6. Execute command migrate::
@@ -63,6 +59,13 @@ Quick start:
 		{% block content %}{% endblock %}
 		{% block hitcount_javascript %}{% endblock %}
 		{% block extra_js %}{% endblock %}
+
+	Add bootstrap and bootstrap material desing:
+		<link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/bootstrap.min.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/material/material.min.css' %}">
+
+	Add style css:
+		<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 
 8. If you need Spanish forum enable internationalization in django.
 
@@ -86,6 +89,8 @@ Field more importants:
 	- Position: The field position is for indicate the order of the forums in the categories.
 	- Topics count: Total forum topics.
 	- Check topics: If you need to review the topics by a moderator.
+
+3. Make sure that each user registration exist in the profile table.
 
 Ready!
 

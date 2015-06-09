@@ -31,8 +31,12 @@
 						  	</a>
 					  	</div>
 					  	<hr>
+					{% empty %}
+						<p> {% trans "Please, you add forums and categories in the administrator." %} <p>
 				  	{% endfor %}
 				</div>
+			{% empty %}
+				<p> {% trans "Please, you add forums and categories in the administrator." %} <p>
 			{% endfor %}
 
 	  	</div>

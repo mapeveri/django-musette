@@ -6,6 +6,7 @@
 
 {% block extra_js %}
     {{form_comment.media.js}}
+    <script src="{% static 'js/hitcount/django-hitcount.js' %}"></script>
     <script src="{% static 'js/endless/endless-pagination.js' %}"></script>
     <script>$.endlessPaginate({paginateOnScroll: true});</script>
     <script src="{% static 'js/js/forum.js' %}"></script>
