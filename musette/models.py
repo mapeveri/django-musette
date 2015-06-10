@@ -65,6 +65,10 @@ class Forum(models.Model):
 	def __str__(self):
 		return self.name
 
+	def clean(self):
+		if self.name:
+			self.name = self.name.strip()
+
 	def escape_html_description(obj):
 		return obj.description
 	escape_html_description.allow_tags = True

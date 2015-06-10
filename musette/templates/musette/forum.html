@@ -21,7 +21,6 @@
 		{% include "musette/notification.html" %}
 	{% endif %}
 
-	{% get_hit_count_js_variables for forum as hitcount %}
 	{% get_hit_count for forum as total_hits %}
 
 	{% if forum.moderators_id == user.id %}
