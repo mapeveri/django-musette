@@ -53,19 +53,19 @@ Quick start:
 
 7. The application django-musette need a template base of name base.html. With the following tags::
 
-		{% block content %}{% endblock %}
-		{% block extra_css %}{% endblock %}
-		{% block extra_js %}{% endblock %}
-		{% block hitcount_javascript %}{% endblock %}
+	{% block content %}{% endblock %}
+	{% block extra_css %}{% endblock %}
+	{% block extra_js %}{% endblock %}
+	{% block hitcount_javascript %}{% endblock %}
 
 	Add extra css:
-				{% include "musette/extra_css.html" %}
+		{% include "musette/extra_css.html" %}
 
 	Add extra js:
-				{% include "musette/extra_js.html" %}
+		{% include "musette/extra_js.html" %}
 
-	Example:
-		https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
+Example.
+	https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
 
 8. If you need Spanish forum enable internationalization in django.
 
