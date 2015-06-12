@@ -2,11 +2,9 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	{% load static %}
 	{% load i18n %}
-	<link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/bootstrap.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/material/material.min.css' %}">
-	<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+
+	{% include "musette/extra_css.html" %}
 	{% block extra_css %}{% endblock %}
 </head>
 
@@ -70,11 +68,7 @@
 	</footer>
 
 	{% block hitcount_javascript %}{% endblock %}
-
-	<script src="{% static 'js/libs/jquery/jquery-2.1.3.min.js' %}"></script>
-	<script src="{% static 'js/libs/bootstrap/bootstrap.min.js' %}"></script>
-	<script src="{% static 'js/libs/bootstrap/material/material.js' %}"></script>
-
+	{% include "musette/extra_js.html" %}
 	{% block extra_js %}{% endblock %}
 
 </body>

@@ -55,17 +55,17 @@ Quick start:
 
 	https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
 
-	With the following tags::
+With the following tags::
 		{% block content %}{% endblock %}
-		{% block hitcount_javascript %}{% endblock %}
+		{% block extra_css %}{% endblock %}
 		{% block extra_js %}{% endblock %}
+		{% block hitcount_javascript %}{% endblock %}
 
-	Add bootstrap and bootstrap material desing:
-		<link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/bootstrap.min.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/material/material.min.css' %}">
+Add extra css:
+		{% include "musette/extra_css.html" %}
 
-	Add style css:
-		<link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+Add extra js:
+		{% include "musette/extra_js.html" %}
 
 8. If you need Spanish forum enable internationalization in django.
 
