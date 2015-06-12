@@ -102,3 +102,21 @@ Execute in the terminal::
 Visit 127.0.0.1:8000/forums you should see the categories and forums.
 
 .. image:: https://github.com/mapeveri/django-musette/blob/master/images/index.png
+
+
+Features:
+---------
+
+1. Multiple forums ordered by for category.
+2. Notifications (Still not support sending emails)
+3. Count views for forum and topic.
+4. Infinite scroll for comments of one topic.
+5. Support of files media for topics.
+6. Easy integration with other applications Django of your project.
+7. Support for moderate forums.
+8. Models registered in admin django for administrators.
+9. Possibility of hide forums unused.
+10. Modern design, thank you to Bootstrap material design
+11. Avatar.
+12. Pre-moderation.
+13. Support to English and Spanish language.
