@@ -58,18 +58,18 @@ Quick start:
 		{% block extra_js %}{% endblock %}
 		{% block hitcount_javascript %}{% endblock %}
 
-Add extra css::
-			{% include "musette/extra_css.html" %}
+	Add extra css:
+				{% include "musette/extra_css.html" %}
 
-Add extra js::
-			{% include "musette/extra_js.html" %}
+	Add extra js:
+				{% include "musette/extra_js.html" %}
 
-Example::
-	https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
+	Example:
+		https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
 
 8. If you need Spanish forum enable internationalization in django.
 
-	https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
+		https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
 How to use?:
 ------------
