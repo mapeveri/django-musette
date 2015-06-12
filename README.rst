@@ -51,21 +51,21 @@ Quick start:
 
 	python manage.py migrate
 
-7. The application django-musette need a template base of name base.html. Example:
+7. The application django-musette need a template base of name base.html. With the following tags::
 
-	https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
-
-With the following tags::
 		{% block content %}{% endblock %}
 		{% block extra_css %}{% endblock %}
 		{% block extra_js %}{% endblock %}
 		{% block hitcount_javascript %}{% endblock %}
 
-Add extra css:
-		{% include "musette/extra_css.html" %}
+Add extra css::
+			{% include "musette/extra_css.html" %}
 
-Add extra js:
-		{% include "musette/extra_js.html" %}
+Add extra js::
+			{% include "musette/extra_js.html" %}
+
+Example::
+	https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
 
 8. If you need Spanish forum enable internationalization in django.
 
