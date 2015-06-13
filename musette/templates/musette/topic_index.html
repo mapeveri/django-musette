@@ -14,11 +14,11 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container-build">
 
   {% get_hit_count for topic as total_hits %}
 
-  <div class="row">
+  <div>
     <div class="col-md-12">
         <h2>{% trans "Forum" %}: <a href="/forum/{{topic.forum.name}}/">{{topic.forum.name}}</a></h2>
         {% if user.id %}
@@ -31,19 +31,19 @@
           <article class="row">
             <div class="col-md-2 col-sm-2 hidden-xs">
               <figure class="thumbnail">
-              	{% if field_photo %}
-	                <img src="{{MEDIA_URL}}{{field_photo}}" class="img-responsive" width="150" hegiht="150" />
-	              {% else %}
-	                <img src="{% static 'img/profile.png' %}" class="img-responsive" width="150" hegiht="150" />
-	              {% endif %}
+                {% if field_photo %}
+                  <img src="{{MEDIA_URL}}{{field_photo}}" class="img-responsive" width="150" hegiht="150" />
+                {% else %}
+                  <img src="{% static 'img/profile.png' %}" class="img-responsive" width="150" hegiht="150" />
+                {% endif %}
                 <figcaption class="text-center"><a href="{{URL_PROFILE}}{{topic.user.username}}/">{{topic.user.username}}</a></figcaption>
               </figure>
               <div style="text-align: center">
                 {% if topic.user.id == user.id %}
                 <a href="/edit_topic/{{topic.forum.name}}/{{topic.idtopic}}/" class="btn btn-success btn-xs">
-                  <i class="glyphicon glyphicon-hand-up"></i>{% trans "Edit" %}</a>
+                  <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</a>
                 <a style="cursor: pointer" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
-                  <i class="glyphicon glyphicon-trash"></i>{% trans "Delete" %}</a>
+                  <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}</a>
                 {% endif %}
               </div>
               <div style="text-align: center">

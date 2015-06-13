@@ -17,7 +17,7 @@
 <!-- Comments-->
 {% paginate comments  %}
 {% for comment in comments %}
-  <article class="row">
+  <article>
     <div class="col-md-1 col-sm-1 hidden-xs">
       <figure class="thumbnail">
         <img class="img-responsive" src="{{comment.user.id|get_photo}}"/>
