@@ -20,21 +20,28 @@
 		<div class="panel-heading"><h4>{% trans "Forums" %}</h4></div>
 	  	<div class="panel-body">
 	    	{% for category in categories %}
-	    		<h4><u>{% trans "Category" %}: {{category.name}}</u></h4>
+				<h4><u>{% trans "Category" %}: {{category.name}}</u></h4>
 		    	<div class="list-group">
 				  	{% for forum in category.idcategory|in_category %}
-				  		<div class="container-fluid">
-						  	<a href="/forum/{{ forum.name }}/" class="list-group-item">
-						  		<span class="badge" style="margin-top: 5px">{{ forum.topics_count }}</span>
-						    	<h4 class="list-group-item-heading">{{ forum.name }}</h4>
-						    	<p class="list-group-item-text">{{ forum.description|safe }}</p>
-						  	</a>
-					  	</div>
-					  	<hr>
+				  		<div class="list-group-item">
+					        <div class="row-action-primary">
+					            <i class="glyphicon glyphicon-tasks"></i>
+					        </div>
+					        <div class="row-content">
+					            <div class="least-content"></div>
+					            <a href="/forum/{{ forum.name }}/" class="list-group-item">
+								  	<span class="badge" style="margin-top: 5px">{{ forum.topics_count }}</span>
+								    <h4 class="list-group-item-heading">{{ forum.name }}</h4>
+								    <p class="list-group-item-text">{{ forum.description|safe }}</p>
+								</a>
+					        </div>
+					    </div>
+					    <div class="list-group-separator"></div>
 					{% empty %}
 						<p> {% trans "Please, you add forums and categories in the administrator." %} <p>
 				  	{% endfor %}
 				</div>
+
 			{% empty %}
 				<p> {% trans "Please, you add forums and categories in the administrator." %} <p>
 			{% endfor %}

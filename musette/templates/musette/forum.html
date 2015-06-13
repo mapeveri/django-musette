@@ -34,26 +34,25 @@
 		{% endif %}
 	{% endif %}
 
+	<h5>{{forum.description|safe}}</h5>
+    <a href="/newtopic/{{forum.name}}/" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</a>
+
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			<div class="span4 offset4 text-left">
-				<h4>{% trans "Forum" %}: {{forum.name}}
+		<div class="panel-heading" style="height: 2.8em">
+			<p>{% trans "Forum" %}: {{forum.name}}
 				{% if total_hits|add:"0" > 1 %}
-					<span style="font-size: 0.7em">({% trans "This forum has" %} {{ total_hits }} {% trans "views" %})</span>
+					<span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "views" %})</span>
 				{% else %}
-					<span style="font-size: 0.7em">({% trans "This forum has" %} {{ total_hits }} {% trans "view" %})</span>
+					<span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "view" %})</span>
 				{% endif %}
-				</h4>
-			</div>
+			</p>
 		</div>
 	  	<div class="panel-body">
-	    	<p>{{forum.description|safe}}</p>
-    		<a href="/newtopic/{{forum.name}}/" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</a>
-
     		<div class="table-responsive">
 				<table class="table table-striped">
 				    <thead>
 				      <tr>
+				      	<th>#</th>
 				        <th>{% trans "Title" %}</th>
 				        <th>{% trans "Users" %}</th>
 				    	<th>{% trans "Responses" %}</th>
@@ -65,7 +64,9 @@
 				    	{% for topic in topics %}
 				    		{% if topic.moderate %}
 							    <tr>
-							        <td><a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/"
+							    	<td>{{forloop.counter}}</td>
+							        <td>
+							        	<a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/"
 							        	data-toggle="tooltip" data-placement="bottom" title="{% trans 'Views' %}: {% get_tot_views topic.idtopic %}">
 							        	{{topic.title}}
 							        </a></td>
@@ -92,23 +93,21 @@
 
 			</div>
 
-			<ul class="pagination" style="float: right">
-		        <li>
-		            {% if paginator.has_prev %}
-		            <a href="/forum/{{forum.name}}/?page={{ paginator.firstPage }}"> << </a>
-		            <a href="/forum/{{forum.name}}/?page={{ paginator.prev_page }}"> < </a>
-		            {% else %}
-		            <a style="color:gray; cursor:not-allowed"> << </a>
-		            <a style="color:gray; cursor:not-allowed"> < </a>
-		            {% endif %}
-		            {% if paginator.has_next %}
-		            <a href="/forum/{{forum.name}}/?page={{ paginator.next_page }}"> > </a>
-		            <a href="/forum/{{forum.name}}/?page={{ paginator.pages }}"> >> </a>
-		            {% else %}
-		            <a style="color:gray; cursor:not-allowed"> > </a>
-		            <a style="color:gray; cursor:not-allowed"> >> </a>
-		            {% endif %}
-		        </li>
+			<ul class="pager" style="float: right">
+	            {% if paginator.has_prev %}
+	            <li><a href="/forum/{{forum.name}}/?page={{ paginator.firstPage }}"> << </a></li>
+	            <li><a href="/forum/{{forum.name}}/?page={{ paginator.prev_page }}"> < </a></li>
+	            {% else %}
+	            <li class="previous disabled"><a> << </a></li>
+	            <li class="previous disabled"><a> < </a></li>
+	            {% endif %}
+	            {% if paginator.has_next %}
+	            <li><a href="/forum/{{forum.name}}/?page={{ paginator.next_page }}"> > </a></li>
+	            <li><a href="/forum/{{forum.name}}/?page={{ paginator.pages }}"> >> </a></li>
+	            {% else %}
+	            <li class="previous disabled"><a> > </a></li>
+	            <li class="previous disabled"><a> >> </a></li>
+	            {% endif %}
 		        <p>{% trans "Page" %} <{{paginator.page}} {% trans "of" %} {{paginator.pages}}> </p>
 		    </ul>
 	  	</div>
