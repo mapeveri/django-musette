@@ -69,6 +69,8 @@ def get_tot_users_comments(topic):
 	idtopic = topic.idtopic
 	users = Comment.objects.filter(topic_id=idtopic)
 
+	url_profile = settings.URL_PROFILE
+
 	data = ""
 	lista = []
 	for user in users:
@@ -81,7 +83,7 @@ def get_tot_users_comments(topic):
 			tooltip = ""
 			tooltip += "data-toggle='tooltip' data-placement='bottom'"
 			tooltip += "title='"+ usuario +"'"
-			data += "<a href='/profile/"+ usuario +"' "+tooltip+" >"
+			data += "<a href='"+url_profile+ usuario +"' "+tooltip+" >"
 			data += "<img class='img-circle' src='"+str(photo)+"' "
 			data += "width=30, height=30></a>"
 
@@ -93,12 +95,21 @@ def get_tot_users_comments(topic):
 		tooltip = ""
 		tooltip += "data-toggle='tooltip' data-placement='bottom'"
 		tooltip += "title='"+ usuario +"'"
-		data += "<a href='/profile/"+ usuario +"' "+tooltip+" >"
+		data += "<a href='"+url_profile+ usuario +"' "+tooltip+" >"
 		data += "<img class='img-circle' src='"+str(photo)+"' "
 		data += "width=30, height=30></a>"
 
 
 	return data
+
+
+@register.filter
+def get_path_profile(usuario):
+	'''
+		Return tag a with profile
+	'''
+	url_profile = settings.URL_PROFILE
+	return "<a href='"+url_profile+ usuario +"'>"+usuario+"</a>"
 
 
 @register.filter
@@ -151,7 +162,8 @@ def get_item_notification(notification):
 			else:
 				path_img = static("img/profile.png")
 
-			user = "<a href='/profile/"+username+"'><p>" +  name +"</p></a>"
+			url_profile = settings.URL_PROFILE
+			user = "<a href='"+url_profile+username+"'><p>" +  name +"</p></a>"
 			date = get_datetime_topic(notification.date)
 
 			html += '<div class="list-group">'

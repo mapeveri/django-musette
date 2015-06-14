@@ -103,6 +103,13 @@ Visit 127.0.0.1:8000/forums you should see the categories and forums.
 
 .. image:: https://github.com/mapeveri/django-musette/blob/master/images/index.png
 
+.. image:: https://github.com/mapeveri/django-musette/blob/master/images/forum.png
+
+.. image:: https://github.com/mapeveri/django-musette/blob/master/images/notifications.png
+
+.. image:: https://github.com/mapeveri/django-musette/blob/master/images/topic.png
+
+.. image:: https://github.com/mapeveri/django-musette/blob/master/images/new_topic.png
 
 Features:
 ---------

@@ -17,14 +17,13 @@
 <!-- Comments-->
 {% paginate comments  %}
 {% for comment in comments %}
-  <article>
+  <article class="row">
     <div class="col-md-1 col-sm-1 hidden-xs">
       <figure class="thumbnail">
-        <img class="img-responsive" src="{{comment.user.id|get_photo}}"/>
-        <figcaption class="text-center"><a href="{{URL_PROFILE}}{{comment.user.username}}">{{comment.user.username}}</a></figcaption>
+        <a href="{{URL_PROFILE}}{{comment.user.username}}"><img class="img-responsive" src="{{comment.user.id|get_photo}}"/></a>
       </figure>
     </div>
-    <div class="col-md-10 col-sm-10">
+    <div class="col-md-11 col-sm-11">
       <div class="panel panel-default arrow left">
         <div class="panel-body">
           <header class="text-left">
@@ -34,6 +33,7 @@
             <div class="well" style="margin-top: 5px">
               {{comment.description|safe}}
             </div>
+            <a href="{{URL_PROFILE}}{{comment.user.username}}">{{comment.user.username}}</a>
           </div>
           {% if comment.user.id == user.id %}
             <div class="span4 offset4 text-right">

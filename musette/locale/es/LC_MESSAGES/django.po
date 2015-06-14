@@ -210,7 +210,7 @@ msgstr "Nuevo tema"
 
 #: musette/templates/musette/forum.html:59
 msgid "Users"
-msgstr "Usuario"
+msgstr "Usuarios"
 
 #: musette/templates/musette/forum.html:60
 msgid "Responses"

@@ -4,6 +4,7 @@
 {% load static %}
 {% load hitcount_tags %}
 {% load forum_filter %}
+{% load photo %}
 
 {% block extra_js %}
 <script src="{% static 'js/hitcount/django-hitcount.js' %}"></script>
@@ -54,7 +55,7 @@
 				      <tr>
 				      	<th>#</th>
 				        <th>{% trans "Title" %}</th>
-				        <th>{% trans "Users" %}</th>
+				        <th>{% trans "User" %}</th>
 				    	<th>{% trans "Responses" %}</th>
 				    	<th>{% trans "Views" %}</th>
 				        <th>{% trans "Date" %}</th>
@@ -64,13 +65,18 @@
 				    	{% for topic in topics %}
 				    		{% if topic.moderate %}
 							    <tr>
-							    	<td>{{forloop.counter}}</td>
-							        <td>
+							    	<td><i class="glyphicon glyphicon-comment"</i></td>
+							        <td style="max-width: 25.0em">
 							        	<a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/"
 							        	data-toggle="tooltip" data-placement="bottom" title="{% trans 'Views' %}: {% get_tot_views topic.idtopic %}">
 							        	{{topic.title}}
-							        </a></td>
-							        <td>{{topic|get_tot_users_comments|safe}}</td>
+							        	</a>
+							        	<p>{{ topic.description|safe|truncatechars:300 }}</p>
+							    	</td>
+							        <td>
+							        	<img src="{{topic.user.id|get_photo}}" class='img-circle' width="30", height="30" />
+							        	<p>{{topic.user.username|get_path_profile|safe}}</p>
+							        </td>
 							        <td>{{topic.idtopic|get_tot_comments}}</td>
 							        <td>{% get_tot_views topic.idtopic %}</td>
 							        <td>{{topic.date}}</td>

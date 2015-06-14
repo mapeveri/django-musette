@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load static %}
+{% load forum_filter %}
 {% load hitcount_tags %}
 
 {% block extra_js %}
@@ -14,7 +15,7 @@
 
 {% block content %}
 
-<div class="container-build">
+<div class="container">
 
   {% get_hit_count for topic as total_hits %}
 
@@ -46,13 +47,6 @@
                   <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}</a>
                 {% endif %}
               </div>
-              <div style="text-align: center">
-                {% if total_hits|add:"0" > 1 %}
-                  <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "views" %}</p>
-                {% else %}
-                  <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "view" %}</p>
-                {% endif %}
-              </div>
             </div>
             <div class="col-md-10 col-sm-10">
               <div class="panel panel-default arrow left">
@@ -70,6 +64,14 @@
                     </p>
                   </div>
                   <hr>
+                  <div class="pull-left">
+                    {% if total_hits|add:"0" > 1 %}
+                      <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "views" %}</p>
+                    {% else %}
+                      <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "view" %}</p>
+                    {% endif %}
+                    <p><b><u>{% trans "Users" %}</u></b> {{topic|get_tot_users_comments|safe}} </p>
+                  </div>
                   <p class="pull-right">{{topic.date}}</p>
                 </div>
               </div>
@@ -79,7 +81,7 @@
     </div>
   </div>
 
-  <hr>
+  <br>
 
   <div id="data-template" class="endless_page_template">
       {% include "musette/topic.html" %}
