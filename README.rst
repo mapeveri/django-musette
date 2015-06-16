@@ -127,3 +127,11 @@ Features:
 11. Avatar.
 12. Pre-moderation.
 13. Support to English and Spanish language.
+
+Contribute:
+-----------
+
+1. Fork this repo and install it
+2. Follow PEP8, Style Guide for Python Code
+3. Write code
+4. Send pull request
