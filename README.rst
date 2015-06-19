@@ -124,6 +124,7 @@ Features:
 11. Avatar.
 12. Pre-moderation.
 13. Support to English and Spanish language.
+14. Validation of forms in real time with AngularJs.
 
 Contribute:
 -----------

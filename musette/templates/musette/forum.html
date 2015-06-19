@@ -11,12 +11,12 @@
 <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip();
 </script>
-<script src="{% static 'js/js/forum.js' %}"></script>
+<script src="{% static 'js/controllers/topic.controller.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
+<div class="container" ng-app="TopicApp">
 
 	{% if user.id %}
 		{% include "musette/notification.html" %}

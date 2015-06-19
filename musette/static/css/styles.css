@@ -24,3 +24,12 @@
 .without-text-transform{
   text-transform: none;
 }
+
+.btn{
+  text-transform: none;
+}
+
+/* Hide element */
+.hide{
+  display: none;
+}

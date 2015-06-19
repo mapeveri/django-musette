@@ -2,18 +2,6 @@
 {% load endless %}
 {% load photo %}
 
-{% block extra_js %}
-    <script type="text/javascript">
-        $('body').bind("DOMSubtreeModified", function() {
-          //Set tinymce to textarea
-          for (var i = 0; i < tinymce.editors.length; i++) {
-              var id = i + 1;
-              tinyMCE.execCommand('mceAddControl', true, 'textarea_comment_' + id);
-          }
-      });
-    </script>
-{% endblock %}
-
 <!-- Comments-->
 {% paginate comments  %}
 {% for comment in comments %}
@@ -59,8 +47,9 @@
         </div>
         <div class="modal-body">
 
-          <form class="form-horizontal" action="/updatecomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/{{comment.idcomment}}/" method="POST">{% csrf_token%}
-              <textarea name="update_description" id="textarea_comment_{{comment.idcomment}}" style="width: 100%">
+          <form action="/updatecomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/{{comment.idcomment}}/" method="POST">
+              {% csrf_token%}
+              <textarea name="update_description" id="textarea_comment_{{comment.idcomment}}" style="width: 100%" required>
                 {{comment.description|safe}}
               </textarea>
             <br>

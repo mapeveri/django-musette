@@ -10,12 +10,12 @@
     <script src="{% static 'js/hitcount/django-hitcount.js' %}"></script>
     <script src="{% static 'js/endless/endless-pagination.js' %}"></script>
     <script>$.endlessPaginate({paginateOnScroll: true});</script>
-    <script src="{% static 'js/js/forum.js' %}"></script>
+    <script src="{% static 'js/controllers/topic.controller.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
+<div class="container" ng-app="TopicApp"  ng-controller="TopicController">
 
   {% get_hit_count for topic as total_hits %}
 
@@ -43,9 +43,11 @@
                 {% if topic.user.id == user.id %}
                 <a href="/edit_topic/{{topic.forum.name}}/{{topic.idtopic}}/" class="btn btn-success btn-xs">
                   <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</a>
-                <a style="cursor: pointer" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
+                <a style="cursor: pointer;" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
                   <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}</a>
                 {% endif %}
+                <br>
+                <br>
               </div>
             </div>
             <div class="col-md-10 col-sm-10">
@@ -109,22 +111,22 @@
           </div>
         {% endif %}
       {% endfor %}
-      <form class="form-horizontal" action="/newcomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/" method="POST">{% csrf_token%}
+      <form action="/newcomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/" name="formComment" method="POST" class="well">{% csrf_token%}
         <center>
         {% for field in form_comment %}
           {% if field.name == "description" %}
-              {{ field }}
-              {% if form_comment.description.errors %}
-                <div style="color: red">{{ form_comment.description.errors }}</div>
-
-              {% endif %}
+              <div class="form-group" ng-class="{ 'has-error' : formComment.description.$invalid && !formComment.description.$pristine }">
+                {{ field }}
+                {% if form_comment.description.errors %}
+                  <div style="color: red">{{ form_comment.description.errors }}</div>
+                {% endif %}
+              </div>
           {% endif %}
         {% endfor %}
         </center>
-        <br>
-        <button type="submit" class="btn btn-success btn-sm">
+        <button type="submit" class="btn btn-success btn-sm" ng-disabled="formComment.$invalid" ng-click="loading()">
             <i class="glyphicon glyphicon-plus"></i> {% trans "New comment" %}
-        </button>
+        </button> <img src="{% static 'img/ajax.gif' %}" class="hide" />
       </form>
     </div>
     <div class="col-md-2"></div>

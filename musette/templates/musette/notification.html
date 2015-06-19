@@ -1,41 +1,43 @@
 {% load i18n %}
 {% load forum_filter %}
 
-<div class="btn-group pull-right" id="notifications_dropdown">
-    <button class="btn btn-success btn-xs" type="button">
-    {% if user.id|get_pending_notifications > 0 %}
-      <span id="badge_notifications" class="badge">{{user.id|get_pending_notifications}}</span>
-    {% endif %}
-    <i class="glyphicon glyphicon-bell"></i>
-    {% trans "Notifications" %}
-    </button>
-    <button data-toggle="dropdown" class="btn btn-success btn-xs dropdown-toggle" type="button"><span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu dropdown-cart" role="menu">
-      {% for notification in notifications|slice:"5" %}
-        <li class="item-notification">
-            <span class="item">
-                <span class="item-left">
-                  {% if notification.is_view %}
-              {{notification|get_item_notification|safe}}
-                  {% else %}
-              {{notification|get_item_notification|safe}}
-                  {% endif %}
-                </span>
-            </span>
-        </li>
-      {% empty %}
-          <center><p class="without-text-transform">{% trans "No notifications" %}</p></center>
+<div ng-controller="NotificationController">
+  <div class="btn-group pull-right" id="notifications_dropdown" ng-click="view_all()">
+      <button class="btn btn-success btn-xs" type="button">
+      {% if user.id|get_pending_notifications > 0 %}
+        <span id="badge_notifications" class="badge">{{user.id|get_pending_notifications}}</span>
+      {% endif %}
+      <i class="glyphicon glyphicon-bell"></i>
+      {% trans "Notifications" %}
+      </button>
+      <button data-toggle="dropdown" class="btn btn-success btn-xs dropdown-toggle" type="button"><span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu dropdown-cart" role="menu">
+        {% for notification in notifications|slice:"5" %}
+          <li class="item-notification">
+              <span class="item">
+                  <span class="item-left">
+                    {% if notification.is_view %}
+                {{notification|get_item_notification|safe}}
+                    {% else %}
+                {{notification|get_item_notification|safe}}
+                    {% endif %}
+                  </span>
+              </span>
+          </li>
+        {% empty %}
+            <center><p class="without-text-transform">{% trans "No notifications" %}</p></center>
+            <li class="divider"></li>
+        {% endfor %}
           <li class="divider"></li>
-      {% endfor %}
-        <li class="divider"></li>
-        <li><a class="text-center" href="/forum_all_notification/">
-          <span class="without-text-transform">
-            <span class="glyphicon glyphicon-envelope"></span>
-            {% trans "All" %}
-          </span>
-        </a></li>
-    </ul>
+          <li><a class="text-center" href="/forum_all_notification/">
+            <span class="without-text-transform">
+              <span class="glyphicon glyphicon-envelope"></span>
+              {% trans "All" %}
+            </span>
+          </a></li>
+      </ul>
+  </div>
 </div>
 
 

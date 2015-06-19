@@ -42,7 +42,9 @@ class FormAddTopic(forms.ModelForm):
 		for key in self.fields:
 			if key != "attachment":
 				self.fields[key].required = True
+				self.fields[key].widget.attrs['ng-model'] = key
 				self.fields[key].widget.attrs['class'] = class_css
+				self.fields[key].widget.attrs['required'] = 'required'
 			else:
 				self.fields[key].required = False
 
@@ -107,7 +109,13 @@ class FormEditTopic(forms.ModelForm):
 		for key in self.fields:
 			if key != "attachment":
 				self.fields[key].required = True
+				self.fields[key].widget.attrs['ng-model'] = key
+				if key == 'title':
+					self.fields[key].widget.attrs['ng-init'] = key + "=" + "'" + str(kwargs['instance'].title) + "'"
+				elif key == 'description':
+					self.fields[key].widget.attrs['ng-init'] = key + "=" + "'" + str(kwargs['instance'].description) + "'"
 				self.fields[key].widget.attrs['class'] = class_css
+				self.fields[key].widget.attrs['required'] = 'required'
 			else:
 				self.fields[key].required = False
 
@@ -131,3 +139,5 @@ class FormAddComment(forms.ModelForm):
 			if key == "description":
 				self.fields[key].required = True
 				self.fields[key].widget.attrs['style'] = "width: 100%"
+				self.fields[key].widget.attrs['ng-model'] = key
+				self.fields[key].widget.attrs['required'] = 'required'

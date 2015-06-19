@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% load i18n %}
-
-{% block content %}
+{% load static %}
 
 {% block extra_js %}
     {{ form.media.js }}
+    <script src="{% static 'js/controllers/topic.controller.js' %}"></script>
 {% endblock %}
 
-<div class="container">
+{% block content %}
+
+<div class="container" ng-app="TopicApp"  ng-controller="TopicController">
 
 	<div class="mainbox col-md-8 col-md-offset-2 col-sm-6 col-sm-offset-3">
 		{% for message in messages %}
@@ -30,37 +32,47 @@
             </div>
 
             <div class="panel-body">
-            	<form class="form-horizontal" action="{{request.get_full_path}}" method="POST" enctype="multipart/form-data">{% csrf_token%}
+            	<form action="{{request.get_full_path}}" method="POST" enctype="multipart/form-data" name="editTopic">
+            		{% csrf_token%}
             		{% for field in form %}
 			   			{% if field.name == "title" %}
-			   				<label>{% trans "Title" %}</label>
-			              	{{ field }}
-			              	{% if form.title.errors %}
-			              		<div style="color: red">{{ form.title.errors }}</div>
-			              	{% else %}
-			              		<br>
-			              	{% endif %}
+			   				<div class="form-group" ng-class="{ 'has-error' : editTopic.title.$invalid && !editTopic.title.$pristine }">
+				   				<label>{% trans "Title" %}</label>
+				              	{{ field }}
+				              	{% if form.title.errors %}
+				              		<div style="color: red">{{ form.title.errors }}</div>
+				              	{% else %}
+				              		<br>
+				              	{% endif %}
+			              	</div>
 			            {% endif %}
 			            {% if field.name == "description" %}
-			            	<label>{% trans "Description" %}</label>
-			              	{{ field }}
-			              	{% if form.description.errors %}
-			              		<div style="color: red">{{ form.description.errors|safe }}</div>
-			              	{% else %}
-			              		<br>
-			              	{% endif %}
+			            	<div class="form-group" ng-class="{ 'has-error' : editTopic.description.$invalid && !editTopic.description.$pristine }">
+				            	<label>{% trans "Description" %}</label>
+				              	{{ field }}
+				              	{% if form.description.errors %}
+				              		<div style="color: red">{{ form.description.errors|safe }}</div>
+				              	{% else %}
+				              		<br>
+				              	{% endif %}
+			              	</div>
 			            {% endif %}
 			          	{% if field.name == "attachment" %}
-			            	<label>{% trans "Attachment" %}</label>
-			              	{{ field }}
-			              	{% if form.attachment.errors %}
-			              		<div style="color: red">{{ form.attachment.errors }}</div>
-			              	{% else %}
-			              		<br>
-			              	{% endif %}
+			          		<div class="form-group">
+				            	<label>{% trans "Attachment" %}</label>
+				              	{{ field }}
+				              	{% if form.attachment.errors %}
+				              		<div style="color: red">{{ form.attachment.errors }}</div>
+				              	{% else %}
+				              		<br>
+				              	{% endif %}
+			              	</div>
 			            {% endif %}
 			        {% endfor %}
-			        <button type="submit" class="btn btn-success btn-sm"><i class="glyphicon glyphicon-floppy-disk"></i> {% trans "Save" %}</button>
+			        <button type="submit" class="btn btn-success btn-sm" ng-disabled="editTopic.$invalid" ng-click="loading()">
+			        	<i class="glyphicon glyphicon-floppy-disk"></i>
+			        	{% trans "Save" %}
+			        </button> <img src="{% static 'img/ajax.gif' %}" class="hide" />
 				</form>
             </div>
         </div>
