@@ -16,6 +16,7 @@ Requirements:
 
 1. Jquery
 2. Bootstrap and bootstrap material desing (https://fezvrasta.github.io/bootstrap-material-design/)
+3. Angular.js
 
 Quick start:
 ------------
@@ -38,7 +39,7 @@ Quick start:
 
 	SESSION_SAVE_EVERY_REQUEST = True
 
-4. Configure STATIC and MEDIA root in the settings.py::
+4. Configure in the settings.py URL_LOGIN, STATIC and MEDIA root.
 
 5. Set this variables::
 
@@ -58,11 +59,7 @@ Quick start:
 	{% block extra_js %}{% endblock %}
 	{% block hitcount_javascript %}{% endblock %}
 
-	Add extra css:
-		{% include "musette/extra_css.html" %}
-
-	Add extra js:
-		{% include "musette/extra_js.html" %}
+And add files static css and js (Angular, Jquery, Bootstrap).
 
 Example.
 	https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
