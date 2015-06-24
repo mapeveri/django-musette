@@ -16,7 +16,11 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 setup(
     name='django-musette',
     version=get_version(),
-    packages=['musette', 'musette.templatetags'],
+    packages=[
+        'musette', 'musette.templatetags',
+        'musette.websockets', 'musette.management',
+        'musette.management.commands',
+    ],
     include_package_data=True,
     license='BSD License',
     zip_safe=False,
@@ -27,6 +31,8 @@ setup(
     author_email='martinpeveri@gmail.com',
     install_requires=[
         'django-admin-log==0.2',
+        'tornado==4.2',
+        'django-redis-cache==0.13.1',
         'django-endless-pagination==2.1',
         'django-hitcount==1.0.5',
     ],

@@ -1,5 +1,7 @@
 # -*- coding: UTF-8 -*-
 import datetime
+import json
+import redis
 
 from django.conf import settings
 from django.contrib import messages
@@ -11,7 +13,7 @@ from django.views.generic import View
 from django.views.generic.edit import FormView
 from django.utils.crypto import get_random_string
 from django.utils.html import strip_tags
-
+from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 
 from endless_pagination.decorators import page_template
@@ -312,7 +314,22 @@ class NewCommentView(View):
 
 			inserted = obj.save()
 
+			r = redis.StrictRedis()
+
 			idcomment = obj.idcomment
+
+			# Data for notification real time
+			comment = Comment.objects.get(idcomment=idcomment)
+			profile = get_id_profile(request.user.id)
+			field_photo = get_photo_profile(profile)
+			username = request.user.username
+
+			if field_photo:
+				has_photo = 1
+			else:
+				has_photo = 0
+
+			# Send notifications
 			lista_us = get_users_topic(topic, request.user.id)
 			for user in lista_us:
 				notification = Notification(
@@ -322,6 +339,26 @@ class NewCommentView(View):
 							)
 				notification.save()
 
+				idnotification = notification.idnotification
+
+				# Data for notification real time
+				description = Truncator(comment.description).chars(100)
+				data = {
+					"description": description,
+					"topic": comment.topic.title,
+					"idtopic": comment.topic.idtopic,
+					"slug": comment.topic.slug,
+					"photo": str(field_photo),
+					"username": username,
+					"forum": forum,
+					"has_photo": has_photo,
+					"URL_PROFILE": URL_PROFILE,
+					"lista_us": lista_us,
+					"idnotification": idnotification,
+					"idobject": idcomment,
+				}
+				json_data = json.dumps(data);
+				r.publish('notifications', json_data)
 
 			return HttpResponseRedirect(url)
 		else:
@@ -374,6 +411,7 @@ class DeleteCommentView(View):
 		try:
 			iduser = request.user.id
 			Comment.objects.filter(idcomment=idcomment, user=iduser).delete()
+			Notification.objects.filter(idobject=idcomment).delete()
 
 			return HttpResponseRedirect(url)
 		except Exception:

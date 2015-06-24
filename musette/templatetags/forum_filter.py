@@ -152,7 +152,6 @@ def get_item_notification(notification):
  			title = "<h5><a href='"+url_topic+"'><u>"+comment.topic.title+"</u></h5></a>"
 			description = "<p>"+description+"</p>"
 
-			name = comment.user.last_name + " " + comment.user.first_name
 			username = comment.user.username
 
 			profile = get_id_profile(comment.user.id)
@@ -163,7 +162,7 @@ def get_item_notification(notification):
 				path_img = static("img/profile.png")
 
 			url_profile = settings.URL_PROFILE
-			user = "<a href='"+url_profile+username+"'><p>" +  name +"</p></a>"
+			user = "<a href='"+url_profile+username+"'><p>" +  username +"</p></a>"
 			date = get_datetime_topic(notification.date)
 
 			html += '<div class="list-group">'

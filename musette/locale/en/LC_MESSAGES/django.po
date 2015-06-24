@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-08 23:36-0300\n"
+"POT-Creation-Date: 2015-06-24 00:31-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgid "If checked, this category will be visible only for staff"
 msgstr ""
 
 #: musette/models.py:27 musette/models.py:40
-#: musette/templates/musette/index.html:23
+#: musette/templates/musette/index.html:24
 msgid "Category"
 msgstr ""
 
@@ -52,9 +52,9 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: musette/models.py:48 musette/models.py:92 musette/models.py:168
-#: musette/templates/musette/edit_topic.html:45
-#: musette/templates/musette/new_topic.html:45
+#: musette/models.py:48 musette/models.py:96 musette/models.py:172
+#: musette/templates/musette/edit_topic.html:51
+#: musette/templates/musette/new_topic.html:51
 msgid "Description"
 msgstr ""
 
@@ -62,8 +62,8 @@ msgstr ""
 msgid "Moderators"
 msgstr ""
 
-#: musette/models.py:53 musette/models.py:91 musette/models.py:167
-#: musette/templates/musette/forum.html:62
+#: musette/models.py:53 musette/models.py:95 musette/models.py:171
+#: musette/templates/musette/forum.html:61
 msgid "Date"
 msgstr ""
 
@@ -79,47 +79,48 @@ msgstr ""
 msgid "Check topics"
 msgstr ""
 
-#: musette/models.py:62 musette/models.py:86
-#: musette/templates/musette/forum.html:41
+#: musette/models.py:62 musette/models.py:90
+#: musette/templates/musette/forum.html:43
 #: musette/templates/musette/topic_index.html:24
 msgid "Forum"
 msgstr ""
 
-#: musette/models.py:63 musette/templates/musette/index.html:20
+#: musette/models.py:63 musette/templates/musette/index.html:21
 msgid "Forums"
 msgstr ""
 
-#: musette/models.py:88 musette/models.py:165
+#: musette/models.py:92 musette/models.py:169
+#: musette/templates/musette/forum.html:58
 msgid "User"
 msgstr ""
 
-#: musette/models.py:90 musette/templates/musette/edit_topic.html:36
-#: musette/templates/musette/forum.html:58
-#: musette/templates/musette/new_topic.html:36
+#: musette/models.py:94 musette/templates/musette/edit_topic.html:40
+#: musette/templates/musette/forum.html:57
+#: musette/templates/musette/new_topic.html:40
 msgid "Title"
 msgstr ""
 
-#: musette/models.py:95
+#: musette/models.py:99
 msgid "File"
 msgstr ""
 
-#: musette/models.py:98
+#: musette/models.py:102
 msgid "Moderate"
 msgstr ""
 
-#: musette/models.py:102 musette/models.py:162
+#: musette/models.py:106 musette/models.py:166
 msgid "Topic"
 msgstr ""
 
-#: musette/models.py:103 musette/templates/musette/forum.html:85
+#: musette/models.py:107 musette/templates/musette/forum.html:91
 msgid "Topics"
 msgstr ""
 
-#: musette/models.py:172
+#: musette/models.py:176
 msgid "Comment"
 msgstr ""
 
-#: musette/models.py:173
+#: musette/models.py:177
 msgid "Comments"
 msgstr ""
 
@@ -162,21 +163,21 @@ msgid "Yes, I'm sure"
 msgstr ""
 
 #: musette/templates/musette/all_notification_index.html:17
-#: musette/templates/musette/notification.html:9
+#: musette/templates/musette/notification.html:11
 msgid "Notifications"
 msgstr ""
 
-#: musette/templates/musette/edit_topic.html:29
+#: musette/templates/musette/edit_topic.html:31
 msgid "Edit topic"
 msgstr ""
 
-#: musette/templates/musette/edit_topic.html:54
-#: musette/templates/musette/new_topic.html:54
+#: musette/templates/musette/edit_topic.html:62
+#: musette/templates/musette/new_topic.html:62
 msgid "Attachment"
 msgstr ""
 
-#: musette/templates/musette/edit_topic.html:63
-#: musette/templates/musette/new_topic.html:63
+#: musette/templates/musette/edit_topic.html:74
+#: musette/templates/musette/new_topic.html:74
 msgid "Save"
 msgstr ""
 
@@ -188,113 +189,117 @@ msgstr ""
 msgid "is pending moderations"
 msgstr ""
 
-#: musette/templates/musette/forum.html:43
-#: musette/templates/musette/forum.html:45
-msgid "This forum has"
-msgstr ""
-
-#: musette/templates/musette/forum.html:43
-#: musette/templates/musette/topic_index.html:52
-msgid "views"
-msgstr ""
-
-#: musette/templates/musette/forum.html:45
-#: musette/templates/musette/topic_index.html:54
-msgid "view"
-msgstr ""
-
-#: musette/templates/musette/forum.html:52
+#: musette/templates/musette/forum.html:39
 msgid "New topic"
 msgstr ""
 
-#: musette/templates/musette/forum.html:59
-msgid "Users"
+#: musette/templates/musette/forum.html:45
+#: musette/templates/musette/forum.html:47
+msgid "This forum has"
 msgstr ""
 
-#: musette/templates/musette/forum.html:60
+#: musette/templates/musette/forum.html:45
+#: musette/templates/musette/topic_index.html:71
+msgid "views"
+msgstr ""
+
+#: musette/templates/musette/forum.html:47
+#: musette/templates/musette/topic_index.html:73
+msgid "view"
+msgstr ""
+
+#: musette/templates/musette/forum.html:59
 msgid "Responses"
 msgstr ""
 
-#: musette/templates/musette/forum.html:61
-#: musette/templates/musette/forum.html:70
+#: musette/templates/musette/forum.html:60
+#: musette/templates/musette/forum.html:71
 msgid "Views"
 msgstr ""
 
-#: musette/templates/musette/forum.html:88
+#: musette/templates/musette/forum.html:94
 msgid "Missing for moderate"
 msgstr ""
 
-#: musette/templates/musette/forum.html:92
+#: musette/templates/musette/forum.html:98
 msgid "Created"
 msgstr ""
 
-#: musette/templates/musette/forum.html:113
+#: musette/templates/musette/forum.html:117
 msgid "Page"
 msgstr ""
 
-#: musette/templates/musette/forum.html:113
+#: musette/templates/musette/forum.html:117
 msgid "of"
 msgstr ""
 
-#: musette/templates/musette/index.html:35
-#: musette/templates/musette/index.html:39
+#: musette/templates/musette/index.html:42
+#: musette/templates/musette/index.html:47
 msgid "Please, you add forums and categories in the administrator."
 msgstr ""
 
-#: musette/templates/musette/new_topic.html:29
+#: musette/templates/musette/new_topic.html:31
 msgid "Add"
 msgstr ""
 
-#: musette/templates/musette/notification.html:26
+#: musette/templates/musette/notification.html:29
 msgid "No notifications"
 msgstr ""
 
-#: musette/templates/musette/notification.html:32
+#: musette/templates/musette/notification.html:49
+msgid "Now"
+msgstr ""
+
+#: musette/templates/musette/notification.html:69
 msgid "All"
 msgstr ""
 
-#: musette/templates/musette/topic.html:41
+#: musette/templates/musette/topic.html:29
 #: musette/templates/musette/topic_index.html:45
 msgid "Edit"
 msgstr ""
 
-#: musette/templates/musette/topic.html:44
+#: musette/templates/musette/topic.html:32
 msgid "Remove"
 msgstr ""
 
-#: musette/templates/musette/topic.html:58
-#: musette/templates/musette/topic.html:68
+#: musette/templates/musette/topic.html:46
+#: musette/templates/musette/topic.html:57
 msgid "Edit comment"
 msgstr ""
 
-#: musette/templates/musette/topic.html:83
-#: musette/templates/musette/topic.html:91
+#: musette/templates/musette/topic.html:72
+#: musette/templates/musette/topic.html:80
 msgid "Remove comment"
 msgstr ""
 
-#: musette/templates/musette/topic.html:86
+#: musette/templates/musette/topic.html:75
 msgid "Do you want remove this comment?"
 msgstr ""
 
 #: musette/templates/musette/topic_index.html:47
-#: musette/templates/musette/topic_index.html:152
+#: musette/templates/musette/topic_index.html:155
 msgid "Delete"
 msgstr ""
 
-#: musette/templates/musette/topic_index.html:52
-#: musette/templates/musette/topic_index.html:54
+#: musette/templates/musette/topic_index.html:71
+#: musette/templates/musette/topic_index.html:73
 msgid "This topic has"
 msgstr ""
 
-#: musette/templates/musette/topic_index.html:125
+#: musette/templates/musette/topic_index.html:75
+msgid "Users"
+msgstr ""
+
+#: musette/templates/musette/topic_index.html:128
 msgid "New comment"
 msgstr ""
 
-#: musette/templates/musette/topic_index.html:144
+#: musette/templates/musette/topic_index.html:147
 msgid "Delete topic"
 msgstr ""
 
-#: musette/templates/musette/topic_index.html:147
+#: musette/templates/musette/topic_index.html:150
 msgid "Do you want to remove the topic?"
 msgstr ""
 
@@ -310,18 +315,18 @@ msgstr ""
 msgid "Files allowed"
 msgstr ""
 
-#: musette/views.py:175 musette/views.py:255
+#: musette/views.py:176 musette/views.py:256
 msgid "Form invalid"
 msgstr ""
 
-#: musette/views.py:328
+#: musette/views.py:358
 msgid "Field required"
 msgstr ""
 
-#: tests/settings.py:113
+#: tests/settings.py:125
 msgid "English"
 msgstr ""
 
-#: tests/settings.py:114
+#: tests/settings.py:126
 msgid "Spanish"
 msgstr ""

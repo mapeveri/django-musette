@@ -39,7 +39,17 @@ Quick start:
 
 	SESSION_SAVE_EVERY_REQUEST = True
 
-4. Configure in the settings.py URL_LOGIN, STATIC and MEDIA root.
+4. Configure in the settings.py URL_LOGIN, STATIC and MEDIA root. Something very important is to set the variable CACHES for redis. example::
+
+	CACHES = {
+	    'default': {
+	        'BACKEND' : 'redis_cache.RedisCache',
+	        'LOCATION' : 'localhost:6379',
+	        'OPTIONS' : {
+	            'DB' : 1
+	            }
+	        }
+	}
 
 5. Set this variables::
 
@@ -96,6 +106,10 @@ Execute in the terminal::
 
 	python manage.py runserver
 
+4. In other terminal execute this command for run server tornado for web sockets::
+
+	python manage.py musette_run_server_ws
+
 Visit 127.0.0.1:8000/forums you should see the categories and forums.
 
 .. image:: https://github.com/mapeveri/django-musette/blob/master/images/index.png
@@ -118,19 +132,20 @@ Features:
 ---------
 
 1. Multiple forums ordered by for category.
-2. Notifications (Still not support sending emails)
-3. Count views for forum and topic.
-4. Infinite scroll for comments of one topic.
-5. Support of files media for topics.
-6. Easy integration with other applications Django of your project.
-7. Support for moderate forums.
-8. Models registered in admin django for administrators.
-9. Possibility of hide forums unused.
-10. Modern design, thank you to Bootstrap material design
-11. Avatar.
-12. Pre-moderation.
-13. Support to English and Spanish language.
-14. Validation of forms in real time with AngularJs.
+2. Notifications (Still not support sending emails).
+3. Notifications in real time.
+4. Count views for forum and topic.
+5. Infinite scroll for comments of one topic.
+6. Support of files media for topics.
+7. Easy integration with other applications Django of your project.
+8. Support for moderate forums.
+9. Models registered in admin django for administrators.
+10. Possibility of hide forums unused.
+11. Modern design, thank you to Bootstrap material design
+12. Avatar.
+13. Pre-moderation.
+14. Support to English and Spanish language.
+15. Validation of forms in real time with AngularJs.
 
 Contribute:
 -----------

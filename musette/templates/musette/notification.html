@@ -3,9 +3,12 @@
 
 <div ng-controller="NotificationController">
   <div class="btn-group pull-right" id="notifications_dropdown" ng-click="view_all()">
+      <input type="hidden" ng-model="user" name="user" id="user_musette" value="{{user.id}}" />
       <button class="btn btn-success btn-xs" type="button">
       {% if user.id|get_pending_notifications > 0 %}
         <span id="badge_notifications" class="badge">{{user.id|get_pending_notifications}}</span>
+      {% else %}
+        <span id="badge_notifications" class="badge hide"></span>
       {% endif %}
       <i class="glyphicon glyphicon-bell"></i>
       {% trans "Notifications" %}
@@ -13,21 +16,52 @@
       <button data-toggle="dropdown" class="btn btn-success btn-xs dropdown-toggle" type="button"><span class="caret"></span>
       </button>
       <ul class="dropdown-menu dropdown-cart" role="menu">
+
+        {% verbatim %}
+          <li class="item-notification" ng-repeat="not in notifications_socket">
+              <span class="item">
+                  <span class="item-left">
+
+                <div class="list-group">
+                    <div class="list-group-item">
+                      <div class="row-action-primary">
+                        <div ng-if="not.has_photo == 0">
+                          <img src="/static/img/profile.png" width="30" height="30" class="img-circle">
+                        </div>
+                        <div ng-if="not.has_photo == 1 ">
+                          <img src="{{ not.photo }}" width="30" height="30" class="img-circle">
+                        </div>
+                      </div>
+                      <div class="row-content">
+                        <div class="least-content">{% endverbatim %} {% trans "Now" %} {% verbatim %}</div>
+                        <h4 class="list-group-item-heading"></h4>
+                        <h5><a href="/topic/{{ not.forum }}/{{not.slug}}/{{not.idtopic}}/">
+                          <u>{{ not.topic }}</u></a></h5>
+                          <p class="list-group-item-text"></p><p>{{ not.description | htmlToPlaintext }}</p>
+                          <p><a href="{{ not.URL_PROFILE }}{{ not.username }}"> {{ not.username }} </a></p
+                        </div>
+                    </div>
+                    <div class="list-group-separator"></div>
+                </div>
+
+                  </span>
+              </span>
+          </li>
+        {% endverbatim %}
+
         {% for notification in notifications|slice:"5" %}
           <li class="item-notification">
               <span class="item">
                   <span class="item-left">
-                    {% if notification.is_view %}
-                {{notification|get_item_notification|safe}}
-                    {% else %}
-                {{notification|get_item_notification|safe}}
-                    {% endif %}
+                  {{notification|get_item_notification|safe}}
                   </span>
               </span>
           </li>
         {% empty %}
+          <div id="no_notifications">
             <center><p class="without-text-transform">{% trans "No notifications" %}</p></center>
             <li class="divider"></li>
+          </div>
         {% endfor %}
           <li class="divider"></li>
           <li><a class="text-center" href="/forum_all_notification/">

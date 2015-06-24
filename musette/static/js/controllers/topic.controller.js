@@ -1,6 +1,12 @@
 'use strict';
 var Topic = angular.module('TopicApp', []);
 
+Topic.filter('htmlToPlaintext', function() {
+    return function(text) {
+      return String(text).replace(/<[^>]+>/gm, '');
+    };
+});
+
 Topic.controller("TopicController", function ($scope) {
 
 	//For manipulate the model description
@@ -31,11 +37,16 @@ Topic.controller("TopicController", function ($scope) {
 
 	}
 
-
 });
 
 //Notification controller
 Topic.controller("NotificationController", function ($scope, $http) {
+
+	$scope.notifications_socket = [];
+	$scope.user = parseInt(angular.element(document.querySelector("#user_musette")).val());
+	$scope.arr_idnotification = [];
+	$scope.arr_idobject = [];
+	$scope.tot_notifications = 0;
 
 	//Set in true all notifications
 	$scope.view_all = function(){
@@ -45,7 +56,8 @@ Topic.controller("NotificationController", function ($scope, $http) {
     		   headers: {'Content-Type': 'application/x-www-form-urlencoded'}
     		})
 	    .success(function(data, status, headers, config) {
-	        angular.element(document.querySelector("#badge_notifications")).text("0");
+	        angular.element(document.querySelector("#badge_notifications")).text("0").addClass("hide");
+	        $scope.tot_notifications = 0;
 	    })
 	    .error(function(data, status, headers, config) {
 	        console.log("Error.");
@@ -53,4 +65,39 @@ Topic.controller("NotificationController", function ($scope, $http) {
 
 	}
 
+	//Socket for notifications
+	var ws = new WebSocket("ws://127.0.0.1:8888/ws/");
+
+	ws.onmessage = function (evt) {
+	    var json = evt.data;
+	    var obj = angular.fromJson(json);
+	    var lista_us = obj.lista_us;
+	    var idnotification = parseInt(obj.idnotification);
+	    var idobject = parseInt(obj.idobject);
+
+	    //Verify if the message belongs to me
+	    if (lista_us.indexOf($scope.user) !== -1){
+	    	//Verify if notification exists previusly
+	    	if ($scope.arr_idnotification.indexOf(idnotification) === -1 && $scope.arr_idobject.indexOf(idobject) === -1){
+	    		$scope.notifications_socket.unshift(obj);
+	    		$scope.arr_idnotification.push(idnotification);
+	    		$scope.arr_idobject.push(idobject);
+	    		$scope.tot_notifications++;
+
+	    		//Remove class hide
+	    		angular.element(document.querySelector("#badge_notifications")).removeClass("hide").html($scope.tot_notifications);
+
+	    		//If not notification hide
+	    		try{
+	    			angular.element(document.querySelector("#no_notifications")).addClass("hide");
+	    		}catch(e){}
+	    	}
+	    }
+
+	};
+
+
+
 });
+
+

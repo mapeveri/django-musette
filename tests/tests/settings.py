@@ -16,6 +16,7 @@ import os
 from django.utils.translation import ugettext_lazy as _
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -29,7 +30,6 @@ SECRET_KEY = '!4kd#=13u=eiz7zmu)a%$26$1xs*8+^#))30c)4fau7&*0n_0x'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -99,6 +99,17 @@ DATABASES = {
     }
 }
 
+# Cache
+CACHES = {
+    'default': {
+        'BACKEND' : 'redis_cache.RedisCache',
+        'LOCATION' : 'localhost:6379',
+        'OPTIONS' : {
+            'DB' : 1
+            #'PASSWORD' :'asdas6d87sf6tsd8f',
+            }
+        }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/

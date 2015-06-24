@@ -177,7 +177,7 @@ class Comment(models.Model):
 		verbose_name_plural = _('Comments')
 
 	def __str__(self):
-		return self.date
+		return str(self.description)
 
 
 @python_2_unicode_compatible
@@ -195,4 +195,4 @@ class Notification(models.Model):
 		ordering = ['date']
 
 	def __str__(self):
-		return self.date
+		return str(self.idnotification)
