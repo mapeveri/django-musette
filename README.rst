@@ -72,7 +72,7 @@ Quick start:
 And add files static css and js (Angular, Jquery, Bootstrap).
 
 Example.
-	https://github.com/mapeveri/django-musette/blob/master/tests/plantillas/base.html
+	https://github.com/mapeveri/django-musette/blob/master/example/plantillas/base.html
 
 8. If you need Spanish forum enable internationalization in django.
 
