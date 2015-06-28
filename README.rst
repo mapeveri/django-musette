@@ -153,4 +153,5 @@ Contribute:
 1. Fork this repo and install it
 2. Follow PEP8, Style Guide for Python Code
 3. Write code
-4. Send pull request
+4. Create unit test
+5. Send pull request
