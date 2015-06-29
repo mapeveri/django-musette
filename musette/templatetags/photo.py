@@ -11,15 +11,15 @@ register = template.Library()
 
 @register.filter
 def get_photo(user):
-	'''
-	This tag return the path photo profile
-	'''
-	pr = get_id_profile(user)
-	field_photo = get_photo_profile(pr)
+    '''
+    This tag return the path photo profile
+    '''
+    pr = get_id_profile(user)
+    field_photo = get_photo_profile(pr)
 
-	if not field_photo:
-		field_photo = static("img/profile.png")
-	else:
-		field_photo = settings.MEDIA_URL + str(field_photo)
+    if not field_photo:
+        field_photo = static("img/profile.png")
+    else:
+        field_photo = settings.MEDIA_URL + str(field_photo)
 
-	return field_photo
+    return field_photo

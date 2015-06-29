@@ -11,133 +11,150 @@ from .widgets import TextareaWidget
 
 
 class FormAdminTopic(forms.ModelForm):
-	'''
-	Form for topic cadmin
-	'''
-	class Meta:
-		model = Topic
-		exclude = ('slug', 'id_attachment')
-		widgets = {
-			'description': TextareaWidget,
-		}
+
+    '''
+    Form for topic cadmin
+    '''
+    class Meta:
+        model = Topic
+        exclude = ('slug', 'id_attachment')
+        widgets = {
+            'description': TextareaWidget,
+        }
 
 
 class FormAddTopic(forms.ModelForm):
-	'''
-	Form for create one new topic
-	'''
 
-	class Meta:
-		model = Topic
-		exclude = ('forum', "user", "slug", "date", "id_attachment", "moderate")
-		widgets = {
-			'description': TextareaWidget,
-		}
+    '''
+    Form for create one new topic
+    '''
 
-	def __init__(self, *args, **kwargs):
+    class Meta:
+        model = Topic
+        exclude = (
+            'forum', "user", "slug", "date", "id_attachment", "moderate")
+        widgets = {
+            'description': TextareaWidget,
+        }
 
-		super(FormAddTopic, self).__init__(*args, **kwargs)
-		class_css = 'form-control'
+    def __init__(self, *args, **kwargs):
 
-		for key in self.fields:
-			if key != "attachment":
-				self.fields[key].required = True
-				self.fields[key].widget.attrs['ng-model'] = key
-				self.fields[key].widget.attrs['class'] = class_css
-				self.fields[key].widget.attrs['required'] = 'required'
-			else:
-				self.fields[key].required = False
+        super(FormAddTopic, self).__init__(*args, **kwargs)
+        class_css = 'form-control'
+
+        for key in self.fields:
+            if key != "attachment":
+                self.fields[key].required = True
+                self.fields[key].widget.attrs['ng-model'] = key
+                self.fields[key].widget.attrs['class'] = class_css
+                self.fields[key].widget.attrs['required'] = 'required'
+            else:
+                self.fields[key].required = False
 
 
 class CustomClearableFileInput(ClearableFileInput):
-	'''
-	  Changes order fields
-	'''
-	template_with_initial = (
-		'%(initial_text)s: <a href="%(initial_url)s">%(initial)s</a> '
-		'%(clear_template)s<br />%(input_text)s: %(input)s'
-	)
-	template_with_clear = '<br>  <label for="%(clear_checkbox_id)s">%(clear_checkbox_label)s</label> %(clear)s'
 
-	def render(self, name, value, attrs=None):
-		substitutions = {
-			'initial_text': self.initial_text,
-			'input_text': self.input_text,
-			'clear_template': '',
-			'clear_checkbox_label': self.clear_checkbox_label,
-		}
-		template = '%(input)s'
-		substitutions['input'] = super(ClearableFileInput, self).render(name, value, attrs)
+    '''
+      Changes order fields
+    '''
+    template_with_initial = (
+        '%(initial_text)s: <a href="%(initial_url)s">%(initial)s</a> '
+        '%(clear_template)s<br />%(input_text)s: %(input)s'
+    )
+    template_with_clear = ""
+    template_with_clear = '<br>  <label for="%(clear_checkbox_id)s"> '
+    template_with_clear += ' %(clear_checkbox_label)s</label> %(clear)s'
 
-		if self.is_initial(value):
-			template = self.template_with_initial
-			substitutions.update(self.get_template_substitution_values(value))
+    def render(self, name, value, attrs=None):
+        substitutions = {
+            'initial_text': self.initial_text,
+            'input_text': self.input_text,
+            'clear_template': '',
+            'clear_checkbox_label': self.clear_checkbox_label,
+        }
+        template = '%(input)s'
+        substitutions['input'] = super(
+            ClearableFileInput, self).render(name, value, attrs)
 
-			values = self.get_template_substitution_values(value)
-			initial = basename(values['initial'])
+        if self.is_initial(value):
+            template = self.template_with_initial
+            substitutions.update(self.get_template_substitution_values(value))
 
-			if not self.is_required:
-				checkbox_name = self.clear_checkbox_name(name)
-				checkbox_id = self.clear_checkbox_id(checkbox_name)
-				substitutions['clear_checkbox_name'] = conditional_escape(checkbox_name)
-				substitutions['clear_checkbox_id'] = conditional_escape(checkbox_id)
-				substitutions['clear'] = CheckboxInput().render(checkbox_name, False, attrs={'id': checkbox_id})
-				substitutions['clear_template'] = self.template_with_clear % substitutions
-				substitutions['initial'] = conditional_escape(initial)
+            values = self.get_template_substitution_values(value)
+            initial = basename(values['initial'])
 
-		return mark_safe(template % substitutions)
+            if not self.is_required:
+                checkbox_name = self.clear_checkbox_name(name)
+                checkbox_id = self.clear_checkbox_id(checkbox_name)
+                substitutions['clear_checkbox_name'] = conditional_escape(
+                    checkbox_name)
+                substitutions['clear_checkbox_id'] = conditional_escape(
+                    checkbox_id)
+                substitutions['clear'] = CheckboxInput().render(
+                    checkbox_name, False, attrs={'id': checkbox_id})
+                clear_template = self.template_with_clear % substitutions
+                substitutions['clear_template'] = clear_template
+                substitutions['initial'] = conditional_escape(initial)
+
+        return mark_safe(template % substitutions)
 
 
 class FormEditTopic(forms.ModelForm):
-	'''
-	Form for edit one new topic
-	'''
 
-	class Meta:
-		model = Topic
-		exclude = ('forum', "user", "slug", "date", "id_attachment", "moderate")
-		widgets = {
-			'description': TextareaWidget,
-			'attachment': CustomClearableFileInput,
-		}
+    '''
+    Form for edit one new topic
+    '''
 
-	def __init__(self, *args, **kwargs):
+    class Meta:
+        model = Topic
+        exclude = (
+            'forum', "user", "slug", "date", "id_attachment", "moderate")
+        widgets = {
+            'description': TextareaWidget,
+            'attachment': CustomClearableFileInput,
+        }
 
-		super(FormEditTopic, self).__init__(*args, **kwargs)
-		class_css = 'form-control'
+    def __init__(self, *args, **kwargs):
 
-		for key in self.fields:
-			if key != "attachment":
-				self.fields[key].required = True
-				self.fields[key].widget.attrs['ng-model'] = key
-				if key == 'title':
-					self.fields[key].widget.attrs['ng-init'] = key + "=" + "'" + str(kwargs['instance'].title) + "'"
-				elif key == 'description':
-					self.fields[key].widget.attrs['ng-init'] = key + "=" + "'" + str(kwargs['instance'].description) + "'"
-				self.fields[key].widget.attrs['class'] = class_css
-				self.fields[key].widget.attrs['required'] = 'required'
-			else:
-				self.fields[key].required = False
+        super(FormEditTopic, self).__init__(*args, **kwargs)
+        class_css = 'form-control'
+
+        for key in self.fields:
+            if key != "attachment":
+                self.fields[key].required = True
+                self.fields[key].widget.attrs['ng-model'] = key
+                if key == 'title':
+                	ng_init = key + "=" + "'" + \
+                	    str(kwargs['instance'].title) + "'"
+                    self.fields[key].widget.attrs['ng-init'] = ng_init
+                elif key == 'description':
+                	ng_init = key + "=" + "'" + str(kwargs['instance'].description) + "'"
+                    self.fields[key].widget.attrs['ng-init'] = ng_init
+                self.fields[key].widget.attrs['class'] = class_css
+                self.fields[key].widget.attrs['required'] = 'required'
+            else:
+                self.fields[key].required = False
 
 
 class FormAddComment(forms.ModelForm):
-	'''
-	Form for add comment to topic
-	'''
-	class Meta:
-		model = Comment
-		fields = ['description']
-		widgets = {
-			'description': TextareaWidget,
-		}
 
-	def __init__(self, *args, **kwargs):
+    '''
+    Form for add comment to topic
+    '''
+    class Meta:
+        model = Comment
+        fields = ['description']
+        widgets = {
+            'description': TextareaWidget,
+        }
 
-		super(FormAddComment, self).__init__(*args, **kwargs)
+    def __init__(self, *args, **kwargs):
 
-		for key in self.fields:
-			if key == "description":
-				self.fields[key].required = True
-				self.fields[key].widget.attrs['style'] = "width: 100%"
-				self.fields[key].widget.attrs['ng-model'] = key
-				self.fields[key].widget.attrs['required'] = 'required'
+        super(FormAddComment, self).__init__(*args, **kwargs)
+
+        for key in self.fields:
+            if key == "description":
+                self.fields[key].required = True
+                self.fields[key].widget.attrs['style'] = "width: 100%"
+                self.fields[key].widget.attrs['ng-model'] = key
+                self.fields[key].widget.attrs['required'] = 'required'

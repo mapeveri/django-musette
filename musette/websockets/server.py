@@ -22,6 +22,7 @@ def redis_listener():
 
 
 class RealtimeHandler(tornado.websocket.WebSocketHandler):
+
     def check_origin(self, origin):
         return True
 
