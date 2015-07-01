@@ -4,19 +4,21 @@ Django-Musette
 
 Forum for Django framework.
 
-NOTE: This application is under development. It is not recommended to use in a production environment.
+**NOTE: This application is under development. It is not recommended to use in a production environment.**
 
 Installing
 ----------
 
-pip install django-musette --process-dependency-links
+With pip::
+
+	pip install django-musette --process-dependency-links
 
 Requirements:
 -------------
 
-1. Jquery
-2. Bootstrap and bootstrap material desing (https://fezvrasta.github.io/bootstrap-material-design/)
-3. Angular.js
+1. Jquery (Version 2.x)
+2. Bootstrap (Version 3.x) and bootstrap material design (https://fezvrasta.github.io/bootstrap-material-design/)
+3. Angular.js (Version 1.3.x)
 
 Quick start:
 ------------
@@ -74,7 +76,7 @@ And add files static css and js (Angular, Jquery, Bootstrap).
 Example.
 	https://github.com/mapeveri/django-musette/blob/master/example/plantillas/base.html
 
-8. If you need Spanish forum enable internationalization in django.
+8. If you need to enable the forum in Spanish:
 
 		https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
@@ -97,10 +99,9 @@ Field more importants:
 	- Topics count: Total forum topics.
 	- Check topics: If you need to review the topics by a moderator.
 
-3. Make sure that each user registration exist in the profile table.
+3. **Make sure that each user registration exist in the profile table.**
 
 Ready!
-
 
 Execute in the terminal::
 
@@ -138,14 +139,13 @@ Features:
 5. Infinite scroll for comments of one topic.
 6. Support of files media for topics.
 7. Easy integration with other applications Django of your project.
-8. Support for moderate forums.
+8. Pre-moderation of topics.
 9. Models registered in admin django for administrators.
 10. Possibility of hide forums unused.
-11. Modern design, thank you to Bootstrap material design
+11. Modern design, thank you to Bootstrap material design.
 12. Avatar.
-13. Pre-moderation.
-14. Support to English and Spanish language.
-15. Validation of forms in real time with AngularJs.
+13. Support to English and Spanish language.
+14. Validation of forms in real time with AngularJs.
 
 Contribute:
 -----------
@@ -153,5 +153,5 @@ Contribute:
 1. Fork this repo and install it
 2. Follow PEP8, Style Guide for Python Code
 3. Write code
-4. Create unit test
+4. Write unit test
 5. Send pull request
