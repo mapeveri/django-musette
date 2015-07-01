@@ -36,7 +36,24 @@
 	{% endif %}
 
 	<h5>{{forum.description|safe}}</h5>
-    <a href="/newtopic/{{forum.name}}/" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</a>
+	{% if register %}
+		<div class="row">
+			<div class="col-md-1">
+		    	<a href="/newtopic/{{forum.name}}/" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</a>
+			</div>
+			<div class="col-md-1">
+		    	<form method="POST" action="/unregister/{{forum}}/">
+		    		{% csrf_token %}
+		    		<button type="submit" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Unregister" %}</button>
+		    	</form>
+		    </div>
+    	</div>
+    {% else %}
+    	<form method="POST" action="/new_register/{{forum}}/">
+    		{% csrf_token %}
+    		<button type="submit" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Join to forum" %}</button>
+    	</form>
+    {% endif %}
 
 	<div class="panel panel-default">
 		<div class="panel-heading" style="height: 2.8em">
@@ -96,10 +113,11 @@
 				{% endif %}
 				<br>
 				<p>{% trans "Created" %}: {{forum.date}}</p>
+				<a href="/users_forum/{{forum}}/">{% trans "Forum members" %}</a>
 
 			</div>
 
-			<ul class="pager" style="float: right">
+			<ul class="pagination" style="float: right">
 	            {% if paginator.has_prev %}
 	            <li><a href="/forum/{{forum.name}}/?page={{ paginator.firstPage }}"> << </a></li>
 	            <li><a href="/forum/{{forum.name}}/?page={{ paginator.prev_page }}"> < </a></li>

@@ -86,12 +86,16 @@ class CustomClearableFileInput(ClearableFileInput):
             if not self.is_required:
                 checkbox_name = self.clear_checkbox_name(name)
                 checkbox_id = self.clear_checkbox_id(checkbox_name)
+
                 substitutions['clear_checkbox_name'] = conditional_escape(
                     checkbox_name)
+
                 substitutions['clear_checkbox_id'] = conditional_escape(
                     checkbox_id)
+
                 substitutions['clear'] = CheckboxInput().render(
                     checkbox_name, False, attrs={'id': checkbox_id})
+
                 clear_template = self.template_with_clear % substitutions
                 substitutions['clear_template'] = clear_template
                 substitutions['initial'] = conditional_escape(initial)
@@ -124,11 +128,12 @@ class FormEditTopic(forms.ModelForm):
                 self.fields[key].required = True
                 self.fields[key].widget.attrs['ng-model'] = key
                 if key == 'title':
-                	ng_init = key + "=" + "'" + \
-                	    str(kwargs['instance'].title) + "'"
+                    ng_init = key + "=" + "'" + \
+                        str(kwargs['instance'].title) + "'"
                     self.fields[key].widget.attrs['ng-init'] = ng_init
                 elif key == 'description':
-                	ng_init = key + "=" + "'" + str(kwargs['instance'].description) + "'"
+                    ng_init = key + "=" + "'" + \
+                        str(kwargs['instance'].description) + "'"
                     self.fields[key].widget.attrs['ng-init'] = ng_init
                 self.fields[key].widget.attrs['class'] = class_css
                 self.fields[key].widget.attrs['required'] = 'required'

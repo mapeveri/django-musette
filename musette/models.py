@@ -106,7 +106,7 @@ class Topic(models.Model):
     moderate = models.BooleanField(_('Moderate'), default=False)
 
     class Meta(object):
-        ordering = ['date', 'title', 'forum']
+        ordering = ['forum', 'date', 'title']
         verbose_name = _('Topic')
         verbose_name_plural = _('Topics')
 
@@ -200,3 +200,24 @@ class Notification(models.Model):
 
     def __str__(self):
         return str(self.idnotification)
+
+
+@python_2_unicode_compatible
+class Register(models.Model):
+
+    idregister = models.AutoField(primary_key=True)
+    forum = models.ForeignKey(
+        Forum, related_name='register', verbose_name=_('Forum')
+    )
+    user = models.ForeignKey(
+        User, related_name='register', verbose_name=_('User')
+    )
+    date = models.DateTimeField(_('Date'), blank=True, db_index=True)
+
+    class Meta(object):
+        ordering = ['date']
+        verbose_name = _('Register')
+        verbose_name_plural = _('Registers')
+
+    def __str__(self):
+        return str(self.forum) + " " + str(self.user)

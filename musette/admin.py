@@ -8,7 +8,7 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from .forms import FormAdminTopic
-from .models import Category, Forum, Topic, Comment
+from .models import Category, Forum, Topic, Comment, Register
 
 from .utils import remove_folder_attachment
 
@@ -28,9 +28,9 @@ class TopicAdmin(admin.ModelAdmin):
 
     def delete_topic(self, request, queryset):
         '''
-                This method remove topic's selected
-                in the admin django. Can remove one
-                o more records.
+            This method remove topic's selected
+            in the admin django. Can remove one
+            o more records.
         '''
         if not self.has_delete_permission(request):
             raise PermissionDenied
@@ -62,10 +62,9 @@ class TopicAdmin(admin.ModelAdmin):
 
             using = router.db_for_write(self.model)
 
-                del_obj, model_c, perms_n, protected = get_deleted_objects(
-                    queryset, opts, request.user,
-                    self.admin_site, using
-                )
+            del_obj, model_c, perms_n, protected = get_deleted_objects(
+                queryset, opts, request.user, self.admin_site, using
+            )
 
             context = {
                 'title': "",
@@ -103,3 +102,4 @@ admin.site.register(Category)
 admin.site.register(Forum, ForumAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Comment)
+admin.site.register(Register)

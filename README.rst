@@ -80,6 +80,8 @@ Example.
 
 		https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
+9. The url for profiles has as parameter the username.
+
 How to use?:
 ------------
 
@@ -146,6 +148,7 @@ Features:
 12. Avatar.
 13. Support to English and Spanish language.
 14. Validation of forms in real time with AngularJs.
+15. User registration a forum.
 
 Contribute:
 -----------

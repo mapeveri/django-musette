@@ -6,7 +6,7 @@ from django.test import TestCase
 
 from musette.models import (
 	Category, Comment, Forum,
-	Notification, Topic
+	Notification, Topic, Register
 )
 
 
@@ -104,4 +104,22 @@ class DeleteNotificationTopicTestCase(TestCase):
 		Notification.objects.filter(
 			idobject=1, iduser=1,
 			is_topic=False, is_comment=True
+		).delete()
+
+
+class AddRegisterTestCase(TestCase):
+
+	def test_hard_no_more_than(self):
+		date = datetime.datetime.now()
+		Register.objects.create(
+			user_id=1, date=date,
+			forum_id=1
+		)
+
+
+class DeleteNotificationTopicTestCase(TestCase):
+
+	def test_hard_no_more_than(self):
+		Register.objects.filter(
+			user_id=1, forum_id=1,
 		).delete()

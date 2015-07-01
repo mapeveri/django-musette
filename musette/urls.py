@@ -5,7 +5,8 @@ from .views import (
     ForumsView, ForumView, TopicView, NewTopicView,
     EditTopicView, DeleteTopicView, NewCommentView,
     EditCommentView, DeleteCommentView, AllNotification,
-    SetNotifications
+    SetNotifications, AddRegisterView, UnregisterView,
+    UsersForumView
 )
 
 urlpatterns = [
@@ -24,8 +25,7 @@ urlpatterns = [
         TopicView, name='topic'
     ),
     url(
-        r'^newtopic/(?P<forum>.+)/$', login_required(NewTopicView.as_view()
-                                                     ),
+        r'^newtopic/(?P<forum>.+)/$', login_required(NewTopicView.as_view()),
         name='newtopic'
     ),
     url(
@@ -55,5 +55,17 @@ urlpatterns = [
     url(
         r'^forum_set_notifications/$', login_required(SetNotifications),
         name='forum_set_notifications'
+    ),
+    url(
+        r'^new_register/(?P<forum>.+)/$', login_required(AddRegisterView.as_view()),
+        name='new_register'
+    ),
+    url(
+        r'^unregister/(?P<forum>.+)/$', login_required(UnregisterView.as_view()),
+        name='unregister'
+    ),
+    url(
+        r'^users_forum/(?P<forum>.+)/$', UsersForumView.as_view(),
+        name='users_forum'
     ),
 ]

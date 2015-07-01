@@ -20,7 +20,7 @@ from endless_pagination.decorators import page_template
 from log.utils import set_error_to_log
 
 from .forms import FormAddTopic, FormEditTopic, FormAddComment
-from .models import Category, Forum, Topic, Comment, Notification
+from .models import Category, Forum, Topic, Comment, Notification, Register
 from .settings import URL_PROFILE
 from .utils import (
     remove_folder_attachment, get_id_profile,
@@ -34,7 +34,7 @@ from .utils import (
 class ForumsView(View):
 
     '''
-    This view display all forum registered
+        This view display all forum registered
     '''
     template_name = "musette/index.html"
 
@@ -58,7 +58,7 @@ class ForumsView(View):
 class ForumView(View):
 
     '''
-    This view display one forum registered
+        This view display one forum registered
     '''
     template_name = "musette/forum.html"
 
@@ -70,7 +70,17 @@ class ForumView(View):
         pag = helper_paginator(self, request, topics, 15, 'topics')
 
         if request.user.id:
-            notifications = get_notifications(request.user.id)
+            iduser = request.user.id
+            notifications = get_notifications(iduser)
+
+            try:
+                Register.objects.get(
+                    forum_id=forum.idforum, user_id=iduser
+                )
+                register = True
+            except Register.DoesNotExist:
+                register = False
+
         else:
             notifications = None
 
@@ -78,6 +88,7 @@ class ForumView(View):
             'forum': forum,
             'topics': pag['topics'],
             'paginator': pag,
+            'register': register,
             'notifications': notifications,
         }
 
@@ -89,9 +100,8 @@ def TopicView(request, forum, slug, idtopic,
               template='musette/topic_index.html', extra_context=None,
               *args, **kwargs):
     '''
-    This view display one Topic of forum
+        This view display one Topic of forum
     '''
-
     forum = get_object_or_404(Forum, name=forum, hidden=False)
     topic = get_object_or_404(Topic, idtopic=idtopic, slug=slug)
 
@@ -125,7 +135,7 @@ def TopicView(request, forum, slug, idtopic,
 class NewTopicView(FormView):
 
     '''
-            This view allowed add new topic
+        This view allowed add new topic
     '''
     template_name = "musette/new_topic.html"
     form_class = FormAddTopic
@@ -184,7 +194,7 @@ class NewTopicView(FormView):
 class EditTopicView(FormView):
 
     '''
-            This view allowed edit topic
+        This view allowed edit topic
     '''
     template_name = "musette/edit_topic.html"
     form_class = FormEditTopic
@@ -267,9 +277,8 @@ class EditTopicView(FormView):
 class DeleteTopicView(View):
 
     '''
-    This view will delete one topic
+        This view will delete one topic
     '''
-
     def get(self, request, forum, idtopic, *args, **kwargs):
 
         # Previouly verify that exists the topic
@@ -298,9 +307,8 @@ class DeleteTopicView(View):
 class NewCommentView(View):
 
     '''
-            This view allowed add new comment to topic
+        This view allowed add new comment to topic
     '''
-
     def get(self, request, forum, slug, idtopic, *args, **kwargs):
         raise Http404()
 
@@ -381,9 +389,8 @@ class NewCommentView(View):
 class EditCommentView(View):
 
     '''
-            This view allowed edit comment to topic
+        This view allowed edit comment to topic
     '''
-
     def get(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
         raise Http404()
 
@@ -411,9 +418,8 @@ class EditCommentView(View):
 class DeleteCommentView(View):
 
     '''
-            This view allowed remove comment to topic
+        This view allowed remove comment to topic
     '''
-
     def get(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
         raise Http404()
 
@@ -454,9 +460,84 @@ def AllNotification(request, template='musette/all_notification_index.html',
 
 def SetNotifications(request):
     '''
-            This view set all views notifications in true
+        This view set all views notifications in true
     '''
     iduser = request.user.id
     Notification.objects.filter(iduser=iduser).update(is_view=True)
 
     return HttpResponse("Ok")
+
+
+class AddRegisterView(View):
+
+    '''
+        This view add register to forum
+    '''
+    def get(self, request, forum, *args, **kwargs):
+        raise Http404()
+
+    def post(self, request, forum, *args, **kwargs):
+
+        url = '/forum/' + forum + "/"
+
+        forum = get_object_or_404(Forum, name=forum, hidden=False)
+        idforum = forum.idforum
+        iduser = request.user.id
+        date = datetime.datetime.now()
+
+        register = Register(
+            forum_id=idforum, user_id=iduser,
+            date=date
+        )
+        register.save()
+        return HttpResponseRedirect(url)
+
+
+class UnregisterView(View):
+
+    '''
+        This view remove register to forum
+    '''
+    def get(self, request, forum, *args, **kwargs):
+        raise Http404()
+
+    def post(self, request, forum, *args, **kwargs):
+
+        url = '/forum/' + forum + "/"
+
+        forum = get_object_or_404(Forum, name=forum, hidden=False)
+        idforum = forum.idforum
+        iduser = request.user.id
+
+        Register.objects.filter(
+            forum_id=idforum, user_id=iduser,
+        ).delete()
+
+        return HttpResponseRedirect(url)
+
+
+class UsersForumView(View):
+
+    '''
+        This view display users register in forum
+    '''
+    template_name = "musette/users_forum.html"
+
+    def get(self, request, forum, *args, **kwargs):
+
+        forum = get_object_or_404(Forum, name=forum, hidden=False)
+        registers = Register.objects.filter(forum_id=forum.idforum)
+
+        pag = helper_paginator(self, request, registers, 18, 'registers')
+
+        data = {
+            'URL_PROFILE': URL_PROFILE,
+            'forum': forum,
+            'paginator': pag,
+            'registers': pag['registers'],
+        }
+
+        return render(request, self.template_name, data)
+
+    def post(self, request, forum, *args, **kwargs):
+        raise Http404()
