@@ -37,7 +37,7 @@
                 {% else %}
                   <img src="{% static 'img/profile.png' %}" class="img-responsive" width="150" hegiht="150" />
                 {% endif %}
-                <figcaption class="text-center"><a href="{{URL_PROFILE}}{{topic.user.username}}/">{{topic.user.username}}</a></figcaption>
+                <figcaption class="text-center">{{topic.user|get_path_profile|safe}}</figcaption>
               </figure>
               <div style="text-align: center">
                 {% if topic.user.id == user.id %}

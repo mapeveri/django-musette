@@ -27,7 +27,7 @@ from .utils import (
     get_photo_profile, get_users_topic,
     get_notifications, remove_file,
     helper_paginator, get_route_file, remove_folder,
-    exists_folder
+    exists_folder, get_params_url_profile
 )
 
 
@@ -105,9 +105,6 @@ def TopicView(request, forum, slug, idtopic,
     forum = get_object_or_404(Forum, name=forum, hidden=False)
     topic = get_object_or_404(Topic, idtopic=idtopic, slug=slug)
 
-    profile = get_id_profile(topic.user_id)
-    field_photo = get_photo_profile(profile)
-
     form_comment = FormAddComment()
 
     comments = Comment.objects.filter(topic_id=idtopic)
@@ -119,9 +116,6 @@ def TopicView(request, forum, slug, idtopic,
 
     data = {
         'topic': topic,
-        'profile': profile,
-        'URL_PROFILE': URL_PROFILE,
-        'field_photo': field_photo,
         'form_comment': form_comment,
         'comments': comments,
         'notifications': notifications,
@@ -279,6 +273,7 @@ class DeleteTopicView(View):
     '''
         This view will delete one topic
     '''
+
     def get(self, request, forum, idtopic, *args, **kwargs):
 
         # Previouly verify that exists the topic
@@ -309,6 +304,7 @@ class NewCommentView(View):
     '''
         This view allowed add new comment to topic
     '''
+
     def get(self, request, forum, slug, idtopic, *args, **kwargs):
         raise Http404()
 
@@ -361,6 +357,10 @@ class NewCommentView(View):
 
                 idnotification = notification.idnotification
 
+                # Get url profile with params
+                params_url_profile = get_params_url_profile(request.user)
+                url_profile_param = URL_PROFILE + params_url_profile
+
                 # Data for notification real time
                 description = Truncator(comment.description).chars(100)
                 data = {
@@ -372,7 +372,7 @@ class NewCommentView(View):
                     "username": username,
                     "forum": forum,
                     "has_photo": has_photo,
-                    "URL_PROFILE": URL_PROFILE,
+                    "url_profile_param": url_profile_param,
                     "lista_us": lista_us,
                     "idnotification": idnotification,
                     "idobject": idcomment,
@@ -391,6 +391,7 @@ class EditCommentView(View):
     '''
         This view allowed edit comment to topic
     '''
+
     def get(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
         raise Http404()
 
@@ -420,6 +421,7 @@ class DeleteCommentView(View):
     '''
         This view allowed remove comment to topic
     '''
+
     def get(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
         raise Http404()
 
@@ -473,6 +475,7 @@ class AddRegisterView(View):
     '''
         This view add register to forum
     '''
+
     def get(self, request, forum, *args, **kwargs):
         raise Http404()
 
@@ -498,6 +501,7 @@ class UnregisterView(View):
     '''
         This view remove register to forum
     '''
+
     def get(self, request, forum, *args, **kwargs):
         raise Http404()
 
@@ -531,7 +535,6 @@ class UsersForumView(View):
         pag = helper_paginator(self, request, registers, 18, 'registers')
 
         data = {
-            'URL_PROFILE': URL_PROFILE,
             'forum': forum,
             'paginator': pag,
             'registers': pag['registers'],

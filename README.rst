@@ -53,12 +53,13 @@ Quick start:
 	        }
 	}
 
-5. Set this variables::
+5. Set this variables if differ from the default values::
 
 	APP_PROFILE = 'profiles' # Application for your profiles
 	MODEL_PROFILE = 'Profile' # Model for profiles
 	FIELD_PHOTO_PROFILE = "photo" # Field that contains url the profile photo
 	URL_PROFILE = '/profile/' # Url for profile
+	URL_PROFILE_PARAMS = ("username",) # Params of url profile, indicate field user model
 
 6. Execute command migrate::
 
@@ -79,8 +80,6 @@ Example.
 8. If you need to enable the forum in Spanish:
 
 		https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
-
-9. The url for profiles has as parameter the username.
 
 How to use?:
 ------------

@@ -3,6 +3,7 @@
 {% load i18n %}
 {% load static %}
 {% load photo %}
+{% load forum_filter %}
 
 {% block content %}
 
@@ -19,7 +20,7 @@
                     </div>
                     <div class="content">
                         <br>
-                        <a href="{{URL_PROFILE}}{{profile.user_id.username}}/">{{ profile.user.username }}</a>
+                        <span>{{ profile.user|get_path_profile|safe }}</span>
                         <br>
                         <p>{{profile.date}}</p>
                     </div>

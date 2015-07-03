@@ -12,14 +12,15 @@ from django.utils.translation import ugettext_lazy as _
 from .models import Forum, Topic, Comment, Notification
 from .settings import (
     APP_PROFILE, MODEL_PROFILE,
-    URL_PROFILE, FIELD_PHOTO_PROFILE
+    URL_PROFILE, FIELD_PHOTO_PROFILE,
+    URL_PROFILE_PARAMS
 )
 
 
 def exists_folder(route):
     '''
-    This method verify that exists
-    folder in base to route
+        This method verify that exists
+        folder in base to route
     '''
     if os.path.exists(route):
         return True
@@ -29,7 +30,7 @@ def exists_folder(route):
 
 def remove_folder(route_folder):
     '''
-            This method remove one folder
+        This method remove one folder
     '''
     try:
         shutil.rmtree(route_folder)
@@ -39,8 +40,8 @@ def remove_folder(route_folder):
 
 def remove_file(route_file):
     '''
-    This method remove one file
-    in base to route and image
+        This method remove one file
+        in base to route and image
     '''
     if route_file != "" and not route_file is None:
         if os.path.exists(route_file):
@@ -49,8 +50,8 @@ def remove_file(route_file):
 
 def get_folder_attachment(topic):
     '''
-            This method return the path of one
-            folder attachment for app forum
+        This method return the path of one
+        folder attachment for app forum
     '''
     folder = ""
     folder = "forum_" + str(topic.forum_id)
@@ -65,8 +66,8 @@ def get_folder_attachment(topic):
 
 def remove_folder_attachment(idtopic):
     '''
-            This method remove folder attachment
-            and subtract one topic.
+        This method remove folder attachment
+        and subtract one topic.
     '''
     # Subtract one topic
     topic = get_object_or_404(Topic, idtopic=idtopic)
@@ -86,8 +87,8 @@ def remove_folder_attachment(idtopic):
 
 def get_id_profile(iduser):
     '''
-            This method return one id
-            of model profile
+        This method return one id
+        of model profile
     '''
     Profile = get_model(APP_PROFILE, MODEL_PROFILE)
     profile = get_object_or_404(Profile, iduser_id=iduser)
@@ -97,8 +98,8 @@ def get_id_profile(iduser):
 
 def get_photo_profile(profile):
     '''
-            This method return the photo
-            of model profile id
+        This method return the photo
+        of model profile id
     '''
     field_photo = getattr(profile, FIELD_PHOTO_PROFILE)
     return field_photo
@@ -106,8 +107,8 @@ def get_photo_profile(profile):
 
 def get_users_topic(topic, myuser):
     '''
-            This method return all users
-            of one topic, else my user
+        This method return all users
+        of one topic, else my user
     '''
     comments = Comment.objects.filter(topic_id=topic.idtopic)
     lista_us = []
@@ -121,8 +122,8 @@ def get_users_topic(topic, myuser):
 
 def get_notifications(iduser):
     '''
-            This method return Notification
-            of one user
+        This method return Notification
+        of one user
     '''
     try:
         notif = Notification.objects.filter(
@@ -135,9 +136,8 @@ def get_notifications(iduser):
 
 def get_datetime_topic(date):
     '''
-            This method return info
-            one datetime for topic or
-            notification
+        This method return info one datetime
+        for topic or notification
     '''
     flag = True
     now = timezone.now()
@@ -177,7 +177,7 @@ def basename(value):
 
 def helper_paginator(self, request, model, tot_record, nonRecPag):
     '''
-    This function is responsible of Pagination
+        This function is responsible of Pagination
     '''
     result_list = Paginator(model, tot_record)
     try:
@@ -208,7 +208,7 @@ def helper_paginator(self, request, model, tot_record, nonRecPag):
 
 def get_route_file(file_path, file_name):
     '''
-            This method build the path for a file MEDIA
+        This method build the path for a file MEDIA
     '''
     try:
         route_file = file_path + "/" + file_name
@@ -216,3 +216,22 @@ def get_route_file(file_path, file_name):
         route_file = ""
 
     return route_file
+
+
+def get_params_url_profile(user):
+    '''
+        This method return all parameter/s
+        for url profile, get data for settings.py
+    '''
+    fields = URL_PROFILE_PARAMS
+    try:
+        params = ""
+        for field in fields:
+            key = getattr(user, field)
+            if not isinstance(key, basestring):
+                key = str(key)
+            params += key + "/"
+    except Exception:
+        params = ""
+
+    return params

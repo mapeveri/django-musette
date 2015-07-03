@@ -18,10 +18,6 @@
 
 <div class="container" ng-app="TopicApp">
 
-	{% if user.id %}
-		{% include "musette/notification.html" %}
-	{% endif %}
-
 	{% get_hit_count for forum as total_hits %}
 
 	{% if forum.moderators_id == user.id %}
@@ -33,6 +29,10 @@
 				</div>
 			{% endif %}
 		{% endif %}
+	{% endif %}
+
+	{% if user.id %}
+		{% include "musette/notification.html" %}
 	{% endif %}
 
 	<h5>{{forum.description|safe}}</h5>
@@ -92,7 +92,7 @@
 							    	</td>
 							        <td>
 							        	<img src="{{topic.user.id|get_photo}}" class='img-circle' width="30", height="30" />
-							        	<p>{{topic.user.username|get_path_profile|safe}}</p>
+							        	<p>{{topic.user|get_path_profile|safe}}</p>
 							        </td>
 							        <td>{{topic.idtopic|get_tot_comments}}</td>
 							        <td>{% get_tot_views topic.idtopic %}</td>

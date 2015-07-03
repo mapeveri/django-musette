@@ -1,6 +1,7 @@
 {% load i18n %}
 {% load endless %}
 {% load photo %}
+{% load forum_filter %}
 
 <!-- Comments-->
 {% paginate comments  %}
@@ -8,7 +9,7 @@
   <article class="row">
     <div class="col-md-1 col-sm-1 hidden-xs">
       <figure class="thumbnail">
-        <a href="{{URL_PROFILE}}{{comment.user.username}}"><img class="img-responsive" src="{{comment.user.id|get_photo}}"/></a>
+        <a href="{{comment.user|get_url_profile}}"><img class="img-responsive" src="{{comment.user.id|get_photo}}"/></a>
       </figure>
     </div>
     <div class="col-md-11 col-sm-11">
@@ -21,7 +22,7 @@
             <div class="well" style="margin-top: 5px">
               {{comment.description|safe}}
             </div>
-            <a href="{{URL_PROFILE}}{{comment.user.username}}">{{comment.user.username}}</a>
+            <span>{{comment.user|get_path_profile|safe}}</span>
           </div>
           {% if comment.user.id == user.id %}
             <div class="span4 offset4 text-right">
