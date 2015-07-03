@@ -2,7 +2,7 @@
 Django-Musette
 ==============
 
-Forum for Django framework.
+Forum for Django framework. This reusable application it is designed to be easily integrated into an existing Django application.
 
 **NOTE: This application is under development. It is not recommended to use in a production environment.**
 
