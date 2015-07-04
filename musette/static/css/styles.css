@@ -33,3 +33,13 @@
 .hide{
   display: none;
 }
+
+/*
+  Margin left for buttons join and unregister forum
+  only navigator firefox
+*/
+@-moz-document url-prefix() {
+  .margin-left-moz{
+    margin-left: 1.0em;
+  }
+}

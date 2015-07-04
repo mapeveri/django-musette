@@ -11,24 +11,32 @@
     <div class="row">
         <h4>{% trans "Forum members" %}: <a href="/forum/{{forum}}/">{{forum}}</a></h4>
     </div>
+
     <div class="row">
-        {% for profile in registers %}
-            <div class="col-sm-2">
-                <div>
-                    <div class="avatar">
-                        <img src="{{profile.user.id|get_photo}}" class="img-thumbnail picture hidden-xs" width="100" hegiht="100" />
-                    </div>
-                    <div class="content">
-                        <br>
-                        <span>{{ profile.user|get_path_profile|safe }}</span>
-                        <br>
-                        <p>{{profile.date}}</p>
-                    </div>
-                </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><h5>{% trans "Moderator" %}: <span>{{ forum.moderators|get_path_profile|safe }}</span></h5></h3>
             </div>
-        {% empty %}
-            <em>{% trans "No registered users" %}</em>
-        {% endfor %}
+            <div class="panel-body">
+                {% for profile in registers %}
+                    <div class="col-sm-2">
+                        <div>
+                            <div class="avatar">
+                                <img src="{{profile.user.id|get_photo}}" class="img-thumbnail picture hidden-xs" width="100" hegiht="100" />
+                            </div>
+                            <div class="content">
+                                <br>
+                                <span>{{ profile.user|get_path_profile|safe }}</span>
+                                <br>
+                                <p>{{profile.date}}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% empty %}
+                    <small class="text-info">{% trans "No registered users" %}</small>
+                {% endfor %}
+            </div>
+        </div>
 
     </div>
 
