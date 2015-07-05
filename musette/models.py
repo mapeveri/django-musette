@@ -1,7 +1,7 @@
 import os
 
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.db import models
 from django.shortcuts import get_object_or_404
 from django.template import defaultfilters
@@ -64,8 +64,47 @@ class Forum(models.Model):
         verbose_name = _('Forum')
         verbose_name_plural = _('Forums')
 
+    def __init__(self, *args, **kwargs):
+        super(Forum, self).__init__(*args, **kwargs)
+        self.old_moderators = self.moderators
+
     def __str__(self):
         return self.name
+
+    def delete(self, *args, **kwargs):
+        if not self.moderators.is_superuser:
+            if self.moderators:
+                try:
+                    u = User.objects.get(username=self.moderators)
+                    u.user_permissions.clear()
+                except Exception:
+                    pass
+        super(Forum, self).delete()
+
+    def save(self, *args, **kwargs):
+        if not self.moderators.is_superuser:
+            # Remove last moderator
+            if self.old_moderators:
+                try:
+                    u = User.objects.get(username=self.old_moderators)
+                    u.user_permissions.clear()
+                except Exception:
+                    pass
+
+            try:
+                u = User.objects.get(username=self.moderators)
+
+                permission1 = Permission.objects.get(codename='add_topic')
+                permission2 = Permission.objects.get(codename='change_topic')
+                permission3 = Permission.objects.get(codename='delete_topic')
+
+                u.user_permissions.add(permission1)
+                u.user_permissions.add(permission2)
+                u.user_permissions.add(permission3)
+            except Exception:
+                pass
+
+        super(Forum, self).save(*args, **kwargs)
 
     def clean(self):
         if self.name:
