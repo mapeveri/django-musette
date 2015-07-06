@@ -1,5 +1,6 @@
+Django
 django-admin-log==0.2
 tornado==4.2
 django-redis-cache==0.13.1
--e git://github.com/mapeveri/django-endless-pagination/tarball/master#egg=django_endless_pagination-2.0
--e git://github.com/mapeveri/django-hitcount/tarball/master#egg=django_hitcount-1.0.5
+-e git://github.com/mapeveri/django-endless-pagination.git#egg=django_endless_pagination-2.0
+-e git://github.com/mapeveri/django-hitcount.git#egg=django_hitcount-1.0.5

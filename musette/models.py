@@ -94,21 +94,18 @@ class Forum(models.Model):
         super(Forum, self).delete()
 
     def save(self, *args, **kwargs):
-        if not self.moderators.is_superuser:
-            # Remove last moderator
-            if self.old_moderators:
+        try:
+            if not self.moderators.is_superuser:
+                # Remove last moderator
+                if self.old_moderators:
 
-                # Only remove permissions if is moderator one forum
-                tot_forum_moderator = self.tot_forums_moderators(self.old_moderators)
-                if tot_forum_moderator <= 1:
-                    try:
+                    # Only remove permissions if is moderator one forum
+                    tot_forum_moderator = self.tot_forums_moderators(self.old_moderators)
+                    if tot_forum_moderator <= 1:
                         u = User.objects.get(username=self.old_moderators)
                         u.user_permissions.clear()
-                    except Exception:
-                        pass
 
-            # Add permissions to user
-            try:
+                # Add permissions to user
                 u = User.objects.get(username=self.moderators)
 
                 permission1 = Permission.objects.get(codename='add_topic')
@@ -118,8 +115,8 @@ class Forum(models.Model):
                 u.user_permissions.add(permission1)
                 u.user_permissions.add(permission2)
                 u.user_permissions.add(permission3)
-            except Exception:
-                pass
+        except Exception:
+            pass
 
         super(Forum, self).save(*args, **kwargs)
 
