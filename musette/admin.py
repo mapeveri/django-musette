@@ -126,11 +126,18 @@ class ForumAdmin(admin.ModelAdmin):
 
                 if not obj.moderators.is_superuser:
                     if obj.moderators:
-                        try:
-                            u = User.objects.get(username=obj.moderators)
-                            u.user_permissions.clear()
-                        except Exception:
-                            pass
+
+                        # Return forums that moderating one moderator
+                        tot_forum_moderator = Forum.objects.filter(
+                            moderators=obj.moderators).count()
+
+                        # Only remove permissions if is moderator one forum
+                        if tot_forum_moderator <= 1:
+                            try:
+                                u = User.objects.get(username=obj.moderators)
+                                u.user_permissions.clear()
+                            except Exception:
+                                pass
 
                 # Delete record
                 Forum.objects.filter(idforum=idforum).delete()

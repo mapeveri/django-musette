@@ -71,26 +71,43 @@ class Forum(models.Model):
     def __str__(self):
         return self.name
 
+    # Return forums that moderating one moderator
+    def tot_forums_moderators(self, moderator):
+        tot = self.__class__.objects.filter(
+            moderators=moderator
+        ).count()
+
+        return tot
+
     def delete(self, *args, **kwargs):
         if not self.moderators.is_superuser:
             if self.moderators:
-                try:
-                    u = User.objects.get(username=self.moderators)
-                    u.user_permissions.clear()
-                except Exception:
-                    pass
+                # Only remove permissions if is moderator one forum
+                tot_forum_moderator = self.tot_forums_moderators(self.moderators)
+                if tot_forum_moderator <= 1:
+                    # Remove permissions to user
+                    try:
+                        u = User.objects.get(username=self.moderators)
+                        u.user_permissions.clear()
+                    except Exception:
+                        pass
         super(Forum, self).delete()
 
     def save(self, *args, **kwargs):
         if not self.moderators.is_superuser:
             # Remove last moderator
             if self.old_moderators:
-                try:
-                    u = User.objects.get(username=self.old_moderators)
-                    u.user_permissions.clear()
-                except Exception:
-                    pass
 
+                # Only remove permissions if is moderator one forum
+                tot_forum_moderator = self.tot_forums_moderators(self.old_moderators)
+                if tot_forum_moderator <= 1:
+                    try:
+                        u = User.objects.get(username=self.old_moderators)
+                        u.user_permissions.clear()
+                    except Exception:
+                        pass
+
+            # Add permissions to user
             try:
                 u = User.objects.get(username=self.moderators)
 
