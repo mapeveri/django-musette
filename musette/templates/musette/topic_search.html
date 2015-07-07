@@ -1,0 +1,26 @@
+{% load i18n %}
+{% load endless %}
+{% load forum_filter %}
+{% load photo %}
+
+<div class="list-group">
+
+	{% paginate topics  %}
+	{% for topic in topics %}
+		<div class="list-group-item">
+	        <div class="row-picture">
+	            <img class="circle" src="{{topic.user.id|get_photo}}" alt="icon">
+	        </div>
+	        <div class="row-content">
+	        	<a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/">
+	            	<h4>{{ topic.title }}</h4>
+	        	</a>
+	            <p class="list-group-item-text">{{ topic.description|safe|truncatechars:300 }}</p>
+	        </div>
+	    </div>
+	    <div class="list-group-separator"></div>
+	{% empty %}
+		<p class="text-info">{% trans "No results" %}.</p>
+    {% endfor %}
+	{% show_more %}
+</div>

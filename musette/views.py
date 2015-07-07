@@ -199,7 +199,8 @@ class EditTopicView(FormView):
     def get(self, request, forum, idtopic, *args, **kwargs):
 
         topic = get_object_or_404(
-            Topic, idtopic=idtopic, user_id=request.user.id)
+            Topic, idtopic=idtopic, user_id=request.user.id
+        )
 
         # Init fields form
         form = FormEditTopic(instance=topic)
@@ -214,7 +215,8 @@ class EditTopicView(FormView):
     def post(self, request, forum, idtopic, *args, **kwargs):
 
         topic = get_object_or_404(
-            Topic, idtopic=idtopic, user_id=request.user.id)
+            Topic, idtopic=idtopic, user_id=request.user.id
+        )
         file_name = topic.attachment
 
         form = FormEditTopic(request.POST, request.FILES, instance=topic)
@@ -278,7 +280,8 @@ class DeleteTopicView(View):
 
         # Previouly verify that exists the topic
         topic = get_object_or_404(
-            Topic, idtopic=idtopic, user_id=request.user.id)
+            Topic, idtopic=idtopic, user_id=request.user.id
+        )
 
         iduser_topic = topic.user_id
 
@@ -544,3 +547,27 @@ class UsersForumView(View):
 
     def post(self, request, forum, *args, **kwargs):
         raise Http404()
+
+
+@page_template('musette/topic_search.html')
+def TopicSearch(request, forum,
+                template='musette/topic_search_index.html',
+                extra_context=None, *args, **kwargs):
+
+    search = request.GET.get('q')
+
+    forum = get_object_or_404(Forum, name=forum)
+    idforum = forum.idforum
+
+    topics = Topic.objects.filter(
+        forum_id=idforum, title__icontains=search
+    )
+
+    data = {
+        'topics': topics,
+        'forum': forum,
+    }
+
+    if extra_context is not None:
+        data.update(extra_context)
+    return render(request, template, data)

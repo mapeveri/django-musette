@@ -6,7 +6,7 @@ from .views import (
     EditTopicView, DeleteTopicView, NewCommentView,
     EditCommentView, DeleteCommentView, AllNotification,
     SetNotifications, AddRegisterView, UnregisterView,
-    UsersForumView
+    UsersForumView, TopicSearch
 )
 
 urlpatterns = [
@@ -67,5 +67,8 @@ urlpatterns = [
     url(
         r'^users_forum/(?P<forum>.+)/$', UsersForumView.as_view(),
         name='users_forum'
+    ),
+    url(
+        r'^search_topic/(?P<forum>.+)/$', TopicSearch, name='search_topic'
     ),
 ]

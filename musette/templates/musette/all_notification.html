@@ -10,6 +10,8 @@
 	    {% else %}
 			{{notification|get_item_notification|safe}}
 	    {% endif %}
+	{% empty %}
+		<p class="text-info">{% trans "No results" %}.</p>
     {% endfor %}
 	{% show_more %}
 </div>

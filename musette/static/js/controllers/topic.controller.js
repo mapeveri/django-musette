@@ -7,6 +7,20 @@ Topic.filter('htmlToPlaintext', function() {
     };
 });
 
+Topic.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
 Topic.controller("TopicController", function ($scope) {
 
 	//For manipulate the model description
@@ -34,6 +48,22 @@ Topic.controller("TopicController", function ($scope) {
 	$scope.loading = function(){
 
 		angular.element(document.querySelector(".hide")).removeAttr('class');
+
+	}
+
+
+
+});
+
+
+//Topics of forum controlller
+Topic.controller("ForumTopicController", function ($scope) {
+
+	// Function that redirect to url for search topic of one forum
+	$scope.search = function(forum){
+
+		var search = $scope.search_text;
+		window.location = "/search_topic/" + forum + "/?q=" + search;
 
 	}
 
@@ -95,8 +125,6 @@ Topic.controller("NotificationController", function ($scope, $http) {
 	    }
 
 	};
-
-
 
 });
 

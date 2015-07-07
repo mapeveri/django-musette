@@ -30,7 +30,7 @@ $(document).ready(function() {
   $.post( hitcountURL, { "hitcountPK" : hitcountPK },
     function(data, status) {
 
-      console.log(data); // just so you can see the response
+      //console.log(data); // just so you can see the response
 
       if (data.status == 'error') {
         // do something for error?
