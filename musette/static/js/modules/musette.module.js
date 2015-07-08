@@ -1,13 +1,13 @@
 'use strict';
-var Topic = angular.module('TopicApp', []);
+var Forum = angular.module('MusetteApp', []);
 
-Topic.filter('htmlToPlaintext', function() {
+Forum.filter('htmlToPlaintext', function() {
     return function(text) {
       return String(text).replace(/<[^>]+>/gm, '');
     };
 });
 
-Topic.directive('ngEnter', function () {
+Forum.directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {
             if(event.which === 13) {
@@ -21,7 +21,7 @@ Topic.directive('ngEnter', function () {
     };
 });
 
-Topic.controller("TopicController", function ($scope) {
+Forum.controller("TopicController", function ($scope) {
 
 	//For manipulate the model description
 	window.onload = function () {
@@ -51,13 +51,11 @@ Topic.controller("TopicController", function ($scope) {
 
 	}
 
-
-
 });
 
 
 //Topics of forum controlller
-Topic.controller("ForumTopicController", function ($scope) {
+Forum.controller("ForumTopicController", function ($scope) {
 
 	// Function that redirect to url for search topic of one forum
 	$scope.search = function(forum){
@@ -70,7 +68,7 @@ Topic.controller("ForumTopicController", function ($scope) {
 });
 
 //Notification controller
-Topic.controller("NotificationController", function ($scope, $http) {
+Forum.controller("NotificationController", function ($scope, $http) {
 
 	$scope.notifications_socket = [];
 	$scope.user = parseInt(angular.element(document.querySelector("#user_musette")).val());

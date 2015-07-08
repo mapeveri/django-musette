@@ -2,15 +2,15 @@
 
 {% load i18n %}
 {% load static %}
-{% load forum_filter %}
+{% load forum_tags %}
 
 {% block extra_js %}
-	<script src="{% static 'js/controllers/topic.controller.js' %}"></script>
+	<script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container" ng-app="TopicApp">
+<div class="container" ng-app="MusetteApp">
 
 	{% if user.id %}
 		{% include "musette/notification.html" %}

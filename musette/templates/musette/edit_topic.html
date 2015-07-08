@@ -5,12 +5,12 @@
 
 {% block extra_js %}
     {{ form.media.js }}
-    <script src="{% static 'js/controllers/topic.controller.js' %}"></script>
+    <script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container" ng-app="TopicApp"  ng-controller="TopicController">
+<div class="container" ng-app="MusetteApp"  ng-controller="TopicController">
 
 	<div class="mainbox col-md-8 col-md-offset-2 col-sm-6 col-sm-offset-3">
 		{% for message in messages %}

@@ -2,7 +2,7 @@
 
 {% load i18n %}
 {% load static %}
-{% load forum_filter %}
+{% load forum_tags %}
 {% load hitcount_tags %}
 
 {% block extra_js %}
@@ -10,12 +10,12 @@
     <script src="{% static 'js/hitcount/django-hitcount.js' %}"></script>
     <script src="{% static 'js/endless/endless-pagination.js' %}"></script>
     <script>$.endlessPaginate({paginateOnScroll: true});</script>
-    <script src="{% static 'js/controllers/topic.controller.js' %}"></script>
+    <script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container" ng-app="TopicApp"  ng-controller="TopicController">
+<div class="container" ng-app="MusetteApp"  ng-controller="TopicController">
 
   {% get_hit_count for topic as total_hits %}
 

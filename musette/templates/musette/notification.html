@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load forum_filter %}
+{% load forum_tags %}
 
 <div ng-controller="NotificationController">
   <div class="btn-group pull-right" id="notifications_dropdown" ng-click="view_all()">
@@ -26,10 +26,10 @@
                     <div class="list-group-item">
                       <div class="row-action-primary">
                         <div ng-if="not.has_photo == 0">
-                          <img src="/static/img/profile.png" width="30" height="30" class="img-circle">
+                          <img ng-src="/static/img/profile.png" width="30" height="30" class="img-circle">
                         </div>
                         <div ng-if="not.has_photo == 1 ">
-                          <img src="{{ not.photo }}" width="30" height="30" class="img-circle">
+                          <img ng-src="{{ not.photo }}" width="30" height="30" class="img-circle">
                         </div>
                       </div>
                       <div class="row-content">

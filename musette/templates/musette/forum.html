@@ -3,7 +3,7 @@
 {% load i18n %}
 {% load static %}
 {% load hitcount_tags %}
-{% load forum_filter %}
+{% load forum_tags %}
 {% load photo %}
 
 {% block extra_js %}
@@ -11,12 +11,12 @@
 <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip();
 </script>
-<script src="{% static 'js/controllers/topic.controller.js' %}"></script>
+<script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container" ng-app="TopicApp">
+<div class="container" ng-app="MusetteApp">
 
 	{% get_hit_count for forum as total_hits %}
 
