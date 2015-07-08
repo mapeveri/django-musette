@@ -2,7 +2,7 @@
 import os
 import shutil
 
-from django.db.models import get_model
+from django.apps import apps
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
@@ -90,7 +90,7 @@ def get_id_profile(iduser):
         This method return one id
         of model profile
     '''
-    Profile = get_model(APP_PROFILE, MODEL_PROFILE)
+    Profile = apps.get_model(app_label=APP_PROFILE, model_name=MODEL_PROFILE)
     profile = get_object_or_404(Profile, iduser_id=iduser)
 
     return profile
