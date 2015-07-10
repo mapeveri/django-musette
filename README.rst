@@ -142,14 +142,14 @@ Features:
 
 1. Multiple forums ordered by for category.
 2. Notifications (Still not support sending emails).
-3. Notifications in real time.
+3. Notifications and comments in real time.
 4. Count views for forum and topic.
 5. Infinite scroll for comments of one topic.
 6. Support of files media for topics.
 7. Easy integration with other applications Django of your project.
 8. Pre-moderation of topics.
 9. Models registered in admin django for administrators.
-10. Possibility of hide forums unused.
+10. Search for topics in a forum.
 11. Modern design, thank you to Bootstrap material design.
 12. Avatar.
 13. Support to English and Spanish language.
