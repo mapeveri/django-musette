@@ -4,7 +4,7 @@
 {% load forum_tags %}
 
 <!-- Comments-->
-{% paginate comments  %}
+{% paginate comments %}
 {% for comment in comments %}
   <article class="row">
     <div class="col-md-1 col-sm-1 hidden-xs">
@@ -16,7 +16,7 @@
       <div class="panel panel-default arrow left">
         <div class="panel-body">
           <header class="text-left">
-            <time class="comment-date" datetime="16-12-2014 01:05"><i class="glyphicon glyphicon-time"></i> {{comment.date}}</time>
+            <time class="comment-date"><i class="glyphicon glyphicon-time"></i> {{comment.date}}</time>
           </header>
           <div class="comment-post">
             <div class="well" style="margin-top: 5px">
@@ -88,4 +88,3 @@
 
 {% endfor %}
 {% show_more %}
-

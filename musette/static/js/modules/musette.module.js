@@ -21,7 +21,17 @@ Forum.directive('ngEnter', function () {
     };
 });
 
-Forum.controller("TopicController", function ($scope) {
+Forum.factory('ConnWS',function(){
+    return {
+        connectionWs: function(url){
+            return new WebSocket("ws://127.0.0.1:8888/ws/");
+        }
+    }
+});
+
+Forum.controller("TopicController", function ($scope, ConnWS) {
+
+	$scope.comments_socket = [];
 
 	//For manipulate the model description
 	window.onload = function () {
@@ -51,6 +61,27 @@ Forum.controller("TopicController", function ($scope) {
 
 	}
 
+	var ws = ConnWS.connectionWs();
+	ws.onmessage = function (evt){
+
+		$scope.topic_id_ws = parseInt(angular.element(document.querySelector("#topic_musette")).val());
+
+		//Only add message when scroll end
+		var length = angular.element("a.endless_more").length;
+		if(length == 0){
+			var json = evt.data;
+		    var obj = angular.fromJson(json);
+		    var idtopic = parseInt(obj.idtopic);
+
+		    //Verify if the message is of topic
+		    if (idtopic == $scope.topic_id_ws){
+		    	$scope.$apply(function(){
+		    		$scope.comments_socket.push(obj);
+		    	});
+		    }
+	    }
+	};
+
 });
 
 
@@ -68,12 +99,10 @@ Forum.controller("ForumTopicController", function ($scope) {
 });
 
 //Notification controller
-Forum.controller("NotificationController", function ($scope, $http) {
+Forum.controller("NotificationController", function ($scope, $http, ConnWS) {
 
 	$scope.notifications_socket = [];
 	$scope.user = parseInt(angular.element(document.querySelector("#user_musette")).val());
-	$scope.arr_idnotification = [];
-	$scope.arr_idobject = [];
 	$scope.tot_notifications = 0;
 
 	//Set in true all notifications
@@ -94,32 +123,25 @@ Forum.controller("NotificationController", function ($scope, $http) {
 	}
 
 	//Socket for notifications
-	var ws = new WebSocket("ws://127.0.0.1:8888/ws/");
+	var ws = ConnWS.connectionWs();
 
 	ws.onmessage = function (evt) {
 	    var json = evt.data;
 	    var obj = angular.fromJson(json);
 	    var lista_us = obj.lista_us;
-	    var idnotification = parseInt(obj.idnotification);
-	    var idobject = parseInt(obj.idobject);
 
 	    //Verify if the message belongs to me
 	    if (lista_us.indexOf($scope.user) !== -1){
-	    	//Verify if notification exists previusly
-	    	if ($scope.arr_idnotification.indexOf(idnotification) === -1 && $scope.arr_idobject.indexOf(idobject) === -1){
-	    		$scope.notifications_socket.unshift(obj);
-	    		$scope.arr_idnotification.push(idnotification);
-	    		$scope.arr_idobject.push(idobject);
-	    		$scope.tot_notifications++;
+    		$scope.notifications_socket.unshift(obj);
+    		$scope.tot_notifications++;
 
-	    		//Remove class hide
-	    		angular.element(document.querySelector("#badge_notifications")).removeClass("hide").html($scope.tot_notifications);
+    		//Remove class hide
+    		angular.element(document.querySelector("#badge_notifications")).removeClass("hide").html($scope.tot_notifications);
 
-	    		//If not notification hide
-	    		try{
-	    			angular.element(document.querySelector("#no_notifications")).addClass("hide");
-	    		}catch(e){}
-	    	}
+    		//Not notification hide
+    		try{
+    			angular.element(document.querySelector("#no_notifications")).addClass("hide");
+    		}catch(e){}
 	    }
 
 	};

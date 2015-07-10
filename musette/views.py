@@ -83,6 +83,7 @@ class ForumView(View):
 
         else:
             notifications = None
+            register = False
 
         data = {
             'forum': forum,
@@ -348,40 +349,48 @@ class NewCommentView(View):
             else:
                 has_photo = 0
 
+            # Get url profile with params
+            params_url_profile = get_params_url_profile(request.user)
+            url_profile_param = URL_PROFILE + params_url_profile
+
+            # Data for notification real time
+            description = Truncator(comment.description).chars(100)
+
             # Send notifications
             lista_us = get_users_topic(topic, request.user.id)
+
+            # If not exists user that create topic, add
+            user_original_topic = topic.user.id
+            if not user_original_topic in lista_us:
+                lista_us.append(user_original_topic)
+            else:
+                user_original_topic = None
+
             for user in lista_us:
-                notification = Notification(
-                    iduser=user, is_view=False,
-                    idobject=idcomment, date=now,
-                    is_topic=False, is_comment=True
-                )
-                notification.save()
+                if user_original_topic != request.user.id:
+                    notification = Notification(
+                        iduser=user, is_view=False,
+                        idobject=idcomment, date=now,
+                        is_topic=False, is_comment=True
+                    )
+                    notification.save()
 
-                idnotification = notification.idnotification
+            data = {
+                "description": description,
+                "topic": comment.topic.title,
+                "idtopic": comment.topic.idtopic,
+                "slug": comment.topic.slug,
+                "photo": str(field_photo),
+                "settings_static": settings.STATIC_URL,
+                "username": username,
+                "forum": forum,
+                "has_photo": has_photo,
+                "url_profile_param": url_profile_param,
+                "lista_us": lista_us,
+            }
 
-                # Get url profile with params
-                params_url_profile = get_params_url_profile(request.user)
-                url_profile_param = URL_PROFILE + params_url_profile
-
-                # Data for notification real time
-                description = Truncator(comment.description).chars(100)
-                data = {
-                    "description": description,
-                    "topic": comment.topic.title,
-                    "idtopic": comment.topic.idtopic,
-                    "slug": comment.topic.slug,
-                    "photo": str(field_photo),
-                    "username": username,
-                    "forum": forum,
-                    "has_photo": has_photo,
-                    "url_profile_param": url_profile_param,
-                    "lista_us": lista_us,
-                    "idnotification": idnotification,
-                    "idobject": idcomment,
-                }
-                json_data = json.dumps(data)
-                r.publish('notifications', json_data)
+            json_data = json.dumps(data)
+            r.publish('notifications', json_data)
 
             return HttpResponseRedirect(url)
         else:

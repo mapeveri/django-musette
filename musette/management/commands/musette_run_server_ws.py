@@ -13,5 +13,5 @@ class Command(BaseCommand):
         path = os.path.dirname(
             os.path.abspath(inspect.getfile(inspect.currentframe())))
         path = os.path.dirname(os.path.dirname(path))
-        self.stdout.write('Run server tornado')
+        self.stdout.write('Tornado server initialized')
         os.system("python " + path + "/websockets/server.py")

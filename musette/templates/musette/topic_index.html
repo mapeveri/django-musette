@@ -89,6 +89,43 @@
       {% include "musette/topic.html" %}
   </div>
 
+  {% comment %} Real time comment with angular {% endcomment %}
+  <input type="hidden" ng-model="topic_id_ws" name="topic_id_ws" id="topic_musette" value="{{topic.idtopic}}" />
+
+  {% verbatim %}
+    <div ng-repeat="comment in comments_socket">
+      <article class="row">
+          <div class="col-md-1 col-sm-1 hidden-xs">
+            <figure class="thumbnail">
+              <a href="{{ comment.url_profile_param }}">
+                <div ng-if="comment.has_photo == 0">
+                    <img ng-src="{{comment.settings_static}}img/profile.png" class="img-responsive">
+                </div>
+                <div ng-if="comment.has_photo == 1 ">
+                    <img ng-src="{{ comment.photo }}" class="img-responsive">
+                </div>
+              </a>
+            </figure>
+          </div>
+          <div class="col-md-11 col-sm-11">
+            <div class="panel panel-default arrow left">
+              <div class="panel-body">
+                <header class="text-left">
+                  <time class="comment-date"><i class="glyphicon glyphicon-time"></i> {% endverbatim %} {% trans "Now" %} {% verbatim %}</time>
+                </header>
+                <div class="comment-post">
+                  <div class="well" style="margin-top: 5px">
+                    {{comment.description | htmlToPlaintext }}
+                  </div>
+                  <span><a href="{{ comment.url_profile_param }}">{{ comment.username }}</a></span>
+                </div>
+              </div>
+            </div>
+          </div>
+      </article>
+    </div>
+  {% endverbatim %}
+
   {% if comments.count > 0 %}
   <hr>
   {% endif %}

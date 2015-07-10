@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import threading
 from functools import partial
 
@@ -27,14 +29,14 @@ class RealtimeHandler(tornado.websocket.WebSocketHandler):
         return True
 
     def open(self):
-        print 'New connection was opened'
+        print('New connection was opened')
         LISTENERS.append(self)
 
     def on_message(self, message):
         self.write_message(message['data'])
 
     def on_close(self):
-        print 'Conn closed...'
+        print('Conn closed...')
         LISTENERS.remove(self)
 
 
@@ -52,4 +54,3 @@ if __name__ == "__main__":
     http_server = tornado.httpserver.HTTPServer(application)
     http_server.listen(8888)
     tornado.ioloop.IOLoop.instance().start()
-    print "Tornado server initialized"
