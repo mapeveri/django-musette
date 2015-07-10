@@ -3,6 +3,7 @@ from django import template
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.staticfiles.templatetags.staticfiles import static
+from django.utils import formats, timezone
 from django.utils.text import Truncator
 
 from hitcount.models import HitCount
@@ -234,3 +235,40 @@ def get_pending_notifications(user):
     '''
     return Notification.objects.filter(
         is_view=False, iduser=user).count()
+
+
+@register.filter
+def get_last_activity(idtopic):
+    '''
+        This method return last activity of topic
+    '''
+    try:
+        comment = Comment.objects.filter(
+            topic_id=idtopic).order_by("-date")
+    except Exception:
+        comment = None
+
+    if comment:
+        # Get timezone for datetime
+        d_timezone = timezone.localtime(comment[0].date)
+        # Format data
+        date = formats.date_format(d_timezone, "SHORT_DATETIME_FORMAT")
+
+        # Return format data more user with tag <a>
+        html = ""
+        html += get_path_profile(comment[0].user)
+        html += " <p>"+str(date)+"</p>"
+        return html
+    else:
+        topic = Topic.objects.get(idtopic=idtopic)
+
+        # Get timezone for datetime
+        d_timezone = timezone.localtime(topic.date)
+        # Format data
+        date = formats.date_format(d_timezone, "SHORT_DATETIME_FORMAT")
+
+        # Return format data more user with tag <a>
+        html = ""
+        html += get_path_profile(topic.user)
+        html += " <p>"+str(date)+"</p>"
+        return html

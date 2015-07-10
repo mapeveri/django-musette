@@ -86,6 +86,7 @@
 				      	<th>#</th>
 				        <th>{% trans "Title" %}</th>
 				        <th>{% trans "User" %}</th>
+				        <th>{% trans "Last activity" %}</th>
 				    	<th>{% trans "Responses" %}</th>
 				    	<th>{% trans "Views" %}</th>
 				        <th>{% trans "Date" %}</th>
@@ -107,9 +108,10 @@
 							        	<img src="{{topic.user.id|get_photo}}" class='img-circle' width="30", height="30" />
 							        	<p>{{topic.user|get_path_profile|safe}}</p>
 							        </td>
+							        <td> {{ topic.idtopic|get_last_activity|safe }} </td>
 							        <td>{{topic.idtopic|get_tot_comments}}</td>
 							        <td>{% get_tot_views topic.idtopic %}</td>
-							        <td>{{topic.date}}</td>
+							        <td>{{ topic.date }}</td>
 							    </tr>
 						    {% endif %}
 					    {% endfor %}
