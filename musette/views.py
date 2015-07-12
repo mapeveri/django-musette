@@ -16,7 +16,6 @@ from django.utils.html import strip_tags
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 
-from endless_pagination.decorators import page_template
 from log.utils import set_error_to_log
 
 from .forms import FormAddTopic, FormEditTopic, FormAddComment
@@ -60,14 +59,14 @@ class ForumView(View):
     '''
         This view display one forum registered
     '''
-    template_name = "musette/forum.html"
 
     def get(self, request, forum, *args, **kwargs):
 
+        template_name = "musette/forum_index.html"
+        page_template = "musette/forum.html"
+
         forum = get_object_or_404(Forum, name=forum, hidden=False)
         topics = Topic.objects.filter(forum_id=forum.idforum)
-
-        pag = helper_paginator(self, request, topics, 15, 'topics')
 
         if request.user.id:
             iduser = request.user.id
@@ -87,44 +86,50 @@ class ForumView(View):
 
         data = {
             'forum': forum,
-            'topics': pag['topics'],
-            'paginator': pag,
+            'topics': topics,
             'register': register,
             'notifications': notifications,
         }
 
-        return render(request, self.template_name, data)
+        if request.is_ajax():
+            template_name = page_template
+
+        return render(request, template_name, data)
 
 
-@page_template('musette/topic.html')
-def TopicView(request, forum, slug, idtopic,
-              template='musette/topic_index.html', extra_context=None,
-              *args, **kwargs):
+class TopicView(View):
+
     '''
         This view display one Topic of forum
     '''
-    forum = get_object_or_404(Forum, name=forum, hidden=False)
-    topic = get_object_or_404(Topic, idtopic=idtopic, slug=slug)
 
-    form_comment = FormAddComment()
+    def get(self, request, forum, slug, idtopic, *args, **kwargs):
 
-    comments = Comment.objects.filter(topic_id=idtopic)
+        template_name = "musette/topic_index.html"
+        page_template = "musette/topic.html"
 
-    if request.user.id:
-        notifications = get_notifications(request.user.id)
-    else:
-        notifications = None
+        forum = get_object_or_404(Forum, name=forum, hidden=False)
+        topic = get_object_or_404(Topic, idtopic=idtopic, slug=slug)
 
-    data = {
-        'topic': topic,
-        'form_comment': form_comment,
-        'comments': comments,
-        'notifications': notifications,
-    }
+        form_comment = FormAddComment()
 
-    if extra_context is not None:
-        data.update(extra_context)
-    return render(request, template, data)
+        comments = Comment.objects.filter(topic_id=idtopic)
+
+        if request.user.id:
+            notifications = get_notifications(request.user.id)
+        else:
+            notifications = None
+
+        data = {
+            'topic': topic,
+            'form_comment': form_comment,
+            'comments': comments,
+            'notifications': notifications,
+        }
+
+        if request.is_ajax():
+            template_name = page_template
+        return render(request, template_name, data)
 
 
 class NewTopicView(FormView):
@@ -454,22 +459,30 @@ class DeleteCommentView(View):
             return HttpResponseRedirect(url)
 
 
-@page_template('musette/all_notification.html')
-def AllNotification(request, template='musette/all_notification_index.html',
-                    extra_context=None, *args, **kwargs):
+class AllNotification(View):
 
-    iduser = request.user.id
+    '''
+        This view return all notification
+        and paginate
+    '''
 
-    Notification.objects.filter(iduser=iduser).update(is_view=True)
+    def get(self, request, *args, **kwargs):
 
-    notifications = get_notifications(iduser)
-    data = {
-        'notifications': notifications,
-    }
+        template_name = "musette/all_notification_index.html"
+        page_template = "musette/all_notification.html"
 
-    if extra_context is not None:
-        data.update(extra_context)
-    return render(request, template, data)
+        iduser = request.user.id
+
+        Notification.objects.filter(iduser=iduser).update(is_view=True)
+
+        notifications = get_notifications(iduser)
+        data = {
+            'notifications': notifications,
+        }
+
+        if request.is_ajax():
+            template_name = page_template
+        return render(request, template_name, data)
 
 
 def SetNotifications(request):
@@ -558,25 +571,31 @@ class UsersForumView(View):
         raise Http404()
 
 
-@page_template('musette/topic_search.html')
-def TopicSearch(request, forum,
-                template='musette/topic_search_index.html',
-                extra_context=None, *args, **kwargs):
+class TopicSearch(View):
 
-    search = request.GET.get('q')
+    '''
+        This view django, display results of search of topics
+    '''
 
-    forum = get_object_or_404(Forum, name=forum)
-    idforum = forum.idforum
+    def get(self, request, forum, *args, **kwargs):
 
-    topics = Topic.objects.filter(
-        forum_id=idforum, title__icontains=search
-    )
+        template_name = "musette/topic_search_index.html"
+        page_template = "musette/topic_search.html"
 
-    data = {
-        'topics': topics,
-        'forum': forum,
-    }
+        search = request.GET.get('q')
 
-    if extra_context is not None:
-        data.update(extra_context)
-    return render(request, template, data)
+        forum = get_object_or_404(Forum, name=forum)
+        idforum = forum.idforum
+
+        topics = Topic.objects.filter(
+            forum_id=idforum, title__icontains=search
+        )
+
+        data = {
+            'topics': topics,
+            'forum': forum,
+        }
+
+        if request.is_ajax():
+            template_name = page_template
+        return render(request, template_name, data)

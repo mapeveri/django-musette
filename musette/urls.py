@@ -22,7 +22,7 @@ urlpatterns = [
     ),
     url(
         r'^topic/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/$',
-        TopicView, name='topic'
+        TopicView.as_view(), name='topic'
     ),
     url(
         r'^newtopic/(?P<forum>.+)/$', login_required(NewTopicView.as_view()),
@@ -49,7 +49,7 @@ urlpatterns = [
         login_required(DeleteCommentView.as_view()), name='removecomment'
     ),
     url(
-        r'^forum_all_notification/$', login_required(AllNotification),
+        r'^forum_all_notification/$', login_required(AllNotification.as_view()),
         name='forum_all_notification'
     ),
     url(
@@ -69,6 +69,6 @@ urlpatterns = [
         name='users_forum'
     ),
     url(
-        r'^search_topic/(?P<forum>.+)/$', TopicSearch, name='search_topic'
+        r'^search_topic/(?P<forum>.+)/$', TopicSearch.as_view(), name='search_topic'
     ),
 ]
