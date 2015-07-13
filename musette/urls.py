@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib.auth.decorators import login_required
 
+from .feeds import TopicFeed
 from .views import (
     ForumsView, ForumView, TopicView, NewTopicView,
     EditTopicView, DeleteTopicView, NewCommentView,
@@ -8,6 +9,7 @@ from .views import (
     SetNotifications, AddRegisterView, UnregisterView,
     UsersForumView, TopicSearch
 )
+
 
 urlpatterns = [
     # Url for django-hitcount
@@ -49,7 +51,8 @@ urlpatterns = [
         login_required(DeleteCommentView.as_view()), name='removecomment'
     ),
     url(
-        r'^forum_all_notification/$', login_required(AllNotification.as_view()),
+        r'^forum_all_notification/$', login_required(
+            AllNotification.as_view()),
         name='forum_all_notification'
     ),
     url(
@@ -57,11 +60,13 @@ urlpatterns = [
         name='forum_set_notifications'
     ),
     url(
-        r'^new_register/(?P<forum>.+)/$', login_required(AddRegisterView.as_view()),
+        r'^new_register/(?P<forum>.+)/$', login_required(
+            AddRegisterView.as_view()),
         name='new_register'
     ),
     url(
-        r'^unregister/(?P<forum>.+)/$', login_required(UnregisterView.as_view()),
+        r'^unregister/(?P<forum>.+)/$', login_required(UnregisterView.as_view()
+                                                       ),
         name='unregister'
     ),
     url(
@@ -69,6 +74,10 @@ urlpatterns = [
         name='users_forum'
     ),
     url(
-        r'^search_topic/(?P<forum>.+)/$', TopicSearch.as_view(), name='search_topic'
+        r'^search_topic/(?P<forum>.+)/$', TopicSearch.as_view(),
+        name='search_topic'
+    ),
+    url(
+        r'^feed/(?P<forum>.+)/$', TopicFeed(), name='rss'
     ),
 ]
