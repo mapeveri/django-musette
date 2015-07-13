@@ -156,6 +156,7 @@ Features:
 14. Validation of forms in real time with AngularJs.
 15. User registration a forum.
 16. Support to Markdown.
+17. Support to rss to forums.
 
 Contribute:
 -----------
