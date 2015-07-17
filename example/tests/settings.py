@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'log',
     'hitcount',
     'endless_pagination',
+    'rest_framework',
     'musette',
     'main',
 )

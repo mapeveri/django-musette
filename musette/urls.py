@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib.auth.decorators import login_required
 
+from .api import router
 from .feeds import TopicFeed
 from .views import (
     ForumsView, ForumView, TopicView, NewTopicView,
@@ -12,6 +13,9 @@ from .views import (
 
 
 urlpatterns = [
+    #Url for django-rest-framework
+    url(r'^', include(router.urls)),
+    url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     # Url for django-hitcount
     url(r'hitcount/', include('hitcount.urls', namespace='hitcount')),
 

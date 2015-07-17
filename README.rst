@@ -25,7 +25,7 @@ Requirements:
 
 1. Jquery (Version 2.x)
 2. Bootstrap (Version 3.x) and bootstrap material design (https://fezvrasta.github.io/bootstrap-material-design/)
-3. Angular.js (Version 1.3.x)
+3. Angular.js (Version 1.x)
 
 Quick start:
 ------------
@@ -37,6 +37,7 @@ Quick start:
 		'log',
 		'hitcount',
 		'endless_pagination',
+		'rest_framework',
 		'musette',
 	)
 
@@ -157,6 +158,7 @@ Features:
 15. User registration a forum.
 16. Support to Markdown.
 17. Support to rss to forums.
+18. API REST with django-rest-framework.
 
 Contribute:
 -----------

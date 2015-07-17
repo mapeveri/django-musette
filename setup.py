@@ -35,6 +35,7 @@ setup(
         'django-redis-cache==0.13.1',
         'django-endless-pagination==2.3',
         'django-hitcount==1.0.5',
+        'djangorestframework==3.1.3'
     ],
     dependency_links=[
         'https://github.com/mapeveri/django-endless-pagination/tarball/master#egg=django_endless_pagination-2.3',
