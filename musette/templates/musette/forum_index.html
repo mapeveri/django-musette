@@ -11,8 +11,7 @@
 <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip();
 </script>
-<script src="{% static 'js/endless/endless-pagination.js' %}"></script>
-<script>$.endlessPaginate({paginateOnScroll: true});</script>
+<script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
 <script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
@@ -96,7 +95,7 @@
 				        <th><a href="/feed/{{forum}}/"><img src="{% static 'img/feed.png' %}" /></a></th>
 				      </tr>
 				    </thead>
-				    <tbody>
+				    <tbody endless-pagination="{'paginateOnScroll': true}">
 						{% include "musette/forum.html" %}
 				    </tbody>
 				</table>

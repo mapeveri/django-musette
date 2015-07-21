@@ -8,8 +8,7 @@
 {% block extra_js %}
     {{form_comment.media.js}}
     <script src="{% static 'js/hitcount/django-hitcount.js' %}"></script>
-    <script src="{% static 'js/endless/endless-pagination.js' %}"></script>
-    <script>$.endlessPaginate({paginateOnScroll: true});</script>
+    <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
     <script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
@@ -85,7 +84,7 @@
 
   <br>
 
-  <div id="data-template" class="endless_page_template">
+  <div id="data-template" class="endless_page_template" endless-pagination="{'paginateOnScroll': true}">
       {% include "musette/topic.html" %}
   </div>
 

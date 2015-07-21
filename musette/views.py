@@ -25,7 +25,7 @@ from .utils import (
     remove_folder_attachment, get_id_profile,
     get_photo_profile, get_users_topic,
     get_notifications, remove_file,
-    helper_paginator, get_route_file, remove_folder,
+    get_route_file, remove_folder,
     exists_folder, get_params_url_profile
 )
 
@@ -550,22 +550,22 @@ class UsersForumView(View):
     '''
         This view display users register in forum
     '''
-    template_name = "musette/users_forum.html"
-
     def get(self, request, forum, *args, **kwargs):
+
+        template_name = "musette/users_forum_index.html"
+        page_template = "musette/users_forum.html"
 
         forum = get_object_or_404(Forum, name=forum, hidden=False)
         registers = Register.objects.filter(forum_id=forum.idforum)
 
-        pag = helper_paginator(self, request, registers, 18, 'registers')
-
         data = {
             'forum': forum,
-            'paginator': pag,
-            'registers': pag['registers'],
+            'registers': registers,
         }
 
-        return render(request, self.template_name, data)
+        if request.is_ajax():
+            template_name = page_template
+        return render(request, template_name, data)
 
     def post(self, request, forum, *args, **kwargs):
         raise Http404()

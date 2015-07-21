@@ -4,8 +4,8 @@
 {% load static %}
 
 {% block extra_js %}
-    <script src="{% static 'js/endless/endless-pagination.js' %}"></script>
-    <script>$.endlessPaginate({paginateOnScroll: true});</script>
+    <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
+    <script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -16,7 +16,7 @@
 	        <div class="panel-heading">
 	            <div class="panel-title text-center">{% trans "Notifications" %}</div>
 	        </div>
-	        <div class="panel-body">
+	        <div class="panel-body" endless-pagination="{'paginateOnScroll': true}">
 	        	{% include "musette/all_notification.html" %}
 	        </div>
 	    </div>

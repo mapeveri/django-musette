@@ -1,5 +1,5 @@
 'use strict';
-var Forum = angular.module('MusetteApp', []);
+var Forum = angular.module('MusetteApp', ['EndlessPagination']);
 
 Forum.filter('htmlToPlaintext', function() {
     return function(text) {

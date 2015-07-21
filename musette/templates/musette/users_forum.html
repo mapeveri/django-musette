@@ -1,62 +1,25 @@
-{% extends 'base.html' %}
-
 {% load i18n %}
 {% load static %}
 {% load photo %}
 {% load forum_tags %}
+{% load endless %}
 
-{% block content %}
-
-<div class="container">
-    <div class="row">
-        <h4>{% trans "Forum members" %}: <a href="/forum/{{forum}}/">{{forum}}</a></h4>
-    </div>
-
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><h5>{% trans "Moderator" %}: <span>{{ forum.moderators|get_path_profile|safe }}</span></h5></h3>
+{% paginate registers %}
+{% for profile in registers %}
+    <div class="col-sm-2">
+        <div>
+            <div class="avatar">
+                <img src="{{profile.user.id|get_photo}}" class="img-thumbnail picture hidden-xs" width="100" hegiht="100" />
             </div>
-            <div class="panel-body">
-                {% for profile in registers %}
-                    <div class="col-sm-2">
-                        <div>
-                            <div class="avatar">
-                                <img src="{{profile.user.id|get_photo}}" class="img-thumbnail picture hidden-xs" width="100" hegiht="100" />
-                            </div>
-                            <div class="content">
-                                <br>
-                                <span>{{ profile.user|get_path_profile|safe }}</span>
-                                <br>
-                                <p>{{profile.date}}</p>
-                            </div>
-                        </div>
-                    </div>
-                {% empty %}
-                    <small class="text-info">{% trans "No registered users" %}</small>
-                {% endfor %}
+            <div class="content">
+                <br>
+                <span>{{ profile.user|get_path_profile|safe }}</span>
+                <br>
+                <p>{{profile.date}}</p>
             </div>
         </div>
-
     </div>
-
-    <ul class="pagination" style="float: right">
-        {% if paginator.has_prev %}
-            <li><a href="/users_forum/{{forum}}/?page={{ paginator.firstPage }}"> << </a></li>
-            <li><a href="/users_forum/{{forum}}/?page={{ paginator.prev_page }}"> < </a></li>
-        {% else %}
-            <li class="previous disabled"><a> << </a></li>
-            <li class="previous disabled"><a> < </a></li>
-        {% endif %}
-        {% if paginator.has_next %}
-            <li><a href="/users_forum/{{forum}}/?page={{ paginator.next_page }}"> > </a></li>
-            <li><a href="/users_forum/{{forum}}/?page={{ paginator.pages }}"> >> </a></li>
-        {% else %}
-            <li class="previous disabled"><a> > </a></li>
-            <li class="previous disabled"><a> >> </a></li>
-        {% endif %}
-        <p>{% trans "Page" %} <{{paginator.page}} {% trans "of" %} {{paginator.pages}}> </p>
-    </ul>
-</div>
-
-{% endblock %}
+{% empty %}
+    <small class="text-info">{% trans "No registered users" %}</small>
+{% endfor %}
+{% show_more %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+{% load forum_tags %}
+
+{% block extra_js %}
+    <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
+    <script src="{% static 'js/modules/musette.module.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <h4>{% trans "Forum members" %}: <a href="/forum/{{forum}}/">{{forum}}</a></h4>
+    </div>
+
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><h5>{% trans "Moderator" %}: <span>{{ forum.moderators|get_path_profile|safe }}</span></h5></h3>
+            </div>
+            <div class="panel-body" endless-pagination="{'paginateOnScroll': true}">
+                {% include 'musette/users_forum.html' %}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
