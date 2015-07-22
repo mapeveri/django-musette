@@ -211,10 +211,10 @@ def get_item_notification(notification):
             html += '       <div class="row-content">'
             html += '           <div class="least-content">'+date+'</div>'
             html += '           <h4 class="list-group-item-heading">' + \
-                title+'</h4>'
+                title.encode('utf8')+'</h4>'
             html += '           <p class="list-group-item-text">' + \
-                description+'</p>'
-            html += '           <p>'+user+'</p>'
+                description.encode('utf8')+'</p>'
+            html += '           <p>'+user.encode('utf8')+'</p>'
             html += '        </div>'
             html += '   </div>'
             html += '   <div class="list-group-separator"></div>'

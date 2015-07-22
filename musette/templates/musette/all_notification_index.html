@@ -4,13 +4,13 @@
 {% load static %}
 
 {% block extra_js %}
-    <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-    <script src="{% static 'js/modules/musette.module.js' %}"></script>
+	<script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
+	<script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container">
+<div class="container" ng-app="MusetteApp">
 	<div class="endless_page_template">
 		<div class="panel panel-default" >
 	        <div class="panel-heading">

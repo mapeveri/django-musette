@@ -33,7 +33,6 @@ setup(
         'django-admin-log==0.2',
         'tornado==4.2',
         'django-redis-cache==0.13.1',
-        'django-endless-pagination==2.3',
         'django-hitcount==1.0.5',
         'djangorestframework==3.1.3',
         'django-endless-pagination-angular==1.1'
