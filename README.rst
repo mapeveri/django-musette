@@ -18,7 +18,7 @@ Installing
 
 With pip::
 
-	pip install django-musette --process-dependency-links
+	pip install django-musette
 
 Requirements:
 -------------

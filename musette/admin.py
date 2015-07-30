@@ -100,7 +100,8 @@ class TopicAdmin(admin.ModelAdmin):
 
 class ForumAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'category', 'escape_html_description', 'topics_count')
+        'name', 'category', 'escape_html_description',
+        'moderators', 'topics_count')
     list_filter = ['name', 'category']
     search_fields = ['name']
     actions = ['delete_topic']
@@ -190,8 +191,20 @@ class ForumAdmin(admin.ModelAdmin):
               '/static/js/textareas.js')
 
 
+class CommentAdmin(admin.ModelAdmin):
+    list_display = (
+        'topic', 'forum', 'user')
+    list_filter = ['topic', 'user']
+    search_fields = ['topic', 'user']
+
+    def forum(self, obj):
+        return obj.topic.forum
+    forum.short_description = 'Forum'
+    forum.admin_order_field = 'topic__forum'
+
+
 admin.site.register(Category)
 admin.site.register(Forum, ForumAdmin)
 admin.site.register(Topic, TopicAdmin)
-admin.site.register(Comment)
+admin.site.register(Comment, CommentAdmin)
 admin.site.register(Register)

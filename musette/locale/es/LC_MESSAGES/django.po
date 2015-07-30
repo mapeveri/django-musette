@@ -174,7 +174,7 @@ msgstr ""
 #: musette/templates/musette/all_notification.html:14
 #: musette/templates/musette/topic_search.html:23
 msgid "No results"
-msgstr "No hay resultados."
+msgstr "No hay resultados"
 
 #: musette/templates/musette/all_notification_index.html:17
 #: musette/templates/musette/notification.html:14
