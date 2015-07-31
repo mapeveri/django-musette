@@ -201,7 +201,7 @@ msgstr "El foro"
 
 #: musette/templates/musette/forum.html:28
 msgid "is pending moderations"
-msgstr "Pendiente de moderación"
+msgstr "pendiente de moderación"
 
 #: musette/templates/musette/forum.html:42
 msgid "New topic"

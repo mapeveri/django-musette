@@ -12,20 +12,21 @@
 {% block content %}
 
 <div class="container" ng-app="MusetteApp">
-    <div class="row">
-        <h4>{% trans "Forum members" %}: <a href="/forum/{{forum}}/">{{forum}}</a></h4>
-    </div>
+    <ul class="breadcrumb">
+        <li><a href="/forums/">{% trans "Forums" %}</a></li>
+        <li><a href="/forum/{{forum}}/">{{ forum }}</a></li>
+        <li class="active">{% trans "Forum members" %}</li>
+    </ul>
 
-    <div class="row">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title"><h5>{% trans "Moderator" %}: <span>{{ forum.moderators|get_path_profile|safe }}</span></h5></h3>
-            </div>
-            <div class="panel-body" endless-pagination="{'paginateOnScroll': true}">
-                {% include 'musette/users_forum.html' %}
-            </div>
+    <h4>{% trans "Forum members" %}: <a href="/forum/{{forum}}/">{{forum}}</a></h4>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><h5>{% trans "Moderator" %}: <span>{{ forum.moderators|get_path_profile|safe }}</span></h5></h3>
         </div>
-
+        <div class="panel-body" endless-pagination="{'paginateOnScroll': true}">
+            {% include 'musette/users_forum.html' %}
+        </div>
     </div>
 </div>
 

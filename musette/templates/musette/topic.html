@@ -50,9 +50,11 @@
 
           <form action="/updatecomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/{{comment.idcomment}}/" method="POST">
               {% csrf_token%}
-              <textarea name="update_description" id="textarea_comment_{{comment.idcomment}}" style="width: 100%" required>
-                {{comment.description|safe}}
-              </textarea>
+              <div class="in_div_textarea">
+                <textarea name="update_description" id="textarea_comment_{{comment.idcomment}}" style="width: 100%" required>
+                  {{comment.description|safe}}
+                </textarea>
+              </div>
             <br>
             <button type="submit" class="btn btn-success btn-sm">
                 <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit comment" %}

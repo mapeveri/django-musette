@@ -13,6 +13,10 @@
 
 <div class="container" ng-app="MusetteApp">
 
+	<ul class="breadcrumb">
+	    <li class="active">{% trans "Forums" %}</li>
+	</ul>
+
 	{% if user.id %}
 		{% include "musette/notification.html" %}
 	{% endif %}

@@ -11,6 +11,15 @@
 {% block content %}
 
 <div class="container" ng-app="MusetteApp">
+
+	<div class="row">
+      <ul class="breadcrumb">
+          <li><a href="/forums/">{% trans "Forums" %}</a></li>
+          <li><a href="/forum/{{forum}}/">{{forum}}</a></li>
+          <li class="active">{% trans "Find Topics" %}</li>
+      </ul>
+    </div>
+
 	<div class="endless_page_template">
 		<div class="panel panel-default" >
 	        <div class="panel-heading">

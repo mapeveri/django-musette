@@ -213,6 +213,7 @@ class EditTopicView(FormView):
 
         data = {
             'form': form,
+            'forum': forum,
             'topic': topic,
         }
 

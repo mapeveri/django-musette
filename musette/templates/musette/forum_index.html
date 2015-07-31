@@ -19,6 +19,11 @@
 
 <div class="container" ng-app="MusetteApp">
 
+	<ul class="breadcrumb">
+	    <li><a href="/forums/">{% trans "Forums" %}</a></li>
+	    <li class="active">{{ forum }}</li>
+	</ul>
+
 	{% get_hit_count for forum as total_hits %}
 
 	{% if forum.moderators_id == user.id %}

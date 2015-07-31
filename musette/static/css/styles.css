@@ -44,12 +44,13 @@
   margin-left: 0.1em;
 }
 
-@-moz-document url-prefix() {
-  .margin-left-moz{
-    margin-left: 0.3em;
+@media screen and (min-width:1280px) {
+  @-moz-document url-prefix() {
+    .margin-left-moz{
+      margin-left: 0.3em;
+    }
   }
 }
-
 
 /* enable absolute positioning for within text box icon*/
 .inner-addon {
@@ -70,3 +71,8 @@
 /* add padding  */
 .left-addon input  { padding-left:  30px; }
 .right-addon input { padding-right: 30px; }
+
+/* For that not outside textarea in div*/
+.in_div_textarea{
+  overflow: auto;
+}
