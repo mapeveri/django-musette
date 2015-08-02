@@ -58,7 +58,11 @@
 
                 <div>
                   <header>
-                    <h3><i class="fa fa-clock-o"></i> {{topic.title}}</h3>
+                    <h3> {{topic.title}}
+                    {% if topic.is_top %}
+                    <i class="glyphicon glyphicon-star"></i>
+                    {% endif %}
+                    </h3>
                     <hr>
                   </header>
                   <div class="comment-post">

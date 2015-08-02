@@ -157,6 +157,7 @@ class Topic(models.Model):
         validators=[valid_extension]
     )
     moderate = models.BooleanField(_('Moderate'), default=False)
+    is_top = models.BooleanField(_('Top'), default=False)
 
     class Meta(object):
         ordering = ['forum', 'date', 'title']

@@ -157,6 +157,7 @@ Features:
 16. Support to Markdown.
 17. Support to rss to forums.
 18. API REST with django-rest-framework.
+19. Support to topics main in forum.
 
 Contribute:
 -----------

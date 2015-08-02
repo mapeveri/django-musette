@@ -66,7 +66,8 @@ class ForumView(View):
         page_template = "musette/forum.html"
 
         forum = get_object_or_404(Forum, name=forum, hidden=False)
-        topics = Topic.objects.filter(forum_id=forum.idforum)
+        topics = Topic.objects.filter(
+            forum_id=forum.idforum).order_by("-is_top", "-date")
 
         if request.user.id:
             iduser = request.user.id

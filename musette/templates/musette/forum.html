@@ -12,6 +12,9 @@
 	        	<a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/"
 	        	data-toggle="tooltip" data-placement="bottom" title="{% trans 'Views' %}: {% get_tot_views topic.idtopic %}">
 	        	{{topic.title}}
+				{% if topic.is_top %}
+	        	<i class="glyphicon glyphicon-star"></i>
+	        	{% endif %}
 	        	</a>
 	        	<p>{{ topic.description|safe|truncatechars:300 }}</p>
 	    	</td>
