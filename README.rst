@@ -9,6 +9,12 @@ Django-Musette
 .. image:: https://travis-ci.org/mapeveri/django-musette.svg?branch=master
     :target: https://travis-ci.org/mapeveri/django-musette
 
+.. image:: https://badge.fury.io/py/django-musette.svg
+    :target: http://badge.fury.io/py/django-musette
+
+.. image:: https://img.shields.io/pypi/dm/django-musette.svg
+   :target: https://pypi.python.org/pypi/django-musette
+
 Forum for Django framework. This reusable application it is designed to be easily integrated into an existing Django application.
 
 Installing
