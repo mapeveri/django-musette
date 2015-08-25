@@ -24,15 +24,15 @@ With pip::
 
 	pip install django-musette
 
-Requirements:
--------------
+Requirements
+------------
 
 1. Jquery (Version 2.x)
 2. Bootstrap (Version 3.x) and bootstrap material design (https://fezvrasta.github.io/bootstrap-material-design/)
 3. Angular.js (Version 1.x)
 
-Quick start:
-------------
+Quick start
+-----------
 
 1. Add application 'musette' and dependencies to INSTALLED_APPS::
 
@@ -84,17 +84,17 @@ Quick start:
 	{% block extra_js %}{% endblock %}
 	{% block hitcount_javascript %}{% endblock %}
 
-And add files static css and js (Angular, Jquery, Bootstrap).
+	//And add files static css and js (Angular, Jquery, Bootstrap).
 
-Example.
-	https://github.com/mapeveri/django-musette/blob/master/example/plantillas/base.html
+8. Example of base.html:
+		https://github.com/mapeveri/django-musette/blob/master/example/plantillas/base.html
 
-8. If you need to enable the forum in Spanish:
+9. If you need to enable the forum in Spanish:
 
 		https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
-How to use?:
-------------
+How to use?
+-----------
 
 1. Login in django admin and start to insert categories necessary. Example:
 
@@ -142,8 +142,8 @@ Visit 127.0.0.1:8000/forums you should see the categories and forums.
 
 .. image:: https://github.com/mapeveri/django-musette/blob/master/images/edit_topic.png
 
-Features:
----------
+Features
+--------
 
 1. Multiple forums ordered by for category.
 2. Notifications (Still not support sending emails).
@@ -165,8 +165,15 @@ Features:
 18. API REST with django-rest-framework.
 19. Support to topics main in forum.
 
-Contribute:
------------
+Roadmap
+-------
+
+Roadmap with content of the next versions of django-musette:
+
+		https://github.com/mapeveri/django-musette/blob/master/roadmap.rst
+
+Contribute
+----------
 
 1. Fork this repo and install it
 2. Follow PEP8, Style Guide for Python Code
