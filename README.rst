@@ -28,8 +28,10 @@ Requirements
 ------------
 
 1. Jquery (Version 2.x)
-2. Bootstrap (Version 3.x) and bootstrap material design (https://fezvrasta.github.io/bootstrap-material-design/)
+2. Bootstrap (Version 3.x) and `bootstrap material design`_.
 3. Angular.js (Version 1.x)
+
+.. _bootstrap material design: https://fezvrasta.github.io/bootstrap-material-design/
 
 Quick start
 -----------
@@ -86,11 +88,13 @@ Quick start
 
 	//And add files static css and js (Angular, Jquery, Bootstrap).
 
-8. Example of the file__ base.html.
+8. `Example base`_ of base.html.
 
-9. If you need to enable the forum in Spanish:
+.. _Example base: https://github.com/mapeveri/django-musette/blob/master/example/plantillas/base.html
 
-		https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
+9. If you need to enable the `forum in spanish`_.
+
+.. _forum in spanish: https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
 How to use?
 -----------
@@ -167,9 +171,9 @@ Features
 Roadmap
 -------
 
-Roadmap with content of the next versions of django-musette:
+`Roadmap`_ with content of the next versions of django-musette.
 
-		https://github.com/mapeveri/django-musette/blob/master/roadmap.rst
+.. _Roadmap: https://github.com/mapeveri/django-musette/blob/master/roadmap.rst
 
 Contribute
 ----------
@@ -179,6 +183,3 @@ Contribute
 3. Write code
 4. Write unit test
 5. Send pull request
-
-
-.. _file: https://github.com/mapeveri/django-musette/blob/master/example/plantillas/base.html
