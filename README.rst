@@ -86,8 +86,7 @@ Quick start
 
 	//And add files static css and js (Angular, Jquery, Bootstrap).
 
-8. Example of base.html:
-		https://github.com/mapeveri/django-musette/blob/master/example/plantillas/base.html
+8. Example of the file__ base.html.
 
 9. If you need to enable the forum in Spanish:
 
@@ -180,3 +179,6 @@ Contribute
 3. Write code
 4. Write unit test
 5. Send pull request
+
+
+.. _file: https://github.com/mapeveri/django-musette/blob/master/example/plantillas/base.html
