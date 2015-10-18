@@ -2,11 +2,6 @@
 Roadmap Django-Musette
 ======================
 
-**For next version (0.1.2) complete the next issues:**
-
-1. Issue #6 "Send email with notifications".
-2. If errors are found in the previous version. They will be arranged.
-
 **For version (0.1.3) complete the next issues:**
 
 1. Issue #26 "Support to python 3 #26". For this issue, it should create unit tests for all code.

@@ -96,6 +96,10 @@ Quick start
 
 .. _forum in spanish: https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
+10. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
+
+11. In settings.py configure SITE_NAME and SITE_URL.
+
 How to use?
 -----------
 
@@ -149,7 +153,7 @@ Features
 --------
 
 1. Multiple forums ordered by for category.
-2. Notifications (Still not support sending emails).
+2. Notifications and email notifications.
 3. Notifications and comments in real time.
 4. Count views for forum and topic.
 5. Infinite scroll for comments of one topic.

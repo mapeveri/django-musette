@@ -6,6 +6,7 @@ import redis
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.models import User
+from django.core.mail import send_mail
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import defaultfilters
@@ -182,6 +183,19 @@ class NewTopicView(FormView):
                     obj.moderate = True
                 else:
                     obj.moderate = False
+
+                    # Send email to moderator
+                    if settings.SITE_URL.endswith("/"):
+                        site = settings.SITE_URL + "forum/" + forum.name
+                    else:
+                        site = settings.SITE_URL + "/forum/" + forum.name
+
+                    title_email = "New notification " + settings.SITE_NAME
+                    message = "You have one new topic: " + site
+                    email_from = settings.EMAIL_MUSETTE
+                    user_moderator = get_object_or_404(User, id=forum.moderators_id)
+                    email_moderator = user_moderator.email
+                    send_mail(title_email, message, email_from, [email_moderator], fail_silently=False)
             else:
                 obj.moderate = True
 
@@ -365,11 +379,15 @@ class NewCommentView(View):
 
             # Send notifications
             lista_us = get_users_topic(topic, request.user.id)
+            lista_email = []
 
             # If not exists user that create topic, add
             user_original_topic = topic.user.id
+            user_email = topic.user.email
+
             if not user_original_topic in lista_us:
                 lista_us.append(user_original_topic)
+                lista_email.append(user_email)
             else:
                 user_original_topic = None
 
@@ -381,6 +399,17 @@ class NewCommentView(View):
                         is_topic=False, is_comment=True
                     )
                     notification.save()
+
+            # Send email notification
+            if settings.SITE_URL.endswith("/"):
+                site = settings.SITE_URL[:-1]
+            else:
+                site = settings.SITE_URL
+
+            title_email = "New notification " + settings.SITE_NAME
+            message = "You have one new comment in the topic: " + site + url
+            email_from = settings.EMAIL_MUSETTE
+            send_mail(title_email, message, email_from, lista_email, fail_silently=False)
 
             data = {
                 "description": description,

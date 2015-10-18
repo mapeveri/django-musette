@@ -1,4 +1,6 @@
+from django.conf import settings
 from django.conf.urls import include, url
+from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
 from .api import router
@@ -11,6 +13,8 @@ from .views import (
     UsersForumView, TopicSearch
 )
 
+
+admin.site.site_header = settings.SITE_NAME
 
 urlpatterns = [
     #Url for django-rest-framework

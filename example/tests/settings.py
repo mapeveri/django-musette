@@ -19,6 +19,9 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Site data
+SITE_NAME = "Musette Forum"
+SITE_URL = "http://127.0.0.1:8000/"
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -31,8 +34,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Application definition
+# Email data
+EMAIL_MUSETTE = ""
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = EMAIL_MUSETTE
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_FROM = EMAIL_MUSETTE
 
+# Application definition
 INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',

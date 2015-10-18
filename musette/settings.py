@@ -1,5 +1,7 @@
 from django.conf import settings
 
+SITE_NAME = getattr(settings, "SITE_NAME", "Musette")
+
 # Name of app profile
 APP_PROFILE = getattr(settings, "APP_PROFILE", "profiles")
 MODEL_PROFILE = getattr(settings, "MODEL_PROFILE", "Profile")
