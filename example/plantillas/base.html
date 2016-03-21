@@ -35,7 +35,15 @@
 	</div>
 
 	<section>
-		{% block content %}{% endblock %}
+		{% block content %}
+		<div class="container jumbotron">
+		  <h1>Welcome</h1>
+
+		  <p>Welcome to forum Django musette example.</p>
+
+		  <p><a href="/forums/" class="btn btn-primary btn-lg">Go</a></p>
+		</div>
+		{% endblock %}
 	</section>
 
 	<hr>

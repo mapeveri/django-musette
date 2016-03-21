@@ -1,18 +1,25 @@
 1. In the settings.py add::
 
 	from django.utils.translation import ugettext_lazy as _
-	from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-
 
 	MIDDLEWARE_CLASSES = (
 	    ...
 	    'django.middleware.locale.LocaleMiddleware',
 	)
 
-	TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-	    "django.core.context_processors.i18n",
-	    "django.core.context_processors.request",
-	)
+	TEMPLATES = [
+	    {
+	        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+	        'DIRS': [os.path.join(BASE_DIR, "plantillas")],
+	        'APP_DIRS': True,
+	        'OPTIONS': {
+	            'context_processors': [
+	            	....
+	                'django.template.context_processors.i18n',
+	            ],
+	        },
+	    },
+	]
 
 	LANGUAGE_CODE = 'es'
 
@@ -42,24 +49,24 @@
 	{% load i18n %}
 
 	<div id="lenguage_sel" class="pull-right">
-				<form action="{% url 'set_language' %}" method="post" class="form-search">
-					{% csrf_token %}
-					<input name="next" type="hidden" value="{{ redirect_to }}" />
-					<div class="input-group">
-						<select class="form-control input-sm" name="language">
-						{% get_current_language as LANGUAGE_CODE %}
-						{% get_available_languages as LANGUAGES %}
-						{% get_language_info_list for LANGUAGES as languages %}
-						{% for language in languages %}
-						<option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-						    {{ language.name_local }} ({{ language.code }})
-						</option>
-						{% endfor %}
-						</select>
-						<span class="input-group-btn">
-							<input type="submit" class="btn btn-flat btn-primary  btn-sm" value="Go" />
-						</span>
-					</div>
-				</form>
+		<form action="{% url 'set_language' %}" method="post" class="form-search">
+			{% csrf_token %}
+			<input name="next" type="hidden" value="{{ redirect_to }}" />
+			<div class="input-group">
+				<select class="form-control input-sm" name="language">
+				{% get_current_language as LANGUAGE_CODE %}
+				{% get_available_languages as LANGUAGES %}
+				{% get_language_info_list for LANGUAGES as languages %}
+				{% for language in languages %}
+				<option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+				    {{ language.name_local }} ({{ language.code }})
+				</option>
+				{% endfor %}
+				</select>
+				<span class="input-group-btn">
+					<input type="submit" class="btn btn-flat btn-primary  btn-sm" value="Go" />
+				</span>
 			</div>
+		</form>
+	</div>
 

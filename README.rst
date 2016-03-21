@@ -51,9 +51,16 @@ Quick start
 
 	url(r'^' , include('musette.urls')),
 
-3. And in settings.py add this variable::
+3. And in settings.py in TEMPLATES check in context_processors this values::
 
-	SESSION_SAVE_EVERY_REQUEST = True
+	'django.template.context_processors.debug',
+    'django.template.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+    'django.template.context_processors.media',
+    'django.template.context_processors.static',
+    'django.template.context_processors.tz',
+    'django.template.context_processors.i18n',
 
 4. Configure in the settings.py URL_LOGIN, STATIC and MEDIA root. Something very important is to set the variable CACHES for redis. example::
 
@@ -119,11 +126,7 @@ Field more importants:
 	- Topics count: Total forum topics.
 	- Check topics: If you need to review the topics by a moderator.
 
-3. **Make sure that each user registration exist in the profile table.**
-
-Ready!
-
-Execute in the terminal::
+3. **Make sure that each user registration exist in the profile table.** Execute in the terminal::
 
 	python manage.py runserver
 

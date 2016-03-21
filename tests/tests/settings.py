@@ -1,8 +1,6 @@
 import os
 
 from django.conf import settings
-from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
-
 
 settings.configure(
 	DEBUG = False,
@@ -32,26 +30,12 @@ settings.configure(
 	    'django.middleware.security.SecurityMiddleware',
 	    'django.middleware.locale.LocaleMiddleware',
 	),
-	TEMPLATE_CONTEXT_PROCESSORS = TCP + (
-	    "django.core.context_processors.i18n",
-	    "django.core.context_processors.request",
-	),
 	LOGIN_URL = "/",
 	DATABASES = {
 	    'default': {
 	        'ENGINE': 'django.db.backends.sqlite3',
 	        'NAME': 'db.sqlite3',
 	    }
-	},
-	CACHES = {
-	    'default': {
-	        'BACKEND' : 'redis_cache.RedisCache',
-	        'LOCATION' : 'localhost:6379',
-	        'OPTIONS' : {
-	            'DB' : 1
-	            #'PASSWORD' :'asdas6d87sf6tsd8f',
-	            }
-	        }
 	},
 	LANGUAGE_CODE = 'en',
 	TIME_ZONE = 'America/New_York',
