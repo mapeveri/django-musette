@@ -5,7 +5,7 @@ from django.forms.widgets import ClearableFileInput, CheckboxInput
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
-from .utils import basename
+from .utils import basename, get_main_model_profile
 from .models import Topic, Comment
 from .widgets import TextareaWidget
 
@@ -165,3 +165,27 @@ class FormAddComment(forms.ModelForm):
                 self.fields[key].widget.attrs['style'] = "width: 100%"
                 self.fields[key].widget.attrs['ng-model'] = key
                 self.fields[key].widget.attrs['required'] = 'required'
+
+
+class FormEditProfile(forms.ModelForm):
+
+    '''
+    Form for edit one profile
+    '''
+
+    class Meta:
+        model = get_main_model_profile()
+        exclude = (
+            'idprofile', "iduser")
+        widgets = {
+            'about': TextareaWidget,
+            'photo': CustomClearableFileInput,
+        }
+
+    def __init__(self, *args, **kwargs):
+
+        super(FormEditProfile, self).__init__(*args, **kwargs)
+        class_css = 'form-control'
+
+        for key in self.fields:
+            self.fields[key].widget.attrs['class'] = class_css

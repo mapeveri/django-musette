@@ -33,9 +33,9 @@ setup(
         'django-admin-log==0.2',
         'tornado==4.2',
         'django-redis-cache==0.13.1',
-        'djangorestframework==3.1.3',
+        'djangorestframework==3.3.3',
         'django-endless-pagination-angular==1.1',
-        'django-hitcount==1.1.0'
+        'django-hitcount==1.2.1'
     ],
     classifiers=[
         'Environment :: Web Environment',

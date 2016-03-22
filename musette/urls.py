@@ -10,7 +10,7 @@ from .views import (
     EditTopicView, DeleteTopicView, NewCommentView,
     EditCommentView, DeleteCommentView, AllNotification,
     SetNotifications, AddRegisterView, UnregisterView,
-    UsersForumView, TopicSearch
+    UsersForumView, TopicSearch, ProfileView, EditProfileView
 )
 
 
@@ -87,5 +87,11 @@ urlpatterns = [
     ),
     url(
         r'^feed/(?P<forum>.+)/$', TopicFeed(), name='rss'
+    ),
+    url(
+        r'^profile/(?P<username>.+)/$', ProfileView.as_view(), name='profile'
+    ),
+    url(
+        r'^edit_profile/(?P<username>[-\w]+)/$', EditProfileView.as_view(), name='edit_profile'
     ),
 ]

@@ -5,15 +5,14 @@ import shutil
 from django.apps import apps
 from django.conf import settings
 from django.core.paginator import Paginator
+from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.shortcuts import get_object_or_404
 from django.utils import formats, timezone
 from django.utils.translation import ugettext_lazy as _
 
-from .models import Forum, Topic, Comment, Notification
-from .settings import (
-    APP_PROFILE, MODEL_PROFILE,
-    URL_PROFILE, FIELD_PHOTO_PROFILE,
-    URL_PROFILE_PARAMS
+from .models import (
+    Forum, Topic, Comment, 
+    Notification, AbstractProfile
 )
 
 
@@ -85,24 +84,45 @@ def remove_folder_attachment(idtopic):
         remove_folder(path)
 
 
+def get_main_model_profile():
+    '''
+        This method return the model profile defined by user
+    '''
+    subclasses = AbstractProfile.__subclasses__()
+    if len(subclasses) > 0:
+        try:
+            return subclasses[0]
+        except Exception:
+            raise BaseException("Occurs one error to get model profile") 
+    else:
+        raise BaseException("It is not defined profile model")
+
+
+def get_app_model(instance):
+
+    '''
+        This method get app_label from model instance
+    '''
+    return instance._meta.app_label
+
+
+def get_count_fields_model(instance):
+
+    '''
+        This method get count fields from model instance
+    '''
+    return len(instance._meta.fields)
+
+
 def get_id_profile(iduser):
     '''
         This method return one id
         of model profile
     '''
-    Profile = apps.get_model(app_label=APP_PROFILE, model_name=MODEL_PROFILE)
-    profile = get_object_or_404(Profile, iduser_id=iduser)
+    ModelProfile = get_main_model_profile()
+    profile = get_object_or_404(ModelProfile, iduser=iduser)
 
     return profile
-
-
-def get_photo_profile(profile):
-    '''
-        This method return the photo
-        of model profile id
-    '''
-    field_photo = getattr(profile, FIELD_PHOTO_PROFILE)
-    return field_photo
 
 
 def get_users_topic(topic, myuser):
@@ -218,20 +238,19 @@ def get_route_file(file_path, file_name):
     return route_file
 
 
-def get_params_url_profile(user):
+def get_photo_profile(iduser):
     '''
-        This method return all parameter/s
-        for url profile, get data for settings.py
+        This method return photo profile
     '''
-    fields = URL_PROFILE_PARAMS
-    try:
-        params = ""
-        for field in fields:
-            key = getattr(user, field)
-            if not isinstance(key, basestring):
-                key = str(key)
-            params += key + "/"
-    except Exception:
-        params = ""
-
-    return params
+    default_photo = static("img/profile.png")
+    ModelProfile = get_main_model_profile()
+    profile = ModelProfile.objects.filter(iduser=iduser)
+    if profile.count() > 0:
+        photo = profile[0].photo
+        if photo:
+            field_photo = settings.MEDIA_URL + str(photo)
+        else:
+            field_photo = default_photo
+    else:
+        field_photo = default_photo
+    return field_photo

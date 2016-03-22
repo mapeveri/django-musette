@@ -275,3 +275,25 @@ class Register(models.Model):
 
     def __str__(self):
         return str(self.forum) + " " + str(self.user)
+
+
+def generate_path_profile(instance, filename):
+    return os.path.join(
+        "profiles", "profile_" + str(instance.iduser_id), filename
+    )
+
+@python_2_unicode_compatible
+class AbstractProfile(models.Model):
+
+    idprofile = models.AutoField(primary_key=True, unique=True)
+    iduser = models.OneToOneField(User, db_index=True)
+    photo = models.FileField(
+                upload_to=generate_path_profile, null=True, blank=True,
+            )
+    about = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return str(self.iduser.username)
+
+    class Meta:
+        abstract = True

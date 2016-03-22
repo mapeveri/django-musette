@@ -1,8 +1,6 @@
 # encoding:utf-8
 from django import template
-from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.utils import formats, timezone
 from django.utils.text import Truncator
 
@@ -10,10 +8,8 @@ from hitcount.models import HitCount
 
 from ..models import Comment, Forum, Topic, Notification
 from .photo import get_photo
-from ..settings import URL_PROFILE
 from ..utils import (
-    get_id_profile, get_photo_profile,
-    get_datetime_topic, get_params_url_profile
+    get_photo_profile, get_datetime_topic
 )
 
 register = template.Library()
@@ -63,34 +59,12 @@ def get_tot_views(idtopic):
 
 
 @register.filter
-def get_url_profile(user):
-    '''
-        Return url of one profile
-    '''
-    url_profile = URL_PROFILE
-
-    params = get_params_url_profile(user)
-    if params:
-        url = url_profile + params
-    else:
-        tag = ""
-
-    return url
-
-
-@register.filter
 def get_path_profile(user):
     '''
         Return tag a with profile
     '''
-    url_profile = URL_PROFILE
     username = getattr(user, "username")
-
-    params = get_params_url_profile(user)
-    if params:
-        tag = "<a href='"+url_profile + params + "'>"+username+"</a>"
-    else:
-        tag = "<a>"+username+"</a>"
+    tag = "<a href='/profile/"+ username + "'>"+username+"</a>"
 
     return tag
 
@@ -104,19 +78,17 @@ def get_tot_users_comments(topic):
     idtopic = topic.idtopic
     users = Comment.objects.filter(topic_id=idtopic)
 
-    url_profile = URL_PROFILE
-
     data = ""
     lista = []
     for user in users:
-        params_url_profile = get_params_url_profile(user.user)
         usuario = user.user.username
         if not usuario in lista:
             lista.append(usuario)
 
             photo = get_photo(user.user.id)
 
-            data += "<a href='"+url_profile + params_url_profile + "' >"
+            tooltip = "data-toggle='tooltip' data-placement='bottom' title='"+usuario+"'"
+            data += "<a href='/profile/"+ usuario + "' "+tooltip+">"
             data += "<img class='img-circle' src='"+str(photo)+"' "
             data += "width=30, height=30></a>"
 
@@ -124,9 +96,8 @@ def get_tot_users_comments(topic):
         usuario = topic.user.username
         iduser = topic.user.id
 
-        params_url_profile = get_params_url_profile(topic.user)
         photo = get_photo(iduser)
-        data += "<a href='"+url_profile + params_url_profile + "'>"
+        data += "<a href='/profile/"+ usuario + "'>"
         data += "<img class='img-circle' src='"+str(photo)+"' "
         data += "width=30, height=30></a>"
 
@@ -176,28 +147,10 @@ def get_item_notification(notification):
 
             description = "<p>"+description+"</p>"
 
-            # Get params for url profile
-            try:
-                params = ""
-                params = get_params_url_profile(comment.user)
-            except Exception:
-                params = ""
-
             # Data profile
-            profile = get_id_profile(comment.user.id)
-            photo = get_photo_profile(profile)
-            if photo:
-                path_img = settings.MEDIA_URL + str(photo)
-            else:
-                path_img = static("img/profile.png")
-
-            url_profile = URL_PROFILE
-
-            if params:
-                user = "<a href='"+url_profile+params + \
-                    "'><p>" + username + "</p></a>"
-            else:
-                user = "<a>" + username + "</a>"
+            photo = get_photo_profile(comment.user.id)
+            user = "<a href='/profile/"+username + \
+                "'><p>" + username + "</p></a>"
 
             date = get_datetime_topic(notification.date)
 
@@ -205,7 +158,7 @@ def get_item_notification(notification):
             html += '<div class="list-group">'
             html += '   <div class="list-group-item">'
             html += '      <div class="row-action-primary">'
-            html += '           <img src="'+path_img + \
+            html += '           <img src="'+photo + \
                 '" width=30 height=30 class="img-circle" />'
             html += '       </div>'
             html += '       <div class="row-content">'
@@ -256,7 +209,7 @@ def get_last_activity(idtopic):
 
         # Return format data more user with tag <a>
         html = ""
-        html += get_path_profile(comment[0].user)
+        # html += get_path_profile(comment[0].user)
         html += " <p>"+str(date)+"</p>"
         return html
     else:
@@ -269,6 +222,6 @@ def get_last_activity(idtopic):
 
         # Return format data more user with tag <a>
         html = ""
-        html += get_path_profile(topic.user)
+        # html += get_path_profile(topic.user)
         html += " <p>"+str(date)+"</p>"
         return html

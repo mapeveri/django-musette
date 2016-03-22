@@ -39,11 +39,7 @@
 
                 <div class="pull-left" style="margin-right: 1em">
                   <figure class="thumbnail">
-                    {% if field_photo %}
-                        <img src="{{MEDIA_URL}}{{field_photo}}" class="img-responsive" width="150" hegiht="150" />
-                      {% else %}
-                        <img src="{% static 'img/profile.png' %}" class="img-responsive" width="150" hegiht="150" />
-                      {% endif %}
+                        <img src="{{ photo }}" class="img-responsive" width="150" hegiht="150" />
                       <figcaption class="text-center">{{topic.user|get_path_profile|safe}}</figcaption>
                   </figure>
                   <div style="text-align: center">
@@ -107,13 +103,8 @@
       <article class="row">
           <div class="col-md-1 col-sm-1 hidden-xs">
             <figure class="thumbnail">
-              <a href="{{ comment.url_profile_param }}">
-                <div ng-if="comment.has_photo == 0">
-                    <img ng-src="{{comment.settings_static}}img/profile.png" class="img-responsive">
-                </div>
-                <div ng-if="comment.has_photo == 1 ">
-                    <img ng-src="{{ comment.photo }}" class="img-responsive">
-                </div>
+              <a href="/profile/{{ comment.username }}">
+                  <img ng-src="{{ comment.photo }}" class="img-responsive">
               </a>
             </figure>
           </div>

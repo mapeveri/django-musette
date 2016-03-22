@@ -62,7 +62,7 @@ Quick start
     'django.template.context_processors.tz',
     'django.template.context_processors.i18n',
 
-4. Configure in the settings.py URL_LOGIN, STATIC and MEDIA root. Something very important is to set the variable CACHES for redis. example::
+4. Configure in the settings.py LOGIN_URL, STATIC and MEDIA root. Something very important is to set the variable CACHES for redis. This is for real time support. Example::
 
 	CACHES = {
 	    'default': {
@@ -74,13 +74,21 @@ Quick start
 	        }
 	}
 
-5. Set this variables if differ from the default values::
+5. In  your application add the profile model do the following. For example your app is 'main', In models.py and admin.py add::
+	
+	# models.py
+	from musette.models import AbstractProfile
 
-	APP_PROFILE = 'profiles' # Application for your profiles
-	MODEL_PROFILE = 'Profile' # Model for profiles
-	FIELD_PHOTO_PROFILE = "photo" # Field that contains url the profile photo
-	URL_PROFILE = '/profile/' # Url for profile
-	URL_PROFILE_PARAMS = ("username",) # Params of url profile, indicate field user model
+	class Profile(AbstractProfile):
+
+		# This is in case you need to extend the profile model. If not use 'pass'
+		location = models.CharField(max_length=200, null=True, blank=True)
+		company = models.CharField(max_length=150, null=True, blank=True)
+
+	# admin.py
+	from .models import Profile
+
+	admin.site.register(Profile)
 
 6. Execute command migrate::
 
@@ -174,6 +182,7 @@ Features
 17. Support to rss to forums.
 18. API REST with django-rest-framework.
 19. Support to topics main in forum.
+20. Integrated model profile, but can be extended.
 
 Roadmap
 -------

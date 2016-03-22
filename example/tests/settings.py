@@ -147,10 +147,3 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# For django musette
-APP_PROFILE = 'main' # Application for your profiles
-MODEL_PROFILE = 'Perfil' # Model for profiles
-FIELD_PHOTO_PROFILE = "photo" # Field that contains url photo
-URL_PROFILE = '/profile/' # Url for profile
-URL_PROFILE_PARAMS = ("username",) # Params of url profile, indicate field user model

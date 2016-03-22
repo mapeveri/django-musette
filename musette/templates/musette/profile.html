@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block content %}
+	
+<div class="container">
+	<div class="row">
+		<div class="col-md-3 bg_blur ">
+    	    
+            <img src="{{photo}}" class="img-thumbnail picture hidden-xs" width="150" hegiht="150" />
+
+            <div class="header">
+                <h1>{{ profile.iduser.first_name }} {{ profile.iduser.last_name }}</h1>
+                <h5>{{ profile.iduser.date_joined }}</h5>
+            </div>
+
+            {% if profile.iduser.id == user.id %}
+                <a href="/edit_profile/{{ profile.iduser.username }}" class="btn btn btn-success">{% trans "Edit profile" %}</a>
+            {% endif %}
+
+		</div>
+        <div class="col-md-9  col-xs-12">
+
+            <h4>{% trans "About me" %}</h4>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{ profile.about|safe }}
+                </div>
+            </div>
+
+            {% if model_profile_is_extend %}
+                {% with app|add:"/profile.html" as template %}
+                    {% include template %}
+                {% endwith %}
+            {% endif %}
+        </div>
+    </div>   
+    
+</div>
+
+
+{% endblock %}

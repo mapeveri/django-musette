@@ -19,15 +19,22 @@ from django.utils.translation import ugettext_lazy as _
 
 from log.utils import set_error_to_log
 
-from .forms import FormAddTopic, FormEditTopic, FormAddComment
-from .models import Category, Forum, Topic, Comment, Notification, Register
-from .settings import URL_PROFILE
+from .forms import (
+    FormAddTopic, FormEditTopic, 
+    FormAddComment, FormEditProfile
+)
+from .models import (
+    Category, Forum, Topic, 
+    Comment, Notification, Register,
+    AbstractProfile
+)
 from .utils import (
     remove_folder_attachment, get_id_profile,
-    get_photo_profile, get_users_topic,
+    get_users_topic, exists_folder,
     get_notifications, remove_file,
     get_route_file, remove_folder,
-    exists_folder, get_params_url_profile
+    get_photo_profile, get_main_model_profile,
+    get_app_model, get_count_fields_model
 )
 
 
@@ -122,10 +129,13 @@ class TopicView(View):
         else:
             notifications = None
 
+        photo = get_photo_profile(topic.user.id)
+
         data = {
             'topic': topic,
             'form_comment': form_comment,
             'comments': comments,
+            'photo': photo,
             'notifications': notifications,
         }
 
@@ -195,7 +205,8 @@ class NewTopicView(FormView):
                     email_from = settings.EMAIL_MUSETTE
                     user_moderator = get_object_or_404(User, id=forum.moderators_id)
                     email_moderator = user_moderator.email
-                    send_mail(title_email, message, email_from, [email_moderator], fail_silently=False)
+                    if email_from:
+                        send_mail(title_email, message, email_from, [email_moderator], fail_silently=False)
             else:
                 obj.moderate = True
 
@@ -353,7 +364,7 @@ class NewCommentView(View):
             obj.user = user
             obj.topic_id = topic.idtopic
 
-            inserted = obj.save()
+            obj.save()
 
             r = redis.StrictRedis()
 
@@ -362,17 +373,10 @@ class NewCommentView(View):
             # Data for notification real time
             comment = Comment.objects.get(idcomment=idcomment)
             profile = get_id_profile(request.user.id)
-            field_photo = get_photo_profile(profile)
             username = request.user.username
 
-            if field_photo:
-                has_photo = 1
-            else:
-                has_photo = 0
-
-            # Get url profile with params
-            params_url_profile = get_params_url_profile(request.user)
-            url_profile_param = URL_PROFILE + params_url_profile
+            # Get photo profile
+            photo = get_photo_profile(request.user.id)
 
             # Data for notification real time
             description = Truncator(comment.description).chars(100)
@@ -409,20 +413,19 @@ class NewCommentView(View):
             title_email = "New notification " + settings.SITE_NAME
             message = "You have one new comment in the topic: " + site + url
             email_from = settings.EMAIL_MUSETTE
-            send_mail(title_email, message, email_from, lista_email, fail_silently=False)
+            if email_from:
+                send_mail(title_email, message, email_from, lista_email, fail_silently=False)
 
             data = {
                 "description": description,
                 "topic": comment.topic.title,
                 "idtopic": comment.topic.idtopic,
                 "slug": comment.topic.slug,
-                "photo": str(field_photo),
                 "settings_static": settings.STATIC_URL,
                 "username": username,
                 "forum": forum,
-                "has_photo": has_photo,
-                "url_profile_param": url_profile_param,
                 "lista_us": lista_us,
+                "photo": photo
             }
 
             json_data = json.dumps(data)
@@ -630,3 +633,127 @@ class TopicSearch(View):
         if request.is_ajax():
             template_name = page_template
         return render(request, template_name, data)
+
+
+class ProfileView(View):
+
+    '''
+        This view django, display results of the profile
+    '''
+
+    def get(self, request, username, *args, **kwargs):
+        template_name = "musette/profile.html"
+
+        user = get_object_or_404(User, username=username)
+        iduser = user.id
+
+        # Get model extend Profile
+        ModelProfile = get_main_model_profile()
+
+        # Get name app of the extend model Profile
+        app = get_app_model(ModelProfile)
+
+        # Check if the model profile is extended
+        count_fields_model = get_count_fields_model(ModelProfile)
+        count_fields_abstract = get_count_fields_model(AbstractProfile)
+        if count_fields_model > count_fields_abstract:
+            model_profile_is_extend = True
+        else:
+            model_profile_is_extend = False
+        profile = get_object_or_404(ModelProfile, iduser=iduser)
+
+        photo = get_photo_profile(iduser)
+
+        data = {
+            'profile': profile,
+            'photo': photo,
+            'user': request.user,
+            'app': app,
+            'model_profile_is_extend': model_profile_is_extend
+        }
+
+        return render(request, template_name, data)
+
+
+class EditProfileView(FormView):
+
+    '''
+        This view allowed edit profile
+    '''
+    template_name = "musette/edit_profile.html"
+    form_class = FormEditProfile
+
+    def get_success_url(self):
+        return '/profile/' + self.kwargs['username']
+
+    def get(self, request, username, *args, **kwargs):
+
+        ModelProfile = get_main_model_profile()
+        profile = get_object_or_404(
+            ModelProfile, iduser=request.user.id
+        )
+
+        # Init fields form
+        form = FormEditProfile(instance=profile)
+
+        data = {
+            'form': form
+        }
+
+        return render(request, self.template_name, data)
+
+    def post(self, request, username, *args, **kwargs):
+
+        ModelProfile = get_main_model_profile()
+        profile = get_object_or_404(
+            ModelProfile, iduser=request.user.id
+        )
+
+        file_name = profile.photo
+
+        form = FormEditProfile(request.POST, request.FILES, instance=profile)
+        file_path = settings.MEDIA_ROOT
+
+        if form.is_valid():
+
+            obj = form.save(commit=False)
+
+            about = strip_tags(request.POST['about'])
+
+            obj.about = about
+
+            # If check field clear, remove file when update
+            if 'attachment-clear' in request.POST:
+                route_file = get_route_file(file_path, file_name.name)
+
+                try:
+                    remove_file(route_file)
+                except Exception:
+                    pass
+
+            if 'attachment' in request.FILES:
+
+                if not topic.id_attachment:
+                    id_attachment = get_random_string(length=32)
+                    obj.id_attachment = id_attachment
+
+                file_name_post = request.FILES['photo']
+                obj.photo = file_name_post
+
+                # Route previous file
+                route_file = get_route_file(file_path, file_name.name)
+
+                try:
+                    # If a previous file exists it removed
+                    remove_file(route_file)
+                except Exception:
+                    pass
+
+            # Update profile
+            form.save()
+
+            return self.form_valid(form, **kwargs)
+        else:
+            messages.error(request, _("Form invalid"))
+            return self.form_invalid(form, **kwargs)
+

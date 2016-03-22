@@ -2,7 +2,11 @@ from django.contrib.auth.models import User
 
 from rest_framework import serializers, viewsets, routers
 
-from .models import Category, Forum, Topic, Register, Comment
+from .models import (
+    Category, Forum, Topic, 
+    Register, Comment
+)
+from .utils import get_main_model_profile
 
 
 # Serializers Users
@@ -84,6 +88,19 @@ class CommentViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CommentSerializer
 
 
+# Serializers profile
+class ProfileSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = get_main_model_profile()
+
+
+# ViewSets for profile
+class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = get_main_model_profile().objects.all()
+    serializer_class = ProfileSerializer
+
+
 # Routers provide a way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'api/users', UserViewSet)
@@ -92,3 +109,4 @@ router.register(r'api/forums', ForumViewSet)
 router.register(r'api/topics', TopicViewSet)
 router.register(r'api/registers', RegisterViewSet)
 router.register(r'api/comments', CommentViewSet)
+router.register(r'api/profiles', ProfileViewSet)
