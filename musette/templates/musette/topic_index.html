@@ -7,6 +7,9 @@
 
 {% block extra_js %}
     {{form_comment.media.js}}
+    <script type="text/javascript">
+        $('[data-toggle="tooltip"]').tooltip();
+    </script>
     <script src="{% static 'js/hitcount/django-hitcount.js' %}"></script>
     <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
     <script src="{% static 'js/modules/musette.module.js' %}"></script>
@@ -44,7 +47,7 @@
                   </figure>
                   <div style="text-align: center">
                       {% if topic.user.id == user.id %}
-                      <a href="/edit_topic/{{topic.forum.name}}/{{topic.idtopic}}/" class="btn btn-success btn-xs">
+                      <a href="/edit_topic/{{topic.forum.name}}/{{topic.idtopic}}/" class="btn btn-inverse btn-xs">
                         <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</a>
                       <a style="cursor: pointer;" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
                         <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}</a>
@@ -164,7 +167,7 @@
           {% endif %}
         {% endfor %}
         </center>
-        <button type="submit" class="btn btn-success btn-sm" ng-disabled="formComment.$invalid" ng-click="loading()">
+        <button type="submit" class="btn btn-inverse btn-sm" ng-disabled="formComment.$invalid" ng-click="loading()">
             <i class="glyphicon glyphicon-plus"></i> {% trans "New comment" %}
         </button> <img src="{% static 'img/ajax.gif' %}" class="hide" />
       </form>

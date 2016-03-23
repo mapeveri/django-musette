@@ -20,9 +20,7 @@
 	{% if user.id %}
 		{% include "musette/notification.html" %}
 	{% endif %}
-	<br>
-	<br>
-	<div class="panel panel-default">
+	<div class="panel panel-default" style="margin-top: 5em">
 		<div class="panel-heading"><h4>{% trans "Forums" %}</h4></div>
 	  	<div class="panel-body">
 	    	{% for category in categories %}

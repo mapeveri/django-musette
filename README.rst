@@ -74,7 +74,7 @@ Quick start
 	        }
 	}
 
-5. In  your application add the profile model do the following. For example your app is 'main', In models.py and admin.py add::
+5. In your application add the profile model do the following. For example your app is 'main', In models.py and admin.py add::
 	
 	# models.py
 	from musette.models import AbstractProfile
@@ -89,6 +89,23 @@ Quick start
 	from .models import Profile
 
 	admin.site.register(Profile)
+
+	# If you need to extend so, you will create template profile.html indide your app and add this
+	# templates/main/profile.html
+
+	<h4>Location</h4>
+	<div class="panel panel-default">
+	    <div class="panel-body">
+	        {{ profile.location|safe }}
+	    </div>
+	</div>
+
+	<h4>Company</h4>
+	<div class="panel panel-default">
+	    <div class="panel-body">
+	        {{ profile.company|safe }}
+	    </div>
+	</div>
 
 6. Execute command migrate::
 

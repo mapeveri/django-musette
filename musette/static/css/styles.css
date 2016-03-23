@@ -1,4 +1,8 @@
 
+a, a:hover, a:focus {
+    color: black;
+}
+
 .background_gray{
   background: #F8F8F8;
   border-color: #E7E7E7;

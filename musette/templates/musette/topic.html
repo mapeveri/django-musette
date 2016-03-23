@@ -26,10 +26,10 @@
           </div>
           {% if comment.user.id == user.id %}
             <div class="span4 offset4 text-right">
-              <a style="cursor: pointer" data-toggle="modal" data-target="#myModal_{{comment.idcomment}}" class="btn btn-default btn-sm">
+              <a style="cursor: pointer" data-toggle="modal" data-target="#myModal_{{comment.idcomment}}" class="btn btn-inverse btn-sm">
                 <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</a>
 
-              <a style="cursor: pointer" data-toggle="modal" data-target="#myModal_{{comment.idcomment}}_remove" class="btn btn-default btn-sm">
+              <a style="cursor: pointer" data-toggle="modal" data-target="#myModal_{{comment.idcomment}}_remove" class="btn btn-danger btn-sm">
                 <i class="glyphicon glyphicon-trash"></i> {% trans "Remove" %}</a>
             </div>
           {% endif %}
@@ -56,7 +56,7 @@
                 </textarea>
               </div>
             <br>
-            <button type="submit" class="btn btn-success btn-sm">
+            <button type="submit" class="btn btn-inverse btn-sm">
                 <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit comment" %}
             </button>
           </form>

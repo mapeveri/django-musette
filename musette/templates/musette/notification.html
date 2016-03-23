@@ -4,7 +4,7 @@
 <div ng-controller="NotificationController">
   <div class="btn-group pull-right" id="notifications_dropdown" ng-click="view_all()">
       <input type="hidden" ng-model="user" name="user" id="user_musette" value="{{user.id}}" />
-      <button class="btn btn-success btn-xs" type="button">
+      <button class="btn btn-inverse btn-sm" type="button">
       {% if user.id|get_pending_notifications > 0 %}
         <span id="badge_notifications" class="badge">{{user.id|get_pending_notifications}}</span>
       {% else %}
@@ -13,7 +13,7 @@
       <i class="glyphicon glyphicon-bell"></i>
       {% trans "Notifications" %}
       </button>
-      <button data-toggle="dropdown" class="btn btn-success btn-xs dropdown-toggle" type="button"><span class="caret"></span>
+      <button data-toggle="dropdown" class="btn btn-inverse btn-sm dropdown-toggle" type="button"><span class="caret"></span>
       </button>
       <ul class="dropdown-menu dropdown-cart" role="menu">
 

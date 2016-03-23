@@ -45,13 +45,13 @@
 	{% if register or user.is_superuser or forum.moderators.id == user.id %}
 		<div class="row">
 			<div class="col-md-1">
-		    	<a href="/newtopic/{{forum.name}}/" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</a>
+		    	<a href="/newtopic/{{forum.name}}/" class="btn btn-raised btn-inverse btn-sm"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</a>
 			</div>
 			{% if not user.is_superuser and not forum.moderators.id == user.id %}
 			<div class="col-md-1 margin-left-moz">
 		    	<form method="POST" action="/unregister/{{forum}}/">
 		    		{% csrf_token %}
-		    		<button type="submit" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Unregister" %}</button>
+		    		<button type="submit" class="btn btn-inverse btn-xs"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Unregister" %}</button>
 		    	</form>
 		    </div>
 		    {% endif %}
@@ -59,7 +59,7 @@
     {% else %}
     	<form method="POST" action="/new_register/{{forum}}/">
     		{% csrf_token %}
-    		<button type="submit" class="btn btn-success btn-xs"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Join to forum" %}</button>
+    		<button type="submit" class="btn btn-inverse btn-xs"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Join to forum" %}</button>
     	</form>
     {% endif %}
 
