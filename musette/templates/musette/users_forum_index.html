@@ -1,17 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'musette/base_musette.html' %}
 
 {% load i18n %}
 {% load static %}
 {% load forum_tags %}
 
-{% block extra_js %}
-    <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-    <script src="{% static 'js/modules/musette.module.js' %}"></script>
-{% endblock %}
-
 {% block content %}
 
-<div class="container" ng-app="MusetteApp">
+<div class="container">
     <ul class="breadcrumb">
         <li><a href="/forums/">{% trans "Forums" %}</a></li>
         <li><a href="/forum/{{forum}}/">{{ forum }}</a></li>

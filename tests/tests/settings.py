@@ -42,9 +42,4 @@ settings.configure(
 	USE_I18N = True,
 	USE_L10N = True,
 	USE_TZ = True,
-	SESSION_SAVE_EVERY_REQUEST = True,
-	APP_PROFILE = 'main',
-	MODEL_PROFILE = 'Perfil',
-	FIELD_PHOTO_PROFILE = "photo",
-	URL_PROFILE = '/profile/',
 )

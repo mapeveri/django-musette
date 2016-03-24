@@ -1,26 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'musette/base_musette.html' %}
 
 {% load i18n %}
 {% load static %}
 {% load forum_tags %}
 
-{% block extra_js %}
-	<script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-	<script src="{% static 'js/modules/musette.module.js' %}"></script>
-{% endblock %}
-
 {% block content %}
 
-<div class="container" ng-app="MusetteApp">
+<div class="container">
 
 	<ul class="breadcrumb">
 	    <li class="active">{% trans "Forums" %}</li>
 	</ul>
 
-	{% if user.id %}
-		{% include "musette/notification.html" %}
-	{% endif %}
-	<div class="panel panel-default" style="margin-top: 5em">
+	<div class="panel panel-default">
 		<div class="panel-heading"><h4>{% trans "Forums" %}</h4></div>
 	  	<div class="panel-body">
 	    	{% for category in categories %}

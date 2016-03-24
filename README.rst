@@ -24,14 +24,6 @@ With pip::
 
 	pip install django-musette
 
-Requirements
-------------
-
-1. Jquery (Version 2.x)
-2. Bootstrap (Version 3.x) and `bootstrap material design`_.
-3. Angular.js (Version 1.x)
-
-.. _bootstrap material design: https://fezvrasta.github.io/bootstrap-material-design/
 
 Quick start
 -----------
@@ -61,6 +53,7 @@ Quick start
     'django.template.context_processors.static',
     'django.template.context_processors.tz',
     'django.template.context_processors.i18n',
+    'musette.context_processors.data_templates',
 
 4. Configure in the settings.py LOGIN_URL, STATIC and MEDIA root. Something very important is to set the variable CACHES for redis. This is for real time support. Example::
 
@@ -82,8 +75,8 @@ Quick start
 	class Profile(AbstractProfile):
 
 		# This is in case you need to extend the profile model. If not use 'pass'
-		location = models.CharField(max_length=200, null=True, blank=True)
-		company = models.CharField(max_length=150, null=True, blank=True)
+		location = models.CharField("Label name", max_length=200, null=True, blank=True)
+		company = models.CharField("Label name", max_length=150, null=True, blank=True)
 
 	# admin.py
 	from .models import Profile
@@ -110,27 +103,19 @@ Quick start
 6. Execute command migrate::
 
 	python manage.py migrate
+	python manage.py makemigrations
+	python manage.py migrate
 
-7. The application django-musette need a template base of name base.html. With the following tags::
 
-	{% block content %}{% endblock %}
-	{% block extra_css %}{% endblock %}
-	{% block extra_js %}{% endblock %}
-	{% block hitcount_javascript %}{% endblock %}
-
-	//And add files static css and js (Angular, Jquery, Bootstrap).
-
-8. `Example base`_ of base.html.
-
-.. _Example base: https://github.com/mapeveri/django-musette/blob/master/example/plantillas/base.html
-
-9. If you need to enable the `forum in spanish`_.
+7. If you need to enable the `forum in spanish`_.
 
 .. _forum in spanish: https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
-10. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
+8. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
 
-11. In settings.py configure SITE_NAME and SITE_URL.
+9. In settings.py configure SITE_NAME and SITE_URL. `Example config`_ of settings.py.		
+		
+.. _Example config: https://github.com/mapeveri/django-musette/blob/master/example/tests/settings.py
 
 How to use?
 -----------
@@ -185,14 +170,14 @@ Features
 3. Notifications and comments in real time.
 4. Count views for forum and topic.
 5. Infinite scroll for comments of one topic.
-6. Support of files media for topics.
+6. Support of media files for topics.
 7. Easy integration with other applications Django of your project.
 8. Pre-moderation of topics.
 9. Models registered in admin django for administrators.
 10. Search for topics in a forum.
 11. Modern design, thank you to Bootstrap material design.
 12. Avatar.
-13. Support to English and Spanish language.
+13. Support to English and Spanish languages.
 14. Validation of forms in real time with AngularJs.
 15. User registration a forum.
 16. Support to Markdown.

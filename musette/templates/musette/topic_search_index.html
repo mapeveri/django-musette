@@ -1,16 +1,11 @@
-{% extends 'base.html' %}
+{% extends 'musette/base_musette.html' %}
 
 {% load i18n %}
 {% load static %}
 
-{% block extra_js %}
-    <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-    <script src="{% static 'js/modules/musette.module.js' %}"></script>
-{% endblock %}
-
 {% block content %}
 
-<div class="container" ng-app="MusetteApp">
+<div class="container">
 
 	<div class="row">
       <ul class="breadcrumb">

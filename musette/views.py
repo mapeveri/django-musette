@@ -49,14 +49,8 @@ class ForumsView(View):
 
         categories = Category.objects.filter(hidden=False)
 
-        if request.user.id:
-            notifications = get_notifications(request.user.id)
-        else:
-            notifications = None
-
         data = {
-            'categories': categories,
-            'notifications': notifications
+            'categories': categories
         }
 
         return render(request, self.template_name, data)
@@ -77,10 +71,8 @@ class ForumView(View):
         topics = Topic.objects.filter(
             forum_id=forum.idforum).order_by("-is_top", "-date")
 
-        if request.user.id:
-            iduser = request.user.id
-            notifications = get_notifications(iduser)
-
+        iduser = request.user.id
+        if iduser:
             try:
                 Register.objects.get(
                     forum_id=forum.idforum, user_id=iduser
@@ -96,8 +88,7 @@ class ForumView(View):
         data = {
             'forum': forum,
             'topics': topics,
-            'register': register,
-            'notifications': notifications,
+            'register': register
         }
 
         if request.is_ajax():
@@ -124,19 +115,13 @@ class TopicView(View):
 
         comments = Comment.objects.filter(topic_id=idtopic)
 
-        if request.user.id:
-            notifications = get_notifications(request.user.id)
-        else:
-            notifications = None
-
         photo = get_photo_profile(topic.user.id)
 
         data = {
             'topic': topic,
             'form_comment': form_comment,
             'comments': comments,
-            'photo': photo,
-            'notifications': notifications,
+            'photo': photo
         }
 
         if request.is_ajax():

@@ -1,17 +1,15 @@
-{% extends 'base.html' %}
+{% extends 'musette/base_musette.html' %}
 
 {% load i18n %}
 {% load static %}
 
 {% block extra_js %}
     {{ form.media.js }}
-    <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-    <script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container" ng-app="MusetteApp"  ng-controller="TopicController">
+<div class="container" ng-controller="TopicController">
 
 	<div class="mainbox col-md-8 col-md-offset-2 col-sm-6 col-sm-offset-3">
 		<ul class="breadcrumb">

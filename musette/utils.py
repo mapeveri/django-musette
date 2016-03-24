@@ -176,11 +176,7 @@ def get_datetime_topic(date):
         else:
             difference = "%s %s" % (str(diff.seconds//3600) + "h ", _("ago"))
 
-    # If > 10 days return string date
-    if difference > 1 and difference <= 10:
-        flag = False
-        difference = formats.date_format(date, "SHORT_DATETIME_FORMAT")
-
+    # If is days
     if flag:
         difference = "%s %s" % (str(difference),  _("days ago"))
 

@@ -86,6 +86,7 @@ TEMPLATES = [
                 'django.template.context_processors.static',
                 'django.template.context_processors.tz',
                 'django.template.context_processors.i18n',
+                'musette.context_processors.data_templates',
             ],
         },
     },

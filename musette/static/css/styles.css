@@ -3,6 +3,10 @@ a, a:hover, a:focus {
     color: black;
 }
 
+.black{
+  color: black;
+}
+
 .background_gray{
   background: #F8F8F8;
   border-color: #E7E7E7;
@@ -40,12 +44,9 @@ a, a:hover, a:focus {
 
 /*
   Margin left for buttons join and unregister forum
-  only navigator firefox
 */
-
-/* For all navigators*/
-.margin-left-moz{
-  margin-left: 0.1em;
+.margin-left-unregister{
+  margin-left: 2em;
 }
 
 @media screen and (min-width:1280px) {

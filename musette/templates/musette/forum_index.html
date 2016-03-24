@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'musette/base_musette.html' %}
 
 {% load i18n %}
 {% load static %}
@@ -7,17 +7,14 @@
 {% load photo %}
 
 {% block extra_js %}
-<script src="{% static 'js/hitcount/django-hitcount.js' %}"></script>
 <script type="text/javascript">
     $('[data-toggle="tooltip"]').tooltip();
 </script>
-<script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-<script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container" ng-app="MusetteApp">
+<div class="container">
 
 	<ul class="breadcrumb">
 	    <li><a href="/forums/">{% trans "Forums" %}</a></li>
@@ -37,10 +34,6 @@
 		{% endif %}
 	{% endif %}
 
-	{% if user.id %}
-		{% include "musette/notification.html" %}
-	{% endif %}
-
 	<h5>{{forum.description|safe}}</h5>
 	{% if register or user.is_superuser or forum.moderators.id == user.id %}
 		<div class="row">
@@ -48,10 +41,10 @@
 		    	<a href="/newtopic/{{forum.name}}/" class="btn btn-raised btn-inverse btn-sm"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</a>
 			</div>
 			{% if not user.is_superuser and not forum.moderators.id == user.id %}
-			<div class="col-md-1 margin-left-moz">
+			<div class="col-md-1 margin-left-unregister">
 		    	<form method="POST" action="/unregister/{{forum}}/">
 		    		{% csrf_token %}
-		    		<button type="submit" class="btn btn-inverse btn-xs"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Unregister" %}</button>
+		    		<button type="submit" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Unregister" %}</button>
 		    	</form>
 		    </div>
 		    {% endif %}
@@ -59,7 +52,7 @@
     {% else %}
     	<form method="POST" action="/new_register/{{forum}}/">
     		{% csrf_token %}
-    		<button type="submit" class="btn btn-inverse btn-xs"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Join to forum" %}</button>
+    		<button type="submit" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Join to forum" %}</button>
     	</form>
     {% endif %}
 

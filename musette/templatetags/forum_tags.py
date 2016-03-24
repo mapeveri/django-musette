@@ -137,6 +137,7 @@ def get_item_notification(notification):
             slug = comment.topic.slug
             idtopic = comment.topic.idtopic
             description = Truncator(comment.description).chars(100)
+            description = description.replace("p>", "p class='black'>", 1)
             username = comment.user.username
 
             url_topic = "/topic/" + forum + "/" + \
@@ -145,7 +146,7 @@ def get_item_notification(notification):
             title = "<h5><a href='"+url_topic+"'><u>" + \
                 comment.topic.title+"</u></h5></a>"
 
-            description = "<p>"+description+"</p>"
+            description = "<p class='black'>"+description+"</p>"
 
             # Data profile
             photo = get_photo_profile(comment.user.id)
@@ -159,15 +160,15 @@ def get_item_notification(notification):
             html += '   <div class="list-group-item">'
             html += '      <div class="row-action-primary">'
             html += '           <img src="'+photo + \
-                '" width=30 height=30 class="img-circle" />'
+                '" width=20 height=20 class="img-circle" />'
             html += '       </div>'
             html += '       <div class="row-content">'
-            html += '           <div class="least-content">'+date+'</div>'
             html += '           <h4 class="list-group-item-heading">' + \
                 title.encode('utf8')+'</h4>'
             html += '           <p class="list-group-item-text">' + \
                 description.encode('utf8')+'</p>'
             html += '           <p>'+user.encode('utf8')+'</p>'
+            html += '           <p class="black">'+date+'</p>'
             html += '        </div>'
             html += '   </div>'
             html += '   <div class="list-group-separator"></div>'
