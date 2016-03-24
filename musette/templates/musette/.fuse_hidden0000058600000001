@@ -1,0 +1,93 @@
+{% extends 'musette/base_musette.html' %}
+
+{% load i18n %}
+{% load static %}
+
+{% block extra_js %}
+    {{ form.media.js }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container" ng-controller="TopicController">
+
+	<div class="mainbox col-md-8 col-md-offset-2 col-sm-6 col-sm-offset-3">
+		<ul class="breadcrumb">
+          	<li><a href="/forums/">{% trans "Forums" %}</a></li>
+          	<li><a href="/forum/{{forum}}/">{{forum}}</a></li>
+          	<li class="active">{% trans "Edit topic" %}</li>
+      	</ul>
+
+		{% for message in messages %}
+			{% if message.tags != "error" %}
+				<div class="alert alert-success" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+					{{ message }}
+				</div>
+			{% else %}
+				<div class="alert alert-danger" role="alert">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+					{{ message }}
+				</div>
+			{% endif %}
+		{% endfor %}
+		<div class="panel panel-default" >
+            <div class="panel-heading">
+                <div class="panel-title text-center">{% trans "Edit topic" %}</div>
+            </div>
+
+            <div class="panel-body">
+            	<form action="{{request.get_full_path}}" method="POST" enctype="multipart/form-data" name="editTopic">
+            		{% csrf_token%}
+            		{% for field in form %}
+			   			{% if field.name == "title" %}
+			   				<div class="form-group" ng-class="{ 'has-error' : editTopic.title.$invalid && !editTopic.title.$pristine }">
+				   				<label>{% trans "Title" %}</label>
+				              	{{ field }}
+				              	{% if form.title.errors %}
+				              		<div style="color: red">{{ form.title.errors }}</div>
+				              	{% else %}
+				              		<br>
+				              	{% endif %}
+			              	</div>
+			            {% endif %}
+			            {% if field.name == "description" %}
+			            	<div class="form-group" ng-class="{ 'has-error' : editTopic.description.$invalid && !editTopic.description.$pristine }">
+				            	<label>{% trans "Description" %}</label>
+				            	<div class="in_div_textarea">
+				              		{{ field }}
+				              	</div>
+				              	{% if form.description.errors %}
+				              		<div style="color: red">{{ form.description.errors|safe }}</div>
+				              	{% else %}
+				              		<br>
+				              	{% endif %}
+			              	</div>
+			            {% endif %}
+			          	{% if field.name == "attachment" %}
+			          		<div class="form-group">
+				            	<label>{% trans "Attachment" %}</label>
+				            	<div class="in_div_textarea">
+				              		{{ field }}
+				              	</div>
+				              	{% if form.attachment.errors %}
+				              		<div style="color: red">{{ form.attachment.errors }}</div>
+				              	{% else %}
+				              		<br>
+				              	{% endif %}
+			              	</div>
+			            {% endif %}
+			        {% endfor %}
+			        <button type="submit" class="btn btn-inverse btn-sm" ng-disabled="editTopic.$invalid" ng-click="loading()">
+			        	<i class="glyphicon glyphicon-floppy-disk"></i>
+			        	{% trans "Save" %}
+			        </button> <img src="{% static 'img/ajax.gif' %}" class="hide" />
+				</form>
+            </div>
+        </div>
+	</div>
+
+</div>
+
+
+{% endblock %}

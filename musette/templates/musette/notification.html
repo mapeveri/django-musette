@@ -46,11 +46,6 @@
       <a href="#">
         {{notification|get_item_notification|safe}}
       </a>
-      {% empty %}
-        <div id="no_notifications">
-            <center><p class="without-text-transform">{% trans "No notifications" %}</p></center>
-            <li class="divider"></li>
-        </div>
       {% endfor %}
       <li class="divider"></li>
       <li><a class="text-center" href="/forum_all_notification/">

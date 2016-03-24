@@ -43,7 +43,21 @@ Quick start
 
 	url(r'^' , include('musette.urls')),
 
-3. And in settings.py in TEMPLATES check in context_processors this values::
+	....
+
+	# And add this
+	from django.conf import settings
+	
+	if settings.DEBUG:
+	    from django.conf.urls.static import static
+	    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+	    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+3. In settings.py configure LOGIN_URL, STATIC, MEDIA root, SITE_NAME and SITE_URL. `Example config`_ of settings.py.
+
+.. _Example config: https://github.com/mapeveri/django-musette/blob/master/example/tests/settings.py	
+
+4. In settings.py in TEMPLATES check in context_processors this values::
 
 	'django.template.context_processors.debug',
     'django.template.context_processors.request',
@@ -55,7 +69,7 @@ Quick start
     'django.template.context_processors.i18n',
     'musette.context_processors.data_templates',
 
-4. Configure in the settings.py LOGIN_URL, STATIC and MEDIA root. Something very important is to set the variable CACHES for redis. This is for real time support. Example::
+5. Configure in the settings.py the variable CACHES for redis. This is for real time support. Example::
 
 	CACHES = {
 	    'default': {
@@ -67,7 +81,7 @@ Quick start
 	        }
 	}
 
-5. In your application add the profile model do the following. For example your app is 'main', In models.py and admin.py add::
+6. In your application add the profile model do the following. For example your app is 'main', In models.py and admin.py add::
 	
 	# models.py
 	from musette.models import AbstractProfile
@@ -100,22 +114,17 @@ Quick start
 	    </div>
 	</div>
 
-6. Execute command migrate::
+7. Execute command migrate::
 
-	python manage.py migrate
-	python manage.py makemigrations
-	python manage.py migrate
+	python manage.py makemigrations 
+	python manage.py migrate 
 
-
-7. If you need to enable the `forum in spanish`_.
+8. If you need to enable the `forum in spanish`_.
 
 .. _forum in spanish: https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
-8. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
-
-9. In settings.py configure SITE_NAME and SITE_URL. `Example config`_ of settings.py.		
-		
-.. _Example config: https://github.com/mapeveri/django-musette/blob/master/example/tests/settings.py
+9. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
+	
 
 How to use?
 -----------
@@ -166,25 +175,26 @@ Features
 --------
 
 1. Multiple forums ordered by for category.
-2. Notifications and email notifications.
-3. Notifications and comments in real time.
-4. Count views for forum and topic.
-5. Infinite scroll for comments of one topic.
-6. Support of media files for topics.
-7. Easy integration with other applications Django of your project.
-8. Pre-moderation of topics.
-9. Models registered in admin django for administrators.
-10. Search for topics in a forum.
-11. Modern design, thank you to Bootstrap material design.
-12. Avatar.
-13. Support to English and Spanish languages.
-14. Validation of forms in real time with AngularJs.
-15. User registration a forum.
-16. Support to Markdown.
-17. Support to rss to forums.
-18. API REST with django-rest-framework.
-19. Support to topics main in forum.
-20. Integrated model profile, but can be extended.
+2. Count views for forum and topic.
+3. Support to topics main in forum.
+4. Support to rss to forums.
+5. User registration a forum.
+6. Search topics in a forum.
+7. Pre-moderation of topics.
+8. Support of media files for topics.
+9. Infinite scroll for comments of one topic.
+10. Notifications and email notifications.
+11. Notifications and comments in real time.
+12. Integrated model profile, but can be extended.
+13. Avatar profile.
+14. Easy integration with other applications Django of your project.
+15. Models registered in admin django for administrators.
+16. Modern design, thank you to Bootstrap material design.
+17. Support to English and Spanish languages.
+18. Validation of forms in real time with AngularJs.
+19. Support to Markdown.
+20. API REST with django-rest-framework.
+
 
 Roadmap
 -------
