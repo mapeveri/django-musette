@@ -17,6 +17,33 @@ Django-Musette
 
 Forum for Django framework. This reusable application it is designed to be easily integrated into an existing Django application.
 
+Features
+--------
+
+1. Multiple forums ordered by for category.
+2. Support to sub-forums.
+3. Count views for forum and topic.
+4. Support to topics main in forum.
+5. Support to rss to forums.
+6. User registration a forum.
+7. Search topics in a forum.
+8. Pre-moderation of topics.
+9. Support of media files for topics.
+10. Infinite scroll for comments of one topic.
+11. Notifications and email notifications.
+12. Notifications and comments in real time.
+13. Integrated model profile, but can be extended.
+14. Avatar profile.
+15. Easy integration with other applications Django of your project.
+16. Models registered in admin django for administrators.
+17. Modern design, thank you to Bootstrap material design.
+18. Support to English and Spanish languages.
+19. Validation of forms in real time with AngularJs.
+20. Support to Markdown.
+21. API REST with django-rest-framework.
+
+Note: Not support login, logout and nothing refered to authentication. Use authentication django admin.
+
 Installing
 ----------
 
@@ -32,7 +59,6 @@ Quick start
 
 	INSTALLED_APPS = (
 		...
-		'log',
 		'hitcount',
 		'endless_pagination',
 		'rest_framework',
@@ -81,7 +107,7 @@ Quick start
 	        }
 	}
 
-6. In your application add the profile model do the following. For example your app is 'main', In models.py and admin.py add::
+6. In your application must add the profile model do the following. For example your app is 'main', in models.py and admin.py add::
 	
 	# models.py
 	from musette.models import AbstractProfile
@@ -170,31 +196,6 @@ Visit 127.0.0.1:8000/forums you should see the categories and forums.
 .. image:: https://github.com/mapeveri/django-musette/blob/master/images/new_topic.png
 
 .. image:: https://github.com/mapeveri/django-musette/blob/master/images/edit_topic.png
-
-Features
---------
-
-1. Multiple forums ordered by for category.
-2. Count views for forum and topic.
-3. Support to topics main in forum.
-4. Support to rss to forums.
-5. User registration a forum.
-6. Search topics in a forum.
-7. Pre-moderation of topics.
-8. Support of media files for topics.
-9. Infinite scroll for comments of one topic.
-10. Notifications and email notifications.
-11. Notifications and comments in real time.
-12. Integrated model profile, but can be extended.
-13. Avatar profile.
-14. Easy integration with other applications Django of your project.
-15. Models registered in admin django for administrators.
-16. Modern design, thank you to Bootstrap material design.
-17. Support to English and Spanish languages.
-18. Validation of forms in real time with AngularJs.
-19. Support to Markdown.
-20. API REST with django-rest-framework.
-
 
 Roadmap
 -------

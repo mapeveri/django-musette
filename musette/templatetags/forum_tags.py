@@ -164,10 +164,10 @@ def get_item_notification(notification):
             html += '       </div>'
             html += '       <div class="row-content">'
             html += '           <h4 class="list-group-item-heading">' + \
-                title.encode('utf8')+'</h4>'
+                                    title+'</h4>'
             html += '           <p class="list-group-item-text">' + \
-                description.encode('utf8')+'</p>'
-            html += '           <p>'+user.encode('utf8')+'</p>'
+                                    description+'</p>'
+            html += '           <p>'+user+'</p>'
             html += '           <p class="black">'+date+'</p>'
             html += '        </div>'
             html += '   </div>'

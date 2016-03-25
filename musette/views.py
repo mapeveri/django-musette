@@ -17,8 +17,6 @@ from django.utils.html import strip_tags
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 
-from log.utils import set_error_to_log
-
 from .forms import (
     FormAddTopic, FormEditTopic, 
     FormAddComment, FormEditProfile
@@ -71,6 +69,9 @@ class ForumView(View):
         topics = Topic.objects.filter(
             forum_id=forum.idforum).order_by("-is_top", "-date")
 
+        # Get forum childs
+        forums_childs = Forum.objects.filter(parent=forum, hidden=False)
+
         iduser = request.user.id
         if iduser:
             try:
@@ -87,6 +88,7 @@ class ForumView(View):
 
         data = {
             'forum': forum,
+            'forums_childs': forums_childs,
             'topics': topics,
             'register': register
         }
@@ -309,12 +311,6 @@ class DeleteTopicView(View):
             Topic.objects.filter(
                 idtopic=idtopic, user_id=iduser_topic).delete()
         else:
-            error = ""
-            error = error + 'The user ' + str(request.user.id)
-            error = error + ' He is trying to remove the job ' + str(idtopic)
-            error = error + ' of user ' + str(iduser_topic)
-
-            set_error_to_log(request, error)
             raise Http404
 
         return redirect('forum', forum)

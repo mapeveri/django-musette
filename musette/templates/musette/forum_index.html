@@ -18,8 +18,24 @@
 
 	<ul class="breadcrumb">
 	    <li><a href="/forums/">{% trans "Forums" %}</a></li>
+	    {% if forum.parent %}
+	    	<li><a href="/forum/{{ forum.parent }}">{{ forum.parent }}</a></li>	
+	    {% endif %}
 	    <li class="active">{{ forum }}</li>
 	</ul>
+
+	{% if forums_childs|length > 0 %}
+	<h5>Sub-{% trans "Forums" %}: {{ forum.name }}</h5>
+	{% endif %}
+
+	{% for forum in forums_childs %}
+		<span class="label label-default"><a href="/forum/{{ forum.name }}" style="color: white">{{ forum.name }}</a></span>
+	{% endfor %}
+
+	{% if forums_childs|length > 0 %}
+		<br>
+		<br>
+	{% endif %}
 
 	{% get_hit_count for forum as total_hits %}
 
