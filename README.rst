@@ -41,8 +41,10 @@ Features
 19. Validation of forms in real time with AngularJs.
 20. Support to Markdown.
 21. API REST with django-rest-framework.
+22. Support Python 3.
 
-Note: Not support login, logout and nothing refered to authentication. Use authentication django admin.
+Note 1: Not support login, logout and nothing refered to authentication. Use authentication django admin. 
+Note 2: When a new record is added to the user model automatically added to your model profile.
 
 Installing
 ----------
