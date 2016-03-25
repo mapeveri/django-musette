@@ -3,6 +3,8 @@ import os
 from django.conf import settings
 from django.contrib.auth.models import User, Permission
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.shortcuts import get_object_or_404
 from django.template import defaultfilters
 from django.utils.encoding import python_2_unicode_compatible
@@ -297,3 +299,17 @@ class AbstractProfile(models.Model):
 
     class Meta:
         abstract = True
+
+
+'''
+    This signal is event of model user for create new profile
+'''
+@receiver(post_save, sender = settings.AUTH_USER_MODEL)
+def post_save_user(sender, instance, **kwargs):
+    if kwargs['created']:
+        subclasses = AbstractProfile.__subclasses__()
+        if len(subclasses) > 0:
+            user = User.objects.get(id=instance.id)
+            Profile = subclasses[0]
+            profile = Profile(iduser=user)
+            profile.save()
