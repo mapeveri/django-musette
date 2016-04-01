@@ -43,8 +43,9 @@ Features
 21. API REST with django-rest-framework.
 22. Support Python 3.
 
-Note 1: Not support login, logout and nothing refered to authentication. Use authentication django admin. 
-Note 2: When a new record is added to the user model automatically added to your model profile.
+**Note 1:** Not support login, logout and nothing refered to authentication. Use authentication django admin. 
+
+**Note 2:** When a new record is added to the user model automatically added to your model profile.
 
 Installing
 ----------
@@ -87,27 +88,27 @@ Quick start
 
 4. In settings.py in TEMPLATES check in context_processors this values::
 
-	'django.template.context_processors.debug',
-    'django.template.context_processors.request',
-    'django.contrib.auth.context_processors.auth',
-    'django.contrib.messages.context_processors.messages',
-    'django.template.context_processors.media',
-    'django.template.context_processors.static',
-    'django.template.context_processors.tz',
-    'django.template.context_processors.i18n',
-    'musette.context_processors.data_templates',
+		'django.template.context_processors.debug',
+		'django.template.context_processors.request',
+		'django.contrib.auth.context_processors.auth',
+		'django.contrib.messages.context_processors.messages',
+		'django.template.context_processors.media',
+		'django.template.context_processors.static',
+		'django.template.context_processors.tz',
+		'django.template.context_processors.i18n',
+		'musette.context_processors.data_templates',
 
 5. Configure in the settings.py the variable CACHES for redis. This is for real time support. Example::
 
-	CACHES = {
-	    'default': {
-	        'BACKEND' : 'redis_cache.RedisCache',
-	        'LOCATION' : 'localhost:6379',
-	        'OPTIONS' : {
-	            'DB' : 1
-	            }
-	        }
-	}
+		CACHES = {
+			'default': {
+			    'BACKEND' : 'redis_cache.RedisCache',
+			    'LOCATION' : 'localhost:6379',
+			    'OPTIONS' : {
+			        'DB' : 1
+			        }
+			    }
+		}
 
 6. In your application must add the profile model do the following. For example your app is 'main', in models.py and admin.py add::
 	
