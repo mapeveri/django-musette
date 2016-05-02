@@ -31,7 +31,7 @@ setup(
     author_email='martinpeveri@gmail.com',
     install_requires=[
         'tornado==4.2',
-        'django-redis-cache==0.13.1',
+        'django-redis-cache==1.6.5',
         'djangorestframework==3.3.3',
         'django-endless-pagination-angular==1.1',
         'django-hitcount==1.2.1'

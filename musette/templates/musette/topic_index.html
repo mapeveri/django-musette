@@ -46,6 +46,27 @@
                         <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}</a>
                       {% endif %}
                   </div>
+                  <table>
+                    <tr>
+                        <td>
+                            <b>{% trans "Last Seen" %}</b>
+                            {% if topic.user.user.last_seen %}
+                                {{ topic.user.user.last_seen|timesince }}
+                            {% else %}
+                                {% trans "awhile ago" %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if topic.user.user.online %}
+                                <ul><li style="color: green; margin-left: -23px"><b>Online</b></li></ul>
+                            {% else %}
+                                <ul><li style="color: red; margin-left: -23px"><b>Online</b></li></ul>
+                            {% endif %}
+                        </td>
+                    </tr>
+                  </table>
                 </div>
 
                 <div class="col-md-8">

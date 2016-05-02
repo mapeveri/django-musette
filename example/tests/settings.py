@@ -66,6 +66,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.locale.LocaleMiddleware',
+    'musette.middleware.ActiveUserMiddleware',
 )
 
 ROOT_URLCONF = 'tests.urls'
@@ -108,10 +109,10 @@ DATABASES = {
 # Cache
 CACHES = {
     'default': {
-        'BACKEND' : 'redis_cache.RedisCache',
-        'LOCATION' : 'localhost:6379',
-        'OPTIONS' : {
-            'DB' : 1
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': 'localhost:6379',
+        'OPTIONS': {
+            'DB': 1
             #'PASSWORD' :'asdas6d87sf6tsd8f',
             }
         }
@@ -142,7 +143,7 @@ LOCALE_PATHS = (
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR,'static'),
+    os.path.join(BASE_DIR, 'static'),
 )
 
 MEDIA_URL = '/media/'

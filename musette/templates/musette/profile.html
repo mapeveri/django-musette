@@ -4,23 +4,44 @@
 {% load static %}
 
 {% block content %}
-	
+
 <div class="container">
-	<div class="row">
-		<div class="col-md-3 bg_blur ">
-    	    
+    <div class="row">
+        <div class="col-md-3 bg_blur ">
+
             <img src="{{photo}}" class="img-thumbnail picture hidden-xs" width="150" hegiht="150" />
 
             <div class="header">
                 <h1>{{ profile.iduser.first_name }} {{ profile.iduser.last_name }}</h1>
-                <h5>{{ profile.iduser.date_joined }}</h5>
+                <h5>{% trans "Joined" %} {{ profile.iduser.date_joined }}</h5>
+                <table>
+                    <tr>
+                        <td>
+                            <b>{% trans "Last Seen" %}</b>
+                            {% if profile.last_seen %}
+                                {{ profile.last_seen|timesince }}
+                            {% else %}
+                                {% trans "awhile ago" %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if profile.online %}
+                                <ul><li style="color: green; margin-left: -23px"><b>Online</b></li></ul>
+                            {% else %}
+                                <ul><li style="color: red; margin-left: -23px"><b>Online</b></li></ul>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
             </div>
 
             {% if profile.iduser.id == user.id %}
                 <a href="/edit_profile/{{ profile.iduser.username }}" class="btn btn btn-inverse">{% trans "Edit profile" %}</a>
             {% endif %}
 
-		</div>
+        </div>
         <div class="col-md-9  col-xs-12">
 
             <h4>{% trans "About me" %}</h4>
@@ -36,8 +57,8 @@
                 {% endwith %}
             {% endif %}
         </div>
-    </div>   
-    
+    </div>
+
 </div>
 
 

@@ -42,6 +42,7 @@ Features
 20. Support to Markdown.
 21. API REST with django-rest-framework.
 22. Support Python 3.
+23. Support check user online.
 
 **Note 1:** Not support login, logout and nothing refered to authentication. Use authentication django admin. 
 
@@ -110,7 +111,14 @@ Quick start
 			    }
 		}
 
-6. In your application must add the profile model do the following. For example your app is 'main', in models.py and admin.py add::
+6. In MIDDLEWARE_CLASSES add this line:
+
+        MIDDLEWARE_CLASSES = (
+            ...
+            'musette.middleware.ActiveUserMiddleware',
+        )
+
+7. In your application must add the profile model do the following. For example your app is 'main', in models.py and admin.py add::
 	
 	# models.py
 	from musette.models import AbstractProfile
@@ -143,16 +151,16 @@ Quick start
 	    </div>
 	</div>
 
-7. Execute command migrate::
+8. Execute command migrate::
 
 	python manage.py makemigrations 
 	python manage.py migrate 
 
-8. If you need to enable the `forum in spanish`_.
+9. If you need to enable the `forum in spanish`_.
 
 .. _forum in spanish: https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
 
-9. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
+10. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
 	
 
 How to use?

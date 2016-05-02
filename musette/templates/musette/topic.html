@@ -11,6 +11,27 @@
       <figure class="thumbnail">
         <a href="/profile/username/{{comment.user}}"><img class="img-responsive" src="{{comment.user.id|get_photo}}"/></a>
       </figure>
+      <table>
+        <tr>
+            <td>
+                <b>{% trans "Last Seen" %}</b>
+                {% if comment.user.user.last_seen %}
+                    {{ comment.user.user.last_seen|timesince }}
+                {% else %}
+                    {% trans "awhile ago" %}
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {% if comment.user.user.online %}
+                    <ul><li style="color: green; margin-left: -23px"><b>Online</b></li></ul>
+                {% else %}
+                    <ul><li style="color: red; margin-left: -23px"><b>Online</b></li></ul>
+                {% endif %}
+            </td>
+        </tr>
+      </table>
     </div>
     <div class="col-md-11 col-sm-11">
       <div class="panel panel-default arrow left">

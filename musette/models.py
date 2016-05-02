@@ -1,7 +1,9 @@
+import datetime
 import os
 
 from django.conf import settings
 from django.contrib.auth.models import User, Permission
+from django.core.cache import cache
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -11,6 +13,7 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
+from . import settings as localSettings
 from .validators import valid_extension
 
 
@@ -39,18 +42,18 @@ class Forum(models.Model):
 
     idforum = models.AutoField(primary_key=True)
     category = models.ForeignKey(
-        Category, related_name='forums',
+        Category, related_name='categories',
         verbose_name=_('Category')
     )
     parent = models.ForeignKey(
-        'self', related_name='child_forums', verbose_name=_('Parent forum'),
+        'self', related_name='parents', verbose_name=_('Parent forum'),
         blank=True, null=True
     )
     name = models.CharField(_('Name'), max_length=80, unique=True)
     position = models.IntegerField(_('Position'), blank=True, default=0)
     description = models.TextField(_('Description'), blank=True)
     moderators = models.ForeignKey(
-        User, blank=True, null=True,
+        User, related_name='moderators', blank=True, null=True,
         verbose_name=_('Moderators')
     )
     date = models.DateTimeField(_('Date'), blank=True, null=True)
@@ -143,10 +146,10 @@ class Topic(models.Model):
 
     idtopic = models.AutoField(primary_key=True)
     forum = models.ForeignKey(
-        Forum, related_name='topic', verbose_name=_('Forum')
+        Forum, related_name='forums', verbose_name=_('Forum')
     )
     user = models.ForeignKey(
-        User, related_name='Topic', verbose_name=_('User'))
+        User, related_name='users', verbose_name=_('User'))
     slug = models.SlugField(max_length=100)
     title = models.CharField(_('Title'), max_length=80)
     date = models.DateTimeField(_('Date'), blank=False, db_index=False)
@@ -221,10 +224,10 @@ class Comment(models.Model):
 
     idcomment = models.AutoField(primary_key=True)
     topic = models.ForeignKey(
-        Topic, related_name='comments', verbose_name=_('Topic')
+        Topic, related_name='topics', verbose_name=_('Topic')
     )
     user = models.ForeignKey(
-        User, related_name='comments', verbose_name=_('User')
+        User, related_name='comment_users', verbose_name=_('User')
     )
     date = models.DateTimeField(_('Date'), blank=True, db_index=True)
     description = models.TextField(_('Description'), blank=True)
@@ -261,10 +264,10 @@ class Register(models.Model):
 
     idregister = models.AutoField(primary_key=True)
     forum = models.ForeignKey(
-        Forum, related_name='register', verbose_name=_('Forum')
+        Forum, related_name='register_forums', verbose_name=_('Forum')
     )
     user = models.ForeignKey(
-        User, related_name='register', verbose_name=_('User')
+        User, related_name='register_users', verbose_name=_('User')
     )
     date = models.DateTimeField(_('Date'), blank=True, db_index=True)
 
@@ -287,7 +290,7 @@ def generate_path_profile(instance, filename):
 class AbstractProfile(models.Model):
 
     idprofile = models.AutoField(primary_key=True, unique=True)
-    iduser = models.OneToOneField(User, db_index=True)
+    iduser = models.OneToOneField(User, related_name="user", db_index=True)
     photo = models.FileField(
                 upload_to=generate_path_profile, null=True, blank=True,
             )
@@ -295,6 +298,20 @@ class AbstractProfile(models.Model):
 
     def __str__(self):
         return str(self.iduser.username)
+
+    def last_seen(self):
+        return cache.get('seen_%s' % self.iduser.username)
+
+    def online(self):
+        if self.last_seen():
+            now = datetime.datetime.now()
+            if now > self.last_seen() + datetime.timedelta(
+                         seconds=localSettings.USER_ONLINE_TIMEOUT):
+                return False
+            else:
+                return True
+        else:
+            return False
 
     class Meta:
         abstract = True

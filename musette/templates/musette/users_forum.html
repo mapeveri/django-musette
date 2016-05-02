@@ -6,7 +6,7 @@
 
 {% paginate registers %}
 {% for profile in registers %}
-    <div class="col-sm-2">
+    <div class="col-sm-3">
         <div>
             <div class="avatar">
                 <img src="{{profile.user.id|get_photo}}" class="img-thumbnail picture" width="100" hegiht="100" />
@@ -15,7 +15,28 @@
                 <br>
                 <span>{{ profile.user|get_path_profile|safe }}</span>
                 <br>
-                <p>{{profile.date}}</p>
+                <p>{% trans "Joined" %} {{profile.date}}</p>
+                <table>
+                    <tr>
+                        <td>
+                            <b>{% trans "Last Seen" %}</b>
+                            {% if profile.last_seen %}
+                                {{ profile.last_seen|timesince }}
+                            {% else %}
+                                {% trans "awhile ago" %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% if profile.online %}
+                                <ul><li style="color: green; margin-left: -23px"><b>Online</b></li></ul>
+                            {% else %}
+                                <ul><li style="color: red; margin-left: -23px"><b>Online</b></li></ul>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
