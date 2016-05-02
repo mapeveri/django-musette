@@ -18,19 +18,18 @@ from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 
 from .forms import (
-    FormAddTopic, FormEditTopic, 
+    FormAddTopic, FormEditTopic,
     FormAddComment, FormEditProfile
 )
 from .models import (
-    Category, Forum, Topic, 
+    Category, Forum, Topic,
     Comment, Notification, Register,
     AbstractProfile
 )
 from .utils import (
     remove_folder_attachment, get_id_profile,
-    get_users_topic, exists_folder,
-    get_notifications, remove_file,
-    get_route_file, remove_folder,
+    get_users_topic, get_notifications,
+    remove_file, get_route_file,
     get_photo_profile, get_main_model_profile,
     get_app_model, get_count_fields_model
 )
@@ -83,7 +82,6 @@ class ForumView(View):
                 register = False
 
         else:
-            notifications = None
             register = False
 
         data = {
@@ -190,10 +188,15 @@ class NewTopicView(FormView):
                     title_email = "New notification " + settings.SITE_NAME
                     message = "You have one new topic: " + site
                     email_from = settings.EMAIL_MUSETTE
-                    user_moderator = get_object_or_404(User, id=forum.moderators_id)
+                    user_moderator = get_object_or_404(
+                        User, id=forum.moderators_id
+                    )
                     email_moderator = user_moderator.email
                     if email_from:
-                        send_mail(title_email, message, email_from, [email_moderator], fail_silently=False)
+                        send_mail(
+                            title_email, message, email_from,
+                            [email_moderator], fail_silently=False
+                        )
             else:
                 obj.moderate = True
 
@@ -353,7 +356,6 @@ class NewCommentView(View):
 
             # Data for notification real time
             comment = Comment.objects.get(idcomment=idcomment)
-            profile = get_id_profile(request.user.id)
             username = request.user.username
 
             # Get photo profile
@@ -395,7 +397,10 @@ class NewCommentView(View):
             message = "You have one new comment in the topic: " + site + url
             email_from = settings.EMAIL_MUSETTE
             if email_from:
-                send_mail(title_email, message, email_from, lista_email, fail_silently=False)
+                send_mail(
+                    title_email, message, email_from,
+                    lista_email, fail_silently=False
+                )
 
             data = {
                 "description": description,
@@ -714,7 +719,7 @@ class EditProfileView(FormView):
 
             if 'attachment' in request.FILES:
 
-                if not topic.id_attachment:
+                if not obj.id_attachment:
                     id_attachment = get_random_string(length=32)
                     obj.id_attachment = id_attachment
 
@@ -737,4 +742,3 @@ class EditProfileView(FormView):
         else:
             messages.error(request, _("Form invalid"))
             return self.form_invalid(form, **kwargs)
-

@@ -84,9 +84,8 @@ class Forum(models.Model):
     def delete(self, *args, **kwargs):
         if not self.moderators.is_superuser:
             if self.moderators:
-                # Only remove permissions if is moderator one forum
-                tot_forum_moderator = self.tot_forums_moderators(self.moderators)
-                if tot_forum_moderator <= 1:
+                # Only remove permissions if is moderator one foru
+                if self.tot_forums_moderators(self.moderators) <= 1:
                     # Remove permissions to user
                     try:
                         u = User.objects.get(username=self.moderators)
@@ -102,8 +101,7 @@ class Forum(models.Model):
                 if self.old_moderators:
 
                     # Only remove permissions if is moderator one forum
-                    tot_forum_moderator = self.tot_forums_moderators(self.old_moderators)
-                    if tot_forum_moderator <= 1:
+                    if self.tot_forums_moderators(self.old_moderators) <= 1:
                         u = User.objects.get(username=self.old_moderators)
                         u.user_permissions.clear()
 
@@ -284,6 +282,7 @@ def generate_path_profile(instance, filename):
         "profiles", "profile_" + str(instance.iduser_id), filename
     )
 
+
 @python_2_unicode_compatible
 class AbstractProfile(models.Model):
 
@@ -301,11 +300,11 @@ class AbstractProfile(models.Model):
         abstract = True
 
 
-'''
-    This signal is event of model user for create new profile
-'''
-@receiver(post_save, sender = settings.AUTH_USER_MODEL)
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def post_save_user(sender, instance, **kwargs):
+    '''
+    This signal is event of model user for create new profile
+    '''
     if kwargs['created']:
         subclasses = AbstractProfile.__subclasses__()
         if len(subclasses) > 0:

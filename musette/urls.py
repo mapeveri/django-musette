@@ -92,6 +92,7 @@ urlpatterns = [
         r'^profile/(?P<username>.+)/$', ProfileView.as_view(), name='profile'
     ),
     url(
-        r'^edit_profile/(?P<username>[-\w]+)/$', EditProfileView.as_view(), name='edit_profile'
+        r'^edit_profile/(?P<username>[-\w]+)/$', EditProfileView.as_view(),
+        name='edit_profile'
     ),
 ]

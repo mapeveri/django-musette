@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers, viewsets, routers
 
 from .models import (
-    Category, Forum, Topic, 
+    Category, Forum, Topic,
     Register, Comment
 )
 from .utils import get_main_model_profile

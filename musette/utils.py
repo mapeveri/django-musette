@@ -2,16 +2,15 @@
 import os
 import shutil
 
-from django.apps import apps
 from django.conf import settings
 from django.core.paginator import Paginator
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.shortcuts import get_object_or_404
-from django.utils import formats, timezone
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from .models import (
-    Forum, Topic, Comment, 
+    Forum, Topic, Comment,
     Notification, AbstractProfile
 )
 
@@ -93,7 +92,7 @@ def get_main_model_profile():
         try:
             return subclasses[0]
         except Exception:
-            raise BaseException("Occurs one error to get model profile") 
+            raise BaseException("Occurs one error to get model profile")
     else:
         raise BaseException("It is not defined profile model")
 
@@ -168,17 +167,17 @@ def get_datetime_topic(date):
     if difference == 0:
         flag = False
         diff = now - date
-        minutes = (diff.seconds//60) % 60
-        hours = diff.seconds//3600
+        minutes = (diff.seconds // 60) % 60
+        hours = diff.seconds // 3600
         if minutes < 60 and hours == 0:
             difference = "%s %s" % (
-                str((diff.seconds//60) % 60) + "m ", _("ago"))
+                str((diff.seconds // 60) % 60) + "m ", _("ago"))
         else:
-            difference = "%s %s" % (str(diff.seconds//3600) + "h ", _("ago"))
+            difference = "%s %s" % (str(diff.seconds // 3600) + "h ", _("ago"))
 
     # If is days
     if flag:
-        difference = "%s %s" % (str(difference),  _("days ago"))
+        difference = "%s %s" % (str(difference), ("days ago"))
 
     return difference
 
@@ -215,8 +214,8 @@ def helper_paginator(self, request, model, tot_record, nonRecPag):
             'pages': result_list.num_pages,
             'has_next': pagina.has_next(),
             'has_prev': pagina.has_previous(),
-            'next_page': page+1,
-            'prev_page': page-1,
+            'next_page': page + 1,
+            'prev_page': page - 1,
             'firstPage': 1,
         }
         return Contexto

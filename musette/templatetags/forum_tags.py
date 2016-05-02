@@ -64,7 +64,7 @@ def get_path_profile(user):
         Return tag a with profile
     '''
     username = getattr(user, "username")
-    tag = "<a href='/profile/"+ username + "'>"+username+"</a>"
+    tag = "<a href='/profile/" + username + "'>" + username + " </a>"
 
     return tag
 
@@ -87,9 +87,10 @@ def get_tot_users_comments(topic):
 
             photo = get_photo(user.user.id)
 
-            tooltip = "data-toggle='tooltip' data-placement='bottom' title='"+usuario+"'"
-            data += "<a href='/profile/"+ usuario + "' "+tooltip+">"
-            data += "<img class='img-circle' src='"+str(photo)+"' "
+            tooltip = "data-toggle='tooltip' data-placement='bottom' "
+            tooltip += "title='" + usuario + "'"
+            data += "<a href='/profile/" + usuario + "' " + tooltip + ">"
+            data += "<img class='img-circle' src='" + str(photo) + "' "
             data += "width=30, height=30></a>"
 
     if len(users) == 0:
@@ -97,8 +98,8 @@ def get_tot_users_comments(topic):
         iduser = topic.user.id
 
         photo = get_photo(iduser)
-        data += "<a href='/profile/"+ usuario + "'>"
-        data += "<img class='img-circle' src='"+str(photo)+"' "
+        data += "<a href='/profile/" + usuario + "'>"
+        data += "<img class='img-circle' src='" + str(photo) + "' "
         data += "width=30, height=30></a>"
 
     return data
@@ -143,14 +144,14 @@ def get_item_notification(notification):
             url_topic = "/topic/" + forum + "/" + \
                 slug + "/" + str(idtopic) + "/"
 
-            title = "<h5><a href='"+url_topic+"'><u>" + \
-                comment.topic.title+"</u></h5></a>"
+            title = "<h5><a href='" + url_topic + "'><u>" + \
+                comment.topic.title + "</u></h5></a>"
 
-            description = "<p class='black'>"+description+"</p>"
+            description = "<p class='black'>" + description + "</p>"
 
             # Data profile
             photo = get_photo_profile(comment.user.id)
-            user = "<a href='/profile/"+username + \
+            user = "<a href='/profile/" + username + \
                 "'><p>" + username + "</p></a>"
 
             date = get_datetime_topic(notification.date)
@@ -159,16 +160,16 @@ def get_item_notification(notification):
             html += '<div class="list-group">'
             html += '   <div class="list-group-item">'
             html += '      <div class="row-action-primary">'
-            html += '           <img src="'+photo + \
+            html += '           <img src="' + photo + \
                 '" width=20 height=20 class="img-circle" />'
             html += '       </div>'
             html += '       <div class="row-content">'
             html += '           <h4 class="list-group-item-heading">' + \
-                                    title+'</h4>'
+                                    title + '</h4>'
             html += '           <p class="list-group-item-text">' + \
-                                    description+'</p>'
-            html += '           <p>'+user+'</p>'
-            html += '           <p class="black">'+date+'</p>'
+                                    description + '</p>'
+            html += '           <p>' + user + '</p>'
+            html += '           <p class="black">' + date + '</p>'
             html += '        </div>'
             html += '   </div>'
             html += '   <div class="list-group-separator"></div>'
@@ -211,7 +212,7 @@ def get_last_activity(idtopic):
         # Return format data more user with tag <a>
         html = ""
         # html += get_path_profile(comment[0].user)
-        html += " <p>"+str(date)+"</p>"
+        html += " <p>" + str(date) + "</p>"
         return html
     else:
         topic = Topic.objects.get(idtopic=idtopic)
@@ -224,5 +225,5 @@ def get_last_activity(idtopic):
         # Return format data more user with tag <a>
         html = ""
         # html += get_path_profile(topic.user)
-        html += " <p>"+str(date)+"</p>"
+        html += " <p>" + str(date) + "</p>"
         return html
