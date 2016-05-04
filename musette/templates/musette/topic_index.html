@@ -20,7 +20,7 @@
 
   <div>
     <div class="col-md-12">
-        <div class="row">
+        <div>
           <ul class="breadcrumb">
               <li><a href="/forums/">{% trans "Forums" %}</a></li>
               <li><a href="/forum/{{topic.forum.name}}/">{{topic.forum.name}}</a></li>
@@ -31,21 +31,20 @@
         <article class="row">
           <div class="col-md-12 col-sm-12">
             <div class="panel panel-default arrow left">
+              <div class="panel-heading">
+                <h3 class="panel-title"> {{topic.title}}
+                    {% if topic.is_top %}
+                    <i class="glyphicon glyphicon-star"></i>
+                    {% endif %}
+                    </h3>
+              </div>
               <div class="panel-body">
 
-                <div class="pull-left col-md-2">
+                <div class="pull-left col-md-2 post-info-left">
                   <figure class="thumbnail">
                         <img src="{{ photo }}" class="img-responsive" width="150" hegiht="150" />
                       <figcaption class="text-center">{{topic.user|get_path_profile|safe}}</figcaption>
                   </figure>
-                  <div style="text-align: center">
-                      {% if topic.user.id == user.id %}
-                      <a href="/edit_topic/{{topic.forum.name}}/{{topic.idtopic}}/" class="btn btn-inverse btn-xs" style="min-width: 8em">
-                        <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</a>
-                      <a style="cursor: pointer; min-width: 8em; margin-top: 0em" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
-                        <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}</a>
-                      {% endif %}
-                  </div>
                   <table>
                     <tr>
                         <td>
@@ -60,9 +59,9 @@
                     <tr>
                         <td>
                             {% if topic.user.user.online %}
-                                <ul><li style="color: green; margin-left: -23px"><b>Online</b></li></ul>
+                                <div class="label label-success"><b>Online</b></div>
                             {% else %}
-                                <ul><li style="color: red; margin-left: -23px"><b>Online</b></li></ul>
+                                <div class="label label-danger"><b>Online</b></div>
                             {% endif %}
                         </td>
                     </tr>
@@ -70,14 +69,6 @@
                 </div>
 
                 <div class="col-md-8">
-                  <header>
-                    <h3> {{topic.title}}
-                    {% if topic.is_top %}
-                    <i class="glyphicon glyphicon-star"></i>
-                    {% endif %}
-                    </h3>
-                    <hr>
-                  </header>
                   <div class="comment-post">
                     <p>
                       {{topic.description|safe}}
@@ -94,6 +85,14 @@
                       <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "view" %}</p>
                     {% endif %}
                     <p><b><u>{% trans "Users" %}</u></b> {{topic|get_tot_users_comments|safe}} </p>
+
+                    {% if topic.user.id == user.id %}
+                      <br>
+                      <button onclick="document.location ='/edit_topic/{{topic.forum.name}}/{{topic.idtopic}}/'" class="btn btn-inverse btn-xs" style="min-width: 8em">
+                        <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</button>
+                      <a style="cursor: pointer; min-width: 8em; margin-top: 0em" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
+                        <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}</a>
+                    {% endif %}
                   </div>
                   <p class="pull-right">{{topic.date}}</p>
                 </div>
@@ -102,7 +101,6 @@
             </div>
           </div>
         </article>
-
     </div>
   </div>
 
@@ -116,32 +114,35 @@
   <input type="hidden" ng-model="topic_id_ws" name="topic_id_ws" id="topic_musette" value="{{topic.idtopic}}" />
 
   {% verbatim %}
-    <div ng-repeat="comment in comments_socket">
-      <article class="row">
-          <div class="col-md-1 col-sm-1 hidden-xs">
-            <figure class="thumbnail">
-              <a href="/profile/{{ comment.username }}">
-                  <img ng-src="{{ comment.photo }}" class="img-responsive">
-              </a>
-            </figure>
-          </div>
-          <div class="col-md-11 col-sm-11">
-            <div class="panel panel-default arrow left">
-              <div class="panel-body">
-                <header class="text-left">
-                  <time class="comment-date"><i class="glyphicon glyphicon-time"></i> {% endverbatim %} {% trans "Now" %} {% verbatim %}</time>
-                </header>
-                <div class="comment-post">
-                  <div class="well" style="margin-top: 5px">
-                    {{comment.description | htmlToPlaintext }}
-                  </div>
-                  <span><a href="{{ comment.url_profile_param }}">{{ comment.username }}</a></span>
+    <article ng-repeat="comment in comments_socket">
+        <div class="col-lg-12">
+          <div class="panel panel-default arrow left">
+            <div class="panel-body">
+              <header class="text-left">
+                <time class="comment-date"><i class="glyphicon glyphicon-time"></i>
+                {% endverbatim %} {% trans "Now" %} {% verbatim %}</time>
+              </header>
+              <div class="comment-post">
+                <div class="well" style="margin-top: 5px">
+                 {{comment.description | htmlToPlaintext }}
                 </div>
+                <span>
+                    <a href="/profile/{{comment.username}}">
+                         <img class="img-circle" ng-src="{{ comment.photo }}""
+                         width="30" height="30" />
+                    </a>
+                    <a href="/profile/{{comment.username}}">{{ comment.username }}</a>
+                    <br>
+                    <div class="label label-success"><b>Online</b></div>
+
+                    <b>{% endverbatim %} {% trans "Last Seen" %} {% verbatim %}</b>
+                    {% endverbatim %} 0 {% trans "minutes" %} {% verbatim %}
+                </span>
               </div>
             </div>
           </div>
+       </div>
       </article>
-    </div>
   {% endverbatim %}
 
   {% if comments.count > 0 %}

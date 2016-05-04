@@ -171,13 +171,13 @@ def get_datetime_topic(date):
         hours = diff.seconds // 3600
         if minutes < 60 and hours == 0:
             difference = "%s %s" % (
-                str((diff.seconds // 60) % 60) + "m ", _("ago"))
+                _("ago"), str((diff.seconds // 60) % 60) + "m ")
         else:
-            difference = "%s %s" % (str(diff.seconds // 3600) + "h ", _("ago"))
+            difference = "%s %s" % (_("ago"), str(diff.seconds // 3600) + "h ")
 
     # If is days
     if flag:
-        difference = "%s %s" % (str(difference), ("days ago"))
+        difference = "%s %s %s" % (_("ago"), str(difference), _("days ago"))
 
     return difference
 

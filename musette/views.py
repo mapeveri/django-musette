@@ -27,7 +27,7 @@ from .models import (
     AbstractProfile
 )
 from .utils import (
-    remove_folder_attachment, get_id_profile,
+    remove_folder_attachment,
     get_users_topic, get_notifications,
     remove_file, get_route_file,
     get_photo_profile, get_main_model_profile,

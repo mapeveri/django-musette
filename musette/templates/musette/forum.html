@@ -5,29 +5,36 @@
 
 {% paginate topics %}
 {% for topic in topics %}
-	{% if topic.moderate %}
-	    <tr>
-	    	<td><i class="glyphicon glyphicon-comment"</i></td>
-	        <td style="max-width: 25.0em">
-	        	<a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/"
-	        	data-toggle="tooltip" data-placement="bottom" title="{% trans 'Views' %}: {% get_tot_views topic.idtopic %}">
-	        	{{topic.title}}
-				{% if topic.is_top %}
-	        	<i class="glyphicon glyphicon-star"></i>
-	        	{% endif %}
-	        	</a>
-	        	<p>{{ topic.description|safe|truncatechars:300 }}</p>
-	    	</td>
-	        <td>
-	        	<img src="{{topic.user.id|get_photo}}" class='img-circle' width="30", height="30" />
-	        	<p>{{topic.user|get_path_profile|safe}}</p>
-	        </td>
-	        <td> {{ topic.idtopic|get_last_activity|safe }} </td>
-	        <td>{{topic.idtopic|get_tot_comments}}</td>
-	        <td>{% get_tot_views topic.idtopic %}</td>
-	        <td>{{ topic.date }}</td>
-	        <td></td>
-	    </tr>
+    {% if topic.moderate %}
+        <tr>
+            <td style="max-width: 25.0em">
+                <span class="pull-left forum-icon" style="margin-right: 5px">
+                    <a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/ class="btn btn-lg btn-default tooltip-link">
+                        <i class="glyphicon glyphicon-comment"></i>
+                    </a>
+                </span>
+                <div class="forum-icon-mobile">
+                    <i class="fa fa-folder fa-fw"></i>
+                </div>
+
+                <a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/"
+                data-toggle="tooltip" data-placement="bottom" title="{% trans 'Views' %}: {% get_tot_views topic.idtopic %}">
+                {{topic.title}}
+                {% if topic.is_top %}
+                <i class="glyphicon glyphicon-star"></i>
+                {% endif %}
+                </a>
+                <small>{{ topic.description|safe|truncatechars:300 }}</small>
+            </td>
+            <td>
+                <img src="{{topic.user.id|get_photo}}" class='img-circle' width="30", height="30" />
+                <p>{{topic.user|get_path_profile|safe}}</p>
+            </td>
+            <td> {{ topic.idtopic|get_last_activity|safe }} </td>
+            <td>{{topic.idtopic|get_tot_comments}}</td>
+            <td>{% get_tot_views topic.idtopic %}</td>
+            <td>{{ topic.date }}</td>
+        </tr>
     {% endif %}
 {% endfor %}
 

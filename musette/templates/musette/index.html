@@ -8,44 +8,54 @@
 
 <div class="container">
 
-	<ul class="breadcrumb">
-	    <li class="active">{% trans "Forums" %}</li>
-	</ul>
+    <ul class="breadcrumb">
+        <li class="active">{% trans "Forums" %}</li>
+    </ul>
 
-	<div class="panel panel-default">
-		<div class="panel-heading"><h4>{% trans "Forums" %}</h4></div>
-	  	<div class="panel-body">
-	    	{% for category in categories %}
-				<h4><u>{% trans "Category" %}: {{category.name}}</u></h4>
-		    	<div class="list-group">
-				  	{% for forum in category.idcategory|in_category %}
-				  		{% if not forum.parent %}
-					  		<div class="list-group-item">
-						        <div class="row-action-primary">
-						            <i class="glyphicon glyphicon-tasks"></i>
-						        </div>
-						        <div class="row-content">
-						            <div class="least-content"></div>
-						            <a href="/forum/{{ forum.name }}/" class="list-group-item">
-									  	<span class="badge" style="margin-top: 5px">{{ forum.topics_count }}</span>
-									    <h4 class="list-group-item-heading">{{ forum.name }}</h4>
-									    <p class="list-group-item-text">{{ forum.description|safe }}</p>
-									</a>
-						        </div>
-						    </div>
-						    <div class="list-group-separator"></div>
-					    {% endif %}
-					{% empty %}
-						<p class="text-info"> {% trans "No topics" %} <p>
-				  	{% endfor %}
-				</div>
+    {% for category in categories %}
+        <table class="table table-striped table-bordered">
+            <thead class="topiclist">
+                <tr>
+                    <th class="forum-name"><i class="fa fa-sitemap"></i>
+                    {{category.name}}</th>
+                    <th><i class="fa fa-comments-o"></i> {% trans "Topics" %}</th>
+                    <th><i class="fa fa-pencil-square-o"></i> {% trans "Users" %}</th>
+                    <th><i class="fa fa-history"></i> <span> {% trans "Created"%}</span></th>
+                </tr>
+            </thead>
+            <tbody class="topiclist forums">
+                {% for forum in category.idcategory|in_category %}
+                      {% if not forum.parent %}
+                        <tr>
+                            <td class="forum-name" title="No unread posts">
+                                <span class="pull-left forum-icon" style="margin-right: 5px">
+                                    <a href="/forum/{{ forum.name }}/" class="btn btn-lg btn-default tooltip-link">
+                                        <i class="glyphicon glyphicon-tasks"></i>
+                                    </a>
+                                </span>
+                                <div class="forum-icon-mobile">
+                                    <i class="fa fa-folder fa-fw"></i>
+                                </div>
+                                <a href="/forum/{{ forum.name }}/" class="forumtitle"> {{ forum.name }}</a><br>
+                                <small>{{ forum.description|safe }}</small>
+                            </td>
 
-			{% empty %}
-				<p class="text-info"> {% trans "Please, you add forums and categories in the administrator." %} <p>
-			{% endfor %}
+                            <td><span class="badge">{{ forum.topics_count }}</span></td>
+                            <td><span class="badge">{{ forum.register_forums.all.count }}</span></td>
+                            <td><span>
+                                <dfn>{{ forum.date }}</dfn>
+                            </td>
+                        </tr>
 
-	  	</div>
-	</div>
+                    {% endif %}
+                {% empty %}
+                    <p class="text-info"> {% trans "No topics" %} <p>
+                {% endfor %}
+        </tbody>
+    </table>
+    {% empty %}
+        <p class="text-info"> {% trans "Please, you add forums and categories in the administrator." %} <p>
+    {% endfor %}
 
 </div>
 

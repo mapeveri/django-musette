@@ -36,13 +36,11 @@ Features
 14. Avatar profile.
 15. Easy integration with other applications Django of your project.
 16. Models registered in admin django for administrators.
-17. Modern design, thank you to Bootstrap material design.
+17. Support check user online.
 18. Support to English and Spanish languages.
 19. Validation of forms in real time with AngularJs.
-20. Support to Markdown.
-21. API REST with django-rest-framework.
-22. Support Python 3.
-23. Support check user online.
+20. API REST with django-rest-framework.
+21. Support Python 3.
 
 **Note 1:** Not support login, logout and nothing refered to authentication. Use authentication django admin. 
 
@@ -114,8 +112,8 @@ Quick start
 6. In MIDDLEWARE_CLASSES add this line:
 
         MIDDLEWARE_CLASSES = (
-            ...
-            'musette.middleware.ActiveUserMiddleware',
+                ...
+                'musette.middleware.ActiveUserMiddleware',
         )
 
 7. In your application must add the profile model do the following. For example your app is 'main', in models.py and admin.py add::

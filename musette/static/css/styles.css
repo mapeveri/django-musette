@@ -24,11 +24,6 @@ a, a:hover, a:focus {
   list-style-type: none;
 }
 
-.item-notification{
-  width: 35em;
-  text-transform: none;
-}
-
 .without-text-transform{
   text-transform: none;
 }
@@ -46,7 +41,7 @@ a, a:hover, a:focus {
   Margin left for buttons join and unregister forum
 */
 .margin-left-unregister{
-  margin-left: 2em;
+  margin-left: 1em;
 }
 
 @media screen and (min-width:1280px) {
@@ -80,4 +75,65 @@ a, a:hover, a:focus {
 /* For that not outside textarea in div*/
 .in_div_textarea{
   overflow: auto;
+}
+
+/* Notifications */
+.dropdown {
+    display:inline-block;
+    margin-left:20px;
+    padding:10px;
+}
+
+
+.glyphicon-bell {
+    font-size:1.5rem;
+}
+
+.notifications {
+   min-width:420px;
+}
+
+.notifications-wrapper {
+  overflow:auto;
+  max-height:250px;
+}
+
+.menu-title {
+ color:#ff7788;
+ font-size:1.5rem;
+ display:inline-block;
+}
+
+.glyphicon-circle-arrow-right {
+   margin-left:5px;
+}
+
+.notification-heading, .notification-footer  {
+ padding:2px 10px;
+}
+
+.dropdown-menu.divider {
+  margin:5px 0;
+}
+
+.item-title {
+ font-size:1.3rem;
+ color:#000;
+}
+
+.notifications a.content {
+ text-decoration:none;
+ background:#ccc;
+}
+
+.notification-item {
+ padding:10px;
+ margin:5px;
+ background:#ccc;
+ border-radius:4px;
+}
+
+/* Topic line user */
+.post-info-left {
+    border-right: 1px solid #eee;
 }

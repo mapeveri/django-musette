@@ -16,118 +16,121 @@
 
 <div class="container">
 
-	<ul class="breadcrumb">
-	    <li><a href="/forums/">{% trans "Forums" %}</a></li>
-	    {% if forum.parent %}
-	    	<li><a href="/forum/{{ forum.parent }}">{{ forum.parent }}</a></li>	
-	    {% endif %}
-	    <li class="active">{{ forum }}</li>
-	</ul>
+    <ul class="breadcrumb">
+        <li><a href="/forums/">{% trans "Forums" %}</a></li>
+        {% if forum.parent %}
+            <li><a href="/forum/{{ forum.parent }}">{{ forum.parent }}</a></li>
+        {% endif %}
+        <li class="active">{{ forum }}</li>
+    </ul>
 
-	{% if forums_childs|length > 0 %}
-	<h5>Sub-{% trans "Forums" %}: {{ forum.name }}</h5>
-	{% endif %}
+    <div class="page-header">
+      <h1>{{ forum.name }} <small>{{forum.description|striptags}}</small></h1>
+    </div>
 
-	{% for forum in forums_childs %}
-		<span class="label label-default"><a href="/forum/{{ forum.name }}" style="color: white">{{ forum.name }}</a></span>
-	{% endfor %}
+    {% get_hit_count for forum as total_hits %}
 
-	{% if forums_childs|length > 0 %}
-		<br>
-		<br>
-	{% endif %}
-
-	{% get_hit_count for forum as total_hits %}
-
-	{% if forum.moderators_id == user.id %}
-		{% if forum.is_moderate %}
-			{% if forum|get_tot_topics_moderate > 0 %}
-				<div class="alert alert-success" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-					<p>{% trans "The forum "%} {{forum.name}} {% trans "is pending moderations" %}</p>
-				</div>
-			{% endif %}
-		{% endif %}
-	{% endif %}
-
-	<h5>{{forum.description|safe}}</h5>
-	{% if register or user.is_superuser or forum.moderators.id == user.id %}
-		<div class="row">
-			<div class="col-md-1">
-		    	<a href="/newtopic/{{forum.name}}/" class="btn btn-raised btn-inverse btn-sm"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</a>
-			</div>
-			{% if not user.is_superuser and not forum.moderators.id == user.id %}
-			<div class="col-md-1 margin-left-unregister">
-		    	<form method="POST" action="/unregister/{{forum}}/">
-		    		{% csrf_token %}
-		    		<button type="submit" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Unregister" %}</button>
-		    	</form>
-		    </div>
-		    {% endif %}
-    	</div>
-    {% else %}
-    	<form method="POST" action="/new_register/{{forum}}/">
-    		{% csrf_token %}
-    		<button type="submit" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Join to forum" %}</button>
-    	</form>
+    {% if forum.moderators_id == user.id %}
+        {% if forum.is_moderate %}
+            {% if forum|get_tot_topics_moderate > 0 %}
+                <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                    <p>{% trans "The forum "%} {{forum.name}} {% trans "is pending moderations" %}</p>
+                </div>
+            {% endif %}
+        {% endif %}
     {% endif %}
 
-	<div class="panel panel-default" ng-controller="ForumTopicController">
-		<div class="panel-heading" style="height: 2.8em">
-			<p>{% trans "Forum" %}: {{forum.name}}
-				{% if total_hits|add:"0" > 1 %}
-					<span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "views" %})</span>
-				{% else %}
-					<span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "view" %})</span>
-				{% endif %}
-			</p>
-		</div>
-	  	<div class="panel-body">
-    		<div class="table-responsive">
-				<div class="col-lg-6">
-					<a href="/users_forum/{{forum}}/"> <i class="glyphicon glyphicon-user"></i> {% trans "Forum members" %}</a>
-				</div>
-				<div class="col-lg-3">
-				</div>
-    			<div class="col-lg-3">
-    				<div class="inner-addon right-addon">
-    					<span class="glyphicon glyphicon-search"></span>
-				    	<input type="text" class="form-control" ng-model="search_text" placeholder="{% trans 'Find Topics' %}" ng-enter="search('{{forum.name}}')" />
-					</div>
-				</div>
+    {% if register or user.is_superuser or forum.moderators.id == user.id %}
+        <div class="row">
+            <div class="col-md-1">
+                <button onclick="window.location = '/newtopic/{{forum.name}}/'" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</button>
+            </div>
+            {% if not user.is_superuser and not forum.moderators.id == user.id %}
+            <div class="col-md-1 margin-left-unregister">
+                <form method="POST" action="/unregister/{{forum}}/">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Unregister" %}</button>
+                </form>
+            </div>
+            {% endif %}
+        </div>
+    {% else %}
+        <form method="POST" action="/new_register/{{forum}}/">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Join to forum" %}</button>
+        </form>
+    {% endif %}
+    <br>
 
-				<table class="table table-striped">
-				    <thead>
-				      <tr>
-				      	<th>#</th>
-				        <th>{% trans "Title" %}</th>
-				        <th>{% trans "User" %}</th>
-				        <th>{% trans "Last activity" %}</th>
-				    	<th>{% trans "Responses" %}</th>
-				    	<th>{% trans "Views" %}</th>
-				        <th>{% trans "Date" %}</th>
-				        <th><a href="/feed/{{forum}}/"><img src="{% static 'img/feed.png' %}" /></a></th>
-				      </tr>
-				    </thead>
-				    <tbody endless-pagination="{'paginateOnScroll': true}">
-						{% include "musette/forum.html" %}
-				    </tbody>
-				</table>
-			</div>
+    <div class="panel panel-default" ng-controller="ForumTopicController">
+        <div class="panel-heading" style="height: 2.8em">
+            <p>
+                {% if total_hits|add:"0" > 1 %}
+                    <span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "views" %})</span>
+                {% else %}
+                    <span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "view" %})</span>
+                {% endif %}
+            </p>
+        </div>
+          <div class="panel-body">
+            <div class="table-responsive">
+                <div class="col-lg-8" style="margin-left: -14px">
+                    <a href="/users_forum/{{forum}}/"> <i class="glyphicon glyphicon-user"></i> {% trans "Forum members" %}</a>
+                    <br>
+                    <div style="margin-top: 1em; margin-bottom: 1em">
+                        {% if forums_childs|length > 0 %}
+                        <span><b>Sub-{% trans "Forums" %}</b></span>
+                        {% endif %}
 
-			<div class="pull-left">
-				<b>{% trans "Topics" %}: {{forum.topics_count}}</b>
-				{% if forum.is_moderate %}
-					{% if forum|get_tot_topics_moderate > 0 %}
-						<b> ({% trans "Missing for moderate" %}: {{forum|get_tot_topics_moderate}})</b>
-					{% endif %}
-				{% endif %}
-				<br>
-				<p>{% trans "Created" %}: {{forum.date}}</p>
-			</div>
+                        {% for forum in forums_childs %}
+                            <span class="label label-default"><a href="/forum/{{ forum.name }}" style="color: white">{{ forum.name }}</a></span>
+                    {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-3" style="margin-bottom: 5px">
+                    <div class="inner-addon right-addon">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <input type="text" class="form-control" ng-model="search_text" placeholder="{% trans 'Find Topics' %}" ng-enter="search('{{forum.name}}')" />
+                    </div>
+                </div>
+                <div class="col-md-1">
+                    <a href="/feed/{{forum}}/"><img src="{% static 'img/feed.png' %}" />
+                        <small>Rss</small>
+                    </a>
 
-	  	</div>
-	</div>
+                </div>
+
+                <table class="table table-striped table-bordered">
+                    <thead>
+                      <tr>
+                        <th>{% trans "Title" %}</th>
+                        <th>{% trans "User" %}</th>
+                        <th>{% trans "Last activity" %}</th>
+                        <th>{% trans "Responses" %}</th>
+                        <th>{% trans "Views" %}</th>
+                        <th>{% trans "Date" %}</th>
+                      </tr>
+                    </thead>
+                    <tbody endless-pagination="{'paginateOnScroll': true}">
+                        {% include "musette/forum.html" %}
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="pull-left">
+                <b>{% trans "Topics" %}: {{forum.topics_count}}</b>
+                {% if forum.is_moderate %}
+                    {% if forum|get_tot_topics_moderate > 0 %}
+                        <b> ({% trans "Missing for moderate" %}: {{forum|get_tot_topics_moderate}})</b>
+                    {% endif %}
+                {% endif %}
+                <br>
+                <p>{% trans "Created" %}: {{forum.date}}</p>
+            </div>
+
+          </div>
+    </div>
 
 </div>
 

@@ -123,8 +123,8 @@ def get_tot_topics_moderate(forum):
 @register.filter
 def get_item_notification(notification):
     '''
-        This filter return info about
-        one notification of one user
+    This filter return info about
+    one notification of one user
     '''
     idobject = notification.idobject
     is_comment = notification.is_comment
@@ -137,8 +137,6 @@ def get_item_notification(notification):
             forum = comment.topic.forum.name
             slug = comment.topic.slug
             idtopic = comment.topic.idtopic
-            description = Truncator(comment.description).chars(100)
-            description = description.replace("p>", "p class='black'>", 1)
             username = comment.user.username
 
             url_topic = "/topic/" + forum + "/" + \
@@ -147,34 +145,20 @@ def get_item_notification(notification):
             title = "<h5><a href='" + url_topic + "'><u>" + \
                 comment.topic.title + "</u></h5></a>"
 
-            description = "<p class='black'>" + description + "</p>"
-
             # Data profile
             photo = get_photo_profile(comment.user.id)
-            user = "<a href='/profile/" + username + \
-                "'><p>" + username + "</p></a>"
-
             date = get_datetime_topic(notification.date)
 
             # Notificacion
-            html += '<div class="list-group">'
-            html += '   <div class="list-group-item">'
-            html += '      <div class="row-action-primary">'
-            html += '           <img src="' + photo + \
-                '" width=20 height=20 class="img-circle" />'
-            html += '       </div>'
-            html += '       <div class="row-content">'
-            html += '           <h4 class="list-group-item-heading">' + \
-                                    title + '</h4>'
-            html += '           <p class="list-group-item-text">' + \
-                                    description + '</p>'
-            html += '           <p>' + user + '</p>'
-            html += '           <p class="black">' + date + '</p>'
-            html += '        </div>'
-            html += '   </div>'
-            html += '   <div class="list-group-separator"></div>'
-            html += '</div>'
-
+            html += '<a class="content" href="' + url_topic + '">'
+            html += '   <div class="notification-item">'
+            html += '    <h4 class="item-title">'
+            html += '<img class="img-circle" src="' + photo + '"'
+            html += ' width=25 height=25 />'
+            html += username + " - " + str(date) + '</h4>'
+            html += '    <p class="item-info"> ' + title + '</p>'
+            html += '  </div>'
+            html += '</a>'
         except Comment.DoesNotExist:
             html = ""
     else:

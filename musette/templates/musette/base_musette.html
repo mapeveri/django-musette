@@ -5,14 +5,14 @@
     {% load i18n %}
     {% load static %}
 
+    <title> {{ SETTINGS.SITE_NAME }} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/material/material.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 
 <body ng-app="MusetteApp">
-    <div class="navbar navbar-inverse">
+    <div class="navbar navbar-default">
 
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -21,7 +21,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/forums/">{{ SETTINGS.SITE_NAME }}</a>
+
+          <a class="navbar-brand" href="/forums/" style="margin-top: -10px; margin-bottom: 5px">
+              <img src="{% static 'img/logo.png' %}" width="160" height="100" class="img-responsive">
+          </a>
         </div>
 
         <div class="container">
@@ -47,7 +50,7 @@
     <footer>
         <div class="container">
             <div class="pull-left">
-                <a href="/"><p class="text-muted">Django forum musette</p></a>
+                <a href="/"><p class="text-muted"> {{ SETTINGS.SITE_NAME }} </p></a>
             </div>
             {% if SETTINGS.LANGUAGES|length > 1 %}
             <div id="lenguage_sel" class="pull-right">
@@ -66,19 +69,19 @@
                         {% endfor %}
                         </select>
                         <span class="input-group-btn">
-                            <input type="submit" class="btn btn-flat btn-primary  btn-sm" value="Go" />
+                            <input type="submit" class="btn btn-flat btn-default  btn-sm" value="Go" />
                         </span>
                     </div>
                 </form>
             </div>
             {% endif %}
         </div>
+        <br>
     </footer>
 
     {% block hitcount_javascript %}{% endblock %}
     <script src="{% static 'js/libs/jquery/jquery-2.1.3.min.js' %}"></script>
     <script src="{% static 'js/libs/bootstrap/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/libs/bootstrap/material/material.js' %}"></script>
     <script src="{% static 'js/frameworks/angularjs/angular.min.js' %}"></script>
     <script src="{% static 'hitcount/hitcount-jquery.js' %}"></script>
 

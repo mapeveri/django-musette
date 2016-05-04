@@ -6,34 +6,8 @@
 <!-- Comments-->
 {% paginate comments %}
 {% for comment in comments %}
-  <article class="row">
-    <div class="col-md-1 col-sm-1 hidden-xs">
-      <figure class="thumbnail">
-        <a href="/profile/username/{{comment.user}}"><img class="img-responsive" src="{{comment.user.id|get_photo}}"/></a>
-      </figure>
-      <table>
-        <tr>
-            <td>
-                <b>{% trans "Last Seen" %}</b>
-                {% if comment.user.user.last_seen %}
-                    {{ comment.user.user.last_seen|timesince }}
-                {% else %}
-                    {% trans "awhile ago" %}
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {% if comment.user.user.online %}
-                    <ul><li style="color: green; margin-left: -23px"><b>Online</b></li></ul>
-                {% else %}
-                    <ul><li style="color: red; margin-left: -23px"><b>Online</b></li></ul>
-                {% endif %}
-            </td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-md-11 col-sm-11">
+  <article>
+    <div class="col-lg-12">
       <div class="panel panel-default arrow left">
         <div class="panel-body">
           <header class="text-left">
@@ -43,12 +17,30 @@
             <div class="well" style="margin-top: 5px">
               {{comment.description|safe}}
             </div>
-            <span>{{comment.user|get_path_profile|safe}}</span>
+            <span>
+                <a href="/profile/{{comment.user}}">
+                     <img class="img-circle" src="{{comment.user.id|get_photo}}"
+                     width="30" height="30" />
+                </a>
+                {{comment.user|get_path_profile|safe}}
+                <br>
+                {% if comment.user.user.online %}
+                    <div class="label label-success"><b>Online</b></div>
+                {% else %}
+                    <div class="label label-danger"><b>Online</b></div>
+                {% endif %}
+                <b>{% trans "Last Seen" %}</b>
+                {% if comment.user.user.last_seen %}
+                    {{ comment.user.user.last_seen|timesince }}
+                {% else %}
+                    {% trans "awhile ago" %}
+                {% endif %}
+            </span>
           </div>
           {% if comment.user.id == user.id %}
             <div class="span4 offset4 text-right">
-              <a style="cursor: pointer" data-toggle="modal" data-target="#myModal_{{comment.idcomment}}" class="btn btn-inverse btn-sm">
-                <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</a>
+              <button data-toggle="modal" data-target="#myModal_{{comment.idcomment}}" class="btn btn-inverse btn-sm">
+                <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</button>
 
               <a style="cursor: pointer" data-toggle="modal" data-target="#myModal_{{comment.idcomment}}_remove" class="btn btn-danger btn-sm">
                 <i class="glyphicon glyphicon-trash"></i> {% trans "Remove" %}</a>
@@ -56,7 +48,7 @@
           {% endif %}
         </div>
       </div>
-    </div>
+   </div>
   </article>
 
   <!-- Modal edit comment -->
