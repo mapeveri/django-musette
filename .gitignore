@@ -4,7 +4,7 @@ settings_local.py
 *.sqlite3
 migrations
 /staticfiles/
-/media/
+example/media/
 /build/
 /dist/
 /django_musette.egg-info/
