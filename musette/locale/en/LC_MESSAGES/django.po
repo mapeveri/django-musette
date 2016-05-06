@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 21:33-0400\n"
+"POT-Creation-Date: 2016-05-05 22:09-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -151,11 +151,16 @@ msgstr ""
 msgid "Registers"
 msgstr ""
 
-#: musette/models.py:355
+#: musette/models.py:356
+msgid ""
+"Css Bootstrap class for navbar. Like \"default\", \"inverse\" or somo custom."
+msgstr ""
+
+#: musette/models.py:361
 msgid "Configuration"
 msgstr ""
 
-#: musette/models.py:356
+#: musette/models.py:362
 msgid "Configurations"
 msgstr ""
 

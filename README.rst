@@ -41,6 +41,7 @@ Features
 19. Validation of forms in real time with AngularJs.
 20. API REST with django-rest-framework.
 21. Support Python 3.
+22. Configuration logo and class css for navbar.
 
 **Note 1:** Not support login, logout and nothing refered to authentication. Use authentication django admin. 
 

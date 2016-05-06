@@ -351,7 +351,11 @@ class Configuration(models.Model):
             )
     logo_width = models.PositiveIntegerField(null=True, blank=True)
     logo_height = models.PositiveIntegerField(null=True, blank=True)
-    class_main = models.CharField(max_length=50, null=True, blank=True)
+    class_main = models.CharField(
+        max_length=50, null=True, blank=True,
+        help_text=_('Css Bootstrap class for navbar. Like '
+        '"default", "inverse" or somo custom.')
+    )
 
     class Meta(object):
         verbose_name = _('Configuration')
