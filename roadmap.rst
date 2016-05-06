@@ -2,7 +2,7 @@
 Roadmap Django-Musette
 ======================
 
-**For version (0.2.0) complete the next issues:**
+**For version (0.2.2) complete the next issues:**
 
 1. Issue #39 "Suport to markdown".
 2. Issue #40 "Notifications and comments NoSQL". 

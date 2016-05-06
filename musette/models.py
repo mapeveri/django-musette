@@ -360,3 +360,6 @@ class Configuration(models.Model):
     class Meta(object):
         verbose_name = _('Configuration')
         verbose_name_plural = _('Configurations')
+
+    def __str__(self):
+        return str(self.idconfig)
