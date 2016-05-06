@@ -1,11 +1,10 @@
-*.pyc
 settings_local.py
-contenido.txt
+*.pyc
 *.mo
+*.sqlite3
 migrations
 /staticfiles/
-/tests/media/
-*.sqlite3
+/media/
 /build/
 /dist/
 /django_musette.egg-info/

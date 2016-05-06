@@ -96,15 +96,11 @@ WSGI_APPLICATION = 'tests.wsgi.application'
 
 LOGIN_URL = "/"
 
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# Import local settings
+try:
+    from .settings_local import *
+except ImportError:
+    pass
 
 # Cache
 CACHES = {

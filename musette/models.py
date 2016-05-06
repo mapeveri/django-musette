@@ -53,7 +53,7 @@ class Forum(models.Model):
     position = models.IntegerField(_('Position'), blank=True, default=0)
     description = models.TextField(_('Description'), blank=True)
     moderators = models.ForeignKey(
-        User, related_name='moderators', blank=True, null=True,
+        User, related_name='moderators', blank=False, null=False,
         verbose_name=_('Moderators')
     )
     date = models.DateTimeField(_('Date'), blank=True, null=True)
@@ -71,7 +71,10 @@ class Forum(models.Model):
 
     def __init__(self, *args, **kwargs):
         super(Forum, self).__init__(*args, **kwargs)
-        self.old_moderators = self.moderators
+        try:
+            self.old_moderators = self.moderators
+        except:
+            pass
 
     def __str__(self):
         return self.name
@@ -329,3 +332,27 @@ def post_save_user(sender, instance, **kwargs):
             Profile = subclasses[0]
             profile = Profile(iduser=user)
             profile.save()
+
+
+def generate_path_configuration(instance, filename):
+    return os.path.join(
+        "configuration", filename
+    )
+
+
+@python_2_unicode_compatible
+class Configuration(models.Model):
+    """
+    Model configuration mussete like logo and class css
+    """
+    idconfig = models.AutoField(primary_key=True)
+    logo = models.FileField(
+                upload_to=generate_path_configuration, null=True, blank=True,
+            )
+    logo_width = models.PositiveIntegerField(null=True, blank=True)
+    logo_height = models.PositiveIntegerField(null=True, blank=True)
+    class_main = models.CharField(max_length=50, null=True, blank=True)
+
+    class Meta(object):
+        verbose_name = _('Configuration')
+        verbose_name_plural = _('Configurations')

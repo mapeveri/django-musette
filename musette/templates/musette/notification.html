@@ -36,6 +36,8 @@
         {% endverbatim %}
         {% for notification in notifications|slice:"5" %}
             {{notification|get_item_notification|safe}}
+        {% empty %}
+            <p style="margin-left: 5px">{% trans "No notifications"%}</p>
         {% endfor %}
      </div>
     <li class="divider"></li>

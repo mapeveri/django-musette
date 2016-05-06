@@ -12,7 +12,7 @@
 </head>
 
 <body ng-app="MusetteApp">
-    <div class="navbar navbar-default">
+    <div class="navbar navbar-{% if configurations.class_main %}{{configurations.class_main}}{% else %}default{% endif %}" style="border-radius: 0px">
 
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -23,7 +23,14 @@
           </button>
 
           <a class="navbar-brand" href="/forums/" style="margin-top: -10px; margin-bottom: 5px">
-              <img src="{% static 'img/logo.png' %}" width="160" height="100" class="img-responsive">
+              {% if configurations.logo  %}
+                  <img src="{{ MEDIA_URL }}{{ configurations.logo }}"
+                      width="{% if configurations.logo_width %}{{configurations.logo_width}}{% else %}160{% endif %}"
+                      height="{% if configurations.logo_height %}{{configurations.logo_height}}{% else %}160{% endif %}"
+                      class="img-responsive">
+              {% else %}
+                  <img src="{% static 'img/logo.png' %}" width="160" height="100" class="img-responsive">
+              {% endif %}
           </a>
         </div>
 

@@ -3,15 +3,15 @@
 {% load forum_tags %}
 
 <div class="list-group">
-	{% paginate notifications  %}
-	{% for notification in notifications %}
-	    {% if notification.is_view %}
-			{{notification|get_item_notification|safe}}
-	    {% else %}
-			{{notification|get_item_notification|safe}}
-	    {% endif %}
-	{% empty %}
-		<p class="text-info">{% trans "No results" %}.</p>
+    {% paginate notifications  %}
+    {% for notification in notifications %}
+        {% if notification.is_view %}
+            {{notification|get_item_notification|safe}}
+        {% else %}
+            {{notification|get_item_notification|safe}}
+        {% endif %}
+    {% empty %}
+        <p class="text-info">{% trans "No notifications" %}.</p>
     {% endfor %}
-	{% show_more %}
+    {% show_more %}
 </div>

@@ -9,7 +9,10 @@ from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
 from .forms import FormAdminTopic
-from .models import Category, Forum, Topic, Comment, Register
+from .models import (
+    Category, Forum, Topic,
+    Comment, Register, Configuration
+)
 
 from .utils import remove_folder_attachment
 
@@ -203,8 +206,16 @@ class CommentAdmin(admin.ModelAdmin):
     forum.admin_order_field = 'topic__forum'
 
 
+class ConfigurationAdmin(admin.ModelAdmin):
+    list_display = ('idconfig',
+        'logo', 'class_main')
+    list_filter = ['logo', 'class_main']
+    search_fields = ['logo', 'class_main']
+
+
 admin.site.register(Category)
+admin.site.register(Register)
 admin.site.register(Forum, ForumAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Comment, CommentAdmin)
-admin.site.register(Register)
+admin.site.register(Configuration, ConfigurationAdmin)
