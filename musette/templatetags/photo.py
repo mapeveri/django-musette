@@ -8,8 +8,8 @@ register = template.Library()
 
 @register.filter
 def get_photo(user):
-    '''
+    """
     This tag return the path photo profile
-    '''
+    """
     field_photo = get_photo_profile(user)
     return field_photo

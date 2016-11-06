@@ -17,9 +17,9 @@ register = template.Library()
 
 @register.filter
 def in_category(category):
-    '''
-        This tag filter the forum for category
-    '''
+    """
+    This tag filter the forum for category
+    """
     return Forum.objects.filter(
         category_id=category,
         hidden=False
@@ -28,10 +28,10 @@ def in_category(category):
 
 @register.filter
 def get_tot_comments(idtopic):
-    '''
-        This tag filter return the total
-        comments of one topic
-    '''
+    """
+    This tag filter return the total
+    comments of one topic
+    """
     return Comment.objects.filter(
         topic_id=idtopic,
     ).count()
@@ -39,10 +39,10 @@ def get_tot_comments(idtopic):
 
 @register.simple_tag
 def get_tot_views(idtopic):
-    '''
-        This tag filter return the total
-        views for topic or forum
-    '''
+    """
+    This tag filter return the total
+    views for topic or forum
+    """
     try:
         content = Topic.objects.get(idtopic=idtopic)
         idobj = ContentType.objects.get_for_model(content)
@@ -60,9 +60,9 @@ def get_tot_views(idtopic):
 
 @register.filter
 def get_path_profile(user):
-    '''
-        Return tag a with profile
-    '''
+    """
+    Return tag a with profile
+    """
     username = getattr(user, "username")
     tag = "<a href='/profile/" + username + "'>" + username + " </a>"
 
@@ -71,10 +71,10 @@ def get_path_profile(user):
 
 @register.filter
 def get_tot_users_comments(topic):
-    '''
-        This tag filter return the total
-        users of one topic
-    '''
+    """
+    This tag filter return the total
+    users of one topic
+    """
     idtopic = topic.idtopic
     users = Comment.objects.filter(topic_id=idtopic)
 
@@ -82,7 +82,7 @@ def get_tot_users_comments(topic):
     lista = []
     for user in users:
         usuario = user.user.username
-        if not usuario in lista:
+        if not in usuario in lista:
             lista.append(usuario)
 
             photo = get_photo(user.user.id)
@@ -107,10 +107,10 @@ def get_tot_users_comments(topic):
 
 @register.filter
 def get_tot_topics_moderate(forum):
-    '''
-        This filter return info about
-        Few topics missing for moderate
-    '''
+    """
+    This filter return info about
+    Few topics missing for moderate
+    """
     topics_count = forum.topics_count
     idforum = forum.idforum
 
@@ -122,10 +122,10 @@ def get_tot_topics_moderate(forum):
 
 @register.filter
 def get_item_notification(notification):
-    '''
+    """
     This filter return info about
     one notification of one user
-    '''
+    """
     idobject = notification.idobject
     is_comment = notification.is_comment
 
@@ -169,18 +169,18 @@ def get_item_notification(notification):
 
 @register.filter
 def get_pending_notifications(user):
-    '''
-        This method return total pending notifications
-    '''
+    """
+    This method return total pending notifications
+    """
     return Notification.objects.filter(
         is_view=False, iduser=user).count()
 
 
 @register.filter
 def get_last_activity(idtopic):
-    '''
-        This method return last activity of topic
-    '''
+    """
+    This method return last activity of topic
+    """
     try:
         comment = Comment.objects.filter(
             topic_id=idtopic).order_by("-date")

@@ -11,10 +11,9 @@ from .widgets import TextareaWidget
 
 
 class FormAdminTopic(forms.ModelForm):
-
-    '''
+    """
     Form for topic cadmin
-    '''
+    """
     class Meta:
         model = Topic
         exclude = ('slug', 'id_attachment')
@@ -24,11 +23,9 @@ class FormAdminTopic(forms.ModelForm):
 
 
 class FormAddTopic(forms.ModelForm):
-
-    '''
+    """
     Form for create one new topic
-    '''
-
+    """
     class Meta:
         model = Topic
         exclude = (
@@ -54,10 +51,9 @@ class FormAddTopic(forms.ModelForm):
 
 
 class CustomClearableFileInput(ClearableFileInput):
-
-    '''
-      Changes order fields
-    '''
+    """
+    Changes order fields
+    """
     template_with_initial = (
         '%(initial_text)s: <a href="%(initial_url)s">%(initial)s</a> '
         '%(clear_template)s<br />%(input_text)s: %(input)s'
@@ -105,11 +101,9 @@ class CustomClearableFileInput(ClearableFileInput):
 
 
 class FormEditTopic(forms.ModelForm):
-
-    '''
+    """
     Form for edit one new topic
-    '''
-
+    """
     class Meta:
         model = Topic
         exclude = (
@@ -144,10 +138,9 @@ class FormEditTopic(forms.ModelForm):
 
 
 class FormAddComment(forms.ModelForm):
-
-    '''
+    """
     Form for add comment to topic
-    '''
+    """
     class Meta:
         model = Comment
         fields = ['description']
@@ -168,11 +161,9 @@ class FormAddComment(forms.ModelForm):
 
 
 class FormEditProfile(forms.ModelForm):
-
-    '''
+    """
     Form for edit one profile
-    '''
-
+    """
     class Meta:
         model = get_main_model_profile()
         exclude = (

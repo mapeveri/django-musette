@@ -36,10 +36,9 @@ from .utils import (
 
 
 class ForumsView(View):
-
-    '''
-        This view display all forum registered
-    '''
+    """
+    This view display all forum registered
+    """
     template_name = "musette/index.html"
 
     def get(self, request, *args, **kwargs):
@@ -54,11 +53,9 @@ class ForumsView(View):
 
 
 class ForumView(View):
-
-    '''
-        This view display one forum registered
-    '''
-
+    """
+    This view display one forum registered
+    """
     def get(self, request, forum, *args, **kwargs):
 
         template_name = "musette/forum_index.html"
@@ -98,11 +95,9 @@ class ForumView(View):
 
 
 class TopicView(View):
-
-    '''
-        This view display one Topic of forum
-    '''
-
+    """
+    This view display one Topic of forum
+    """
     def get(self, request, forum, slug, idtopic, *args, **kwargs):
 
         template_name = "musette/topic_index.html"
@@ -130,10 +125,9 @@ class TopicView(View):
 
 
 class NewTopicView(FormView):
-
-    '''
-        This view allowed add new topic
-    '''
+    """
+    This view allowed add new topic
+    """
     template_name = "musette/new_topic.html"
     form_class = FormAddTopic
 
@@ -208,10 +202,9 @@ class NewTopicView(FormView):
 
 
 class EditTopicView(FormView):
-
-    '''
-        This view allowed edit topic
-    '''
+    """
+    This view allowed edit topic
+    """
     template_name = "musette/edit_topic.html"
     form_class = FormEditTopic
 
@@ -294,11 +287,9 @@ class EditTopicView(FormView):
 
 
 class DeleteTopicView(View):
-
-    '''
-        This view will delete one topic
-    '''
-
+    """
+    This view will delete one topic
+    """
     def get(self, request, forum, idtopic, *args, **kwargs):
 
         # Previouly verify that exists the topic
@@ -320,11 +311,9 @@ class DeleteTopicView(View):
 
 
 class NewCommentView(View):
-
-    '''
-        This view allowed add new comment to topic
-    '''
-
+    """
+    This view allowed add new comment to topic
+    """
     def get(self, request, forum, slug, idtopic, *args, **kwargs):
         raise Http404()
 
@@ -372,7 +361,7 @@ class NewCommentView(View):
             user_original_topic = topic.user.id
             user_email = topic.user.email
 
-            if not user_original_topic in lista_us:
+            if not in user_original_topic in lista_us:
                 lista_us.append(user_original_topic)
                 lista_email.append(user_email)
             else:
@@ -424,11 +413,9 @@ class NewCommentView(View):
 
 
 class EditCommentView(View):
-
-    '''
-        This view allowed edit comment to topic
-    '''
-
+    """
+    This view allowed edit comment to topic
+    """
     def get(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
         raise Http404()
 
@@ -454,11 +441,9 @@ class EditCommentView(View):
 
 
 class DeleteCommentView(View):
-
-    '''
-        This view allowed remove comment to topic
-    '''
-
+    """
+    This view allowed remove comment to topic
+    """
     def get(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
         raise Http404()
 
@@ -480,12 +465,9 @@ class DeleteCommentView(View):
 
 
 class AllNotification(View):
-
-    '''
-        This view return all notification
-        and paginate
-    '''
-
+    """
+    This view return all notification and paginate
+    """
     def get(self, request, *args, **kwargs):
 
         template_name = "musette/all_notification_index.html"
@@ -506,9 +488,9 @@ class AllNotification(View):
 
 
 def SetNotifications(request):
-    '''
-        This view set all views notifications in true
-    '''
+    """
+    This view set all views notifications in true
+    """
     iduser = request.user.id
     Notification.objects.filter(iduser=iduser).update(is_view=True)
 
@@ -516,11 +498,9 @@ def SetNotifications(request):
 
 
 class AddRegisterView(View):
-
-    '''
-        This view add register to forum
-    '''
-
+    """
+    This view add register to forum
+    """
     def get(self, request, forum, *args, **kwargs):
         raise Http404()
 
@@ -542,11 +522,9 @@ class AddRegisterView(View):
 
 
 class UnregisterView(View):
-
-    '''
-        This view remove register to forum
-    '''
-
+    """
+    This view remove register to forum
+    """
     def get(self, request, forum, *args, **kwargs):
         raise Http404()
 
@@ -566,10 +544,9 @@ class UnregisterView(View):
 
 
 class UsersForumView(View):
-
-    '''
-        This view display users register in forum
-    '''
+    """
+    This view display users register in forum
+    """
     def get(self, request, forum, *args, **kwargs):
 
         template_name = "musette/users_forum_index.html"
@@ -592,11 +569,9 @@ class UsersForumView(View):
 
 
 class TopicSearch(View):
-
-    '''
-        This view django, display results of search of topics
-    '''
-
+    """
+    This view django, display results of search of topics
+    """
     def get(self, request, forum, *args, **kwargs):
 
         template_name = "musette/topic_search_index.html"
@@ -622,11 +597,9 @@ class TopicSearch(View):
 
 
 class ProfileView(View):
-
-    '''
-        This view django, display results of the profile
-    '''
-
+    """
+    This view django, display results of the profile
+    """
     def get(self, request, username, *args, **kwargs):
         template_name = "musette/profile.html"
 
@@ -662,10 +635,9 @@ class ProfileView(View):
 
 
 class EditProfileView(FormView):
-
-    '''
-        This view allowed edit profile
-    '''
+    """
+    This view allowed edit profile
+    """
     template_name = "musette/edit_profile.html"
     form_class = FormEditProfile
 

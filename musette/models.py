@@ -322,9 +322,9 @@ class AbstractProfile(models.Model):
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def post_save_user(sender, instance, **kwargs):
-    '''
+    """
     This signal is event of model user for create new profile
-    '''
+    """
     if kwargs['created']:
         subclasses = AbstractProfile.__subclasses__()
         if len(subclasses) > 0:
@@ -354,7 +354,7 @@ class Configuration(models.Model):
     class_main = models.CharField(
         max_length=50, null=True, blank=True,
         help_text=_('Css Bootstrap class for navbar. Like '
-        '"default", "inverse" or somo custom.')
+                    '"default", "inverse" or somo custom.')
     )
 
     class Meta(object):

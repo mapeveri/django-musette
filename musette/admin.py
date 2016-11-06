@@ -116,11 +116,11 @@ class ForumAdmin(admin.ModelAdmin):
         return actions
 
     def delete_topic(self, request, queryset):
-        '''
-            This method remove forum selected
-            in the admin django. Can remove one
-            o more records.
-        '''
+        """
+        This method remove forum selected
+        in the admin django. Can remove one
+        o more records.
+        """
         if not self.has_delete_permission(request):
             raise PermissionDenied
 
@@ -207,8 +207,7 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class ConfigurationAdmin(admin.ModelAdmin):
-    list_display = ('idconfig',
-        'logo', 'class_main')
+    list_display = ('idconfig', 'logo', 'class_main')
     list_filter = ['logo', 'class_main']
     search_fields = ['logo', 'class_main']
 
