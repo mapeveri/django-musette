@@ -82,7 +82,7 @@ def get_tot_users_comments(topic):
     lista = []
     for user in users:
         usuario = user.user.username
-        if not in usuario in lista:
+        if not (usuario in lista):
             lista.append(usuario)
 
             photo = get_photo(user.user.id)

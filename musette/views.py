@@ -361,7 +361,7 @@ class NewCommentView(View):
             user_original_topic = topic.user.id
             user_email = topic.user.email
 
-            if not in user_original_topic in lista_us:
+            if not (user_original_topic in lista_us):
                 lista_us.append(user_original_topic)
                 lista_email.append(user_email)
             else:
