@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-05-05 22:09-0400\n"
+"POT-Creation-Date: 2016-11-21 22:18-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -155,7 +155,9 @@ msgstr "Registros"
 #: musette/models.py:356
 msgid ""
 "Css Bootstrap class for navbar. Like \"default\", \"inverse\" or somo custom."
-msgstr "Class css bootstrap para el navbar. Como \"default\", \"inverse\" or alguna customizable"
+msgstr ""
+"Class css bootstrap para el navbar. Como \"default\", \"inverse\" or alguna "
+"customizable"
 
 #: musette/models.py:361
 msgid "Configuration"
@@ -214,12 +216,12 @@ msgstr "No hay notificaciones"
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: musette/templates/musette/edit_profile.html:30
+#: musette/templates/musette/edit_profile.html:17
 #: musette/templates/musette/profile.html:42
 msgid "Edit profile"
 msgstr "Editar perfil"
 
-#: musette/templates/musette/edit_profile.html:39
+#: musette/templates/musette/edit_profile.html:26
 #: musette/templates/musette/edit_topic.html:83
 #: musette/templates/musette/new_topic.html:86
 msgid "Save"
@@ -429,11 +431,17 @@ msgstr "días"
 msgid "Files allowed"
 msgstr "Archivos permitidos"
 
-#: musette/views.py:206 musette/views.py:292 musette/views.py:743
+#: musette/views.py:198 musette/views.py:284 musette/views.py:310
+#: musette/views.py:413 musette/views.py:443 musette/views.py:468
+#: musette/views.py:528 musette/views.py:551 musette/views.py:722
+msgid "Action successful"
+msgstr "Acción exitosa"
+
+#: musette/views.py:201 musette/views.py:287 musette/views.py:725
 msgid "Form invalid"
 msgstr "Formulario invalido"
 
-#: musette/views.py:422
+#: musette/views.py:416
 msgid "Field required"
 msgstr "Campo requerido"
 

@@ -195,6 +195,7 @@ class NewTopicView(FormView):
                 obj.moderate = True
 
             obj.save()
+            messages.success(request, _("Action successful"))
             return self.form_valid(form, **kwargs)
         else:
             messages.error(request, _("Form invalid"))
@@ -243,7 +244,7 @@ class EditTopicView(FormView):
             obj = form.save(commit=False)
 
             title = strip_tags(request.POST['title'])
-            description = strip_tags(request.POST['description'])
+            description = request.POST['description']
             slug = defaultfilters.slugify(request.POST['title'])
 
             obj.title = title
@@ -280,6 +281,7 @@ class EditTopicView(FormView):
             # Update topic
             form.save()
 
+            messages.success(request, _("Action successful"))
             return self.form_valid(form, **kwargs)
         else:
             messages.error(request, _("Form invalid"))
@@ -303,7 +305,9 @@ class DeleteTopicView(View):
         if request.user.id == iduser_topic:
             remove_folder_attachment(idtopic)
             Topic.objects.filter(
-                idtopic=idtopic, user_id=iduser_topic).delete()
+                idtopic=idtopic, user_id=iduser_topic
+            ).delete()
+            messages.success(request, _("Action successful"))
         else:
             raise Http404
 
@@ -406,6 +410,7 @@ class NewCommentView(View):
             json_data = json.dumps(data)
             r.publish('notifications', json_data)
 
+            messages.success(request, _("Action successful"))
             return HttpResponseRedirect(url)
         else:
             messages.error(request, _("Field required"))
@@ -435,6 +440,7 @@ class EditCommentView(View):
                 description=description
             )
 
+            messages.success(request, _("Action successful"))
             return HttpResponseRedirect(url)
         else:
             return HttpResponseRedirect(url)
@@ -459,6 +465,7 @@ class DeleteCommentView(View):
             Comment.objects.filter(idcomment=idcomment, user=iduser).delete()
             Notification.objects.filter(idobject=idcomment).delete()
 
+            messages.success(request, _("Action successful"))
             return HttpResponseRedirect(url)
         except Exception:
             return HttpResponseRedirect(url)
@@ -518,6 +525,7 @@ class AddRegisterView(View):
             date=date
         )
         register.save()
+        messages.success(request, _("Action successful"))
         return HttpResponseRedirect(url)
 
 
@@ -540,6 +548,7 @@ class UnregisterView(View):
             forum_id=idforum, user_id=iduser,
         ).delete()
 
+        messages.success(request, _("Action successful"))
         return HttpResponseRedirect(url)
 
 
@@ -675,9 +684,7 @@ class EditProfileView(FormView):
         if form.is_valid():
 
             obj = form.save(commit=False)
-
-            about = strip_tags(request.POST['about'])
-
+            about = request.POST['about']
             obj.about = about
 
             # If check field clear, remove file when update
@@ -710,6 +717,7 @@ class EditProfileView(FormView):
             # Update profile
             form.save()
 
+            messages.success(request, _("Action successful"))
             return self.form_valid(form, **kwargs)
         else:
             messages.error(request, _("Form invalid"))

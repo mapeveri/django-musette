@@ -154,19 +154,6 @@
     <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-      {% for message in messages %}
-        {% if message.tags != "error" %}
-          <div class="alert alert-success" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            {{ message }}
-          </div>
-        {% else %}
-          <div class="alert alert-danger" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-            {{ message }}
-          </div>
-        {% endif %}
-      {% endfor %}
       <form action="/newcomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/" name="formComment" method="POST" class="well">{% csrf_token%}
         <center>
         {% for field in form_comment %}

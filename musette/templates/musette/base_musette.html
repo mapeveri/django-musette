@@ -8,6 +8,7 @@
     <title> {{ SETTINGS.SITE_NAME }} </title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'js/libs/toastr/build/toastr.min.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 
@@ -91,10 +92,27 @@
     <script src="{% static 'js/libs/bootstrap/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/frameworks/angularjs/angular.min.js' %}"></script>
     <script src="{% static 'hitcount/hitcount-jquery.js' %}"></script>
+    <script src="{% static 'js/libs/toastr/build/toastr.min.js' %}"></script>
 
     <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
     <script src="{% static 'js/modules/musette.module.js' %}"></script>
-    {% block extra_js %}{% endblock %}
 
+    <script>
+      $(document).ready(function() {
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                toastr.success("{{ message|safe }}");
+            {% else %}
+                {% if message.tags == 'error' %}
+                    toastr.error("{{ message|safe }}");
+                {% else %}
+                    toastr.info("{{ message|safe }}");
+                {% endif %}
+            {% endif %}
+        {% endfor %}
+      });
+   </script>
+
+    {% block extra_js %}{% endblock %}
 </body>
 </html>

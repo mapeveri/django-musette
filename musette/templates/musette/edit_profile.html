@@ -12,19 +12,6 @@
 <div class="container">
 
 	<div class="mainbox col-md-8 col-md-offset-2 col-sm-6 col-sm-offset-3">
-		{% for message in messages %}
-			{% if message.tags != "error" %}
-				<div class="alert alert-success" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-					{{ message }}
-				</div>
-			{% else %}
-				<div class="alert alert-danger" role="alert">
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
-					{{ message }}
-				</div>
-			{% endif %}
-		{% endfor %}
 		<div class="panel panel-default" >
             <div class="panel-heading">
                 <div class="panel-title text-center">{% trans "Edit profile" %}</div>
