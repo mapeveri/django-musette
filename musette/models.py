@@ -17,7 +17,9 @@ from .validators import valid_extension
 
 @python_2_unicode_compatible
 class Category(models.Model):
-
+    """
+    Model Category
+    """
     idcategory = models.AutoField(primary_key=True)
     name = models.CharField(max_length=80)
     position = models.IntegerField(blank=True, default=0)
@@ -37,7 +39,9 @@ class Category(models.Model):
 
 @python_2_unicode_compatible
 class Forum(models.Model):
-
+    """
+    Model Forum
+    """
     idforum = models.AutoField(primary_key=True)
     category = models.ForeignKey(
         Category, related_name='categories',
@@ -133,17 +137,20 @@ class Forum(models.Model):
     escape_html_description.allow_tags = True
 
 
-def generate_path(instance, filename):
-
-    folder = ""
-    folder = "forum_" + str(instance.forum_id)
-    folder = folder + "_user_" + str(instance.user)
-    folder = folder + "_topic_" + str(instance.id_attachment)
-    return os.path.join("forum", folder, filename)
-
-
 @python_2_unicode_compatible
 class Topic(models.Model):
+    """
+    Model Topic
+    """
+    def generate_path(instance, filename):
+        """
+        Generate path to field Attchment
+        """
+        folder = ""
+        folder = "forum_" + str(instance.forum_id)
+        folder = folder + "_user_" + str(instance.user)
+        folder = folder + "_topic_" + str(instance.id_attachment)
+        return os.path.join("forum", folder, filename)
 
     idtopic = models.AutoField(primary_key=True)
     forum = models.ForeignKey(
@@ -222,6 +229,9 @@ class Topic(models.Model):
 
 @python_2_unicode_compatible
 class Comment(models.Model):
+    """
+    Model Comment
+    """
 
     idcomment = models.AutoField(primary_key=True)
     topic = models.ForeignKey(
@@ -244,6 +254,9 @@ class Comment(models.Model):
 
 @python_2_unicode_compatible
 class Notification(models.Model):
+    """
+    Model Notification
+    """
 
     idnotification = models.AutoField(primary_key=True)
     idobject = models.IntegerField(default=0)
@@ -262,6 +275,9 @@ class Notification(models.Model):
 
 @python_2_unicode_compatible
 class Register(models.Model):
+    """
+    Model Register
+    """
 
     idregister = models.AutoField(primary_key=True)
     forum = models.ForeignKey(
@@ -281,20 +297,24 @@ class Register(models.Model):
         return str(self.forum) + " " + str(self.user)
 
 
-def generate_path_profile(instance, filename):
-    return os.path.join(
-        "profiles", "profile_" + str(instance.iduser_id), filename
-    )
-
-
 @python_2_unicode_compatible
 class AbstractProfile(models.Model):
+    """
+    Model AbstractProfile
+    """
+    def generate_path_profile(instance, filename):
+        """
+        Generate path to field photo
+        """
+        return os.path.join(
+            "profiles", "profile_" + str(instance.iduser_id), filename
+        )
 
     idprofile = models.AutoField(primary_key=True, unique=True)
     iduser = models.OneToOneField(User, related_name="user", db_index=True)
     photo = models.FileField(
-                upload_to=generate_path_profile, null=True, blank=True,
-            )
+        upload_to=generate_path_profile, null=True, blank=True,
+    )
     about = models.TextField(blank=True, null=True)
 
     def __str__(self):
@@ -318,21 +338,23 @@ class AbstractProfile(models.Model):
         abstract = True
 
 
-def generate_path_configuration(instance, filename):
-    return os.path.join(
-        "configuration", filename
-    )
-
-
 @python_2_unicode_compatible
 class Configuration(models.Model):
     """
     Model configuration mussete like logo and class css
     """
+    def generate_path_configuration(instance, filename):
+        """
+        Generate path to field logo
+        """
+        return os.path.join(
+            "configuration", filename
+        )
+
     idconfig = models.AutoField(primary_key=True)
     logo = models.FileField(
-                upload_to=generate_path_configuration, null=True, blank=True,
-            )
+        upload_to=generate_path_configuration, null=True, blank=True,
+    )
     logo_width = models.PositiveIntegerField(null=True, blank=True)
     logo_height = models.PositiveIntegerField(null=True, blank=True)
     class_main = models.CharField(
