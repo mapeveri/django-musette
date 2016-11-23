@@ -30,6 +30,7 @@ setup(
     author='Peveri Martin',
     author_email='martinpeveri@gmail.com',
     install_requires=[
+        'Django>=1.7',
         'tornado==4.2',
         'django-redis-cache==1.6.5',
         'djangorestframework==3.5.3',
