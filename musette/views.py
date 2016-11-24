@@ -13,7 +13,7 @@ from django.template import defaultfilters
 from django.views.generic import View
 from django.views.generic.edit import FormView
 from django.utils.crypto import get_random_string
-from django.utils.html import strip_tags
+from django.utils.html import conditional_escape
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 
@@ -152,7 +152,7 @@ class NewTopicView(FormView):
             now = datetime.datetime.now()
             user = User.objects.get(id=request.user.id)
             forum = get_object_or_404(Forum, name=forum)
-            title = strip_tags(request.POST['title'])
+            title = conditional_escape(request.POST['title'])
 
             obj.date = now
             obj.user = user
@@ -243,12 +243,10 @@ class EditTopicView(FormView):
 
             obj = form.save(commit=False)
 
-            title = strip_tags(request.POST['title'])
-            description = request.POST['description']
+            title = conditional_escape(request.POST['title'])
             slug = defaultfilters.slugify(request.POST['title'])
 
             obj.title = title
-            obj.description = description
             obj.slug = slug
 
             # If check field clear, remove file when update

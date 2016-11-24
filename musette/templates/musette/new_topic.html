@@ -4,9 +4,8 @@
 {% load static %}
 
 {% block extra_js %}
+	<!-- For TinyMce -->
     {{ form.media.js }}
-    <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-	<script src="{% static 'js/modules/musette.module.js' %}"></script>
 {% endblock %}
 
 {% block content %}

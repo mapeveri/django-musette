@@ -24,7 +24,6 @@
                 <i class="glyphicon glyphicon-star"></i>
                 {% endif %}
                 </a>
-                <small style="word-wrap: break-word;">{{ topic.description|safe|truncatewords:15 }}</small>
             </td>
             <td>
                 <img src="{{topic.user.id|get_photo}}" class='img-circle' width="30", height="30" />

@@ -70,12 +70,11 @@
 
                 <div class="col-md-8">
                   <div class="comment-post">
-                    <p>
-                      {{topic.description|safe}}
+                      {{topic.description|safe }}
+                      
                       {% if topic.attachment %}
                         <img src="{{MEDIA_URL}}{{topic.attachment}}" class="img-responsive" />
                       {% endif %}
-                    </p>
                     <hr>
                   </div>
                   <div class="pull-left">

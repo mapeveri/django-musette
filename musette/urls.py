@@ -17,7 +17,7 @@ from .views import (
 admin.site.site_header = settings.SITE_NAME
 
 urlpatterns = [
-    #Url for django-rest-framework
+    # Url for django-rest-framework
     url(r'^', include(router.urls)),
     url(r'^api/', include('rest_framework.urls', namespace='rest_framework')),
     # Url for django-hitcount

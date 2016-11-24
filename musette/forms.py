@@ -3,7 +3,7 @@
 from django import forms
 from django.forms.widgets import ClearableFileInput, CheckboxInput
 from django.utils.html import conditional_escape
-from django.utils.safestring import mark_safe
+from django.utils.safestring import mark_safe, mark_for_escaping
 
 from .utils import basename, get_main_model_profile
 from .models import Topic, Comment
@@ -128,8 +128,11 @@ class FormEditTopic(forms.ModelForm):
                         str(kwargs['instance'].title) + "'"
                     self.fields[key].widget.attrs['ng-init'] = ng_init
                 elif key == 'description':
-                    ng_init = key + "=" + "'" + \
-                        str(kwargs['instance'].description) + "'"
+                    description = str(
+                        kwargs['instance'].description
+                    ).replace("'", r"\'")
+
+                    ng_init = key + "=" + "'" + description + "'"
                     self.fields[key].widget.attrs['ng-init'] = ng_init
                 self.fields[key].widget.attrs['class'] = class_css
                 self.fields[key].widget.attrs['required'] = 'required'
