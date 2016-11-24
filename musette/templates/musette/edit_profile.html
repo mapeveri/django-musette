@@ -3,6 +3,11 @@
 {% load i18n %}
 {% load static %}
 
+{% block extra_js %}
+	<!-- For TinyMce -->
+    {{ form.media.js }}
+{% endblock %}
+
 {% block content %}
 
 <div class="container">
