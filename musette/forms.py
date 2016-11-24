@@ -3,7 +3,7 @@
 from django import forms
 from django.forms.widgets import ClearableFileInput, CheckboxInput
 from django.utils.html import conditional_escape
-from django.utils.safestring import mark_safe, mark_for_escaping
+from django.utils.safestring import mark_safe
 
 from .utils import basename, get_main_model_profile
 from .models import Topic, Comment
