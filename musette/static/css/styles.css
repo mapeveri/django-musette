@@ -37,21 +37,6 @@ a, a:hover, a:focus {
   display: none;
 }
 
-/*
-  Margin left for buttons join and unregister forum
-*/
-.margin-left-unregister{
-  margin-left: 1em;
-}
-
-@media screen and (min-width:1280px) {
-  @-moz-document url-prefix() {
-    .margin-left-moz{
-      margin-left: 0.3em;
-    }
-  }
-}
-
 /* enable absolute positioning for within text box icon*/
 .inner-addon {
     position: relative;

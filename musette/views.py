@@ -560,7 +560,7 @@ class UsersForumView(View):
         page_template = "musette/users_forum.html"
 
         forum = get_object_or_404(Forum, name=forum, hidden=False)
-        registers = Register.objects.filter(forum_id=forum.idforum)
+        registers = forum.register_forums.all()
 
         data = {
             'forum': forum,

@@ -278,7 +278,6 @@ class Register(models.Model):
     """
     Model Register
     """
-
     idregister = models.AutoField(primary_key=True)
     forum = models.ForeignKey(
         Forum, related_name='register_forums', verbose_name=_('Forum')
