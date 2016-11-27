@@ -211,3 +211,14 @@ def get_last_activity(idtopic):
         # html += get_path_profile(topic.user)
         html += " <p>" + str(date) + "</p>"
         return html
+
+
+@register.filter
+def get_object_user(obj, user):
+    """
+    Get object user
+    """
+    if obj:
+        return user.user
+    else:
+        return user

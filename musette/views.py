@@ -2,6 +2,7 @@
 import datetime
 import json
 import redis
+from itertools import chain
 
 from django.conf import settings
 from django.contrib import messages
@@ -559,12 +560,16 @@ class UsersForumView(View):
         template_name = "musette/users_forum_index.html"
         page_template = "musette/users_forum.html"
 
+        # Get register users
         forum = get_object_or_404(Forum, name=forum, hidden=False)
         registers = forum.register_forums.all()
 
+        # Add moderator to users
+        users = list(chain(registers, [forum.moderators]))
+
         data = {
             'forum': forum,
-            'registers': registers,
+            'users': users,
         }
 
         if request.is_ajax():

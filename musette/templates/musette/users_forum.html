@@ -4,36 +4,44 @@
 {% load forum_tags %}
 {% load endless %}
 
-{% paginate registers %}
-{% for profile in registers %}
+{% paginate users %}
+{% for profile in users %}
     <div class="col-sm-3">
         <div>
             <div class="avatar">
-                <img src="{{profile.user.id|get_photo}}" class="img-thumbnail picture" width="100" hegiht="100" />
+                <img src="{{profile.user.username|get_object_user:profile|get_photo}}" class="img-thumbnail picture" width="100" hegiht="100" />
             </div>
             <div class="content">
                 <br>
-                <span>{{ profile.user|get_path_profile|safe }}</span>
+                <span>{{ profile.user.username|get_object_user:profile|get_path_profile|safe }}</span>
                 <br>
-                <p>{% trans "Joined" %} {{profile.date}}</p>
+                {% if profile.date %}
+                    <p>{% trans "Joined" %} {{profile.date.date}}</p>
+                {% else %}
+                    <p>{% trans "Moderator" %}</p>
+                {% endif %}
                 <table>
                     <tr>
                         <td>
                             <b>{% trans "Last Seen" %}</b>
-                            {% if profile.last_seen %}
-                                {{ profile.last_seen|timesince }}
-                            {% else %}
-                                {% trans "awhile ago" %}
-                            {% endif %}
+                            {% with profile.user.username|get_object_user:profile as us_pr %}
+                                {% if us_pr.user.last_seen %}
+                                    {{ us_pr.user.last_seen|timesince }}
+                                {% else %}
+                                    {% trans "awhile ago" %}
+                                {% endif %}
+                            {% endwith %}
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            {% if profile.online %}
-                                <div class="label label-success"><b>Online</b></div>
-                            {% else %}
-                                <div class="label label-danger"><b>Online</b></div>
-                            {% endif %}
+                            {% with profile.user.username|get_object_user:profile as us_pr %}
+                                {% if us_pr.user.online %}
+                                    <div class="label label-success"><b>Online</b></div>
+                                {% else %}
+                                    <div class="label label-danger"><b>Online</b></div>
+                                {% endif %}
+                            {% endwith %}
                         </td>
                     </tr>
                 </table>
