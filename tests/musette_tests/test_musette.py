@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-import datetime
-
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.utils import timezone
 
 from musette.models import (
     Category, Comment, Forum,
@@ -13,25 +11,26 @@ from musette.models import (
 class CreateTopicTestCase(TestCase):
 
     def test_hard_no_more_than(self):
-        date = datetime.datetime.now()
+        date = timezone.now()
         Category.objects.create(
             name="Backend", position=0, hidden=False
         )
 
-        user = User.objects.create_user('john', 'lennon@thebeatles.com', 'johnpassword')
+        user = User.objects.create_user(
+            'john', 'lennon@thebeatles.com', 'johnpassword'
+        )
         user.last_name = 'Lennon'
         user.save()
 
         Forum.objects.create(
             category_id=1, parent=None, name="Django",
             position=0, description="Test forum",
-            moderators=user, date=date, topics_count=0,
-            hidden=False, is_moderate=False
+            topics_count=0, hidden=False, is_moderate=False
         )
 
         Topic.objects.create(
             forum_id=1, user_id=1, title="test",
-            date=date, description="Test topic create",
+            date=timezone.now(), description="Test topic create",
             id_attachment="", attachment="", moderate=True
         )
 
@@ -55,7 +54,7 @@ class DeleteTopicTestCase(TestCase):
 class NewCommentTopicTestCase(TestCase):
 
     def test_hard_no_more_than(self):
-        date = datetime.datetime.now()
+        date = timezone.now()
         Comment.objects.create(
             topic_id=1, user_id=1, date=date,
             description="Comment tests"
@@ -81,7 +80,7 @@ class DeleteCommentTopicTestCase(TestCase):
 class NewNotificationTopicTestCase(TestCase):
 
     def test_hard_no_more_than(self):
-        date = datetime.datetime.now()
+        date = timezone.now()
         Notification.objects.create(
             idobject=1, iduser=1, date=date,
             is_topic=False, is_comment=True,
@@ -110,10 +109,8 @@ class DeleteNotificationTopicTestCase(TestCase):
 class AddRegisterTestCase(TestCase):
 
     def test_hard_no_more_than(self):
-        date = datetime.datetime.now()
         Register.objects.create(
-            user_id=1, date=date,
-            forum_id=1
+            user_id=1, date=timezone.now(), forum_id=1
         )
 
 
