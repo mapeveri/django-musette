@@ -1,12 +1,10 @@
-# encoding:utf-8
-
 from django import forms
 from django.forms.widgets import ClearableFileInput, CheckboxInput
 from django.utils.html import conditional_escape
 from django.utils.safestring import mark_safe
 
 from .utils import basename, get_main_model_profile
-from .models import Topic, Comment
+from .models import Forum, Topic, Comment
 from .widgets import TextareaWidget
 
 
@@ -14,6 +12,14 @@ class FormAdminTopic(forms.ModelForm):
     """
     Form for topic cadmin
     """
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop('request', None)
+        super(FormAdminTopic, self).__init__(*args, **kwargs)
+
+        if not self.request.user.is_superuser:
+            queryset = Forum.objects.filter(moderators=self.request.user)
+            self.fields['forum'].queryset = queryset
+
     class Meta:
         model = Topic
         exclude = ('slug', 'id_attachment')

@@ -61,11 +61,16 @@ class Forum(models.Model):
         _('Date'), blank=True, null=True, auto_now_add=True, editable=False
     )
     topics_count = models.IntegerField(
-        _('Topics count'), blank=True, default=0, editable=False)
-    hidden = models.BooleanField(
-        _('Hidden'), blank=False, null=False, default=False
+        _('Topics count'), blank=True, default=0, editable=False,
     )
-    is_moderate = models.BooleanField(_('Check topics'), default=False)
+    hidden = models.BooleanField(
+        _('Hidden'), blank=False, null=False, default=False,
+        help_text=_('If hide the forum in the index page')
+    )
+    is_moderate = models.BooleanField(
+        _('Check topics'), default=False,
+        help_text=_('If the forum is moderated')
+    )
 
     class Meta(object):
         ordering = ['category', 'position']
@@ -158,8 +163,14 @@ class Topic(models.Model):
         _('File'), blank=True, null=True, upload_to=generate_path,
         validators=[valid_extension]
     )
-    moderate = models.BooleanField(_('Moderate'), default=False)
-    is_top = models.BooleanField(_('Top'), default=False)
+    moderate = models.BooleanField(
+        _('Moderate'), default=False,
+        help_text=_('If the topic is moderated')
+    )
+    is_top = models.BooleanField(
+        _('Top'), default=False,
+        help_text=_('If the topic is important and it will go top')
+    )
 
     class Meta(object):
         ordering = ['forum', 'date', 'title']
@@ -345,8 +356,14 @@ class Configuration(models.Model):
     logo = models.FileField(
         upload_to=generate_path_configuration, null=True, blank=True,
     )
-    logo_width = models.PositiveIntegerField(null=True, blank=True)
-    logo_height = models.PositiveIntegerField(null=True, blank=True)
+    logo_width = models.PositiveIntegerField(
+        _("Logo width"), null=True, blank=True,
+        help_text=_('In pixels')
+    )
+    logo_height = models.PositiveIntegerField(
+        _("Logo height"), null=True, blank=True,
+        help_text=_('In pixels')
+    )
     class_main = models.CharField(
         max_length=50, null=True, blank=True,
         help_text=_('Css Bootstrap class for navbar. Like '
