@@ -22,8 +22,8 @@
     <div class="col-md-12">
         <div>
           <ul class="breadcrumb">
-              <li><a href="/forums/">{% trans "Forums" %}</a></li>
-              <li><a href="/forum/{{topic.forum.name}}/">{{topic.forum.name}}</a></li>
+              <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
+              <li><a href="{% url 'forum' topic.forum.name %}">{{topic.forum.name}}</a></li>
               <li class="active">{{ topic.title }}</li>
           </ul>
         </div>
@@ -87,7 +87,7 @@
 
                     {% if topic.user.id == user.id %}
                       <br>
-                      <button onclick="document.location ='/edit_topic/{{topic.forum.name}}/{{topic.idtopic}}/'" class="btn btn-inverse btn-xs" style="min-width: 8em">
+                      <button onclick="document.location ='{% url 'edittopic' topic.forum.name topic.idtopic %}'" class="btn btn-inverse btn-xs" style="min-width: 8em">
                         <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</button>
                       <a style="cursor: pointer; min-width: 8em; margin-top: 0em" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
                         <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}</a>
@@ -126,11 +126,11 @@
                  {{comment.description | htmlToPlaintext }}
                 </div>
                 <span>
-                    <a href="/profile/{{comment.username}}">
+                    <a href="{% url 'profile' comment.username %}">
                          <img class="img-circle" ng-src="{{ comment.photo }}""
                          width="30" height="30" />
                     </a>
-                    <a href="/profile/{{comment.username}}">{{ comment.username }}</a>
+                    <a href="{% url 'profile' comment.username %}">{{ comment.username }}</a>
                     <br>
                     <div class="label label-success"><b>Online</b></div>
 
@@ -153,7 +153,7 @@
     <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">
-      <form action="/newcomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/" name="formComment" method="POST" class="well">{% csrf_token%}
+      <form action="{% url 'newcomment' topic.forum.name topic.slug topic.idtopic %}" name="formComment" method="POST" class="well">{% csrf_token%}
         <center>
         {% for field in form_comment %}
           {% if field.name == "description" %}
@@ -194,7 +194,7 @@
             {% trans "Do you want to remove the topic?" %}
           </div>
           <div class="modal-footer">
-            <form accept-charset="UTF-8" action="/delete_topic/{{topic.forum.name}}/{{topic.idtopic}}/" method="GET">
+            <form accept-charset="UTF-8" action="{% url 'deletetopic' topic.forum.name topic.idtopic %}" method="GET">
               <button type="submit" class="btn btn-danger">
                   <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}
               </button>

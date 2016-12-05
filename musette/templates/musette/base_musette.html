@@ -23,7 +23,7 @@
             <span class="icon-bar"></span>
           </button>
 
-          <a class="navbar-brand" href="/forums/" style="margin-top: -10px; margin-bottom: 5px">
+          <a class="navbar-brand" href="{% url 'forums' %}" style="margin-top: -10px; margin-bottom: 5px">
               {% if configurations.logo  %}
                   <img src="{{ MEDIA_URL }}{{ configurations.logo }}"
                       width="{% if configurations.logo_width %}{{configurations.logo_width}}{% else %}160{% endif %}"

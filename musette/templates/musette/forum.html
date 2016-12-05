@@ -9,7 +9,7 @@
         <tr>
             <td style="max-width: 25.0em">
                 <span class="pull-left forum-icon" style="margin-right: 5px">
-                    <a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/" class="btn btn-sm btn-default tooltip-link">
+                    <a href="{% url 'topic' forum.name topic.slug topic.idtopic %}" class="btn btn-sm btn-default tooltip-link">
                         <i class="glyphicon glyphicon-comment"></i>
                     </a>
                 </span>
@@ -17,7 +17,7 @@
                     <i class="fa fa-folder fa-fw"></i>
                 </div>
 
-                <a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/" data-toggle="tooltip" 
+                <a href="{% url 'topic' forum.name topic.slug topic.idtopic %}" data-toggle="tooltip" 
                     data-placement="bottom" title="{% trans 'Views' %}: {% get_tot_views topic.idtopic %}">
                 {{topic.title}}
                 {% if topic.is_top %}

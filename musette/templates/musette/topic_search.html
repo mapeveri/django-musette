@@ -9,18 +9,18 @@
         <div class="list-group-item">
 
             <span class="pull-left forum-icon" style="margin-right: 5px;">
-                <a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/" class="btn btn-lg btn-default tooltip-link">
+                <a href="{% url 'topic' forum.name topic.slug topic.idtopic %}" class="btn btn-lg btn-default tooltip-link">
                     <img class="img-circle" src="{{topic.user.id|get_photo}}" alt="icon" width="30" height="30">
                 </a>
             </span>
 
-            <h4 class="list-group-item-heading" style="margin-top: 10px">
-                <a href="/topic/{{forum.name}}/{{topic.slug}}/{{topic.idtopic}}/">
+            <h4 class="list-group-item-heading" style="margin-top: 0.5em;">
+                <a href="{% url 'topic' forum.name topic.slug topic.idtopic %}">
                     {{ topic.title }}
                 </a>
+                <p><small>{% trans "User" %}: {{topic.user|get_path_profile|safe}}</small></p>
+                <p><small>{{ topic.date }}</small></p>
             </h4>
-            <p class="list-group-item-text">{{ topic.description|safe|truncatechars:300 }}</p>
-
         </div>
         <div class="list-group-separator"></div>
     {% empty %}

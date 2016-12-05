@@ -18,7 +18,7 @@
               {{comment.description|safe}}
             </div>
             <span>
-                <a href="/profile/{{comment.user}}">
+                <a href="{% url 'profile' comment.user %}">
                      <img class="img-circle" src="{{comment.user.id|get_photo}}"
                      width="30" height="30" />
                 </a>
@@ -61,7 +61,7 @@
         </div>
         <div class="modal-body">
 
-          <form action="/updatecomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/{{comment.idcomment}}/" method="POST">
+          <form action="{% url 'updatecomment' topic.forum.name topic.slug topic.idtopic comment.idcomment %}" method="POST">
               {% csrf_token%}
               <div class="in_div_textarea">
                 <textarea name="update_description" id="textarea_comment_{{comment.idcomment}}" style="width: 100%" required>
@@ -91,7 +91,7 @@
           <p>{% trans "Do you want remove this comment?" %}</p>
         </div>
         <div class="modal-footer">
-            <form class="form-horizontal" action="/removecomment/{{topic.forum.name}}/{{topic.slug}}/{{topic.idtopic}}/{{comment.idcomment}}/" method="POST">{% csrf_token%}
+            <form class="form-horizontal" action="{% url 'removecomment' topic.forum.name topic.slug topic.idtopic comment.idcomment %}" method="POST">{% csrf_token%}
             <button type="submit" class="btn btn-danger btn-sm">
               <i class="glyphicon glyphicon-trash"></i> {% trans "Remove comment" %}
             </button>

@@ -16,7 +16,7 @@
     <div class="notification-heading">
         <h4 class="menu-title">{% trans "Notifications" %}</h4>
         <h4 class="menu-title pull-right">
-            <a href="/forum_all_notification/" style="color: #ff7788">
+            <a href="{% url 'forum_all_notification' %}" style="color: #ff7788">
             {% trans "All" %}<i class="glyphicon glyphicon-circle-arrow-right"></i>
             </a>
         </h4>
@@ -25,7 +25,7 @@
     <div class="notifications-wrapper">
         {% comment %} Real time notification with angular {% endcomment %}
         {% verbatim %}
-          <a class="content" href="/topic/{{ not.forum }}/{{not.slug}}/{{not.idtopic}}/" ng-repeat="not in notifications_socket">
+          <a class="content" href="{% url 'topic' not.forum not.slug not.idtopic %}" ng-repeat="not in notifications_socket">
             <div class="notification-item">
                <h4 class="item-title">
                   <img class="img-circle" ng-src="{{ not.photo }}" width=25 height=25 />
@@ -43,7 +43,7 @@
     <li class="divider"></li>
     <div class="notification-footer">
         <h4 class="menu-title">
-            <a href="/forum_all_notification/" style="color: #ff7788">
+            <a href="{% url 'forum_all_notification' %}" style="color: #ff7788">
             <span>{% trans "All" %}</span><i class="glyphicon glyphicon-circle-arrow-right"></i>
             </a>
         </h4>

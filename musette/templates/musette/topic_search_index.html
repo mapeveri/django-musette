@@ -9,8 +9,8 @@
 
 	<div class="row">
       <ul class="breadcrumb">
-          <li><a href="/forums/">{% trans "Forums" %}</a></li>
-          <li><a href="/forum/{{forum}}/">{{forum}}</a></li>
+          <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
+          <li><a href="{% url 'forum' forum %}">{{forum}}</a></li>
           <li class="active">{% trans "Find Topics" %}</li>
       </ul>
     </div>

@@ -39,7 +39,7 @@
 
             {% if profile.iduser.id == user.id %}
                 <br>
-                <button onclick="document.location = '/edit_profile/{{ profile.iduser.username }}'" class="btn btn btn-inverse">{% trans "Edit profile" %}</button>
+                <button onclick="document.location = '{% url 'edit_profile' profile.iduser.username %}'" class="btn btn btn-inverse">{% trans "Edit profile" %}</button>
             {% endif %}
 
         </div>
