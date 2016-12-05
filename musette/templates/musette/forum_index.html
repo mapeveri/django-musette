@@ -14,7 +14,7 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container" ng-controller="ForumTopicController">
     <ul class="breadcrumb">
         <li><a href="/forums/">{% trans "Forums" %}</a></li>
         {% if forum.parent %}
@@ -40,24 +40,25 @@
 
     {% get_hit_count for forum as total_hits %}
 
-    {% if forum.moderators_id == user.id %}
-        {% if forum.is_moderate %}
+    {% if forum.is_moderate %}
+        {% if user in forum.moderators.all %}
             {% if forum|get_tot_topics_moderate > 0 %}
                 <div class="alert alert-success" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
                     <p>{% trans "The forum "%} {{forum.name}} {% trans "is pending moderations" %}</p>
-                </div>
+                </div> 
             {% endif %}
         {% endif %}
     {% endif %}
+
     
     <div class="row">
         <div class="pull-left">
-            {% if register or user.is_superuser or forum.moderators.id == user.id %}
+            {% if register or user.is_superuser or user in forum.moderators.all %}
                 <div class="col-md-5 text-left">
                     <button onclick="window.location = '/newtopic/{{forum.name}}/'" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</button>
                 </div>
-                {% if not user.is_superuser and not forum.moderators.id == user.id %}
+                {% if not user.is_superuser and not user in forum.moderators.all %}
                 <div class="col-md-4 text-right">
                     <form method="POST" action="/unregister/{{forum}}/">
                         {% csrf_token %}
@@ -76,7 +77,8 @@
             <div class="col-md-10">
                 <div class="inner-addon right-addon">
                     <span class="glyphicon glyphicon-search"></span>
-                    <input type="text" class="form-control" ng-model="search_text" placeholder="{% trans 'Find Topics' %}" ng-enter="search('{{forum.name}}')" />
+                    <input type="text" class="form-control" ng-model="search_text" placeholder="{% trans 'Find Topics' %}" 
+                        ng-enter="search('{{forum.name}}')" />
                 </div>
             </div>
             <div class="col-md-2">
@@ -88,7 +90,7 @@
     </div>
     <br>
 
-    <div class="panel panel-default" ng-controller="ForumTopicController">
+    <div class="panel panel-default">
         <div class="panel-heading" style="height: 2.8em">
             <p>
                 {% if total_hits|add:"0" > 1 %}

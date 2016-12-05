@@ -1,6 +1,5 @@
 {% extends "admin/base_site.html" %}
 {% load i18n l10n admin_urls %}
-{% load url from future %}
 
 {% block breadcrumbs %}
   <ul class="breadcrumb">
@@ -54,7 +53,7 @@
             {% for id in ids %}
                 <input type="hidden" name="{{ action_checkbox_name }}" value="{{ id.0 }}" />
             {% endfor %}
-            <input type="hidden" name="action" value="delete_topic" />
+            <input type="hidden" name="action" value="{{ action }}" />
             <input type="hidden" name="post" value="yes" />
             <input type="submit" value="{% trans "Yes, I'm sure" %}" class="btn btn-danger"/>
           </div>

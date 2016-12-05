@@ -17,7 +17,16 @@
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3 class="panel-title"><h5>{% trans "Moderator" %}: <span>{{ forum.moderators|get_path_profile|safe }}</span></h5></h3>
+            <h3 class="panel-title">
+                <h5>
+                    {% trans "Moderator" %}:
+                    <span>
+                        {% for moderator in forum.moderators.all %}
+                            {{ moderator|get_path_profile|safe }}
+                        {% endfor %}
+                    </span>
+                </h5>
+            </h3>
         </div>
         <div class="panel-body" endless-pagination="{'paginateOnScroll': true}">
             {% include 'musette/users_forum.html' %}

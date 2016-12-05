@@ -19,8 +19,8 @@ from .utils import remove_folder_attachment
 
 class TopicAdmin(admin.ModelAdmin):
     form = FormAdminTopic
-    list_display = ('title', 'forum', 'date')
-    list_filter = ['title', 'date']
+    list_display = ('title', 'forum', 'date', 'moderate')
+    list_filter = ['title', 'date', 'moderate']
     search_fields = ['title']
     actions = ['delete_topic']
 
@@ -43,10 +43,10 @@ class TopicAdmin(admin.ModelAdmin):
         return actions
 
     def delete_topic(self, request, queryset):
-        '''
-            This method remove topic's selected in the admin django.
-            Can remove one o more records.
-        '''
+        """
+        This method remove topic's selected in the admin django.
+        Can remove one o more records.
+        """
         if not self.has_delete_permission(request):
             raise PermissionDenied
 
@@ -60,8 +60,7 @@ class TopicAdmin(admin.ModelAdmin):
 
             n = queryset.count()
             self.message_user(
-                request,
-                _("Successfully deleted %(count)d record/s.") % {
+                request, _("Successfully deleted %(count)d record/s.") % {
                     "count": n, }, messages.SUCCESS
             )
 
@@ -89,11 +88,11 @@ class TopicAdmin(admin.ModelAdmin):
                 'opts': opts,
                 'objects_name': objects_name,
                 'deletable_objects': [del_obj],
+                'action': 'delete_topic',
             }
 
             return TemplateResponse(
-                request, 'musette/admin/confirm_delete.html',
-                context, current_app=self.admin_site.name
+                request, 'musette/admin/confirm_delete.html', context
             )
 
     delete_topic.short_description = _(
@@ -103,11 +102,11 @@ class TopicAdmin(admin.ModelAdmin):
 
 class ForumAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'category', 'escape_html_description',
-        'moderators', 'topics_count')
+        'name', 'category', 'forum_description', 'topics_count'
+    )
     list_filter = ['name', 'category']
     search_fields = ['name']
-    actions = ['delete_topic']
+    actions = ['delete_forum']
 
     def get_actions(self, request):
         actions = super(ForumAdmin, self).get_actions(request)
@@ -115,7 +114,7 @@ class ForumAdmin(admin.ModelAdmin):
             del actions['delete_selected']
         return actions
 
-    def delete_topic(self, request, queryset):
+    def delete_forum(self, request, queryset):
         """
         This method remove forum selected
         in the admin django. Can remove one
@@ -127,29 +126,15 @@ class ForumAdmin(admin.ModelAdmin):
         if request.POST.get("post"):
             for obj in queryset:
                 idforum = obj.idforum
-
-                if not obj.moderators.is_superuser:
-                    if obj.moderators:
-
-                        # Return forums that moderating one moderator
-                        tot_forum_moderator = Forum.objects.filter(
-                            moderators=obj.moderators).count()
-
-                        # Only remove permissions if is moderator one forum
-                        if tot_forum_moderator <= 1:
-                            try:
-                                u = User.objects.get(username=obj.moderators)
-                                u.user_permissions.clear()
-                            except Exception:
-                                pass
+                # Remove permissions to moderators
+                obj.remove_user_permissions_moderator()
 
                 # Delete record
                 Forum.objects.filter(idforum=idforum).delete()
 
             n = queryset.count()
             self.message_user(
-                request,
-                _("Successfully deleted %(count)d record/s.") % {
+                request, _("Successfully deleted %(count)d record/s.") % {
                     "count": n, }, messages.SUCCESS
             )
 
@@ -177,21 +162,16 @@ class ForumAdmin(admin.ModelAdmin):
                 'opts': opts,
                 'objects_name': objects_name,
                 'deletable_objects': [del_obj],
+                'action': 'delete_forum'
             }
 
             return TemplateResponse(
-                request, 'musette/admin/confirm_delete.html',
-                context, current_app=self.admin_site.name
+                request, 'musette/admin/confirm_delete.html', context
             )
 
-    delete_topic.short_description = _(
+    delete_forum.short_description = _(
         "Delete selected %(verbose_name_plural)s"
     )
-
-    # TinyMCE
-    class Media:
-        js = ('/static/js/libs/tiny_mce/tiny_mce.js',
-              '/static/js/textareas.js')
 
 
 class CommentAdmin(admin.ModelAdmin):

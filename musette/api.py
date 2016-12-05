@@ -28,6 +28,7 @@ class CategorySerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Category
+        fields = '__all__'
 
 
 # ViewSets for categiry
@@ -41,6 +42,7 @@ class ForumSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Forum
+        fields = '__all__'
 
 
 # ViewSets for forum
@@ -54,6 +56,7 @@ class TopicSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Topic
+        fields = '__all__'
 
 
 # ViewSets for topic
@@ -67,6 +70,7 @@ class RegisterSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Register
+        fields = '__all__'
 
 
 # ViewSets for register
@@ -80,6 +84,7 @@ class CommentSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Comment
+        fields = '__all__'
 
 
 # ViewSets for comment
@@ -93,6 +98,7 @@ class ProfileSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = get_main_model_profile()
+        fields = '__all__'
 
 
 # ViewSets for profile

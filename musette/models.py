@@ -54,13 +54,14 @@ class Forum(models.Model):
     name = models.CharField(_('Name'), max_length=80, unique=True)
     position = models.IntegerField(_('Position'), blank=True, default=0)
     description = models.TextField(_('Description'), blank=True)
-    moderators = models.ForeignKey(
-        User, related_name='moderators', blank=False, null=False,
-        verbose_name=_('Moderators')
+    moderators = models.ManyToManyField(
+        User, related_name='moderators', verbose_name=_('Moderators')
     )
-    date = models.DateTimeField(_('Date'), blank=True, null=True)
+    date = models.DateTimeField(
+        _('Date'), blank=True, null=True, auto_now_add=True, editable=False
+    )
     topics_count = models.IntegerField(
-        _('Topics count'), blank=True, default=0)
+        _('Topics count'), blank=True, default=0, editable=False)
     hidden = models.BooleanField(
         _('Hidden'), blank=False, null=False, default=False
     )
@@ -70,13 +71,6 @@ class Forum(models.Model):
         ordering = ['category', 'position']
         verbose_name = _('Forum')
         verbose_name_plural = _('Forums')
-
-    def __init__(self, *args, **kwargs):
-        super(Forum, self).__init__(*args, **kwargs)
-        try:
-            self.old_moderators = self.moderators
-        except:
-            pass
 
     def __str__(self):
         return self.name
@@ -89,52 +83,49 @@ class Forum(models.Model):
 
         return tot
 
+    # Add permissions topic to moderator
+    def add_permissions_topic_moderator(self, moderator):
+        permission1 = Permission.objects.get(codename='add_topic')
+        permission2 = Permission.objects.get(codename='change_topic')
+        permission3 = Permission.objects.get(codename='delete_topic')
+
+        moderator.user_permissions.add(permission1)
+        moderator.user_permissions.add(permission2)
+        moderator.user_permissions.add(permission3)
+
+    # Clear permissions to moderator
+    def clear_permissions_moderator(self, moderator):
+        moderator.user_permissions.clear()
+
+    # Remove permission in user moderators
+    def remove_user_permissions_moderator(self):
+        for moderator in self.moderators.all():
+            # Superuser not is necessary
+            if not moderator.is_superuser:
+                # Return forums that moderating one moderator
+                tot_forum_moderator = self.tot_forums_moderators(moderator)
+
+                # Only remove permissions if is moderator one forum
+                if tot_forum_moderator <= 1:
+                    self.clear_permissions_moderator(moderator)
+
     def delete(self, *args, **kwargs):
-        if not self.moderators.is_superuser:
-            if self.moderators:
-                # Only remove permissions if is moderator one foru
-                if self.tot_forums_moderators(self.moderators) <= 1:
+        for moderator in self.moderators.all():
+            if not moderator.is_superuser:
+                # Only remove permissions if is moderator has one forum
+                if self.tot_forums_moderators(moderator) <= 1:
                     # Remove permissions to user
-                    try:
-                        u = User.objects.get(username=self.moderators)
-                        u.user_permissions.clear()
-                    except Exception:
-                        pass
+                    self.clear_permissions_moderator(moderator)
+
         super(Forum, self).delete()
-
-    def save(self, *args, **kwargs):
-        try:
-            if not self.moderators.is_superuser:
-                # Remove last moderator
-                if self.old_moderators:
-
-                    # Only remove permissions if is moderator one forum
-                    if self.tot_forums_moderators(self.old_moderators) <= 1:
-                        u = User.objects.get(username=self.old_moderators)
-                        u.user_permissions.clear()
-
-                # Add permissions to user
-                u = User.objects.get(username=self.moderators)
-
-                permission1 = Permission.objects.get(codename='add_topic')
-                permission2 = Permission.objects.get(codename='change_topic')
-                permission3 = Permission.objects.get(codename='delete_topic')
-
-                u.user_permissions.add(permission1)
-                u.user_permissions.add(permission2)
-                u.user_permissions.add(permission3)
-        except Exception:
-            pass
-
-        super(Forum, self).save(*args, **kwargs)
 
     def clean(self):
         if self.name:
             self.name = self.name.strip()
 
-    def escape_html_description(obj):
+    def forum_description(obj):
         return obj.description
-    escape_html_description.allow_tags = True
+    forum_description.allow_tags = True
 
 
 @python_2_unicode_compatible

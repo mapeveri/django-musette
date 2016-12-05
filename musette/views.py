@@ -1,5 +1,3 @@
-# -*- coding: UTF-8 -*-
-import datetime
 import json
 import redis
 from itertools import chain
@@ -14,6 +12,7 @@ from django.template import defaultfilters
 from django.views.generic import View
 from django.views.generic.edit import FormView
 from django.utils.crypto import get_random_string
+from django.utils import timezone
 from django.utils.html import conditional_escape
 from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
@@ -150,7 +149,7 @@ class NewTopicView(FormView):
         if form.is_valid():
             obj = form.save(commit=False)
 
-            now = datetime.datetime.now()
+            now = timezone.now()
             user = User.objects.get(id=request.user.id)
             forum = get_object_or_404(Forum, name=forum)
             title = conditional_escape(request.POST['title'])
@@ -169,29 +168,29 @@ class NewTopicView(FormView):
                 obj.attachment = file_name
 
             if forum.is_moderate:
-                if forum.moderators_id == request.user.id:
+                # If is moderator, so the topic is moderate
+                if request.user in forum.moderators.all():
                     obj.moderate = True
                 else:
                     obj.moderate = False
 
-                    # Send email to moderator
-                    if settings.SITE_URL.endswith("/"):
-                        site = settings.SITE_URL + "forum/" + forum.name
-                    else:
-                        site = settings.SITE_URL + "/forum/" + forum.name
+                    for moderator in forum.moderators.all():
+                        # Send email to moderator
+                        if settings.SITE_URL.endswith("/"):
+                            site = settings.SITE_URL + "forum/" + forum.name
+                        else:
+                            site = settings.SITE_URL + "/forum/" + forum.name
 
-                    title_email = "New notification " + settings.SITE_NAME
-                    message = "You have one new topic: " + site
-                    email_from = settings.EMAIL_MUSETTE
-                    user_moderator = get_object_or_404(
-                        User, id=forum.moderators_id
-                    )
-                    email_moderator = user_moderator.email
-                    if email_from:
-                        send_mail(
-                            title_email, message, email_from,
-                            [email_moderator], fail_silently=False
-                        )
+                        title_email = "New notification " + settings.SITE_NAME
+                        message = "You have one new topic: " + site
+                        email_from = settings.EMAIL_MUSETTE
+
+                        email_moderator = moderator.email
+                        if email_from:
+                            send_mail(
+                                title_email, message, email_from,
+                                [email_moderator], fail_silently=False
+                            )
             else:
                 obj.moderate = True
 
@@ -332,7 +331,7 @@ class NewCommentView(View):
         if form.is_valid():
             obj = form.save(commit=False)
 
-            now = datetime.datetime.now()
+            now = timezone.now()
             user = User.objects.get(id=request.user.id)
             topic = get_object_or_404(Topic, idtopic=idtopic)
 
@@ -517,7 +516,7 @@ class AddRegisterView(View):
         forum = get_object_or_404(Forum, name=forum, hidden=False)
         idforum = forum.idforum
         iduser = request.user.id
-        date = datetime.datetime.now()
+        date = timezone.now()
 
         register = Register(
             forum_id=idforum, user_id=iduser,
@@ -565,7 +564,7 @@ class UsersForumView(View):
         registers = forum.register_forums.all()
 
         # Add moderator to users
-        users = list(chain(registers, [forum.moderators]))
+        users = list(chain(registers, forum.moderators.all()))
 
         data = {
             'forum': forum,

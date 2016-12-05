@@ -24,12 +24,8 @@ urlpatterns = [
     url(r'hitcount/', include('hitcount.urls', namespace='hitcount')),
 
     # Url's Django-musette
-    url(
-        r'^forums/$', ForumsView.as_view(), name='forums'
-    ),
-    url(
-        r'^forum/(?P<forum>.+)/$', ForumView.as_view(), name='forum'
-    ),
+    url(r'^forums/$', ForumsView.as_view(), name='forums'),
+    url(r'^forum/(?P<forum>.+)/$', ForumView.as_view(), name='forum'),
     url(
         r'^topic/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/$',
         TopicView.as_view(), name='topic'
@@ -59,8 +55,7 @@ urlpatterns = [
         login_required(DeleteCommentView.as_view()), name='removecomment'
     ),
     url(
-        r'^forum_all_notification/$', login_required(
-            AllNotification.as_view()),
+        r'^forum_all_notification/$', login_required(AllNotification.as_view()),
         name='forum_all_notification'
     ),
     url(
@@ -69,13 +64,11 @@ urlpatterns = [
     ),
     url(
         r'^new_register/(?P<forum>.+)/$', login_required(
-            AddRegisterView.as_view()),
-        name='new_register'
+            AddRegisterView.as_view()), name='new_register'
     ),
     url(
-        r'^unregister/(?P<forum>.+)/$', login_required(UnregisterView.as_view()
-                                                       ),
-        name='unregister'
+        r'^unregister/(?P<forum>.+)/$', login_required(
+            UnregisterView.as_view()), name='unregister'
     ),
     url(
         r'^users_forum/(?P<forum>.+)/$', UsersForumView.as_view(),
@@ -85,12 +78,8 @@ urlpatterns = [
         r'^search_topic/(?P<forum>.+)/$', TopicSearch.as_view(),
         name='search_topic'
     ),
-    url(
-        r'^feed/(?P<forum>.+)/$', TopicFeed(), name='rss'
-    ),
-    url(
-        r'^profile/(?P<username>.+)/$', ProfileView.as_view(), name='profile'
-    ),
+    url(r'^feed/(?P<forum>.+)/$', TopicFeed(), name='rss'),
+    url(r'^profile/(?P<username>.+)/$', ProfileView.as_view(), name='profile'),
     url(
         r'^edit_profile/(?P<username>[-\w]+)/$', EditProfileView.as_view(),
         name='edit_profile'
