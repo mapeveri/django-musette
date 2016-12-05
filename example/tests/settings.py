@@ -17,29 +17,11 @@ from django.utils.translation import ugettext_lazy as _
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Site data
-SITE_NAME = "Musette Forum"
-SITE_URL = "http://127.0.0.1:8000/"
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!4kd#=13u=eiz7zmu)a%$26$1xs*8+^#))30c)4fau7&*0n_0x'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
-
-# Email data
-EMAIL_MUSETTE = ''
-EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = EMAIL_MUSETTE
-EMAIL_HOST_PASSWORD = ''
-EMAIL_PORT = 587
-EMAIL_FROM = EMAIL_MUSETTE
 
 # Application definition
 INSTALLED_APPS = (
@@ -74,7 +56,7 @@ ROOT_URLCONF = 'tests.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "plantillas")],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,7 +91,7 @@ CACHES = {
         'LOCATION': 'localhost:6379',
         'OPTIONS': {
             'DB': 1
-            #'PASSWORD' :'asdas6d87sf6tsd8f',
+            # 'PASSWORD' :'asdas6d87sf6tsd8f',
             }
         }
 }

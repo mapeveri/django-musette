@@ -1,4 +1,3 @@
-import datetime
 import os
 
 from django.conf import settings
@@ -7,6 +6,7 @@ from django.core.cache import cache
 from django.db import models
 from django.shortcuts import get_object_or_404
 from django.template import defaultfilters
+from django.utils import timezone
 from django.utils.encoding import python_2_unicode_compatible
 from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
@@ -326,8 +326,8 @@ class AbstractProfile(models.Model):
 
     def online(self):
         if self.last_seen():
-            now = datetime.datetime.now()
-            if now > self.last_seen() + datetime.timedelta(
+            now = timezone.now()
+            if now > self.last_seen() + timezone.timedelta(
                          seconds=localSettings.USER_ONLINE_TIMEOUT):
                 return False
             else:
