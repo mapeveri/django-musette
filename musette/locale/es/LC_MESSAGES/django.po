@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-04 22:52-0500\n"
+"POT-Creation-Date: 2016-12-06 09:03-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,6 +35,42 @@ msgstr ""
 #, python-format
 msgid "Delete selected %(verbose_name_plural)s"
 msgstr ""
+
+#: musette/forms.py:18 musette/forms.py:80
+msgid "Username"
+msgstr "Usuario"
+
+#: musette/forms.py:47
+msgid "Username or password incorrect."
+msgstr "Usuario o contraseña incorrecta"
+
+#: musette/forms.py:82 musette/templates/musette/password_reset_form.html:21
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: musette/forms.py:84
+msgid "Names"
+msgstr "Nombres"
+
+#: musette/forms.py:86
+msgid "Surname"
+msgstr "Apellido"
+
+#: musette/forms.py:88
+msgid "Password"
+msgstr "Contraseña"
+
+#: musette/forms.py:90
+msgid "Repeat password"
+msgstr "Repita la contraseña"
+
+#: musette/forms.py:98
+msgid "Passwords don't match"
+msgstr "Las contraseñas no coinciden"
+
+#: musette/forms.py:114
+msgid "Email addresses must be unique."
+msgstr "El correo electrónico debe ser único"
 
 #: musette/models.py:28
 msgid "If checked, this category will be visible only for staff"
@@ -169,34 +205,35 @@ msgstr "Registrarse"
 msgid "Registers"
 msgstr "Registros"
 
-#: musette/models.py:360
+#: musette/models.py:362
 msgid "Logo width"
 msgstr "Ancho del logo"
 
-#: musette/models.py:361 musette/models.py:365
+#: musette/models.py:363 musette/models.py:367
 msgid "In pixels"
 msgstr "En pixels"
 
-#: musette/models.py:364
+#: musette/models.py:366
 msgid "Logo height"
 msgstr "Altura del logo"
 
-#: musette/models.py:369
+#: musette/models.py:371
 msgid ""
 "Css Bootstrap class for navbar. Like \"default\", \"inverse\" or somo custom."
 msgstr ""
 "Class css bootstrap para el navbar. Como \"default\", \"inverse\" or alguna "
 "customizable"
 
-#: musette/models.py:374
+#: musette/models.py:376
 msgid "Configuration"
 msgstr "Configuración"
 
-#: musette/models.py:375
+#: musette/models.py:377
 msgid "Configurations"
 msgstr "Configuraciones"
 
 #: musette/templates/musette/admin/confirm_delete.html:6
+#: musette/templates/musette/password_reset_complete.html:6
 msgid "Home"
 msgstr "Inicio"
 
@@ -244,6 +281,49 @@ msgstr "No hay notificaciones"
 #: musette/templates/musette/notification.html:17
 msgid "Notifications"
 msgstr "Notificaciones"
+
+#: musette/templates/musette/base_musette.html:46
+#: musette/templates/musette/confirm_email.html:22
+#: musette/templates/musette/password_reset_complete.html:21
+msgid "Log in"
+msgstr "Iniciar sesión"
+
+#: musette/templates/musette/confirm_email.html:12
+#: musette/templates/musette/password_reset_complete.html:17
+msgid "Congratulations"
+msgstr "Felicitaciones"
+
+#: musette/templates/musette/confirm_email.html:15
+#: musette/templates/musette/confirm_email_expired.html:21
+msgid "Confirmation email"
+msgstr "Confirmación de correo electrónico"
+
+#: musette/templates/musette/confirm_email.html:17
+msgid "Congratulations, you are now an active member of "
+msgstr "Felicitaciones, usted ya es un usuario activo de "
+
+#: musette/templates/musette/confirm_email.html:19
+msgid "Thank you: "
+msgstr "Gracias: "
+
+#: musette/templates/musette/confirm_email_expired.html:13
+msgid "Please, check your email."
+msgstr "Por favor, revise su correo electrónico."
+
+#: musette/templates/musette/confirm_email_expired.html:18
+#: musette/templates/musette/confirm_email_expired.html:23
+msgid "The activation key has expired"
+msgstr "La clave de activación ha caducado"
+
+#: musette/templates/musette/confirm_email_expired.html:25
+msgid "Please click the following button to get a new activation key."
+msgstr ""
+"Por favor haga click en el siguiente botón para obtener una nueva clave de "
+"activación."
+
+#: musette/templates/musette/confirm_email_expired.html:29
+msgid "New activation key"
+msgstr "Nueva clave de activación"
 
 #: musette/templates/musette/edit_profile.html:18
 #: musette/templates/musette/profile.html:42
@@ -349,6 +429,14 @@ msgstr "No hay temas cargados"
 msgid "Please, you add forums and categories in the administrator."
 msgstr "Por favor, agregue los foros y categorías en el administrador"
 
+#: musette/templates/musette/login.html:39
+msgid "Forgot password?"
+msgstr "¿Olvidó la contraseña?"
+
+#: musette/templates/musette/login.html:41
+msgid "Sign in"
+msgstr "Registrarse"
+
 #: musette/templates/musette/new_topic.html:25
 msgid "Add"
 msgstr "Agregar"
@@ -362,6 +450,94 @@ msgstr "Todo"
 #: musette/templates/musette/topic_index.html:123
 msgid "Now"
 msgstr "Ahora"
+
+#: musette/templates/musette/notification.html:51
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+#: musette/templates/musette/password_reset_complete.html:7
+msgid "Password reset"
+msgstr "Resetear contraseña"
+
+#: musette/templates/musette/password_reset_complete.html:19
+msgid "Your password has been set.  You may go ahead and log in now."
+msgstr ""
+"Se ha establecido su contraseña. Usted puede seguir adelante y acceder ahora."
+
+#: musette/templates/musette/password_reset_confirm.html:15
+msgid "Change password"
+msgstr "Cambia la contraseña"
+
+#: musette/templates/musette/password_reset_confirm.html:19
+msgid ""
+"Please enter your new password twice so we can verify you typed it in "
+"correctly."
+msgstr ""
+"Ingrese su nueva contraseña dos veces para poder verificar que la escribió "
+"correctamente"
+
+#: musette/templates/musette/password_reset_confirm.html:23
+msgid "New password"
+msgstr "Nueva contraseña"
+
+#: musette/templates/musette/password_reset_confirm.html:31
+msgid "Confirm password"
+msgstr "Confirmar contraseña"
+
+#: musette/templates/musette/password_reset_confirm.html:37
+msgid "Change my password"
+msgstr "Cambiar mi contraseña"
+
+#: musette/templates/musette/password_reset_confirm.html:49
+msgid ""
+"The password reset link was invalid, possibly because it has already been "
+"used.  Please request a new password reset."
+msgstr ""
+"El enlace de restablecimiento de contraseña no es válido, posiblemente "
+"porque ya se ha usado. Por favor restablezca su contraseña."
+
+#: musette/templates/musette/password_reset_email.html:2
+#, python-format
+msgid ""
+"You're receiving this email because you requested a password reset for your "
+"user account at %(site_name)s."
+msgstr ""
+"Recibió este correo electrónico porque solicitó una restablecimiento de "
+"contraseña para su cuenta de usuario en %(site_name)s."
+
+#: musette/templates/musette/password_reset_email.html:4
+msgid "Please go to the following page and choose a new password:"
+msgstr "Por favor, vaya a la siguiente página y elija una nueva contraseña:"
+
+#: musette/templates/musette/password_reset_email.html:8
+msgid "Your username, in case you've forgotten:"
+msgstr "Su nombre de usuario, en caso de que lo hayas olvidado:"
+
+#: musette/templates/musette/password_reset_email.html:10
+msgid "Thanks for using our site!"
+msgstr "¡Gracias por usar nuestro sitio!"
+
+#: musette/templates/musette/password_reset_email.html:12
+#, python-format
+msgid "The %(site_name)s team"
+msgstr "El equipo de %(site_name)s"
+
+#: musette/templates/musette/password_reset_form.html:13
+msgid "Reset password"
+msgstr "Restablecer contraseña"
+
+#: musette/templates/musette/password_reset_form.html:31
+msgid "Submit"
+msgstr "Enviar"
+
+#: musette/templates/musette/password_reset_subject.txt:3
+#, python-format
+msgid ""
+"Password reset for email %(email)s. Follow the link below: %(protocol)s://"
+"%(domain)s"
+msgstr ""
+"Restablecimiento de contraseña para correo electrónico %(email)s. Por favor "
+"siga el siguiente link : %(protocol)s://%(domain)s"
 
 #: musette/templates/musette/profile.html:16
 #: musette/templates/musette/users_forum.html:19
@@ -386,6 +562,26 @@ msgstr "hace un tiempo"
 #: musette/templates/musette/profile.html:48
 msgid "About me"
 msgstr "Acerca de"
+
+#: musette/templates/musette/signup.html:12
+msgid "Sign up"
+msgstr "Regístrate"
+
+#: musette/templates/musette/signup.html:13
+msgid "Create a free account."
+msgstr "Crea una cuenta nueva"
+
+#: musette/templates/musette/signup.html:61
+msgid ""
+"By clicking Create my account, you agree to our Terms and that you have read "
+"our Data Use Policy, including our Cookie Use."
+msgstr ""
+"Al hacer click en Crear mi cuenta, acepta nuestros Términos y ha leído "
+"nuestra política de uso de datos, incluyendo nuestro uso de cookies"
+
+#: musette/templates/musette/signup.html:64
+msgid "Create my account"
+msgstr "Crear mi cuenta"
 
 #: musette/templates/musette/topic.html:43
 #: musette/templates/musette/topic_index.html:91
@@ -449,36 +645,49 @@ msgstr "Moderador"
 msgid "No registered users"
 msgstr "No hay usuarios registrados"
 
-#: musette/utils.py:168 musette/utils.py:170 musette/utils.py:174
+#: musette/utils.py:171 musette/utils.py:173 musette/utils.py:177
 msgid "ago"
 msgstr "hace"
 
-#: musette/utils.py:174
+#: musette/utils.py:177
 msgid "days ago"
 msgstr "días"
+
+#: musette/utils.py:260
+msgid "Welcome to "
+msgstr ""
 
 #: musette/validators.py:16
 msgid "Files allowed"
 msgstr "Archivos permitidos"
 
-#: musette/views.py:198 musette/views.py:282 musette/views.py:308
-#: musette/views.py:411 musette/views.py:441 musette/views.py:466
-#: musette/views.py:526 musette/views.py:549 musette/views.py:722
-msgid "Action successful"
-msgstr "Acción exitosa"
+#: musette/views.py:67
+msgid "The user is not active"
+msgstr "El usuario no está activo"
 
-#: musette/views.py:201 musette/views.py:285 musette/views.py:725
+#: musette/views.py:117 musette/views.py:416 musette/views.py:502
+#: musette/views.py:958
 msgid "Form invalid"
 msgstr "Formulario invalido"
 
-#: musette/views.py:414
+#: musette/views.py:196
+msgid "Please, check your email"
+msgstr "Por favor, revise su correo electrónico"
+
+#: musette/views.py:413 musette/views.py:499 musette/views.py:524
+#: musette/views.py:631 musette/views.py:662 musette/views.py:689
+#: musette/views.py:751 musette/views.py:775 musette/views.py:955
+msgid "Action successful"
+msgstr "Acción exitosa"
+
+#: musette/views.py:634
 msgid "Field required"
 msgstr "Campo requerido"
 
-#: tests/settings.py:128
+#: tests/settings.py:110
 msgid "English"
 msgstr "Inglés"
 
-#: tests/settings.py:129
+#: tests/settings.py:111
 msgid "Spanish"
 msgstr "Español"

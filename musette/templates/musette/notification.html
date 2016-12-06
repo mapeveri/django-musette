@@ -16,8 +16,8 @@
     <div class="notification-heading">
         <h4 class="menu-title">{% trans "Notifications" %}</h4>
         <h4 class="menu-title pull-right">
-            <a href="{% url 'forum_all_notification' %}" style="color: #ff7788">
-            {% trans "All" %}<i class="glyphicon glyphicon-circle-arrow-right"></i>
+            <a href="{% url 'forum_all_notification' %}">
+            <strong>{% trans "All" %}</strong><i class="glyphicon glyphicon-circle-arrow-right"></i>
             </a>
         </h4>
     </div>
@@ -42,11 +42,12 @@
      </div>
     <li class="divider"></li>
     <div class="notification-footer">
-        <h4 class="menu-title">
-            <a href="{% url 'forum_all_notification' %}" style="color: #ff7788">
-            <span>{% trans "All" %}</span><i class="glyphicon glyphicon-circle-arrow-right"></i>
+        <h4 class="menu-title" class="pull-left">
+            <a href="{% url 'forum_all_notification' %}">
+            <strong><span>{% trans "All" %}</span><i class="glyphicon glyphicon-circle-arrow-right"></i></strong>
             </a>
         </h4>
+        <a href="{% url 'logout' %}" class="pull-right"><strong>{% trans "Logout" %}</strong></a>
     </div>
   </ul>
 

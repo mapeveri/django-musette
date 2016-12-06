@@ -1,8 +1,11 @@
-# -*- coding: UTF-8 -*-
+import base64
+import hashlib
 import os
+import random
 import shutil
 
 from django.conf import settings
+from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.shortcuts import get_object_or_404
@@ -129,7 +132,7 @@ def get_users_topic(topic, myuser):
     lista_us = []
     for comment in comments:
         if comment.user_id != myuser:
-            if not comment.user_id in lista_us:
+            if not (comment.user_id in lista_us):
                 lista_us.append(comment.user_id)
 
     return lista_us
@@ -242,3 +245,36 @@ def get_photo_profile(iduser):
     else:
         field_photo = default_photo
     return field_photo
+
+
+def send_welcome_email(email, username, activation_key):
+    """
+    This method send email for confirm user
+    """
+    username = base64.b64encode(username.encode("utf-8")).decode("ascii")
+    content = ""
+    content += "Thank you for joining " + settings.SITE_NAME + ", "
+    content += "please enter to confirm your email to this address: "
+    urlContent = "confirm_email/" + username + "/" + activation_key
+    send_mail(
+        _("Welcome to " + settings.SITE_NAME),
+        _(content) + settings.SITE_URL + urlContent,
+        settings.EMAIL_MUSETTE,
+        [email],
+        fail_silently=False
+    )
+
+
+def get_data_confirm_email(email):
+    """
+    This method return info for email confir
+    """
+    salt = hashlib.sha1(str(random.random()).encode("utf-8")).hexdigest()[:5]
+    key = salt.encode("utf-8") + email.encode("utf-8")
+    activation_key = hashlib.sha1(key).hexdigest()
+    key_expires = timezone.now() + timezone.timedelta(2)
+
+    return {
+        'activation_key': activation_key,
+        'key_expires': key_expires
+    }

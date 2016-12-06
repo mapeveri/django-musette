@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.dispatch import receiver
 
-from musette.models import AbstractProfile, Forum
+from musette import models, utils
 
 
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
@@ -12,15 +12,29 @@ def post_save_user(sender, instance, **kwargs):
     This signal is event of model user for create new profile
     """
     if kwargs['created']:
-        subclasses = AbstractProfile.__subclasses__()
+        subclasses = models.AbstractProfile.__subclasses__()
         if len(subclasses) > 0:
             user = User.objects.get(id=instance.id)
             Profile = subclasses[0]
-            profile = Profile(iduser=user)
+
+            # For confirm email
+            data = utils.get_data_confirm_email(user.email)
+
+            # Insert profile
+            profile = Profile(
+                iduser=user, photo="", about="",
+                activation_key=data['activation_key'],
+                key_expires=data['key_expires']
+            )
             profile.save()
 
+            # Send email for confirm user
+            utils.send_welcome_email(
+                user.email, user.username, data['activation_key']
+            )
 
-@receiver(m2m_changed, sender=Forum.moderators.through)
+
+@receiver(m2m_changed, sender=models.Forum.moderators.through)
 def post_save_forum(sender, instance, **kwargs):
     """
     This signal is event of model forum for add permissions

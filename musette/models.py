@@ -317,6 +317,8 @@ class AbstractProfile(models.Model):
         upload_to=generate_path_profile, null=True, blank=True,
     )
     about = models.TextField(blank=True, null=True)
+    activation_key = models.CharField(max_length=100, null=False, blank=False)
+    key_expires = models.DateTimeField(auto_now=False)
 
     def __str__(self):
         return str(self.iduser.username)

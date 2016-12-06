@@ -41,6 +41,11 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% if user.id %}
                       {% include "musette/notification.html" %}
+                    {% else %}
+                    <div style="margin-top: 10px; margin-bottom: 5px">
+                        <a href="{% url 'login' %}" class="btn btn-sm btn-default">{% trans "Log in" %}</a>
+                        <a href="{% url 'signup' %}" class="btn btn-sm btn-default">{% trans "Sign up" %}</a>
+                    </div>
                     {% endif %}
                 </ul>
             </div>

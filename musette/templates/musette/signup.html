@@ -1,0 +1,69 @@
+{% extends "musette/base_musette.html" %}
+
+{% load i18n %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <form action="{% url 'signup' %}" method="POST" accept-charset="utf-8" class="form" role="form">
+                {% csrf_token %}
+                <legend>{% trans "Sign up" %}</legend>
+                <h4>{% trans "Create a free account." %}</h4>
+                <div class="row">
+                     <div class="form-group col-xs-6 col-md-6">
+                          {{ form.first_name }}
+                          {% if form.first_name.errors %}
+                              <div style="color: red">{{ form.first_name.errors }}</div>
+                          {% endif %}
+                    </div>
+
+                     <div class="form-group col-xs-6 col-md-6">
+                          {{ form.last_name }}
+                          {% if form.last_name.errors %}
+                              <div style="color: red">{{ form.last_name.errors }}</div>
+                          {% endif %}
+                     </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12 col-md-12">
+                          {{ form.username }}
+                          {% if form.username.errors %}
+                              <div style="color: red">{{ form.username.errors }}</div>
+                          {% endif %}
+                      </div>
+
+                    <div class="form-group col-xs-12 col-md-12">
+                          {{ form.email }}
+                          {% if form.email.errors %}
+                              <div style="color: red">{{ form.email.errors }}</div>
+                          {% endif %}
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-12">
+                          {{ form.password }}
+                          {% if form.password.errors %}
+                              <div style="color: red">{{ form.password.errors }}</div>
+                          {% endif %}
+                    </div>
+
+                    <div class="form-group col-xs-12 col-md-12">
+                          {{ form.pass_confirm }}
+                          {% if form.pass_confirm.errors %}
+                              <div style="color: red">{{ form.pass_confirm.errors }}</div>
+                          {% endif %}
+                      </div>
+                  </div>
+
+                <span class="help-block">
+                     {% trans "By clicking Create my account, you agree to our Terms and that you have read our Data Use Policy, including our Cookie Use." %}
+                </span>
+                <button class="btn btn-lg btn-default btn-block signup-btn" type="submit">
+                        {% trans "Create my account" %}</button>
+            </form>
+         </div>
+     </div>
+ </div>
+{% endblock %}

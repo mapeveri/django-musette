@@ -1,0 +1,50 @@
+{% extends "musette/base_musette.html" %}
+
+{% load i18n %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <legend>{{ SETTINGS.SITE_NAME }}</legend>
+            <h4>{% trans "Log in" %}</h4>
+            {% if form.hidden_error.errors %}
+                    <div style="color: red">{{ form.hidden_error.errors|safe }}</div>
+            {% endif %}
+            <form class="form-horizontal" method="POST" action="{% url 'login' %}" role="form">
+                {% csrf_token %}
+                {% for message in messages %}
+                    <div class="alert alert-danger" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                                <div style="color: red">{{ form.username.errors|safe }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        {{ form.password }}
+                        {% if form.password.errors %}
+                                <div style="color: red">{{ form.password.errors|safe }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group last">
+                    <div class="col-sm-12">
+                        <center><a href="{% url 'password_reset' %}">{% trans "Forgot password?" %}</a></center>
+                        <button type="submit" class="btn btn-lg btn-primary btn-block signup-btn" style="margin-top: 5px">
+                        {% trans "Sign in" %}</button>
+                    </div>
+                </div>
+            </form>
+         </div>
+     </div>
+ </div>
+{% endblock %}
