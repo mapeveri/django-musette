@@ -27,7 +27,7 @@ Features
 5. Support to rss to forums.
 6. User registration a forum.
 7. Search topics in a forum.
-8. Pre-moderation of topics.
+8. Pre-moderation of topics with multiple moderators.
 9. Support of media files for topics.
 10. Infinite scroll for comments of one topic.
 11. Notifications and email notifications.
@@ -43,10 +43,9 @@ Features
 21. Support Python 3.
 22. Configuration logo and class css for navbar.
 23. Markdown support in textarea.
+24. Authentication.
 
-**Note 1:** Not support login, logout and nothing refered to authentication. Use authentication django admin. 
-
-**Note 2:** When a new record is added to the user model automatically added to your model profile.
+**Note 1:** When a new record is added to the user model automatically added to your model profile.
 
 Installing
 ----------
@@ -111,7 +110,7 @@ Quick start
 			    }
 		}
 
-6. In MIDDLEWARE_CLASSES add this line:
+6. In MIDDLEWARE_CLASSES add this line::
 
         MIDDLEWARE_CLASSES = (
                 ...
@@ -153,8 +152,8 @@ Quick start
 
 8. Execute command migrate::
 
-	python manage.py makemigrations 
-	python manage.py migrate 
+	python manage.py makemigrations musette
+	python manage.py migrate musette
 
 9. If you need to enable the `forum in spanish`_.
 

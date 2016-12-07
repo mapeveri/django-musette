@@ -9,6 +9,10 @@ Roadmap Django-Musette
 3. [X] Issue #47 Add multiple moderators to forum 
 4. [X] Issue #45 Authentication
 5. [X] Issue #49 Models delete cascade 
-6. [ ] Issue #40 "Notifications and comments NoSQL"
-7. [ ] Issue #17 "Add message private between users"
-8. [ ] If errors are found in the previous version. They will be arranged
+6. [X] If errors are found in the previous version. They will be arranged
+
+**For version (0.2.3) complete the next issues:**
+
+1. [ ] Issue #40 "Notifications and comments NoSQL"
+2. [ ] Issue #17 "Add message private between users"
+3. [ ] If errors are found in the previous version. They will be arranged
