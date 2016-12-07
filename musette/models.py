@@ -45,11 +45,11 @@ class Forum(models.Model):
     idforum = models.AutoField(primary_key=True)
     category = models.ForeignKey(
         Category, related_name='categories',
-        verbose_name=_('Category')
+        verbose_name=_('Category'), on_delete=models.CASCADE
     )
     parent = models.ForeignKey(
         'self', related_name='parents', verbose_name=_('Parent forum'),
-        blank=True, null=True
+        blank=True, null=True, on_delete=models.CASCADE
     )
     name = models.CharField(_('Name'), max_length=80, unique=True)
     position = models.IntegerField(_('Position'), blank=True, default=0)
@@ -150,10 +150,13 @@ class Topic(models.Model):
 
     idtopic = models.AutoField(primary_key=True)
     forum = models.ForeignKey(
-        Forum, related_name='forums', verbose_name=_('Forum')
+        Forum, related_name='forums', verbose_name=_('Forum'),
+        on_delete=models.CASCADE
     )
     user = models.ForeignKey(
-        User, related_name='users', verbose_name=_('User'))
+        User, related_name='users', verbose_name=_('User'),
+        on_delete=models.CASCADE
+    )
     slug = models.SlugField(max_length=100)
     title = models.CharField(_('Title'), max_length=80)
     date = models.DateTimeField(_('Date'), blank=False, db_index=False)
@@ -237,10 +240,12 @@ class Comment(models.Model):
 
     idcomment = models.AutoField(primary_key=True)
     topic = models.ForeignKey(
-        Topic, related_name='topics', verbose_name=_('Topic')
+        Topic, related_name='topics', verbose_name=_('Topic'),
+        on_delete=models.CASCADE
     )
     user = models.ForeignKey(
-        User, related_name='comment_users', verbose_name=_('User')
+        User, related_name='comment_users', verbose_name=_('User'),
+        on_delete=models.CASCADE
     )
     date = models.DateTimeField(_('Date'), blank=True, db_index=True)
     description = models.TextField(_('Description'), blank=True)
@@ -282,10 +287,12 @@ class Register(models.Model):
     """
     idregister = models.AutoField(primary_key=True)
     forum = models.ForeignKey(
-        Forum, related_name='register_forums', verbose_name=_('Forum')
+        Forum, related_name='register_forums', verbose_name=_('Forum'),
+        on_delete=models.CASCADE
     )
     user = models.ForeignKey(
-        User, related_name='register_users', verbose_name=_('User')
+        User, related_name='register_users', verbose_name=_('User'),
+        on_delete=models.CASCADE
     )
     date = models.DateTimeField(_('Date'), blank=True, db_index=True)
 
@@ -312,7 +319,9 @@ class AbstractProfile(models.Model):
         )
 
     idprofile = models.AutoField(primary_key=True, unique=True)
-    iduser = models.OneToOneField(User, related_name="user", db_index=True)
+    iduser = models.OneToOneField(
+        User, related_name="user", db_index=True, on_delete=models.CASCADE
+    )
     photo = models.FileField(
         upload_to=generate_path_profile, null=True, blank=True,
     )
