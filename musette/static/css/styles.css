@@ -1,6 +1,6 @@
 
 a, a:hover, a:focus {
-    color: black;
+    color: SeaGreen;
 }
 
 .black{
@@ -69,11 +69,6 @@ a, a:hover, a:focus {
     padding:10px;
 }
 
-
-.glyphicon-bell {
-    font-size:1.5rem;
-}
-
 .notifications {
    min-width:420px;
 }
@@ -86,10 +81,6 @@ a, a:hover, a:focus {
 .menu-title {
  font-size:1.5rem;
  display:inline-block;
-}
-
-.glyphicon-circle-arrow-right {
-   margin-left:5px;
 }
 
 .notification-heading, .notification-footer  {
@@ -107,13 +98,11 @@ a, a:hover, a:focus {
 
 .notifications a.content {
  text-decoration:none;
- background:#ccc;
 }
 
 .notification-item {
  padding:10px;
  margin:5px;
- background:#ccc;
  border-radius:4px;
 }
 

@@ -22,21 +22,30 @@
             </a>
         </h4>
     </div>
-    <li class="divider"></li>
+    
     <div class="notifications-wrapper">
         {% comment %} Real time notification with angular {% endcomment %}
         {% verbatim %}
-          <a class="content" href="{% url 'topic' not.forum not.slug not.idtopic %}" ng-repeat="not in notifications_socket">
-            <div class="notification-item">
-               <h4 class="item-title">
-                  <img class="img-circle" ng-src="{{ not.photo }}" width=25 height=25 />
-                   {{ not.username }} - {% endverbatim %} {% trans "Now" %} {% verbatim %}</h4>
-                <p class="item-info"> {{ not.topic }}</p>
-            </div>
-          </a>
+          <!-- Url fixed for verbatim -->
+          <span ng-repeat="not in notifications_socket">
+            <li class="divider"></li>
+            <a class="content" href="/topic/{{not.forum}}/{{not.slug}}/{{not.idtopic}}">
+                <h4 class="item-title">
+                    <img class="img-circle pull-left" ng-src="{{ not.photo }}" width=45 height=45 />
+                </h4>
+                <h5><a href="/topic/{{not.forum}}/{{not.slug}}/{{not.idtopic}}"><u>{{ not.topic }}</u></a></h5>
+                <p class="item-info">{{ not.username }} - {% endverbatim %} {% trans "Now" %} {% verbatim %}</p>
+            </a>
+          </span>
         {% endverbatim %}
         {% for notification in notifications|slice:"5" %}
+            {% if forloop.first %}
+            <li class="divider"></li>
+            {% endif %}
             {{notification|get_item_notification|safe}}
+            {% if not forloop.last %}
+            <li class="divider"></li>
+            {% endif %}
         {% empty %}
             <p style="margin-left: 5px">{% trans "No notifications"%}</p>
         {% endfor %}

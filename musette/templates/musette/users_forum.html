@@ -6,13 +6,10 @@
 
 {% paginate users %}
 {% for profile in users %}
-    <div class="col-sm-3">
-        <div>
-            <div class="avatar">
-                <img src="{{profile.user.username|get_object_user:profile|get_photo}}" class="img-thumbnail picture" width="100" hegiht="100" />
-            </div>
-            <div class="content">
-                <br>
+    <div class="col-md-2">
+        <div class="thumbnail">
+            <img src="{{profile.user.username|get_object_user:profile|get_photo}}" class="img-thumbnail picture" width="150" height="150" />
+            <div class="caption">
                 <span>{{ profile.user.username|get_object_user:profile|get_path_profile|safe }}</span>
                 <br>
                 {% if profile.date %}

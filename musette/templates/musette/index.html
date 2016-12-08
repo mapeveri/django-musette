@@ -39,7 +39,7 @@
                             </td>
 
                             <td><span class="badge">{{ forum.topics_count }}</span></td>
-                            <td><span class="badge">{{ forum.register_forums.all.count }}</span></td>
+                            <td><span class="badge">{{ forum|get_tot_users_forum }}</span></td>
                             <td><span>
                                 <dfn>{{ forum.date }}</dfn>
                             </td>

@@ -142,7 +142,7 @@ def get_item_notification(notification):
                 slug + "/" + str(idtopic) + "/"
 
             title = "<h5><a href='" + url_topic + "'><u>" + \
-                comment.topic.title + "</u></h5></a>"
+                comment.topic.title + "</u></a></h5>"
 
             # Data profile
             photo = get_photo_profile(comment.user.id)
@@ -150,14 +150,12 @@ def get_item_notification(notification):
 
             # Notificacion
             html += '<a class="content" href="' + url_topic + '">'
-            html += '   <div class="notification-item">'
-            html += '    <h4 class="item-title">'
-            html += '<img class="img-circle" src="' + photo + '"'
-            html += ' width=25 height=25 />'
-            html += username + " - " + str(date) + '</h4>'
-            html += '    <p class="item-info"> ' + title + '</p>'
-            html += '  </div>'
-            html += '</a>'
+            html += ' <h4 class="item-title">'
+            html += ' <img class="img-circle pull-left" src="' + photo + '"'
+            html += ' width=45 height=45 />'
+            html += title + '</h4>'
+            html += ' <p class="item-info"> ' + username + " - " + str(date)
+            html += '</p></a>'
         except Comment.DoesNotExist:
             html = ""
     else:
@@ -221,3 +219,13 @@ def get_object_user(obj, user):
         return user.user
     else:
         return user
+
+
+@register.filter
+def get_tot_users_forum(forum):
+    """
+    Get total users register and moderators
+    """
+    users_registers = forum.register_forums.all().count()
+    moderators = forum.moderators.all().count()
+    return users_registers + moderators
