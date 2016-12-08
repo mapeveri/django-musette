@@ -56,27 +56,27 @@
         <div class="pull-left">
             {% if register or user.is_superuser or user in forum.moderators.all %}
                 <div class="col-md-5 text-left">
-                    <button onclick="window.location = '{% url 'newtopic' forum.name %}'" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-plus"></i> {% trans "New topic" %}</button>
+                    <button onclick="window.location = '{% url 'newtopic' forum.name %}'" class="btn btn-inverse btn-sm"><i class="fa fa-plus"></i> {% trans "New topic" %}</button>
                 </div>
                 {% if not user.is_superuser and not user in forum.moderators.all %}
                 <div class="col-md-4 text-right">
                     <form method="POST" action="{% url 'unregister' forum %}">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Unregister" %}</button>
+                        <button type="submit" class="btn btn-inverse btn-sm"><i class="fa fa-hand-o-up"></i> {% trans "Unregister" %}</button>
                     </form>
                 </div>
                 {% endif %}
             {% else %}
                 <form method="POST" action="{% url 'new_register' forum %}" class="col-md-5 text-left">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-inverse btn-sm"><i class="glyphicon glyphicon-hand-up"></i> {% trans "Join to forum" %}</button>
+                    <button type="submit" class="btn btn-inverse btn-sm"><i class="fa fa-hand-o-up"></i> {% trans "Join to forum" %}</button>
                 </form>
             {% endif %}
         </div>
         <div class="pull-right">
             <div class="col-md-10">
                 <div class="inner-addon right-addon">
-                    <span class="glyphicon glyphicon-search"></span>
+                    <i class="fa fa-search"></i>
                     <input type="text" class="form-control" ng-model="search_text" placeholder="{% trans 'Find Topics' %}" 
                         ng-enter="search('{{forum.name}}')" />
                 </div>
@@ -105,12 +105,12 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                       <tr>
-                        <th>{% trans "Title" %}</th>
-                        <th>{% trans "User" %}</th>
-                        <th>{% trans "Last activity" %}</th>
-                        <th>{% trans "Responses" %}</th>
-                        <th>{% trans "Views" %}</th>
-                        <th>{% trans "Date" %}</th>
+                        <th><i class="fa fa-square" aria-hidden="true"></i> {% trans "Title" %}</th>
+                        <th><i class="fa fa-user"></i> {% trans "User" %}</th>
+                        <th><i class="fa fa-history"></i> {% trans "Last activity" %}</th>
+                        <th><i class="fa fa-comments" aria-hidden="true"></i> {% trans "Comments" %}</th>
+                        <th><i class="fa fa-eye" aria-hidden="true"></i> {% trans "Views" %}</th>
+                        <th><i class="fa fa-history"></i> {% trans "Date" %}</th>
                       </tr>
                     </thead>
                     <tbody endless-pagination="{'paginateOnScroll': true}">
@@ -120,8 +120,8 @@
             </div>
 
             <div class="pull-left">
-                <p>{% trans "Created" %}: {{forum.date.date}}</p>
-                <p><strong>{% trans "Topics" %}: {{forum.topics_count}}</strong></p>
+                <p><i class="fa fa-history"></i> {% trans "Created" %}: {{forum.date.date}}</p>
+                <p><strong><i class="fa fa-map-o"></i> {% trans "Topics" %}: {{forum.topics_count}}</strong></p>
                 {% if forum.is_moderate %}
                     {% if forum|get_tot_topics_moderate > 0 %}
                         <p><strong> ({% trans "Missing for moderate" %}: {{forum|get_tot_topics_moderate}})</strong></p>
@@ -129,7 +129,7 @@
                 {% endif %}
             </div>
             <div class="pull-right">
-                <a href="{% url 'users_forum' forum %}"> <i class="glyphicon glyphicon-user"></i> {% trans "Forum members" %}</a>
+                <a href="{% url 'users_forum' forum %}"> <i class="fa fa-user"></i> {% trans "Forum members" %}</a>
             </div>
 
           </div>

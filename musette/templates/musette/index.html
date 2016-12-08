@@ -16,10 +16,10 @@
         <table class="table table-striped table-bordered">
             <thead class="topiclist">
                 <tr>
-                    <th class="forum-name"><i class="fa fa-sitemap"></i>
+                    <th class="forum-name">
                     {{category.name}}</th>
-                    <th><i class="fa fa-comments-o"></i> {% trans "Topics" %}</th>
-                    <th><i class="fa fa-pencil-square-o"></i> {% trans "Users" %}</th>
+                    <th><i class="fa fa-map-o"></i> {% trans "Topics" %}</th>
+                    <th><i class="fa fa-user"></i> {% trans "Users" %}</th>
                     <th><i class="fa fa-history"></i> <span> {% trans "Created"%}</span></th>
                 </tr>
             </thead>
@@ -30,12 +30,10 @@
                             <td class="forum-name" title="No unread posts">
                                 <span class="pull-left forum-icon" style="margin-right: 5px">
                                     <a href="{% url 'forum' forum.name %}" class="btn btn-lg btn-default tooltip-link">
-                                        <i class="glyphicon glyphicon-tasks"></i>
+                                        <i class="fa fa-tasks"></i>
                                     </a>
                                 </span>
-                                <div class="forum-icon-mobile">
-                                    <i class="fa fa-folder fa-fw"></i>
-                                </div>
+                               
                                 <a href="{% url 'forum' forum.name %}" class="forumtitle"> {{ forum.name }}</a><br>
                                 <small>{{ forum.description|safe }}</small>
                             </td>

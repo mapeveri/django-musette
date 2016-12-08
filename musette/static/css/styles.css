@@ -43,15 +43,15 @@ a, a:hover, a:focus {
 }
 
 /* style icon */
-.inner-addon .glyphicon {
+.inner-addon .fa {
   position: absolute;
   padding: 10px;
   pointer-events: none;
 }
 
 /* align icon */
-.left-addon .glyphicon  { left:  0px;}
-.right-addon .glyphicon { right: 0px;}
+.left-addon .fa  { left:  0px;}
+.right-addon .fa { right: 0px;}
 
 /* add padding  */
 .left-addon input  { padding-left:  30px; }
@@ -120,4 +120,11 @@ a, a:hover, a:focus {
 /* Topic line user */
 .post-info-left {
     border-right: 1px solid #eee;
+}
+
+/* Share social  */
+.social-share a {
+  margin-left: 1.5em;
+  font-size: 1.5em;
+  text-decoration: none;
 }

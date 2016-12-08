@@ -3,12 +3,13 @@
 
 <div class="dropdown" ng-controller="NotificationController">
    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" ng-click="view_all()">
-    <i class="fa fa-fw fa-bell-o"></i> {{ user.username }}
+    {{ user.username }}
     {% if user.id|get_pending_notifications > 0 %}
       <span id="badge_notifications" class="badge">{{user.id|get_pending_notifications}}</span>
     {% else %}
       <span id="badge_notifications" class="badge hide"></span>
     {% endif %}
+    <i class="fa fa-fw fa-bell-o"></i>
   </a>
   <input type="hidden" ng-model="user" name="user" id="user_musette" value="{{user.id}}" />
   <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
@@ -17,7 +18,7 @@
         <h4 class="menu-title">{% trans "Notifications" %}</h4>
         <h4 class="menu-title pull-right">
             <a href="{% url 'forum_all_notification' %}">
-            <strong>{% trans "All" %}</strong><i class="glyphicon glyphicon-circle-arrow-right"></i>
+            <strong>{% trans "All" %}</strong> <i class="fa fa-arrow-circle-right"></i>
             </a>
         </h4>
     </div>
@@ -44,10 +45,10 @@
     <div class="notification-footer">
         <h4 class="menu-title" class="pull-left">
             <a href="{% url 'forum_all_notification' %}">
-            <strong><span>{% trans "All" %}</span><i class="glyphicon glyphicon-circle-arrow-right"></i></strong>
+            <strong><span>{% trans "All" %} </span><i class="fa fa-arrow-circle-right"></i></strong>
             </a>
         </h4>
-        <a href="{% url 'logout' %}" class="pull-right"><strong>{% trans "Logout" %}</strong></a>
+        <a href="{% url 'logout' %}" class="pull-right"><strong><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans "Logout" %}</strong></a>
     </div>
   </ul>
 

@@ -7,6 +7,7 @@
 
     <title> {{ SETTINGS.SITE_NAME }} </title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/libs/toastr/build/toastr.min.css' %}">
     {% block extra_css %}{% endblock %}
@@ -43,8 +44,8 @@
                       {% include "musette/notification.html" %}
                     {% else %}
                     <div style="margin-top: 10px; margin-bottom: 5px">
-                        <a href="{% url 'login' %}" class="btn btn-sm btn-default">{% trans "Log in" %}</a>
-                        <a href="{% url 'signup' %}" class="btn btn-sm btn-default">{% trans "Sign up" %}</a>
+                        <a href="{% url 'login' %}" class="btn btn-sm btn-default"><i class="fa fa-sign-in" aria-hidden="true"></i> {% trans "Log in" %}</a>
+                        <a href="{% url 'signup' %}" class="btn btn-sm btn-default"><i class="fa fa-user" aria-hidden="true"></i><i class="fa fa-plus" aria-hidden="true"></i> {% trans "Sign up" %}</a>
                     </div>
                     {% endif %}
                 </ul>

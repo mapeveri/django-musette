@@ -32,10 +32,11 @@
           <div class="col-md-12 col-sm-12">
             <div class="panel panel-default arrow left">
               <div class="panel-heading">
-                <h3 class="panel-title"> {{topic.title}}
-                    {% if topic.is_top %}
-                    <i class="glyphicon glyphicon-star"></i>
+                <h3 class="panel-title"> 
+                   {% if topic.is_top %}
+                    <i class="fa fa-thumb-tack"></i>
                     {% endif %}
+                   {{topic.title}}
                     </h3>
               </div>
               <div class="panel-body">
@@ -78,6 +79,7 @@
                     <hr>
                   </div>
                   <div class="pull-left">
+                                        <p> <i class="fa fa-comments" aria-hidden="true"></i> {{ topic.idtopic|get_tot_comments }} </p>
                     {% if total_hits|add:"0" > 1 %}
                       <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "views" %}</p>
                     {% else %}
@@ -88,12 +90,17 @@
                     {% if topic.user.id == user.id %}
                       <br>
                       <button onclick="document.location ='{% url 'edittopic' topic.forum.name topic.idtopic %}'" class="btn btn-inverse btn-xs" style="min-width: 8em">
-                        <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</button>
+                        <i class="fa fa-hand-o-up"></i> {% trans "Edit" %}</button>
                       <a style="cursor: pointer; min-width: 8em; margin-top: 0em" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
-                        <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}</a>
+                        <i class="fa fa-trash"></i> {% trans "Delete" %}</a>
                     {% endif %}
                   </div>
-                  <p class="pull-right">{{topic.date}}</p>
+                  <div class="pull-right">
+                    <p>{{topic.date}}</p>
+                    <a style="cursor: pointer" data-toggle="modal" data-target="#modelTopicShared">
+                      <i class="fa fa-share"></i> {% trans "Share" %}
+                    </a>
+                  </div>
                 </div>
               </div>
 
@@ -118,7 +125,7 @@
           <div class="panel panel-default arrow left">
             <div class="panel-body">
               <header class="text-left">
-                <time class="comment-date"><i class="glyphicon glyphicon-time"></i>
+                <time class="comment-date"><i class="fa fa-clock-o"></i>
                 {% endverbatim %} {% trans "Now" %} {% verbatim %}</time>
               </header>
               <div class="comment-post">
@@ -169,7 +176,7 @@
         {% endfor %}
         </center>
         <button type="submit" class="btn btn-inverse btn-sm" ng-disabled="formComment.$invalid" ng-click="loading()">
-            <i class="glyphicon glyphicon-plus"></i> {% trans "New comment" %}
+            <i class="fa fa-plus"></i> {% trans "New comment" %}
         </button> <img src="{% static 'img/ajax.gif' %}" class="hide" />
       </form>
     </div>
@@ -196,7 +203,7 @@
           <div class="modal-footer">
             <form accept-charset="UTF-8" action="{% url 'deletetopic' topic.forum.name topic.idtopic %}" method="GET">
               <button type="submit" class="btn btn-danger">
-                  <i class="glyphicon glyphicon-trash"></i> {% trans "Delete" %}
+                  <i class="fa fa-trash"></i> {% trans "Delete" %}
               </button>
           </form>
           </div>
@@ -206,8 +213,35 @@
 
 {% endif %}
 
+<!-- Modal topic share -->
+<div class="modal fade" id="modelTopicShared" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">{% trans "Share topic" %}</h4>
+      </div>
+      <div class="modal-body">
+        <input type="text" class="form-control" onClick="this.select();" value="{{ request.build_absolute_uri }}" />
+      </div>
+      <div class="modal-footer social-share">
+        <a href="http://www.facebook.com/sharer.php?s=100&amp;p%5Burl%5D={{ request.build_absolute_uri }}" target="_blank">
+          <i class="fa fa-facebook"></i>
+        </a>
+        <a href="https://plus.google.com/share?url={{ request.build_absolute_uri }}" target="_blank">
+          <i class="fa fa-google-plus"></i>
+        </a>
+        <a class="twitter-share-button" href="https://twitter.com/intent/tweet?text={{ request.build_absolute_uri }}">
+          <i class="fa fa-twitter"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
 {% endblock %}
 
 {% block hitcount_javascript %}
 {% insert_hit_count_js_variables for topic %}
+
 {% endblock %}

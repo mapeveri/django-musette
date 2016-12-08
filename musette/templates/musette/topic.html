@@ -11,7 +11,7 @@
       <div class="panel panel-default arrow left">
         <div class="panel-body">
           <header class="text-left">
-            <time class="comment-date"><i class="glyphicon glyphicon-time"></i> {{comment.date}}</time>
+            <time class="comment-date"><i class="fa fa-clock-o"></i> {{comment.date}}</time>
           </header>
           <div class="comment-post">
             <div class="well" style="margin-top: 5px">
@@ -40,10 +40,10 @@
           {% if comment.user.id == user.id %}
             <div class="span4 offset4 text-right">
               <button data-toggle="modal" data-target="#myModal_{{comment.idcomment}}" class="btn btn-inverse btn-sm">
-                <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit" %}</button>
+                <i class="fa fa-hand-o-up"></i> {% trans "Edit" %}</button>
 
               <a style="cursor: pointer" data-toggle="modal" data-target="#myModal_{{comment.idcomment}}_remove" class="btn btn-danger btn-sm">
-                <i class="glyphicon glyphicon-trash"></i> {% trans "Remove" %}</a>
+                <i class="fa fa-trash"></i> {% trans "Remove" %}</a>
             </div>
           {% endif %}
         </div>
@@ -70,7 +70,7 @@
               </div>
             <br>
             <button type="submit" class="btn btn-inverse btn-sm">
-                <i class="glyphicon glyphicon-hand-up"></i> {% trans "Edit comment" %}
+                <i class="fa fa-hand-o-up"></i> {% trans "Edit comment" %}
             </button>
           </form>
 
@@ -93,7 +93,7 @@
         <div class="modal-footer">
             <form class="form-horizontal" action="{% url 'removecomment' topic.forum.name topic.slug topic.idtopic comment.idcomment %}" method="POST">{% csrf_token%}
             <button type="submit" class="btn btn-danger btn-sm">
-              <i class="glyphicon glyphicon-trash"></i> {% trans "Remove comment" %}
+              <i class="fa fa-trash"></i> {% trans "Remove comment" %}
             </button>
           </form>
         </div>
