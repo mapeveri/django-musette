@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08 16:26-0500\n"
+"POT-Creation-Date: 2016-12-09 07:31-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,8 +267,8 @@ msgstr ""
 msgid "Yes, I'm sure"
 msgstr ""
 
-#: musette/templates/musette/all_notification.html:14
-#: musette/templates/musette/notification.html:42
+#: musette/templates/musette/all_notification.html:16
+#: musette/templates/musette/notification.html:51
 msgid "No notifications"
 msgstr ""
 
@@ -346,12 +346,12 @@ msgstr ""
 msgid "Attachment"
 msgstr ""
 
-#: musette/templates/musette/forum.html:18
+#: musette/templates/musette/forum.html:21
 #: musette/templates/musette/forum_index.html:111
 msgid "Views"
 msgstr ""
 
-#: musette/templates/musette/forum.html:25
+#: musette/templates/musette/forum.html:28
 msgid "By"
 msgstr ""
 
@@ -442,16 +442,16 @@ msgid "Add"
 msgstr ""
 
 #: musette/templates/musette/notification.html:21
-#: musette/templates/musette/notification.html:49
+#: musette/templates/musette/notification.html:58
 msgid "All"
 msgstr ""
 
-#: musette/templates/musette/notification.html:34
+#: musette/templates/musette/notification.html:38
 #: musette/templates/musette/topic_index.html:130
 msgid "Now"
 msgstr ""
 
-#: musette/templates/musette/notification.html:52
+#: musette/templates/musette/notification.html:61
 msgid "Logout"
 msgstr ""
 
@@ -531,7 +531,7 @@ msgid ""
 msgstr ""
 
 #: musette/templates/musette/profile.html:16
-#: musette/templates/musette/users_forum.html:19
+#: musette/templates/musette/users_forum.html:16
 msgid "Joined"
 msgstr ""
 
@@ -539,14 +539,14 @@ msgstr ""
 #: musette/templates/musette/topic.html:32
 #: musette/templates/musette/topic_index.html:52
 #: musette/templates/musette/topic_index.html:145
-#: musette/templates/musette/users_forum.html:26
+#: musette/templates/musette/users_forum.html:23
 msgid "Last Seen"
 msgstr ""
 
 #: musette/templates/musette/profile.html:24
 #: musette/templates/musette/topic.html:36
 #: musette/templates/musette/topic_index.html:56
-#: musette/templates/musette/users_forum.html:31
+#: musette/templates/musette/users_forum.html:28
 msgid "awhile ago"
 msgstr ""
 
@@ -631,12 +631,12 @@ msgstr "No loaded topics"
 msgid "No results"
 msgstr ""
 
-#: musette/templates/musette/users_forum.html:21
+#: musette/templates/musette/users_forum.html:18
 #: musette/templates/musette/users_forum_index.html:22
 msgid "Moderator"
 msgstr ""
 
-#: musette/templates/musette/users_forum.html:52
+#: musette/templates/musette/users_forum.html:49
 msgid "No registered users"
 msgstr ""
 
@@ -660,8 +660,8 @@ msgstr ""
 msgid "The user is not active"
 msgstr ""
 
-#: musette/views.py:117 musette/views.py:416 musette/views.py:502
-#: musette/views.py:958
+#: musette/views.py:117 musette/views.py:419 musette/views.py:509
+#: musette/views.py:973
 msgid "Form invalid"
 msgstr ""
 
@@ -669,14 +669,47 @@ msgstr ""
 msgid "Please, check your email"
 msgstr ""
 
-#: musette/views.py:413 musette/views.py:499 musette/views.py:524
-#: musette/views.py:631 musette/views.py:662 musette/views.py:689
-#: musette/views.py:751 musette/views.py:775 musette/views.py:955
-msgid "Action successful"
+#: musette/views.py:414
+#, python-format
+msgid "The topic '%(topic)s' was successfully created"
 msgstr ""
 
-#: musette/views.py:634
+#: musette/views.py:504
+#, python-format
+msgid "The topic '%(topic)s' was successfully edited"
+msgstr ""
+
+#: musette/views.py:534
+#, python-format
+msgid "The topic '%(topic)s' was successfully deleted"
+msgstr ""
+
+#: musette/views.py:643
+msgid "Added new comment"
+msgstr ""
+
+#: musette/views.py:646
 msgid "Field required"
+msgstr ""
+
+#: musette/views.py:674
+msgid "Comment edited"
+msgstr ""
+
+#: musette/views.py:701
+msgid "Comment deleted"
+msgstr ""
+
+#: musette/views.py:763
+msgid "You have successfully registered"
+msgstr ""
+
+#: musette/views.py:787
+msgid "Registration was successfully canceled"
+msgstr ""
+
+#: musette/views.py:969
+msgid "Your profile was successfully edited"
 msgstr ""
 
 #: tests/settings.py:110
@@ -686,3 +719,8 @@ msgstr ""
 #: tests/settings.py:111
 msgid "Spanish"
 msgstr ""
+
+#, fuzzy
+#~| msgid "No topics"
+#~ msgid "The topic '"
+#~ msgstr "No loaded topics"

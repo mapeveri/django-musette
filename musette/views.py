@@ -410,7 +410,10 @@ class NewTopicView(FormView):
 
             # Save topic
             obj.save()
-            messages.success(request, _("Action successful"))
+            messages.success(
+                request, _("The topic '%(topic)s' was successfully created")
+                % {'topic': obj.title}
+            )
             return self.form_valid(form, **kwargs)
         else:
             messages.error(request, _("Form invalid"))
@@ -496,7 +499,11 @@ class EditTopicView(FormView):
             # Update topic
             form.save()
 
-            messages.success(request, _("Action successful"))
+            messages.success(
+                request,
+                _("The topic '%(topic)s' was successfully edited")
+                % {'topic': obj.title}
+            )
             return self.form_valid(form, **kwargs)
         else:
             messages.error(request, _("Form invalid"))
@@ -513,7 +520,9 @@ class DeleteTopicView(View):
             models.Topic, idtopic=idtopic, user_id=request.user.id
         )
 
+        # Get data topic
         iduser_topic = topic.user_id
+        title_topic = topic.title
 
         # If my user so delete
         if request.user.id == iduser_topic:
@@ -521,7 +530,10 @@ class DeleteTopicView(View):
             models.Topic.objects.filter(
                 idtopic=idtopic, user_id=iduser_topic
             ).delete()
-            messages.success(request, _("Action successful"))
+            messages.success(
+                request, _("The topic '%(topic)s' was successfully deleted")
+                % {'topic': title_topic}
+            )
         else:
             raise Http404
 
@@ -628,7 +640,7 @@ class NewCommentView(View):
             json_data = json.dumps(data)
             r.publish('notifications', json_data)
 
-            messages.success(request, _("Action successful"))
+            messages.success(request, _("Added new comment"))
             return HttpResponseRedirect(url)
         else:
             messages.error(request, _("Field required"))
@@ -659,7 +671,7 @@ class EditCommentView(View):
                 description=description
             )
 
-            messages.success(request, _("Action successful"))
+            messages.success(request, _("Comment edited"))
             return HttpResponseRedirect(url)
         else:
             return HttpResponseRedirect(url)
@@ -686,7 +698,7 @@ class DeleteCommentView(View):
             ).delete()
             models.Notification.objects.filter(idobject=idcomment).delete()
 
-            messages.success(request, _("Action successful"))
+            messages.success(request, _("Comment deleted"))
             return HttpResponseRedirect(url)
         except Exception:
             return HttpResponseRedirect(url)
@@ -748,7 +760,7 @@ class AddRegisterView(View):
             date=date
         )
         register.save()
-        messages.success(request, _("Action successful"))
+        messages.success(request, _("You have successfully registered"))
         return HttpResponseRedirect(url)
 
 
@@ -772,7 +784,7 @@ class UnregisterView(View):
             forum_id=idforum, user_id=iduser,
         ).delete()
 
-        messages.success(request, _("Action successful"))
+        messages.success(request, _("Registration was successfully canceled"))
         return HttpResponseRedirect(url)
 
 
@@ -952,7 +964,10 @@ class EditProfileView(FormView):
             # Update profile
             form.save()
 
-            messages.success(request, _("Action successful"))
+            messages.success(
+                request,
+                _("Your profile was successfully edited")
+            )
             return self.form_valid(form, **kwargs)
         else:
             messages.error(request, _("Form invalid"))

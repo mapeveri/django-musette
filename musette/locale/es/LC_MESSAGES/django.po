@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-08 16:26-0500\n"
+"POT-Creation-Date: 2016-12-09 07:31-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -270,8 +270,8 @@ msgstr ""
 msgid "Yes, I'm sure"
 msgstr ""
 
-#: musette/templates/musette/all_notification.html:14
-#: musette/templates/musette/notification.html:42
+#: musette/templates/musette/all_notification.html:16
+#: musette/templates/musette/notification.html:51
 msgid "No notifications"
 msgstr "No hay notificaciones"
 
@@ -351,12 +351,12 @@ msgstr "Editar tema"
 msgid "Attachment"
 msgstr "Adjunto"
 
-#: musette/templates/musette/forum.html:18
+#: musette/templates/musette/forum.html:21
 #: musette/templates/musette/forum_index.html:111
 msgid "Views"
 msgstr "Vistas"
 
-#: musette/templates/musette/forum.html:25
+#: musette/templates/musette/forum.html:28
 msgid "By"
 msgstr "Por"
 
@@ -390,7 +390,7 @@ msgstr "Buscar temas"
 #: musette/templates/musette/forum_index.html:97
 #: musette/templates/musette/forum_index.html:99
 msgid "This forum has"
-msgstr "Este foro tiene"
+msgstr "El foro tiene"
 
 #: musette/templates/musette/forum_index.html:97
 #: musette/templates/musette/topic_index.html:84
@@ -447,16 +447,16 @@ msgid "Add"
 msgstr "Agregar"
 
 #: musette/templates/musette/notification.html:21
-#: musette/templates/musette/notification.html:49
+#: musette/templates/musette/notification.html:58
 msgid "All"
 msgstr "Todo"
 
-#: musette/templates/musette/notification.html:34
+#: musette/templates/musette/notification.html:38
 #: musette/templates/musette/topic_index.html:130
 msgid "Now"
 msgstr "Ahora"
 
-#: musette/templates/musette/notification.html:52
+#: musette/templates/musette/notification.html:61
 msgid "Logout"
 msgstr "Cerrar sesión"
 
@@ -502,7 +502,6 @@ msgstr ""
 "porque ya se ha usado. Por favor restablezca su contraseña."
 
 #: musette/templates/musette/password_reset_email.html:2
-#, python-format
 msgid ""
 "You're receiving this email because you requested a password reset for your "
 "user account at %(site_name)s."
@@ -545,7 +544,7 @@ msgstr ""
 "siga el siguiente link : %(protocol)s://%(domain)s"
 
 #: musette/templates/musette/profile.html:16
-#: musette/templates/musette/users_forum.html:19
+#: musette/templates/musette/users_forum.html:16
 msgid "Joined"
 msgstr "Registrado"
 
@@ -553,14 +552,14 @@ msgstr "Registrado"
 #: musette/templates/musette/topic.html:32
 #: musette/templates/musette/topic_index.html:52
 #: musette/templates/musette/topic_index.html:145
-#: musette/templates/musette/users_forum.html:26
+#: musette/templates/musette/users_forum.html:23
 msgid "Last Seen"
 msgstr "Última conexión"
 
 #: musette/templates/musette/profile.html:24
 #: musette/templates/musette/topic.html:36
 #: musette/templates/musette/topic_index.html:56
-#: musette/templates/musette/users_forum.html:31
+#: musette/templates/musette/users_forum.html:28
 msgid "awhile ago"
 msgstr "hace un tiempo"
 
@@ -605,12 +604,12 @@ msgstr "Eliminar comentario"
 
 #: musette/templates/musette/topic.html:91
 msgid "Do you want remove this comment?"
-msgstr "¿Desea eliminar este comentario?"
+msgstr "¿Desea eliminar el comentario?"
 
 #: musette/templates/musette/topic_index.html:84
 #: musette/templates/musette/topic_index.html:86
 msgid "This topic has"
-msgstr "Este tema tiene"
+msgstr "El tema tiene"
 
 #: musette/templates/musette/topic_index.html:95
 #: musette/templates/musette/topic_index.html:207
@@ -635,7 +634,7 @@ msgstr "Eliminar tema"
 
 #: musette/templates/musette/topic_index.html:202
 msgid "Do you want to remove the topic?"
-msgstr "¿Desea eliminar este tema?"
+msgstr "¿Desea eliminar el tema?"
 
 #: musette/templates/musette/topic_index.html:223
 msgid "Share topic"
@@ -645,12 +644,12 @@ msgstr "Compartir tema"
 msgid "No results"
 msgstr "No hay resultados"
 
-#: musette/templates/musette/users_forum.html:21
+#: musette/templates/musette/users_forum.html:18
 #: musette/templates/musette/users_forum_index.html:22
 msgid "Moderator"
 msgstr "Moderador"
 
-#: musette/templates/musette/users_forum.html:52
+#: musette/templates/musette/users_forum.html:49
 msgid "No registered users"
 msgstr "No hay usuarios registrados"
 
@@ -664,7 +663,7 @@ msgstr "días"
 
 #: musette/utils.py:260
 msgid "Welcome to "
-msgstr ""
+msgstr "Bienvenido a "
 
 #: musette/validators.py:16
 msgid "Files allowed"
@@ -674,8 +673,8 @@ msgstr "Archivos permitidos"
 msgid "The user is not active"
 msgstr "El usuario no está activo"
 
-#: musette/views.py:117 musette/views.py:416 musette/views.py:502
-#: musette/views.py:958
+#: musette/views.py:117 musette/views.py:419 musette/views.py:509
+#: musette/views.py:973
 msgid "Form invalid"
 msgstr "Formulario invalido"
 
@@ -683,15 +682,46 @@ msgstr "Formulario invalido"
 msgid "Please, check your email"
 msgstr "Por favor, revise su correo electrónico"
 
-#: musette/views.py:413 musette/views.py:499 musette/views.py:524
-#: musette/views.py:631 musette/views.py:662 musette/views.py:689
-#: musette/views.py:751 musette/views.py:775 musette/views.py:955
-msgid "Action successful"
-msgstr "Acción exitosa"
+#: musette/views.py:414
+msgid "The topic '%(topic)s' was successfully created"
+msgstr "El tema '%(topic)s' se creó correctamente"
 
-#: musette/views.py:634
+#: musette/views.py:504
+msgid "The topic '%(topic)s' was successfully edited"
+msgstr "El tema '%(topic)s' se editó correctamente"
+
+#: musette/views.py:534
+#, python-format
+msgid "The topic '%(topic)s' was successfully deleted"
+msgstr "El tema '%(topic)s' se eliminó correctamente"
+
+#: musette/views.py:643
+msgid "Added new comment"
+msgstr "Nuevo comentario añadido"
+
+#: musette/views.py:646
 msgid "Field required"
 msgstr "Campo requerido"
+
+#: musette/views.py:674
+msgid "Comment edited"
+msgstr "Comentario editado"
+
+#: musette/views.py:701
+msgid "Comment deleted"
+msgstr "Comentario eliminado"
+
+#: musette/views.py:763
+msgid "You have successfully registered"
+msgstr "Se ha registrado exitosamente"
+
+#: musette/views.py:787
+msgid "Registration was successfully canceled"
+msgstr "El registro se canceló correctamente"
+
+#: musette/views.py:969
+msgid "Your profile was successfully edited"
+msgstr "Su perfil se editó correctamente"
 
 #: tests/settings.py:110
 msgid "English"
