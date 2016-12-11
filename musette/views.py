@@ -3,6 +3,7 @@ import json
 import redis
 from itertools import chain
 
+from django.db.models import Q
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
@@ -13,7 +14,6 @@ from django.contrib.auth.views import (
     password_reset, password_reset_complete,
     password_reset_confirm
 )
-from django.core.mail import send_mail
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import defaultfilters
@@ -395,16 +395,8 @@ class NewTopicView(FormView):
                         else:
                             site = settings.SITE_URL + "/forum/" + forum.name
 
-                        title_email = "New notification " + settings.SITE_NAME
-                        message = "You have one new topic: " + site
-                        email_from = settings.EMAIL_MUSETTE
-
-                        email_moderator = moderator.email
-                        if email_from:
-                            send_mail(
-                                title_email, message, email_from,
-                                [email_moderator], fail_silently=False
-                            )
+                        # Send email
+                        form.send_mail_topic(site, moderator.email)
             else:
                 obj.moderate = True
 
@@ -614,14 +606,8 @@ class NewCommentView(View):
             else:
                 site = settings.SITE_URL
 
-            title_email = "New notification " + settings.SITE_NAME
-            message = "You have one new comment in the topic: " + site + url
-            email_from = settings.EMAIL_MUSETTE
-            if email_from:
-                send_mail(
-                    title_email, message, email_from,
-                    lista_email, fail_silently=False
-                )
+            # Send email
+            form.send_mail_comment(site, url, lista_email)
 
             # Data necessary for realtime
             data = {
@@ -799,10 +785,12 @@ class UsersForumView(View):
 
         # Get register users
         forum = get_object_or_404(models.Forum, name=forum, hidden=False)
-        registers = forum.register_forums.all()
+        moderators = forum.moderators.all()
+        # Get registers, exclude moderators
+        registers = forum.register_forums.filter(~Q(user__in=moderators))
 
         # Add moderator to users
-        users = list(chain(registers, forum.moderators.all()))
+        users = list(chain(registers, moderators))
 
         data = {
             'forum': forum,

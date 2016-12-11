@@ -14,6 +14,7 @@ Roadmap Django-Musette
 **For version (0.2.3) complete the next issues:**
 
 1. [X] Issue #50 Share link
-2. [ ] Issue #40 Notifications and comments NoSQL
-3. [ ] Issue #17 Add message private between users
-4. [ ] If errors are found in the previous version. They will be arranged
+2. [X] Issue #51 Send email background
+3. [ ] Issue #40 Notifications and comments NoSQL
+4. [ ] Issue #17 Add message private between users
+5. [ ] If errors are found in the previous version. They will be arranged

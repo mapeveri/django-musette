@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-09 07:31-0500\n"
+"POT-Creation-Date: 2016-12-10 23:08-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -35,40 +35,60 @@ msgstr ""
 msgid "Delete selected %(verbose_name_plural)s"
 msgstr ""
 
-#: musette/forms.py:18 musette/forms.py:80
+#: musette/forms.py:20 musette/forms.py:82
 msgid "Username"
 msgstr ""
 
-#: musette/forms.py:47
+#: musette/forms.py:49
 msgid "Username or password incorrect."
 msgstr ""
 
-#: musette/forms.py:82 musette/templates/musette/password_reset_form.html:21
+#: musette/forms.py:84 musette/templates/musette/password_reset_form.html:21
 msgid "Email"
 msgstr ""
 
-#: musette/forms.py:84
+#: musette/forms.py:86
 msgid "Names"
 msgstr ""
 
-#: musette/forms.py:86
+#: musette/forms.py:88
 msgid "Surname"
 msgstr ""
 
-#: musette/forms.py:88
+#: musette/forms.py:90
 msgid "Password"
 msgstr ""
 
-#: musette/forms.py:90
+#: musette/forms.py:92
 msgid "Repeat password"
 msgstr ""
 
-#: musette/forms.py:98
+#: musette/forms.py:100
 msgid "Passwords don't match"
 msgstr ""
 
-#: musette/forms.py:114
+#: musette/forms.py:116
 msgid "Email addresses must be unique."
+msgstr ""
+
+#: musette/forms.py:191
+#, python-format
+msgid "New topic in %(site)s "
+msgstr ""
+
+#: musette/forms.py:192
+#, python-format
+msgid "You have one new topic to moderate: %(site)s"
+msgstr ""
+
+#: musette/forms.py:316
+#, python-format
+msgid "New comment in %(site)s"
+msgstr ""
+
+#: musette/forms.py:319
+#, python-format
+msgid "You have one new comment in the topic: %(site)s"
 msgstr ""
 
 #: musette/models.py:28
@@ -648,7 +668,14 @@ msgstr ""
 msgid "days ago"
 msgstr ""
 
-#: musette/utils.py:260
+#: musette/utils.py:256
+#, python-format
+msgid ""
+"Thank you for joining to %(site)s please enter to confirm your email to this "
+"address:"
+msgstr ""
+
+#: musette/utils.py:263
 msgid "Welcome to "
 msgstr ""
 
@@ -660,8 +687,8 @@ msgstr ""
 msgid "The user is not active"
 msgstr ""
 
-#: musette/views.py:117 musette/views.py:419 musette/views.py:509
-#: musette/views.py:973
+#: musette/views.py:117 musette/views.py:411 musette/views.py:501
+#: musette/views.py:961
 msgid "Form invalid"
 msgstr ""
 
@@ -669,46 +696,46 @@ msgstr ""
 msgid "Please, check your email"
 msgstr ""
 
-#: musette/views.py:414
+#: musette/views.py:406
 #, python-format
 msgid "The topic '%(topic)s' was successfully created"
 msgstr ""
 
-#: musette/views.py:504
+#: musette/views.py:496
 #, python-format
 msgid "The topic '%(topic)s' was successfully edited"
 msgstr ""
 
-#: musette/views.py:534
+#: musette/views.py:526
 #, python-format
 msgid "The topic '%(topic)s' was successfully deleted"
 msgstr ""
 
-#: musette/views.py:643
+#: musette/views.py:629
 msgid "Added new comment"
 msgstr ""
 
-#: musette/views.py:646
+#: musette/views.py:632
 msgid "Field required"
 msgstr ""
 
-#: musette/views.py:674
+#: musette/views.py:660
 msgid "Comment edited"
 msgstr ""
 
-#: musette/views.py:701
+#: musette/views.py:687
 msgid "Comment deleted"
 msgstr ""
 
-#: musette/views.py:763
+#: musette/views.py:749
 msgid "You have successfully registered"
 msgstr ""
 
-#: musette/views.py:787
+#: musette/views.py:773
 msgid "Registration was successfully canceled"
 msgstr ""
 
-#: musette/views.py:969
+#: musette/views.py:957
 msgid "Your profile was successfully edited"
 msgstr ""
 

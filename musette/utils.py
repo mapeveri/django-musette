@@ -5,17 +5,17 @@ import random
 import shutil
 
 from django.conf import settings
-from django.core.mail import send_mail
 from django.core.paginator import Paginator
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-from .models import (
+from musette.models import (
     Forum, Topic, Comment,
     Notification, AbstractProfile
 )
+from musette.email import send_mail
 
 
 def exists_folder(route):
@@ -252,9 +252,12 @@ def send_welcome_email(email, username, activation_key):
     This method send email for confirm user
     """
     username = base64.b64encode(username.encode("utf-8")).decode("ascii")
-    content = ""
-    content += "Thank you for joining " + settings.SITE_NAME + ", "
-    content += "please enter to confirm your email to this address: "
+    content = _(
+        "Thank you for joining to %(site)s "
+        "please enter to confirm your email to this address:"
+    ) % {
+        'site': settings.SITE_NAME
+    }
     urlContent = "confirm_email/" + username + "/" + activation_key
     send_mail(
         _("Welcome to " + settings.SITE_NAME),
