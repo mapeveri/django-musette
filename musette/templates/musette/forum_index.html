@@ -15,6 +15,12 @@
 {% block content %}
 
 <div class="container" ng-controller="ForumTopicController">
+    {% if has_message_forum %}
+        <div class="alert alert-info" role="alert">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            {{ message_forum|safe }}
+        </div>
+    {% endif %}
     <ul class="breadcrumb">
         <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
         {% if forum.parent %}
@@ -23,7 +29,7 @@
         <li class="active">{{ forum }}</li>
     </ul>
 
-        {% if forums_childs|length > 0 %}
+    {% if forums_childs|length > 0 %}
         <span>Sub-{% trans "Forums" %}</span>
     {% endif %}
 
@@ -35,7 +41,7 @@
 
     <h1>{{ forum.name }}</h1>
     <small>{{forum.description|striptags}}</small>
-  
+
     <hr />
 
     {% get_hit_count for forum as total_hits %}

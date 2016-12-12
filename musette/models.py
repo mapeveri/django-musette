@@ -133,6 +133,33 @@ class Forum(models.Model):
     forum_description.allow_tags = True
 
 
+class MessageForum(models.Model):
+    """
+    Message forum model
+    """
+    idmessage_forum = models.AutoField(primary_key=True)
+    forum = models.ForeignKey(
+        Forum, related_name='message_information', verbose_name=_('Forum'),
+        on_delete=models.CASCADE
+    )
+    message_information = models.TextField(
+        _('Message of information'), blank=True, null=True,
+        help_text=_('If you want to report a message to a forum')
+    )
+    message_expires_from = models.DateTimeField(
+        _('Message expires from'), blank=True, null=True,
+        help_text=_('Date from message expired')
+    )
+    message_expires_to = models.DateTimeField(
+        _('Message expires to'), blank=True, null=True,
+        help_text=_('Date to message expired')
+    )
+
+    class Meta(object):
+        verbose_name = _('Message for forums')
+        verbose_name_plural = _('Messages for forums')
+
+
 @python_2_unicode_compatible
 class Topic(models.Model):
     """

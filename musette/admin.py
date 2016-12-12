@@ -11,7 +11,8 @@ from django.utils.translation import ugettext_lazy as _
 from .forms import FormAdminTopic
 from .models import (
     Category, Forum, Topic,
-    Comment, Register, Configuration
+    Comment, Register, Configuration,
+    MessageForum
 )
 
 from .utils import remove_folder_attachment
@@ -202,9 +203,17 @@ class ConfigurationAdmin(admin.ModelAdmin):
     search_fields = ['logo', 'class_main']
 
 
+class MessageForumAdmin(admin.ModelAdmin):
+    list_display = (
+        'forum', 'message_information', 
+        'message_expires_from', 'message_expires_to'
+    )
+
+
 admin.site.register(Category)
 admin.site.register(Register)
 admin.site.register(Forum, ForumAdmin)
 admin.site.register(Topic, TopicAdmin)
 admin.site.register(Comment, CommentAdmin)
 admin.site.register(Configuration, ConfigurationAdmin)
+admin.site.register(MessageForum, MessageForumAdmin)

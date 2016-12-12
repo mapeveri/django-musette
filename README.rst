@@ -44,6 +44,7 @@ Features
 22. Configuration logo and class css for navbar.
 23. Markdown support in textarea.
 24. Authentication.
+25. Message for forums.
 
 **Note 1:** When a new record is added to the user model automatically added to your model profile.
 

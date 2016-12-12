@@ -288,11 +288,28 @@ class ForumView(View):
         else:
             register = False
 
+        # Get messages for forum
+        now = timezone.now()
+        message_queryset = forum.message_information.filter(
+            Q(message_expires_from__lte=now, message_expires_to__gte=now),
+            Q(message_expires_to__hour__lte=now.hour)
+        )
+
+        # Get if has message and if is correct, get message
+        if message_queryset.count() > 0:
+            has_message_forum = True
+            message_forum = message_queryset[0].message_information
+        else:
+            has_message_forum = False
+            message_forum = ""
+
         data = {
             'forum': forum,
             'forums_childs': forums_childs,
             'topics': topics,
-            'register': register
+            'register': register,
+            'has_message_forum': has_message_forum,
+            'message_forum': message_forum
         }
 
         if request.is_ajax():

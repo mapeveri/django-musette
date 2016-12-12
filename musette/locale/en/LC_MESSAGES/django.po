@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-10 23:08-0500\n"
+"POT-Creation-Date: 2016-12-11 22:27-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,12 +25,12 @@ msgstr ""
 msgid "company"
 msgstr ""
 
-#: musette/admin.py:73 musette/admin.py:147
+#: musette/admin.py:74 musette/admin.py:148
 #, python-format
 msgid "Successfully deleted %(count)d record/s."
 msgstr ""
 
-#: musette/admin.py:109 musette/admin.py:183
+#: musette/admin.py:110 musette/admin.py:184
 #, python-format
 msgid "Delete selected %(verbose_name_plural)s"
 msgstr ""
@@ -115,7 +115,7 @@ msgstr ""
 msgid "Position"
 msgstr ""
 
-#: musette/models.py:56 musette/models.py:163 musette/models.py:251
+#: musette/models.py:56 musette/models.py:190 musette/models.py:278
 #: musette/templates/musette/edit_topic.html:44
 #: musette/templates/musette/new_topic.html:45
 msgid "Description"
@@ -125,8 +125,8 @@ msgstr ""
 msgid "Moderators"
 msgstr ""
 
-#: musette/models.py:61 musette/models.py:162 musette/models.py:250
-#: musette/models.py:297
+#: musette/models.py:61 musette/models.py:189 musette/models.py:277
+#: musette/models.py:324
 msgid "Date"
 msgstr ""
 
@@ -150,7 +150,8 @@ msgstr ""
 msgid "If the forum is moderated"
 msgstr ""
 
-#: musette/models.py:77 musette/models.py:153 musette/models.py:290
+#: musette/models.py:77 musette/models.py:142 musette/models.py:180
+#: musette/models.py:317
 msgid "Forum"
 msgstr ""
 
@@ -167,84 +168,116 @@ msgstr ""
 msgid "Forums"
 msgstr ""
 
-#: musette/models.py:157 musette/models.py:247 musette/models.py:294
+#: musette/models.py:146
+msgid "Message of information"
+msgstr ""
+
+#: musette/models.py:147
+msgid "If you want to report a message to a forum"
+msgstr ""
+
+#: musette/models.py:150
+msgid "Message expires from"
+msgstr ""
+
+#: musette/models.py:151
+msgid "Date from message expired"
+msgstr ""
+
+#: musette/models.py:154
+msgid "Message expires to"
+msgstr ""
+
+#: musette/models.py:155
+msgid "Date to message expired"
+msgstr ""
+
+#: musette/models.py:159
+msgid "Message for forums"
+msgstr ""
+
+#: musette/models.py:160
+msgid "Messages for forums"
+msgstr ""
+
+#: musette/models.py:184 musette/models.py:274 musette/models.py:321
 #: musette/templates/musette/topic_search.html:21
 msgid "User"
 msgstr ""
 
-#: musette/models.py:161 musette/templates/musette/edit_topic.html:33
+#: musette/models.py:188 musette/templates/musette/edit_topic.html:33
 #: musette/templates/musette/forum_index.html:108
 #: musette/templates/musette/new_topic.html:34
 msgid "Title"
 msgstr ""
 
-#: musette/models.py:166
+#: musette/models.py:193
 msgid "File"
 msgstr ""
 
-#: musette/models.py:170
+#: musette/models.py:197
 msgid "Moderate"
 msgstr ""
 
-#: musette/models.py:171
+#: musette/models.py:198
 msgid "If the topic is moderated"
 msgstr ""
 
-#: musette/models.py:174
+#: musette/models.py:201
 msgid "Top"
 msgstr ""
 
-#: musette/models.py:175
+#: musette/models.py:202
 msgid "If the topic is important and it will go top"
 msgstr ""
 
-#: musette/models.py:180 musette/models.py:243
+#: musette/models.py:207 musette/models.py:270
 msgid "Topic"
 msgstr ""
 
-#: musette/models.py:181 musette/templates/musette/forum_index.html:122
+#: musette/models.py:208 musette/templates/musette/forum_index.html:122
 #: musette/templates/musette/index.html:21
 msgid "Topics"
 msgstr ""
 
-#: musette/models.py:255
+#: musette/models.py:282
 msgid "Comment"
 msgstr ""
 
-#: musette/models.py:256 musette/templates/musette/forum_index.html:110
+#: musette/models.py:283 musette/templates/musette/forum_index.html:110
 msgid "Comments"
 msgstr ""
 
-#: musette/models.py:301
+#: musette/models.py:328
 msgid "Register"
 msgstr ""
 
-#: musette/models.py:302
+#: musette/models.py:329
 msgid "Registers"
 msgstr ""
 
-#: musette/models.py:371
+#: musette/models.py:398
 msgid "Logo width"
 msgstr ""
 
-#: musette/models.py:372 musette/models.py:376
+#: musette/models.py:399 musette/models.py:403
 msgid "In pixels"
 msgstr ""
 
-#: musette/models.py:375
+#: musette/models.py:402
 msgid "Logo height"
 msgstr ""
 
-#: musette/models.py:380
+#: musette/models.py:407
 msgid ""
 "Css Bootstrap class for navbar. Like \"default\", \"inverse\" or somo custom."
 msgstr ""
 
-#: musette/models.py:385
+#: musette/models.py:412
 msgid "Configuration"
 msgstr ""
 
-#: musette/models.py:386
+#: musette/models.py:413
 msgid "Configurations"
 msgstr ""
 
