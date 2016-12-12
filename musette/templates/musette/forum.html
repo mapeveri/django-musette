@@ -19,10 +19,10 @@
                 <div class="col-sm-11">
                     <a href="{% url 'topic' forum.name topic.slug topic.idtopic %}" data-toggle="tooltip" 
                         data-placement="bottom" title="{% trans 'Views' %}: {% get_tot_views topic.idtopic %}">
+                    {{topic.title}}
                     {% if topic.is_top %}
                     <i class="fa fa-thumb-tack"></i>
                     {% endif %}
-                    {{topic.title}}
                     </a>
                     <p>
                         <small>{% trans "By" %} <i class="fa fa-user"></i> 

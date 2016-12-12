@@ -33,10 +33,10 @@
             <div class="panel panel-default arrow left">
               <div class="panel-heading">
                 <h3 class="panel-title"> 
-                   {% if topic.is_top %}
+                   {{topic.title}}
+                    {% if topic.is_top %}
                     <i class="fa fa-thumb-tack"></i>
                     {% endif %}
-                   {{topic.title}}
                     </h3>
               </div>
               <div class="panel-body">
