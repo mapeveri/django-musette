@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
-from django.shortcuts import get_object_or_404
 
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from musette import models, utils
 from musette.api import serializers
+from musette.api.permissions import TopicLimitActionsPermissions
 
 
 # ViewSets for user
@@ -16,24 +16,24 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 # ViewSets for categiry
-class CategoryViewSet(viewsets.ModelViewSet):
+class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Category.objects.all()
     serializer_class = serializers.CategorySerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 # ViewSets for forum
-class ForumViewSet(viewsets.ModelViewSet):
+class ForumViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = models.Forum.objects.all()
     serializer_class = serializers.ForumSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 # ViewSets for topic
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = models.Topic.objects.all()
     serializer_class = serializers.TopicSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (
+        IsAuthenticatedOrReadOnly, TopicLimitActionsPermissions
+    )
 
 
 # ViewSets for register
@@ -51,7 +51,6 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 
 # ViewSets for profile
-class ProfileViewSet(viewsets.ModelViewSet):
+class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = utils.get_main_model_profile().objects.all()
     serializer_class = serializers.ProfileSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)

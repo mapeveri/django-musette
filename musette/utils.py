@@ -281,3 +281,14 @@ def get_data_confirm_email(email):
         'activation_key': activation_key,
         'key_expires': key_expires
     }
+
+
+def is_user_moderator_forum(forum, user):
+    """
+    Check if user is moderator forum
+    """
+    forum = get_object_or_404(Forum, name=forum)
+    if user in forum.moderators.all():
+        return True
+    else:
+        return False
