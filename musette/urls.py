@@ -3,9 +3,9 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.contrib.auth.decorators import login_required
 
-from .api import router
-from .feeds import TopicFeed
 from musette import views
+from musette.feeds import TopicFeed
+from musette.api.urls import router
 
 
 admin.site.site_header = settings.SITE_NAME
