@@ -189,7 +189,9 @@ class Topic(models.Model):
     )
     slug = models.SlugField(max_length=100)
     title = models.CharField(_('Title'), max_length=80)
-    date = models.DateTimeField(_('Date'), blank=False, db_index=False)
+    date = models.DateTimeField(
+        _('Date'), blank=False, auto_now=True, db_index=False
+    )
     description = models.TextField(_('Description'), blank=False, null=False)
     id_attachment = models.CharField(max_length=200, null=True, blank=True)
     attachment = models.FileField(
@@ -241,6 +243,7 @@ class Topic(models.Model):
             self.slug = defaultfilters.slugify(self.title)
             self.update_forum_topics(self.forum, "sum")
 
+        self.moderate = self.check_topic_moderate()
         self.generate_id_attachment(self.id_attachment)
         super(Topic, self).save(*args, **kwargs)
 
@@ -256,6 +259,22 @@ class Topic(models.Model):
         Forum.objects.filter(name=forum).update(
             topics_count=tot_topics
         )
+
+    def check_topic_moderate(self):
+        """
+        Check if one topic is mark like moderate
+        """
+        # If is superuser
+        if self.user.is_superuser:
+            return True
+        # If the forum not is moderate
+        elif not self.forum.is_moderate:
+            return True
+        # If user is moderator
+        elif self.user in self.forum.moderators.all():
+            return True
+        else:
+            return False
 
     def generate_id_attachment(self, value):
         if not value:
@@ -277,7 +296,9 @@ class Comment(models.Model):
         User, related_name='comment_users', verbose_name=_('User'),
         on_delete=models.CASCADE
     )
-    date = models.DateTimeField(_('Date'), blank=True, db_index=True)
+    date = models.DateTimeField(
+        _('Date'), blank=True, auto_now=True, db_index=True
+    )
     description = models.TextField(_('Description'), blank=True)
 
     class Meta(object):
@@ -324,7 +345,9 @@ class Register(models.Model):
         User, related_name='register_users', verbose_name=_('User'),
         on_delete=models.CASCADE
     )
-    date = models.DateTimeField(_('Date'), blank=True, db_index=True)
+    date = models.DateTimeField(
+        _('Date'), blank=True, auto_now=True, db_index=True
+    )
 
     class Meta(object):
         ordering = ['date']

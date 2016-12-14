@@ -1,11 +1,13 @@
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 
 from rest_framework import viewsets
+from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
 from musette import models, utils
 from musette.api import serializers
-from musette.api.permissions import TopicLimitActionsPermissions
+from musette.api.permissions import ForumPermissions
 
 
 # ViewSets for user
@@ -31,23 +33,69 @@ class ForumViewSet(viewsets.ReadOnlyModelViewSet):
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = models.Topic.objects.all()
     serializer_class = serializers.TopicSerializer
-    permission_classes = (
-        IsAuthenticatedOrReadOnly, TopicLimitActionsPermissions
-    )
+    permission_classes = (IsAuthenticatedOrReadOnly, ForumPermissions,)
+
+    def create(self, request, **kwargs):
+        is_my_user = int(request.data['user']) == request.user.id
+        # If is my user or is superuser can create
+        if is_my_user or request.user.is_superuser:
+            forum_id = request.data['forum']
+            forum = get_object_or_404(models.Forum, pk=forum_id)
+            # If has permissions
+            if utils.user_can_create_topic(forum, request.user):
+                return super(TopicViewSet, self).create(request, **kwargs)
+            else:
+                raise PermissionDenied({
+                    "message": "You don't have permission to access"
+                })
+        else:
+            raise PermissionDenied({
+                    "message": "Not your user"
+                })
 
 
 # ViewSets for register
 class RegisterViewSet(viewsets.ModelViewSet):
     queryset = models.Register.objects.all()
     serializer_class = serializers.RegisterSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly, ForumPermissions,)
+
+    def create(self, request, **kwargs):
+        is_my_user = int(request.data['user']) == request.user.id
+        # If is my user or is superuser can create
+        if is_my_user or request.user.is_superuser:
+            forum_id = request.data['forum']
+            exists_register = models.Register.objects.filter(
+                pk=forum_id, user=request.user
+            )
+            # If the register not exists
+            if exists_register.count() == 0:
+                return super(RegisterViewSet, self).create(request, **kwargs)
+            else:
+                raise PermissionDenied({
+                    "message": "You are already Registered"
+                })
+        else:
+            raise PermissionDenied({
+                    "message": "Not your user"
+                })
 
 
 # ViewSets for comment
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = models.Comment.objects.all()
     serializer_class = serializers.CommentSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
+    permission_classes = (IsAuthenticatedOrReadOnly, ForumPermissions,)
+
+    def create(self, request, **kwargs):
+        is_my_user = int(request.data['user']) == request.user.id
+        # If is my user or is superuser can create
+        if is_my_user or request.user.is_superuser:
+            return super(CommentViewSet, self).create(request, **kwargs)
+        else:
+            raise PermissionDenied({
+                    "message": "Not your user"
+                })
 
 
 # ViewSets for profile

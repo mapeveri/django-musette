@@ -1,4 +1,6 @@
+from django.db.models import Q
 from django.contrib.auth.models import User
+
 from rest_framework import serializers
 from musette import models, utils
 
@@ -33,25 +35,63 @@ class ForumSerializer(serializers.ModelSerializer):
 # Serializers Topic
 class TopicSerializer(serializers.ModelSerializer):
 
+    def __init__(self, *args, **kwargs):
+        super(TopicSerializer, self).__init__(*args, **kwargs)
+        user = self.context['request'].user
+        # If no is superuser, only forum register or is moderator
+        if not user.is_superuser:
+            registers = models.Register.objects.filter(user=user)
+            self.fields['forum'].queryset = models.Forum.objects.filter(
+                Q(moderators__in=[user.id]) | Q(register_forums__in=registers)
+            )
+
+            # Only my user
+            self.fields['user'].queryset = User.objects.filter(id=user.id)
+
     class Meta:
         model = models.Topic
-        fields = '__all__'
+        exclude = (
+            'slug', 'date', 'moderate', 'id_attachment', 'is_top',
+        )
 
 
 # Serializers register
 class RegisterSerializer(serializers.ModelSerializer):
 
+    def __init__(self, *args, **kwargs):
+        super(RegisterSerializer, self).__init__(*args, **kwargs)
+        user = self.context['request'].user
+        # If no is superuser, get forum that
+        # not is register or not is moderator
+        if not user.is_superuser:
+            registers = models.Register.objects.filter(user=user)
+            self.fields['forum'].queryset = models.Forum.objects.filter(
+                ~Q(moderators__in=[user.id]), ~Q(
+                    register_forums__in=registers
+                )
+            )
+
+            # Only my user
+            self.fields['user'].queryset = User.objects.filter(id=user.id)
+
     class Meta:
         model = models.Register
-        fields = '__all__'
+        exclude = ('date',)
 
 
 # Serializers comment
 class CommentSerializer(serializers.ModelSerializer):
 
+    def __init__(self, *args, **kwargs):
+        super(CommentSerializer, self).__init__(*args, **kwargs)
+        user = self.context['request'].user
+        if not user.is_superuser:
+            # Only my user
+            self.fields['user'].queryset = User.objects.filter(id=user.id)
+
     class Meta:
         model = models.Comment
-        fields = '__all__'
+        exclude = ('date',)
 
 
 # Serializers profile

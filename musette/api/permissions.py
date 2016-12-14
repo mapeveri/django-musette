@@ -2,7 +2,7 @@ from rest_framework import permissions
 from musette import utils
 
 
-class TopicLimitActionsPermissions(permissions.BasePermission):
+class ForumPermissions(permissions.BasePermission):
     """
     Check if is superuser for can crete, remove, etc.
     """
@@ -12,7 +12,12 @@ class TopicLimitActionsPermissions(permissions.BasePermission):
             return True
         else:
             # Get is moderator forum
-            forum = obj.forum
+            if hasattr(obj, 'forum'):
+                forum = obj.forum
+            elif hasattr(obj, 'topic'):
+                forum = obj.topic.forum
+            else:
+                forum = None
             is_moderator = utils.is_user_moderator_forum(forum, request.user)
 
             # Only allow if is superuser or moderator or creted topic
@@ -21,3 +26,5 @@ class TopicLimitActionsPermissions(permissions.BasePermission):
                 is_moderator or
                 obj.user == request.user
             )
+
+

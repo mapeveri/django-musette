@@ -113,7 +113,8 @@ class TopicAdmin(admin.ModelAdmin):
 
 class ForumAdmin(admin.ModelAdmin):
     list_display = (
-        'name', 'category', 'forum_description', 'topics_count'
+        'name', 'category', 'forum_description',
+        'topics_count', 'is_moderate'
     )
     list_filter = ['name', 'category']
     search_fields = ['name']

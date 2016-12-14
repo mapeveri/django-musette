@@ -12,7 +12,7 @@ from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
 from musette.models import (
-    Forum, Topic, Comment,
+    Forum, Topic, Comment, Register,
     Notification, AbstractProfile
 )
 from musette.email import send_mail
@@ -289,6 +289,19 @@ def is_user_moderator_forum(forum, user):
     """
     forum = get_object_or_404(Forum, name=forum)
     if user in forum.moderators.all():
+        return True
+    else:
+        return False
+
+
+def user_can_create_topic(forum, user):
+    """
+    Check if user can create topic
+    """
+    is_moderator = is_user_moderator_forum(forum, user)
+    is_register = Register.objects.filter(forum=forum, user=user).count()
+    # If is superuser or moderator or is register in the forum
+    if user.is_superuser or is_moderator or is_register > 0:
         return True
     else:
         return False

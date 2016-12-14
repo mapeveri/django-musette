@@ -401,6 +401,8 @@ class NewTopicView(FormView):
                 # If is moderator, so the topic is moderate
                 if request.user in forum.moderators.all():
                     obj.moderate = True
+                elif request.user.is_superuser:
+                    obj.moderate = True
                 else:
                     obj.moderate = False
 
