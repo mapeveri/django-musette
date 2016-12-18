@@ -198,6 +198,10 @@ class Topic(models.Model):
         _('File'), blank=True, null=True, upload_to=generate_path,
         validators=[valid_extension]
     )
+    is_close = models.BooleanField(
+        _('Closed topic'), default=False,
+        help_text=_('If the topic is close')
+    )
     moderate = models.BooleanField(
         _('Moderate'), default=False,
         help_text=_('If the topic is moderated')

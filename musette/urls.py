@@ -52,6 +52,10 @@ urlpatterns = [
         login_required(views.DeleteTopicView.as_view()), name='deletetopic'
     ),
     url(
+        r'^open_close_topic/$', views.OpenCloseTopicView.as_view(),
+        name="open_close_topic"
+    ),
+    url(
         r'^newcomment/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/$',
         login_required(views.NewCommentView.as_view()), name='newcomment'
     ),

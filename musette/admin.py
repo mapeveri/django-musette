@@ -20,9 +20,9 @@ from .utils import remove_folder_attachment
 
 class TopicAdmin(admin.ModelAdmin):
     form = FormAdminTopic
-    list_display = ('title', 'forum', 'date', 'moderate')
-    list_filter = ['title', 'date', 'moderate']
-    search_fields = ['title']
+    list_display = ('title', 'forum', 'date', 'moderate', 'is_close')
+    list_filter = ['title', 'date', 'moderate', 'is_close']
+    search_fields = ['title', 'date', 'moderate', 'is_close']
     actions = ['delete_topic']
 
     def get_form(self, request, obj=None, **kwargs):

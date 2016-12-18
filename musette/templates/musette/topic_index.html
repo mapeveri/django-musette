@@ -70,6 +70,15 @@
                 </div>
 
                 <div class="col-md-8">
+                  <!-- Close topic -->
+                  <div id="close_topic" {% if not topic.is_close %} style="display: none" {% endif %}>
+                    <p style="color: red">
+                      <i class="fa fa-times" aria-hidden="true"></i> 
+                      <strong>{% trans "This topic is close" %}</strong>
+                    </p>
+                    <hr />
+                  </div>
+
                   <div class="comment-post">
                       {{topic.description|safe }}
                       
@@ -97,9 +106,18 @@
                   </div>
                   <div class="pull-right">
                     <p>{{topic.date}}</p>
-                    <a style="cursor: pointer" data-toggle="modal" data-target="#modelTopicShared">
+                    <a class="btn btn-default" style="cursor: pointer" data-toggle="modal" data-target="#modelTopicShared">
                       <i class="fa fa-share"></i> {% trans "Share" %}
                     </a>
+
+                    {% if topic.user == user %}
+                      <a class="btn btn-default" id="close_topic_button" {% if topic.is_close %} style="display: none" {% endif %} ng-click="close_topic({{ topic.idtopic }}, {{user.id}})">
+                        <i class="fa fa-times"></i> {% trans "Close topic" %}
+                      </a>
+                      <a class="btn btn-default" id="open_topic_button" {% if not topic.is_close %} style="display: none" {% endif %} ng-click="open_topic({{ topic.idtopic }}, {{user.id}})">
+                        <i class="fa fa-times"></i> {% trans "Open topic" %}
+                      </a>
+                    {% endif %}
                   </div>
                 </div>
               </div>
@@ -156,7 +174,7 @@
   {% endif %}
 
   <!-- New comment-->
-  {% if user.id != None %}
+  {% if user.id != None and not topic.is_close %}
     <div class="row">
     <div class="col-md-2"></div>
     <div class="col-md-8">

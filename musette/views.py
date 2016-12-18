@@ -662,6 +662,36 @@ class NewCommentView(View):
             return HttpResponseRedirect(url)
 
 
+class OpenCloseTopicView(View):
+    """
+    This view close or re-open topic
+    """
+    def get(self, request, *args, **kwargs):
+        return Http404()
+
+    def post(self, request, *args, **kwargs):
+        print("Entro")
+        userid = int(request.POST.get("userid"))
+        idtopic = int(request.POST.get("idtopic"))
+        is_close = int(request.POST.get("is_close"))
+
+        # Check if has params
+        if idtopic and userid:
+            # Only same user can close topic
+            if request.user.id == userid:
+                status = True if is_close == 1 else False
+                # Close or re-open topic
+                models.Topic.objects.filter(idtopic=idtopic).update(
+                    is_close=status
+                )
+
+                return HttpResponse(status=200)
+            else:
+                return HttpResponse(status=404)
+        else:
+            return HttpResponse(status=404)
+
+
 class EditCommentView(View):
     """
     This view allowed edit comment to topic

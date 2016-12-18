@@ -26,7 +26,10 @@
                 }
             }
         })
-        .controller("TopicController", function ($scope, ConnWS) {
+        .controller("TopicController", function ($scope, $http, ConnWS) {
+            //For csrf forms
+            $http.defaults.xsrfHeaderName = 'X-CSRFToken';
+            $http.defaults.xsrfCookieName = 'csrftoken';
 
             $scope.comments_socket = [];
 
@@ -52,6 +55,52 @@
             //Execute the loading ajax.gif
             $scope.loading = function() {
                 angular.element(document.querySelector(".hide")).removeAttr('class');
+            }
+
+            /**
+            * Open topic 
+            */
+            $scope.open_topic = function(idtopic, userid) {
+                $http({method: "POST",
+                       url: '/open_close_topic/',
+                       data: $.param({"idtopic": idtopic, "userid": userid, is_close: 0}),
+                       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    })
+                .success(function(data, status, headers, config) {
+                    if(status == 200) {
+                        angular.element(document.querySelector("#close_topic")).hide("slow");
+                        angular.element(document.querySelector("#close_topic_button")).show("slow");
+                        angular.element(document.querySelector("#open_topic_button")).hide("slow");
+                    } else {
+                        toastr.error("Error");
+                    }
+                })
+                .error(function(data, status, headers, config) {
+                    console.log("Error.");
+                });
+            }
+
+            /**
+            * Close topic 
+            */
+            $scope.close_topic = function(idtopic, userid) {
+                $http({method: "POST",
+                       url: '/open_close_topic/',
+                       data: $.param({"idtopic": idtopic, "userid": userid, is_close: 1}),
+                       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                    })
+                .success(function(data, status, headers, config) {
+                    if(status == 200) {
+                        angular.element(document.querySelector("#close_topic")).show("slow");
+                        angular.element(document.querySelector("#open_topic_button")).show("slow");
+                        angular.element(document.querySelector("#close_topic_button")).hide("slow");
+                    } else {
+                        toastr.error("Error");
+                    }
+                })
+                .error(function(data, status, headers, config) {
+                    console.log("Error.");
+                });
             }
 
             var ws = ConnWS.connectionWs();
