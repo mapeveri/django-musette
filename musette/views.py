@@ -340,11 +340,21 @@ class TopicView(View):
         # Get photo of created user topic
         photo = utils.get_photo_profile(topic.user.id)
 
+        # Get suggest topic
+        words = topic.title.split(" ")
+        condition = Q()
+        for word in words:
+            condition |= Q(title__icontains=word)
+        suggest = models.Topic.objects.filter(condition).exclude(
+            idtopic=topic.idtopic
+        )[:10]
+
         data = {
             'topic': topic,
             'form_comment': form_comment,
             'comments': comments,
-            'photo': photo
+            'photo': photo,
+            'suggest': suggest
         }
 
         if request.is_ajax():

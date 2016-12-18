@@ -16,6 +16,7 @@ Roadmap Django-Musette
 1. [X] Issue #50 Share link
 2. [X] Issue #51 Send email background
 3. [X] Issue #52 Message of information for forum of the moderators
-4. [ ] Issue #40 Notifications and comments NoSQL
-5. [ ] Issue #17 Add message private between users
-6. [ ] If errors are found in the previous version. They will be arranged
+4. [X] Issue #55 Suggested Topics in topic
+5. [ ] Issue #40 Notifications and comments NoSQL
+6. [ ] Issue #17 Add message private between users
+7. [ ] If errors are found in the previous version. They will be arranged
