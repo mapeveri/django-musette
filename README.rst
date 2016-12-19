@@ -194,11 +194,13 @@ Field more importants:
 	- Topics count: Total forum topics.
 	- Check topics: If you need to review the topics by a moderator.
 
-3. **Make sure that each user registration exist in the profile table.** Execute in the terminal::
+3. Add record to Model Configuration and configurate the forum.
+
+4. **Make sure that each user registration exist in the profile table.** Execute in the terminal::
 
 	python manage.py runserver
 
-4. In other terminal execute this command for run server tornado for web sockets::
+5. In other terminal execute this command for run server tornado for web sockets::
 
 	python manage.py musette_run_server_ws
 

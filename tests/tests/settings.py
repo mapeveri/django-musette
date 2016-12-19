@@ -13,6 +13,7 @@ settings.configure(
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+        'django.contrib.sites',
         'hitcount',
         'endless_pagination',
         'musette',
