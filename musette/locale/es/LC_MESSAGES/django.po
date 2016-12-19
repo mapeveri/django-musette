@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-18 18:50-0300\n"
+"POT-Creation-Date: 2016-12-19 01:06-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -280,18 +280,15 @@ msgstr "En pixels"
 msgid "Logo height"
 msgstr "Altura del logo"
 
-#: musette/models.py:437
-msgid ""
-"Css Bootstrap class for navbar. Like \"default\", \"inverse\" or somo custom."
-msgstr ""
-"Class css bootstrap para el navbar. Como \"default\", \"inverse\" or alguna "
-"customizable"
+#: musette/models.py:436
+msgid "Custom design"
+msgstr "Diseño customizado"
 
-#: musette/models.py:442
+#: musette/models.py:440
 msgid "Configuration"
 msgstr "Configuración"
 
-#: musette/models.py:443
+#: musette/models.py:441
 msgid "Configurations"
 msgstr "Configuraciones"
 
@@ -345,14 +342,14 @@ msgstr "No hay notificaciones"
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: musette/templates/musette/base_musette.html:47
+#: musette/templates/musette/base_musette.html:48
 #: musette/templates/musette/confirm_email.html:22
 #: musette/templates/musette/login.html:11
 #: musette/templates/musette/password_reset_complete.html:21
 msgid "Log in"
 msgstr "Iniciar sesión"
 
-#: musette/templates/musette/base_musette.html:48
+#: musette/templates/musette/base_musette.html:49
 #: musette/templates/musette/signup.html:12
 msgid "Sign up"
 msgstr "Regístrate"

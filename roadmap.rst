@@ -18,6 +18,10 @@ Roadmap Django-Musette
 3. [X] Issue #52 Message of information for forum of the moderators
 4. [X] Issue #55 Suggested Topics in topic
 5. [X] Issue #41 Close topic
-6. [ ] Issue #40 Notifications and comments NoSQL
-7. [ ] Issue #17 Add message private between users
-8. [ ] If errors are found in the previous version. They will be arranged
+6. [X] Issue #56 Add custom.css to model Configuration
+7. [ ] If errors are found in the previous version. They will be arranged
+
+**For version (0.2.4) complete the next issues:**
+
+1. [ ] Issue #40 Notifications and comments NoSQL
+2. [ ] Issue #17 Add message private between users

@@ -8,7 +8,7 @@ from django.template.response import TemplateResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
-from .forms import FormAdminTopic
+from .forms import FormAdminConfiguration, FormAdminTopic
 from .models import (
     Category, Forum, Topic,
     Comment, Register, Configuration,
@@ -199,14 +199,13 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 class ConfigurationAdmin(admin.ModelAdmin):
-    list_display = ('idconfig', 'logo', 'class_main')
-    list_filter = ['logo', 'class_main']
-    search_fields = ['logo', 'class_main']
+    list_display = ('site', 'logo',)
+    form = FormAdminConfiguration
 
 
 class MessageForumAdmin(admin.ModelAdmin):
     list_display = (
-        'forum', 'message_information', 
+        'forum', 'message_information',
         'message_expires_from', 'message_expires_to'
     )
 

@@ -9,6 +9,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 # Site data
+SITE_ID = 1
 SITE_NAME = "Musette Forum"
 SITE_URL = "http://127.0.0.1:8000/"
 

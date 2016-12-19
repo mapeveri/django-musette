@@ -1,0 +1,15 @@
+/*Link Color*/
+a, a:hover, a:focus {
+    color: SeaGreen;
+}
+
+/*Navbar default*/
+.navbar-default {
+    background-color: #f8f8f8;
+    border-color: #e7e7e7;
+}
+
+/*Body*/
+.body-default {
+    background-color: white;
+}

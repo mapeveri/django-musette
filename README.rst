@@ -41,7 +41,7 @@ Features
 19. Validation of forms in real time with AngularJs.
 20. API REST with django-rest-framework.
 21. Support Python 3.
-22. Configuration logo and class css for navbar.
+22. Custom configuration css.
 23. Markdown support in textarea.
 24. Authentication.
 25. Message for forums.
@@ -64,6 +64,13 @@ Quick start
 1. Add application 'musette' and dependencies to INSTALLED_APPS::
 
 	INSTALLED_APPS = (
+		'django.contrib.admin',
+		'django.contrib.auth',
+		'django.contrib.contenttypes',
+		'django.contrib.sessions',
+		'django.contrib.messages',
+		'django.contrib.staticfiles',
+		'django.contrib.sites',
 		...
 		'hitcount',
 		'endless_pagination',
@@ -85,7 +92,7 @@ Quick start
 	    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 	    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
-3. In settings.py configure LOGIN_URL, STATIC, MEDIA root, SITE_NAME and SITE_URL. `Example config`_ of settings.py.
+3. In settings.py configure LOGIN_URL, STATIC, MEDIA root, SITE_ID, SITE_NAME and SITE_URL. `Example config`_ of settings.py.
 
 .. _Example config: https://github.com/mapeveri/django-musette/blob/master/example/tests/settings.py	
 
@@ -154,6 +161,9 @@ Quick start
 	</div>
 
 8. Execute command migrate::
+
+	python manage.py makemigrations 
+	python manage.py migrate
 
 	python manage.py makemigrations musette
 	python manage.py migrate musette

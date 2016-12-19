@@ -9,12 +9,13 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'js/libs/toastr/build/toastr.min.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
 
-<body ng-app="MusetteApp">
-    <div class="navbar navbar-{% if configurations.class_main %}{{configurations.class_main}}{% else %}default{% endif %}" style="border-radius: 0px">
+<body ng-app="MusetteApp" class="body-default">
+    <div class="navbar navbar-default" style="border-radius: 0px">
 
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">

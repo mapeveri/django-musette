@@ -1,8 +1,46 @@
-
-a, a:hover, a:focus {
-    color: SeaGreen;
+/*Bootstrap class override*/
+/*--------------------------------------*/
+.btn{
+  text-transform: none;
 }
 
+/* enable absolute positioning for within text box icon*/
+.inner-addon {
+    position: relative;
+}
+
+/* style icon */
+.inner-addon .fa {
+  position: absolute;
+  padding: 10px;
+  pointer-events: none;
+}
+
+/* align icon */
+.left-addon .fa  { left:  0px;}
+.right-addon .fa { right: 0px;}
+
+/* add padding  */
+.left-addon input  { padding-left:  30px; }
+.right-addon input { padding-right: 30px; }
+
+.dropdown {
+    display:inline-block;
+    margin-left:20px;
+    padding:10px;
+}
+
+.menu-title {
+ font-size:1.5rem;
+ display:inline-block;
+}
+
+.dropdown-menu.divider {
+  margin:5px 0;
+}
+
+/*Class musette*/
+/*--------------------------------------*/
 .black{
   color: black;
 }
@@ -28,34 +66,10 @@ a, a:hover, a:focus {
   text-transform: none;
 }
 
-.btn{
-  text-transform: none;
-}
-
 /* Hide element */
 .hide{
   display: none;
 }
-
-/* enable absolute positioning for within text box icon*/
-.inner-addon {
-    position: relative;
-}
-
-/* style icon */
-.inner-addon .fa {
-  position: absolute;
-  padding: 10px;
-  pointer-events: none;
-}
-
-/* align icon */
-.left-addon .fa  { left:  0px;}
-.right-addon .fa { right: 0px;}
-
-/* add padding  */
-.left-addon input  { padding-left:  30px; }
-.right-addon input { padding-right: 30px; }
 
 /* For that not outside textarea in div*/
 .in_div_textarea{
@@ -63,12 +77,6 @@ a, a:hover, a:focus {
 }
 
 /* Notifications */
-.dropdown {
-    display:inline-block;
-    margin-left:20px;
-    padding:10px;
-}
-
 .notifications {
    min-width:420px;
 }
@@ -78,17 +86,8 @@ a, a:hover, a:focus {
   max-height:250px;
 }
 
-.menu-title {
- font-size:1.5rem;
- display:inline-block;
-}
-
 .notification-heading, .notification-footer  {
  padding:2px 10px;
-}
-
-.dropdown-menu.divider {
-  margin:5px 0;
 }
 
 .item-title {

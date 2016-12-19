@@ -2,6 +2,7 @@ import os
 
 from django.conf import settings
 from django.contrib.auth.models import User, Permission
+from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.db import models
 from django.shortcuts import get_object_or_404
@@ -421,6 +422,7 @@ class Configuration(models.Model):
         )
 
     idconfig = models.AutoField(primary_key=True)
+    site = models.OneToOneField(Site)
     logo = models.FileField(
         upload_to=generate_path_configuration, null=True, blank=True,
     )
@@ -432,10 +434,8 @@ class Configuration(models.Model):
         _("Logo height"), null=True, blank=True,
         help_text=_('In pixels')
     )
-    class_main = models.CharField(
-        max_length=50, null=True, blank=True,
-        help_text=_('Css Bootstrap class for navbar. Like '
-                    '"default", "inverse" or somo custom.')
+    custom_css = models.TextField(
+        _("Custom design"), null=True, blank=True
     )
 
     class Meta(object):
