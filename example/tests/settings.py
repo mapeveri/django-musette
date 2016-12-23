@@ -50,6 +50,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'musette.middleware.ActiveUserMiddleware',
+    'musette.middleware.RestrictStaffToAdminMiddleware'
 )
 
 ROOT_URLCONF = 'tests.urls'

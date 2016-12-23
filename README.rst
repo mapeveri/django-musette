@@ -106,7 +106,9 @@ Quick start
 		'django.template.context_processors.static',
 		'django.template.context_processors.tz',
 		'django.template.context_processors.i18n',
-		'musette.context_processors.data_templates',
+		'musette.context_processors.data_templates', # Necessary
+		'musette.middleware.ActiveUserMiddleware', # Necessary
+		'musette.middleware.RestrictStaffToAdminMiddleware' # If you want block admin url add this middleware
 
 5. Configure in the settings.py the variable CACHES for redis. This is for real time support. Example::
 
