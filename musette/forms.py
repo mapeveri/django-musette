@@ -327,6 +327,20 @@ class FormAddComment(forms.ModelForm):
             )
 
 
+class FormAdminProfile(forms.ModelForm):
+    """
+    Form for admin profile
+    """
+    class Meta:
+        model = utils.get_main_model_profile()
+        exclude = (
+            'idprofile', 'iduser',
+        )
+        widgets = {
+            'about': widgets.TextareaWidget,
+        }
+
+
 class FormEditProfile(forms.ModelForm):
     """
     Form for edit one profile

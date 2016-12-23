@@ -107,8 +107,6 @@ Quick start
 		'django.template.context_processors.tz',
 		'django.template.context_processors.i18n',
 		'musette.context_processors.data_templates', # Necessary
-		'musette.middleware.ActiveUserMiddleware', # Necessary
-		'musette.middleware.RestrictStaffToAdminMiddleware' # If you want block admin url add this middleware
 
 5. Configure in the settings.py the variable CACHES for redis. This is for real time support. Example::
 
@@ -126,7 +124,8 @@ Quick start
 
         MIDDLEWARE_CLASSES = (
                 ...
-                'musette.middleware.ActiveUserMiddleware',
+				'musette.middleware.ActiveUserMiddleware', # Necessary
+				'musette.middleware.RestrictStaffToAdminMiddleware' # If you want block admin url add this middleware
         )
 
 7. In your application must add the profile model do the following. For example your app is 'main', in models.py and admin.py add::

@@ -24,5 +24,7 @@ tinymce.init({
   toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
   toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
   image_advtab: true,
-  visualblocks_default_state: true
+  visualblocks_default_state: true,
+  theme_advanced_toolbar_location : "top",
+  theme_advanced_toolbar_align : "left",
  });

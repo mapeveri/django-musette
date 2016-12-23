@@ -1,5 +1,7 @@
 from django.db import router
 from django.contrib import admin, messages
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import get_deleted_objects
 from django.contrib.auth.models import User
@@ -8,18 +10,11 @@ from django.template.response import TemplateResponse
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
 
-from .forms import FormAdminConfiguration, FormAdminTopic
-from .models import (
-    Category, Forum, Topic,
-    Comment, Register, Configuration,
-    MessageForum
-)
-
-from .utils import remove_folder_attachment
+from musette import forms, models, utils
 
 
 class TopicAdmin(admin.ModelAdmin):
-    form = FormAdminTopic
+    form = forms.FormAdminTopic
     list_display = ('title', 'forum', 'date', 'moderate', 'is_close')
     list_filter = ['title', 'date', 'moderate', 'is_close']
     search_fields = ['title', 'date', 'moderate', 'is_close']
@@ -40,7 +35,9 @@ class TopicAdmin(admin.ModelAdmin):
         if request.user.is_superuser:
             return qs
 
-        forums = Forum.objects.filter(moderators=request.user.id)
+        forums = models.Forum.objects.filter(
+            moderators=request.user.id
+        )
         lista = []
         for f in forums:
             lista.append(f.idforum)
@@ -65,9 +62,11 @@ class TopicAdmin(admin.ModelAdmin):
             for obj in queryset:
                 idtopic = obj.idtopic
                 # Remove folder attachment
-                remove_folder_attachment(idtopic)
+                utils.remove_folder_attachment(idtopic)
                 # Delete record
-                Topic.objects.filter(idtopic=idtopic).delete()
+                models.Topic.objects.filter(
+                    idtopic=idtopic
+                ).delete()
 
             n = queryset.count()
             self.message_user(
@@ -142,7 +141,9 @@ class ForumAdmin(admin.ModelAdmin):
                 obj.remove_user_permissions_moderator()
 
                 # Delete record
-                Forum.objects.filter(idforum=idforum).delete()
+                models.Forum.objects.filter(
+                    idforum=idforum
+                ).delete()
 
             n = queryset.count()
             self.message_user(
@@ -188,19 +189,21 @@ class ForumAdmin(admin.ModelAdmin):
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = (
-        'topic', 'forum', 'user')
+        'topic', 'forum', 'user',
+    )
     list_filter = ['topic', 'user']
     search_fields = ['topic', 'user']
 
     def forum(self, obj):
         return obj.topic.forum
+
     forum.short_description = 'Forum'
     forum.admin_order_field = 'topic__forum'
 
 
 class ConfigurationAdmin(admin.ModelAdmin):
     list_display = ('site', 'logo',)
-    form = FormAdminConfiguration
+    form = forms.FormAdminConfiguration
 
 
 class MessageForumAdmin(admin.ModelAdmin):
@@ -210,10 +213,29 @@ class MessageForumAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(Category)
-admin.site.register(Register)
-admin.site.register(Forum, ForumAdmin)
-admin.site.register(Topic, TopicAdmin)
-admin.site.register(Comment, CommentAdmin)
-admin.site.register(Configuration, ConfigurationAdmin)
-admin.site.register(MessageForum, MessageForumAdmin)
+class ProfileInline(admin.StackedInline):
+    model = utils.get_main_model_profile()
+    can_delete = False
+    verbose_name_plural = _('Profile')
+    fk_name = 'iduser'
+    form = forms.FormAdminProfile
+
+
+class CustomUserAdmin(UserAdmin):
+    inlines = (ProfileInline, )
+
+    def get_inline_instances(self, request, obj=None):
+        if not obj:
+            return list()
+        return super(CustomUserAdmin, self).get_inline_instances(request, obj)
+
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
+admin.site.register(models.Category)
+admin.site.register(models.Register)
+admin.site.register(models.Forum, ForumAdmin)
+admin.site.register(models.Topic, TopicAdmin)
+admin.site.register(models.Comment, CommentAdmin)
+admin.site.register(models.Configuration, ConfigurationAdmin)
+admin.site.register(models.MessageForum, MessageForumAdmin)
