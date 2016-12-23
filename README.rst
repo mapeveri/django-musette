@@ -139,10 +139,7 @@ Quick start
 		location = models.CharField("Label name", max_length=200, null=True, blank=True)
 		company = models.CharField("Label name", max_length=150, null=True, blank=True)
 
-	# admin.py
-	from .models import Profile
-
-	admin.site.register(Profile)
+	# NOTE: The model profile, will be in the admin in the model user like section 'profile'.
 
 	# If you need to extend so, you will create template profile.html indide your app and add this
 	# templates/main/profile.html
