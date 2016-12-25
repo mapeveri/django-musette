@@ -56,6 +56,12 @@
     </div>
 
     <section>
+        <noscript>
+            <div class="container">
+                <p style="color: CornflowerBlue">{% trans "Your browser does not support JavaScript." %}
+                {% trans "Some features may not work correctly." %}</p>
+            </div>
+        </noscript>
         {% block content %}
         {% endblock %}
     </section>
