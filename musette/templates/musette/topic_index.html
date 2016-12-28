@@ -9,6 +9,11 @@
     {{form_comment.media.js}}
     <script type="text/javascript">
         $('[data-toggle="tooltip"]').tooltip();
+
+        //For django-endless-pagination-vue
+        new Vue({
+            el: '#data-template',
+        });
     </script>
 {% endblock %}
 
@@ -130,7 +135,7 @@
 
   <br>
 
-  <div id="data-template" class="endless_page_template" endless-pagination="{'paginateOnScroll': true}">
+  <div id="data-template" class="endless_page_template" v-endless-pagination="{'paginateOnScroll': true}">
       {% include "musette/topic.html" %}
   </div>
 
@@ -298,3 +303,4 @@
 {% insert_hit_count_js_variables for topic %}
 
 {% endblock %}
+

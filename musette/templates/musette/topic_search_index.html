@@ -20,10 +20,19 @@
 	        <div class="panel-heading">
 	            <div class="panel-title">{% trans "Find Topics" %}</div>
 	        </div>
-	        <div class="panel-body" endless-pagination="{'paginateOnScroll': true}">
+	        <div id="search-items" class="panel-body" v-endless-pagination="{'paginateOnScroll': true}">
 	        	{% include "musette/topic_search.html" %}
 	        </div>
 	    </div>
 	</div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        //For django-endless-pagination-vue
+        new Vue({
+            el: '#search-items',
+        });
+    </script>
 {% endblock %}

@@ -19,10 +19,19 @@
             <div class="panel-heading">
                 <div class="panel-title">{% trans "Notifications" %}</div>
             </div>
-            <div class="panel-body" endless-pagination="{'paginateOnScroll': true}">
+            <div id="notifications-items" class="panel-body" v-endless-pagination="{'paginateOnScroll': true}">
                 {% include "musette/all_notification.html" %}
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        //For django-endless-pagination-vue
+        new Vue({
+            el: '#notifications-items',
+        });
+    </script>
 {% endblock %}

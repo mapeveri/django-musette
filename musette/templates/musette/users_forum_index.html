@@ -28,10 +28,19 @@
                 </h5>
             </h3>
         </div>
-        <div class="panel-body" endless-pagination="{'paginateOnScroll': true}">
+        <div id="users-items" class="panel-body" v-endless-pagination="{'paginateOnScroll': true}">
             {% include 'musette/users_forum.html' %}
         </div>
     </div>
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        //For django-endless-pagination-vue
+        new Vue({
+            el: '#users-items',
+        });
+    </script>
 {% endblock %}

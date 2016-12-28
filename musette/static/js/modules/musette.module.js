@@ -1,6 +1,6 @@
 (function() {
     'use strict';
-    angular.module('MusetteApp', ['EndlessPagination'])
+    angular.module('MusetteApp', [])
         .filter('htmlToPlaintext', function() {
             return function(text) {
               return String(text).replace(/<[^>]+>/gm, '');
@@ -22,7 +22,13 @@
         .factory('ConnWS',function() {
             return {
                 connectionWs: function(url) {
-                    return new WebSocket("ws://127.0.0.1:8888/ws/");
+                    var protocol;
+                    if (window.location.protocol === "https:") {
+                        protocol = "wss:";
+                    } else {
+                        protocol = "ws:";
+                    }
+                    return new WebSocket(protocol + "//" + window.location.host + "/ws/");
                 }
             }
         })
