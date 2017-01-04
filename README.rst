@@ -38,7 +38,7 @@ Features
 16. Models registered in admin django for administrators.
 17. Support check user online.
 18. Support to English and Spanish languages.
-19. Validation of forms in real time with AngularJs.
+19. Validation of forms in real time with VueJs.
 20. API REST with django-rest-framework.
 21. Support Python 3.
 22. Custom configuration css.

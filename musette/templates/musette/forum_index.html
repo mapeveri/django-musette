@@ -19,7 +19,7 @@
 
 {% block content %}
 
-<div class="container" ng-controller="ForumTopicController">
+<div class="container" id="forum-controller">
     {% if has_message_forum %}
         <div class="alert alert-info" role="alert">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -88,8 +88,8 @@
             <div class="col-md-10">
                 <div class="inner-addon right-addon">
                     <i class="fa fa-search"></i>
-                    <input type="text" class="form-control" ng-model="search_text" placeholder="{% trans 'Find Topics' %}" 
-                        ng-enter="search('{{forum.name}}')" />
+                    <input type="text" class="form-control" v-model="search_text" placeholder="{% trans 'Find Topics' %}" 
+                        v-on:keyup.enter="search('{{forum.name}}')" />
                 </div>
             </div>
             <div class="col-md-2">

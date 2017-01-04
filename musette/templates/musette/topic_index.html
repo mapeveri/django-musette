@@ -9,17 +9,12 @@
     {{form_comment.media.js}}
     <script type="text/javascript">
         $('[data-toggle="tooltip"]').tooltip();
-
-        //For django-endless-pagination-vue
-        new Vue({
-            el: '#data-template',
-        });
     </script>
 {% endblock %}
 
 {% block content %}
 
-<div class="container" ng-controller="TopicController">
+<div class="container" id="topic-controller">
 
   {% get_hit_count for topic as total_hits %}
 
@@ -116,10 +111,10 @@
                     </a>
 
                     {% if topic.user == user %}
-                      <a class="btn btn-default" id="close_topic_button" {% if topic.is_close %} style="display: none" {% endif %} ng-click="close_topic({{ topic.idtopic }}, {{user.id}})">
+                      <a class="btn btn-default" id="close_topic_button" {% if topic.is_close %} style="display: none" {% endif %} v-on:click="close_topic({{ topic.idtopic }}, {{user.id}})">
                         <i class="fa fa-times"></i> {% trans "Close topic" %}
                       </a>
-                      <a class="btn btn-default" id="open_topic_button" {% if not topic.is_close %} style="display: none" {% endif %} ng-click="open_topic({{ topic.idtopic }}, {{user.id}})">
+                      <a class="btn btn-default" id="open_topic_button" {% if not topic.is_close %} style="display: none" {% endif %} v-on:click="open_topic({{ topic.idtopic }}, {{user.id}})">
                         <i class="fa fa-times"></i> {% trans "Open topic" %}
                       </a>
                     {% endif %}
@@ -139,11 +134,11 @@
       {% include "musette/topic.html" %}
   </div>
 
-  {% comment %} Real time comment with angular {% endcomment %}
-  <input type="hidden" ng-model="topic_id_ws" name="topic_id_ws" id="topic_musette" value="{{topic.idtopic}}" />
+  {% comment %} Real time comment with Vue {% endcomment %}
+  <input type="hidden" name="topic_id_ws" id="topic_musette" value="{{topic.idtopic}}" />
 
   {% verbatim %}
-    <article ng-repeat="comment in comments_socket">
+    <article v-for="comment in comments_socket">
         <div class="col-lg-12">
           <div class="panel panel-default arrow left">
             <div class="panel-body">
@@ -152,12 +147,11 @@
                 {% endverbatim %} {% trans "Now" %} {% verbatim %}</time>
               </header>
               <div class="comment-post">
-                <div class="well" style="margin-top: 5px">
-                 {{comment.description | htmlToPlaintext }}
+                <div class="well" style="margin-top: 5px" v-html="comment.description">
                 </div>
                 <span>
                     <a href="{% url 'profile' comment.username %}">
-                         <img class="img-circle" ng-src="{{ comment.photo }}""
+                         <img class="img-circle" v-bind:src="comment.photo"
                          width="30" height="30" />
                     </a>
                     <a href="{% url 'profile' comment.username %}">{{ comment.username }}</a>
@@ -181,36 +175,33 @@
   <!-- New comment-->
   {% if user.id != None and not topic.is_close %}
     <div class="row">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-      <form action="{% url 'newcomment' topic.forum.name topic.slug topic.idtopic %}" name="formComment" method="POST" class="well">{% csrf_token%}
-        <center>
-        {% for field in form_comment %}
-          {% if field.name == "description" %}
-              <div class="form-group" ng-class="{ 'has-error' : formComment.description.$invalid && !formComment.description.$pristine }">
-                <div class="in_div_textarea">
-                  {{ field }}
-                </div>
-                {% if form_comment.description.errors %}
-                  <div style="color: red">{{ form_comment.description.errors }}</div>
-                {% endif %}
-              </div>
-          {% endif %}
-        {% endfor %}
-        </center>
-        <button type="submit" class="btn btn-inverse btn-sm" ng-disabled="formComment.$invalid" ng-click="loading()">
-            <i class="fa fa-plus"></i> {% trans "New comment" %}
-        </button> <img src="{% static 'img/ajax.gif' %}" class="hide" />
-      </form>
-    </div>
-    <div class="col-md-2"></div>
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <form action="{% url 'newcomment' topic.forum.name topic.slug topic.idtopic %}" name="formComment" method="POST" class="well">{% csrf_token%}
+            <center>
+            {% for field in form_comment %}
+              {% if field.name == "description" %}
+                  <div class="form-group">
+                    <div class="in_div_textarea">
+                      {{ field }}
+                    </div>
+                    {% if form_comment.description.errors %}
+                      <div style="color: red">{{ form_comment.description.errors }}</div>
+                    {% endif %}
+                  </div>
+              {% endif %}
+            {% endfor %}
+            </center>
+            <button type="submit" class="btn btn-inverse btn-sm" :disabled="!description" v-on:click="loading()">
+                <i class="fa fa-plus"></i> {% trans "New comment" %}
+            </button> <img src="{% static 'img/ajax.gif' %}" class="hide" />
+          </form>
+        </div>
+        <div class="col-md-2"></div>
     </div>
   {% endif %}
 
-
-</div>
-
-{% if topic.user.id == user.id %}
+  {% if topic.user.id == user.id %}
 
     <!-- Modal remove topic-->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -224,17 +215,17 @@
             {% trans "Do you want to remove the topic?" %}
           </div>
           <div class="modal-footer">
-            <form accept-charset="UTF-8" action="{% url 'deletetopic' topic.forum.name topic.idtopic %}" method="GET">
-              <button type="submit" class="btn btn-danger">
+              <button type="button" class="btn btn-danger" v-on:click="delete_topic('{{topic.forum.name}}', {{topic.idtopic}})">
                   <i class="fa fa-trash"></i> {% trans "Delete" %}
               </button>
-          </form>
           </div>
         </div>
       </div>
     </div>
 
-{% endif %}
+  {% endif %}
+
+</div>
 
 <!-- Modal topic share -->
 <div class="modal fade" id="modelTopicShared" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

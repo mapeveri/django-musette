@@ -1,186 +1,272 @@
 (function() {
     'use strict';
-    angular.module('MusetteApp', [])
-        .filter('htmlToPlaintext', function() {
-            return function(text) {
-              return String(text).replace(/<[^>]+>/gm, '');
-            };
-        })
-        .directive('ngEnter', function () {
-            return function (scope, element, attrs) {
-                element.bind("keydown keypress", function (event) {
-                    if(event.which === 13) {
-                        scope.$apply(function () {
-                            scope.$eval(attrs.ngEnter);
-                        });
 
-                        event.preventDefault();
-                    }
-                });
-            };
-        })
-        .factory('ConnWS',function() {
-            return {
-                connectionWs: function(url) {
-                    var protocol;
-                    if (window.location.protocol === "https:") {
-                        protocol = "wss:";
-                    } else {
-                        protocol = "ws:";
-                    }
-                    return new WebSocket(protocol + "//" + window.location.host + "/ws/");
+    //Base musette Methods
+    var MusetteApp = Vue.extend({
+        methods: {
+            //Connection to websockets
+            connectionWs: function (url) {
+                var protocol;
+                if (window.location.protocol === "https:") {
+                    protocol = "wss:";
+                } else {
+                    protocol = "ws:";
                 }
-            }
-        })
-        .controller("TopicController", function ($scope, $http, ConnWS) {
-            //For csrf forms
-            $http.defaults.xsrfHeaderName = 'X-CSRFToken';
-            $http.defaults.xsrfCookieName = 'csrftoken';
-
-            $scope.comments_socket = [];
-
-            //For manipulate the model description
-            window.onload = function () {
-                var el = tinyMCE.get('id_description');
-                if(typeof(el) !== "undefined") {
-                    el.on('keyup',function(e){
-                        var content = el.getContent();
-                        if(!content) {
-                            $scope.$apply(function() {
-                              $scope.description = "";
-                            });
-                        }else {
-                            $scope.$apply(function() {
-                              $scope.description = content;
-                            });
-                        }
-                    });
-                }
-            };
-
+                return new WebSocket(protocol + "//" + window.location.hostname + ":8888/ws/");
+            },
             //Execute the loading ajax.gif
-            $scope.loading = function() {
-                angular.element(document.querySelector(".hide")).removeAttr('class');
+            loading: function() {
+                $("#loading-img").removeAttr('class');
             }
+        }
+    });
+    
+    //Forum controller
+    new MusetteApp({
+        el: '#forum-controller',
+        data: {
+            search_text: '',
+        },
+        methods: {
+            search: function(forum) {
+                // Function that redirect to url for search topic of one forum
+                var search = this.search_text;
+                window.location = "/search_topic/" + forum + "/?q=" + search;
+            }
+        }
+    });
+    
+    //Topic Form controller
+    new MusetteApp({
+        el: '#topic-form-controller',
+        data() {
+            return window.__FORM__ || {
+                //Title model form add/edit topic
+                title: '',
+                //Touch title model form add/edit topic
+                touchTitle: false,
+                //Description model form add/edit topic
+                description: '',
+                //Touch description model form add/edit topic
+                touchDescription: false,
+            }
+        },
+        mounted () {
+            //Context
+            var $that = this;
 
-            /**
-            * Open topic 
-            */
-            $scope.open_topic = function(idtopic, userid) {
-                $http({method: "POST",
-                       url: '/open_close_topic/',
-                       data: $.param({"idtopic": idtopic, "userid": userid, is_close: 0}),
-                       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                    })
-                .success(function(data, status, headers, config) {
-                    if(status == 200) {
-                        angular.element(document.querySelector("#close_topic")).hide("slow");
-                        angular.element(document.querySelector("#close_topic_button")).show("slow");
-                        angular.element(document.querySelector("#open_topic_button")).hide("slow");
-                    } else {
-                        toastr.error("Error");
+            setTimeout(function() {
+                //For manipulate the model description in new and edit topic
+                try{
+                    var el = tinyMCE.get('id_description');
+                    if (typeof (el) !== "undefined") {
+                        el.on('keyup', function (e) {
+                            var content = el.getContent();
+                            if (!content) {
+                                $that.description = "";
+                            } else {
+                                $that.description = content;
+                            }
+                        });
                     }
-                })
-                .error(function(data, status, headers, config) {
-                    console.log("Error.");
-                });
+                } catch(e) {}
+            }, 1000);
+        },
+        watch: {
+            title: function() {
+                //Field title is touch
+                this.touchTitle = true;
+            },
+            description: function() {
+                //Field description is touch
+                this.touchDescription = true
             }
+        }
+    });
+     
+    //Extend for Comment forms
+    var TopicApp = MusetteApp.extend({
+        data() {
+            return window.__FORM__ || {
+                description: '',
+                descrip_comments: [],
+            }
+        },
+    })
 
-            /**
-            * Close topic 
-            */
-            $scope.close_topic = function(idtopic, userid) {
-                $http({method: "POST",
-                       url: '/open_close_topic/',
-                       data: $.param({"idtopic": idtopic, "userid": userid, is_close: 1}),
-                       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                    })
-                .success(function(data, status, headers, config) {
-                    if(status == 200) {
-                        angular.element(document.querySelector("#close_topic")).show("slow");
-                        angular.element(document.querySelector("#open_topic_button")).show("slow");
-                        angular.element(document.querySelector("#close_topic_button")).hide("slow");
-                    } else {
-                        toastr.error("Error");
+    //Topic controller
+    new TopicApp({
+        el: '#topic-controller',
+        data: {
+            //Topod id for web socket
+            topic_id_ws: 0,
+            //Comments array for websockets
+            comments_socket: [],
+        },
+        mounted () {
+            //Context
+            var $that = this;
+
+            setTimeout(function() {
+                //For manipulate the model description in new and edit topic
+                try{
+                    var el = tinyMCE.get('id_description');
+                    if (typeof (el) !== "undefined") {
+                        el.on('keyup', function (e) {
+                            var content = el.getContent();
+                            if (!content) {
+                                $that.description = "";
+                            } else {
+                                $that.description = content;
+                            }
+                        });
                     }
-                })
-                .error(function(data, status, headers, config) {
-                    console.log("Error.");
-                });
-            }
+                } catch(e) {} 
+            }, 1000);
 
-            var ws = ConnWS.connectionWs();
+            //Connection to websockets
+            var ws = this.connectionWs();
             ws.onmessage = function (evt) {
-
-                $scope.topic_id_ws = parseInt(angular.element(document.querySelector("#topic_musette")).val());
+                $that.topic_id_ws = parseInt($("#topic_musette").val());
 
                 //Only add message when scroll end
-                var length = angular.element("a.endless_more").length;
-                if(length == 0) {
+                var length = $("a.endless_more").length;
+                if (length == 0) {
                     var json = evt.data;
-                    var obj = angular.fromJson(json);
+                    var obj = JSON.parse(json);
                     var idtopic = parseInt(obj.idtopic);
 
                     //Verify if the message is of topic
-                    if (idtopic == $scope.topic_id_ws) {
-                        $scope.$apply(function() {
-                            $scope.comments_socket.push(obj);
-                        });
+                    if (idtopic == $that.topic_id_ws) {
+                        $that.comments_socket.push(obj);
                     }
                 }
             };
+        },
+        methods: {
+            //Open a topic close
+            open_topic: function(idtopic, userid) {
+                var csrf_token = $("[name='csrfmiddlewaretoken']").first().val();
+                var params = {
+                    "idtopic": idtopic, "userid": userid, is_close: 0, 
+                    csrfmiddlewaretoken: csrf_token
+                };
 
-        })
-        //Topics of forum controlller
-        .controller("ForumTopicController", function($scope) {
-            // Function that redirect to url for search topic of one forum
-            $scope.search = function(forum) {
-                var search = $scope.search_text;
-                window.location = "/search_topic/" + forum + "/?q=" + search;
-            }
-        })
-        //Notification controller
-        .controller("NotificationController", function($scope, $http, ConnWS) {
-            $scope.notifications_socket = [];
-            $scope.user = parseInt(angular.element(document.querySelector("#user_musette")).val());
-            $scope.tot_notifications = 0;
+                $.ajax({
+                    url : "/open_close_topic/",
+                    type: "POST",
+                    data : params,
+                    success: function( data ){
+                        $("#close_topic").hide("slow");
+                        $("#close_topic_button").show("slow");
+                        $("#open_topic_button").hide("slow");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error("Error");
+                    }
+                });
+            },
+            //Close a topic
+            close_topic: function(idtopic, userid) {
+                var csrf_token = $("[name='csrfmiddlewaretoken']").first().val();
+                var params = {
+                    "idtopic": idtopic, "userid": userid, is_close: 1, 
+                    csrfmiddlewaretoken: csrf_token
+                };
 
-            //Set in true all notifications
-            $scope.view_all = function() {
-                $http({method: "GET",
-                       url: '/forum_set_notifications/',
-                       headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-                    })
-                .success(function(data, status, headers, config) {
-                    angular.element(document.querySelector("#badge_notifications")).text("0").addClass("hide");
-                    $scope.tot_notifications = 0;
-                })
-                .error(function(data, status, headers, config) {
-                    console.log("Error.");
+                $.ajax({
+                    url : "/open_close_topic/",
+                    type: "POST",
+                    data : params,
+                    success: function( data ){
+                        $("#close_topic").show("slow");
+                        $("#open_topic_button").show("slow");
+                        $("#close_topic_button").hide("slow");
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error("Error");
+                    }
+                });
+            },
+            //Delete a topic
+            delete_topic: function(forum, idtopic) {
+                var csrf_token = $("[name='csrfmiddlewaretoken']").first().val();
+                var params = {
+                    "idtopic": idtopic, "forum": forum, 
+                    csrfmiddlewaretoken: csrf_token
+                };
+
+                $.ajax({
+                    url : "/delete_topic/",
+                    type: "DELETE",
+                    data : params,
+                    success: function( data, statusText, xhr){
+                        var status = parseInt(xhr.status);
+                        if(status==200) {
+                            window.location.href = "/forum/" + forum;
+                        }else {
+                            toastr.error("Error");
+                        }
+                    },
+                    //headers: { 'X_METHODOVERRIDE': 'DELETE' },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error("Error");
+                    }
                 });
             }
+        }
+    });
+
+    //Notification controller
+    new MusetteApp({
+        el: '#notification-controller',
+        data: {
+            user: '',
+            tot_notifications: 0,
+            notifications_socket: [],
+        },
+        mounted: function () {
+            var $that = this;
 
             //Socket for notifications
-            var ws = ConnWS.connectionWs();
-
+            var ws = this.connectionWs();
             ws.onmessage = function (evt) {
+                $that.user = parseInt($("#user_musette").val());
+
                 var json = evt.data;
-                var obj = angular.fromJson(json);
+                var obj = JSON.parse(json);
                 var lista_us = obj.lista_us;
 
                 //Verify if the message belongs to me
-                if (lista_us.indexOf($scope.user) > -1) {
-                    $scope.notifications_socket.unshift(obj);
-                    $scope.tot_notifications++;
+                if (lista_us.indexOf($that.user) > -1) {
+                    $that.notifications_socket.unshift(obj);
+                    $that.tot_notifications++;
 
                     //Remove class hide
-                    angular.element(document.querySelector("#badge_notifications")).removeClass("hide").html($scope.tot_notifications);
+                    $("#badge_notifications").text("0").removeClass("hide").html($that.tot_notifications);
 
                     //Not notification hide
                     try {
-                        angular.element(document.querySelector("#no_notifications")).addClass("hide");
+                        $("#no_notifications").addClass("hide");
                     }catch(e){}
                 }
             };
-        });
+        },
+        methods: {
+            //Set in true all notifications
+            view_all: function() {
+                $.ajax({
+                    url : "/forum_set_notifications/",
+                    type: "GET",
+                    success: function( data ){
+                        $("#badge_notifications").text("0").addClass("hide");
+                        this.tot_notifications = 0;
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error("Error");
+                    }
+                });
+            }
+        }
+    });
 })();

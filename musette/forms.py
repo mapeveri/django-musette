@@ -166,8 +166,9 @@ class FormAddTopic(forms.ModelForm):
     class Meta:
         model = models.Topic
         exclude = (
-            'forum', "user", "slug", "date",
+            "forum", "user", "slug", "date",
             "id_attachment", "moderate", "is_top"
+            "is_close",
         )
         widgets = {
             'description': widgets.TextareaWidget,
@@ -179,10 +180,11 @@ class FormAddTopic(forms.ModelForm):
 
         for key in self.fields:
             if key != "attachment":
-                self.fields[key].required = True
-                self.fields[key].widget.attrs['ng-model'] = key
-                self.fields[key].widget.attrs['class'] = class_css
-                self.fields[key].widget.attrs['required'] = 'required'
+                if key == "title" or key == "description":
+                    self.fields[key].required = True
+                    self.fields[key].widget.attrs['v-model'] = key
+                    self.fields[key].widget.attrs['class'] = class_css
+                    self.fields[key].widget.attrs['required'] = 'required'
             else:
                 self.fields[key].required = False
 
@@ -258,8 +260,9 @@ class FormEditTopic(forms.ModelForm):
     class Meta:
         model = models.Topic
         exclude = (
-            'forum', "user", "slug", "date",
-            "id_attachment", "moderate", "is_top"
+            "forum", "user", "slug", "date",
+            "id_attachment", "moderate", "is_top",
+            "is_close",
         )
         widgets = {
             'description': widgets.TextareaWidget,
@@ -272,21 +275,15 @@ class FormEditTopic(forms.ModelForm):
 
         for key in self.fields:
             if key != "attachment":
-                self.fields[key].required = True
-                self.fields[key].widget.attrs['ng-model'] = key
-                if key == 'title':
-                    ng_init = key + "=" + "'" + \
-                        str(kwargs['instance'].title) + "'"
-                    self.fields[key].widget.attrs['ng-init'] = ng_init
-                elif key == 'description':
-                    description = str(
-                        kwargs['instance'].description
-                    ).replace("'", r"\'")
-
-                    ng_init = key + "=" + "'" + description + "'"
-                    self.fields[key].widget.attrs['ng-init'] = ng_init
-                self.fields[key].widget.attrs['class'] = class_css
-                self.fields[key].widget.attrs['required'] = 'required'
+                if key == "title" or key == "description":
+                    v_init = ""
+                    v_init += key + "=" + "'"
+                    v_init += str(kwargs['instance'].title) + "'"
+                    self.fields[key].required = True
+                    self.fields[key].widget.attrs['v-model'] = key
+                    self.fields[key].widget.attrs['value'] = v_init
+                    self.fields[key].widget.attrs['class'] = class_css
+                    self.fields[key].widget.attrs['required'] = 'required'
             else:
                 self.fields[key].required = False
 
@@ -309,16 +306,18 @@ class FormAddComment(forms.ModelForm):
             if key == "description":
                 self.fields[key].required = True
                 self.fields[key].widget.attrs['style'] = "width: 100%"
-                self.fields[key].widget.attrs['ng-model'] = key
+                self.fields[key].widget.attrs['v-model'] = key
                 self.fields[key].widget.attrs['required'] = 'required'
 
     def send_mail_comment(self, site, url, lista_email):
         title_email = _("New comment in %(site)s") % {
             'site': settings.SITE_NAME
-        } 
+        }
+
         message = _("You have one new comment in the topic: %(site)s") % {
             'site': site + url
         }
+
         email_from = settings.EMAIL_MUSETTE
         if email_from:
             send_mail(

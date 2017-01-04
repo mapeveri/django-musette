@@ -14,7 +14,7 @@ from django.contrib.auth.views import (
     password_reset, password_reset_complete,
     password_reset_confirm
 )
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect, QueryDict
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import defaultfilters
 from django.views.generic import View
@@ -372,6 +372,11 @@ class NewTopicView(FormView):
     def get_success_url(self):
         return '/forum/' + self.kwargs['forum']
 
+    def get_context_data(self, **kwargs):
+        context = super(EditTopicView, self).get_context_data(**kwargs)
+        context['forum'] = self.kwargs['forum']
+        return context
+
     def get(self, request, forum, *args, **kwargs):
 
         data = {
@@ -450,6 +455,11 @@ class EditTopicView(FormView):
 
     def get_success_url(self):
         return '/forum/' + self.kwargs['forum']
+
+    def get_context_data(self, **kwargs):
+        context = super(EditTopicView, self).get_context_data(**kwargs)
+        context['forum'] = self.kwargs['forum']
+        return context
 
     def get(self, request, forum, idtopic, *args, **kwargs):
         # Get topic
@@ -535,7 +545,16 @@ class DeleteTopicView(View):
     """
     This view will delete one topic
     """
-    def get(self, request, forum, idtopic, *args, **kwargs):
+    def delete(self, request, *args, **kwargs):
+
+        # Dict delete
+        qd = QueryDict(request.body)
+        DELETE_DICT = {k: v[0] if len(v) == 1 else v for k, v in qd.lists()}
+
+        # Get params
+        forum = DELETE_DICT.get("forum")
+        idtopic = DELETE_DICT.get("idtopic")
+
         # Previouly verify that exists the topic
         topic = get_object_or_404(
             models.Topic, idtopic=idtopic, user_id=request.user.id
@@ -556,9 +575,38 @@ class DeleteTopicView(View):
                 % {'topic': title_topic}
             )
         else:
-            raise Http404
+            raise HttpResponse(status=404)
 
-        return redirect('forum', forum)
+        return HttpResponse(status=200)
+
+
+class OpenCloseTopicView(View):
+    """
+    This view close or re-open topic
+    """
+    def get(self, request, *args, **kwargs):
+        return Http404()
+
+    def post(self, request, *args, **kwargs):
+        userid = int(request.POST.get("userid"))
+        idtopic = int(request.POST.get("idtopic"))
+        is_close = int(request.POST.get("is_close"))
+
+        # Check if has params
+        if idtopic and userid:
+            # Only same user can close topic
+            if request.user.id == userid:
+                status = True if is_close == 1 else False
+                # Close or re-open topic
+                models.Topic.objects.filter(idtopic=idtopic).update(
+                    is_close=status
+                )
+
+                return HttpResponse(status=200)
+            else:
+                return HttpResponse(status=404)
+        else:
+            return HttpResponse(status=404)
 
 
 class NewCommentView(View):
@@ -660,36 +708,6 @@ class NewCommentView(View):
         else:
             messages.error(request, _("Field required"))
             return HttpResponseRedirect(url)
-
-
-class OpenCloseTopicView(View):
-    """
-    This view close or re-open topic
-    """
-    def get(self, request, *args, **kwargs):
-        return Http404()
-
-    def post(self, request, *args, **kwargs):
-        print("Entro")
-        userid = int(request.POST.get("userid"))
-        idtopic = int(request.POST.get("idtopic"))
-        is_close = int(request.POST.get("is_close"))
-
-        # Check if has params
-        if idtopic and userid:
-            # Only same user can close topic
-            if request.user.id == userid:
-                status = True if is_close == 1 else False
-                # Close or re-open topic
-                models.Topic.objects.filter(idtopic=idtopic).update(
-                    is_close=status
-                )
-
-                return HttpResponse(status=200)
-            else:
-                return HttpResponse(status=404)
-        else:
-            return HttpResponse(status=404)
 
 
 class EditCommentView(View):

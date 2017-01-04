@@ -130,7 +130,6 @@ def get_item_notification(notification):
 
     html = ""
     if is_comment:
-
         try:
             comment = Comment.objects.get(idcomment=idobject)
             forum = comment.topic.forum.name

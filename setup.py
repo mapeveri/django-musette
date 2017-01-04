@@ -19,7 +19,7 @@ setup(
     packages=[
         'musette', 'musette.templatetags',
         'musette.websockets', 'musette.management',
-        'musette.management.commands',
+        'musette.management.commands', 'musette.api',
     ],
     include_package_data=True,
     license='BSD License',
@@ -34,7 +34,7 @@ setup(
         'tornado==4.2',
         'django-redis-cache==1.6.5',
         'djangorestframework==3.5.3',
-        'django-endless-pagination-vue==1.1',
+        'django-endless-pagination-vue==1.2',
         'django-hitcount==1.2.2'
     ],
     classifiers=[

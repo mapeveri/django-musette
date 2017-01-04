@@ -48,7 +48,7 @@ urlpatterns = [
         login_required(views.EditTopicView.as_view()), name='edittopic'
     ),
     url(
-        r'^delete_topic/(?P<forum>.+)/(?P<idtopic>\d+)/$',
+        r'^delete_topic/$',
         login_required(views.DeleteTopicView.as_view()), name='deletetopic'
     ),
     url(

@@ -3,6 +3,16 @@
 {% load photo %}
 {% load forum_tags %}
 
+<script>
+    (function() {
+      // rendered by server
+      window.__FORM__ = {
+        'description': '',
+        'descrip_comments': [],
+      }
+    })();
+</script>
+
 <!-- Comments-->
 {% paginate comments %}
 {% for comment in comments %}
@@ -64,15 +74,24 @@
           <form action="{% url 'updatecomment' topic.forum.name topic.slug topic.idtopic comment.idcomment %}" method="POST">
               {% csrf_token%}
               <div class="in_div_textarea">
-                <textarea name="update_description" id="textarea_comment_{{comment.idcomment}}" style="width: 100%" required>
+                <textarea name="update_description" v-model="descrip_comments[{{comment.idcomment}}]" id="textarea_comment_{{comment.idcomment}}" style="width: 100%" required>
                   {{comment.description|safe}}
                 </textarea>
               </div>
             <br>
-            <button type="submit" class="btn btn-inverse btn-sm">
+            <button type="submit" class="btn btn-inverse btn-sm" :disabled="!descrip_comments[{{comment.idcomment}}]">
                 <i class="fa fa-hand-o-up"></i> {% trans "Edit comment" %}
             </button>
           </form>
+          
+          <script>
+                setTimeout(function() {
+                  tinymce.init({ selector:'#textarea_comment_{{comment.idcomment}}' });
+                }, 1000)
+                
+                //Load comment
+                window.__FORM__['descrip_comments'][{{comment.idcomment}}] = '{{comment.description|safe|escapejs}}';
+          </script>
 
         </div>
       </div>

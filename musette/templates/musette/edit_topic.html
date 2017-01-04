@@ -10,7 +10,7 @@
 
 {% block content %}
 
-<div class="container" ng-controller="TopicController">
+<div class="container" id="topic-form-controller">
 
 	<div class="mainbox col-md-10 col-sm-6 col-sm-offset-1">
 		<ul class="breadcrumb">
@@ -29,7 +29,7 @@
             		{% csrf_token%}
             		{% for field in form %}
 			   			{% if field.name == "title" %}
-			   				<div class="form-group" ng-class="{ 'has-error' : editTopic.title.$invalid && !editTopic.title.$pristine }">
+			   				<div class="form-group" v-bind:class="{ 'has-error' : !title && touchTitle }">
 				   				<label>{% trans "Title" %}</label>
 				              	{{ field }}
 				              	{% if form.title.errors %}
@@ -40,7 +40,7 @@
 			              	</div>
 			            {% endif %}
 			            {% if field.name == "description" %}
-			            	<div class="form-group" ng-class="{ 'has-error' : editTopic.description.$invalid && !editTopic.description.$pristine }">
+			            	<div class="form-group" v-bind:class="{ 'has-error' : !title && touchDescription }">
 				            	<label>{% trans "Description" %}</label>
 				            	<div class="in_div_textarea">
 				              		{{ field }}
@@ -66,7 +66,7 @@
 			              	</div>
 			            {% endif %}
 			        {% endfor %}
-			        <button type="submit" class="btn btn-inverse btn-sm" ng-disabled="editTopic.$invalid" ng-click="loading()">
+			        <button type="submit" class="btn btn-inverse btn-sm" :disabled="!title || !description" v-on:click="loading()">
 			        	<i class="fa fa-floppy-o"></i>
 			        	{% trans "Save" %}
 			        </button> <img src="{% static 'img/ajax.gif' %}" class="hide" />
@@ -74,8 +74,22 @@
             </div>
         </div>
 	</div>
-
 </div>
 
+<script>
+	(function() {
+		// rendered by server
+		window.__FORM__ = {
+			//Title model form add/edit topic
+			title: '{{ form.title.value }}',
+			//Touch title model form add/edit topic
+			touchTitle: false,
+			//Description model form add/edit topic
+			description: '{{ form.description.value|safe|escapejs }}',
+			//Touch description model form add/edit topic
+			touchDescription: false,
+		}
+	})();
+</script>
 
 {% endblock %}

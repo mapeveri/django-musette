@@ -1,8 +1,8 @@
 {% load i18n %}
 {% load forum_tags %}
 
-<div class="dropdown" ng-controller="NotificationController">
-   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" ng-click="view_all()">
+<div class="dropdown" id="notification-controller">
+   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" v-on:click="view_all()">
     {{ user.username }}
     {% if user.id|get_pending_notifications > 0 %}
       <span id="badge_notifications" class="badge">{{user.id|get_pending_notifications}}</span>
@@ -11,7 +11,7 @@
     {% endif %}
     <i class="fa fa-fw fa-bell-o"></i>
   </a>
-  <input type="hidden" ng-model="user" name="user" id="user_musette" value="{{user.id}}" />
+  <input type="hidden" name="user" id="user_musette" value="{{user.id}}" />
   <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
 
     <div class="notification-heading">
@@ -24,14 +24,14 @@
     </div>
     
     <div class="notifications-wrapper">
-        {% comment %} Real time notification with angular {% endcomment %}
+        {% comment %} Real time notification with Vue.js {% endcomment %}
         {% verbatim %}
           <!-- Url fixed for verbatim -->
-          <span ng-repeat="not in notifications_socket">
+          <span v-for="not in notifications_socket">
             <li class="divider"></li>
             <a class="content" href="/topic/{{not.forum}}/{{not.slug}}/{{not.idtopic}}">
                 <h4 class="item-title">
-                    <img class="img-circle pull-left" ng-src="{{ not.photo }}" width=45 height=45 />
+                    <img class="img-circle pull-left" v-bind:src="not.photo" width=45 height=45 />
                 </h4>
                 <h5><a href="/topic/{{not.forum}}/{{not.slug}}/{{not.idtopic}}"><u>{{ not.topic }}</u></a></h5>
                 <p class="item-info">{{ not.username }} - {% endverbatim %} {% trans "Now" %} {% verbatim %}</p>

@@ -6,11 +6,7 @@
     {% paginate notifications  %}
     {% for notification in notifications %}
         <div class="list-group-item">
-            {% if notification.is_view %}
-                {{notification|get_item_notification|safe}}
-            {% else %}
-                {{notification|get_item_notification|safe}}
-            {% endif %}
+            {{notification|get_item_notification|safe}}
         </div>
     {% empty %}
         <p class="text-info">{% trans "No notifications" %}.</p>
