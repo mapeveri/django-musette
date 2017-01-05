@@ -130,7 +130,7 @@
 
   <br>
 
-  <div id="data-template" class="endless_page_template" v-endless-pagination="{'paginateOnScroll': true}">
+  <div id="data-template" class="endless_page_template" v-endless-pagination="{'paginateOnScroll': true, 'paginateOnScrollMargin': 550}">
       {% include "musette/topic.html" %}
   </div>
 
@@ -272,7 +272,7 @@
                     <th><i class="fa fa-user" aria-hidden="true"></i> {% trans "User" %}</th>
                   </tr>
                 </thead>
-                <tbody">
+                <tbody>
                   {% for topic in suggest %}
                     <tr>
                       <td> <a href="{% url 'topic' topic.forum topic.slug topic.pk %}"> {{ topic.title }} </a> </td>

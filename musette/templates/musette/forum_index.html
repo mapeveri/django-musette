@@ -8,12 +8,7 @@
 
 {% block extra_js %}
 <script type="text/javascript">
-    //$('[data-toggle="tooltip"]').tooltip();
-
-    //For django-endless-pagination-vue
-    new Vue({
-        el: '#forums-items',
-    });
+    $('[data-toggle="tooltip"]').tooltip();
 </script>
 {% endblock %}
 
@@ -122,7 +117,7 @@
                         <th><i class="fa fa-eye" aria-hidden="true"></i> {% trans "Views" %}</th>
                       </tr>
                     </thead>
-                    <tbody id="forums-items" v-endless-pagination="{'paginateOnScroll': true}">
+                    <tbody id="forums-items" v-endless-pagination="{'paginateOnScroll': true, 'paginateOnScrollMargin': 180}">
                         {% include "musette/forum.html" %}
                     </tbody>
                 </table>

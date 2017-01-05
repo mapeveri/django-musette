@@ -20,10 +20,9 @@
             }
         }
     });
-    
+
     //Forum controller
-    new MusetteApp({
-        el: '#forum-controller',
+    var forumMixin = {
         data: {
             search_text: '',
         },
@@ -34,11 +33,10 @@
                 window.location = "/search_topic/" + forum + "/?q=" + search;
             }
         }
-    });
+    };
     
     //Topic Form controller
-    new MusetteApp({
-        el: '#topic-form-controller',
+    var topicFormMixin = {
         data() {
             return window.__FORM__ || {
                 //Title model form add/edit topic
@@ -82,21 +80,20 @@
                 this.touchDescription = true
             }
         }
-    });
+    };
      
-    //Extend for Comment forms
-    var TopicApp = MusetteApp.extend({
+    //Comment forms controller
+    var commentMixim = {
         data() {
             return window.__FORM__ || {
                 description: '',
                 descrip_comments: [],
             }
         },
-    })
+    };
 
     //Topic controller
-    new TopicApp({
-        el: '#topic-controller',
+    var topicMixin = {
         data: {
             //Topod id for web socket
             topic_id_ws: 0,
@@ -208,18 +205,16 @@
                             toastr.error("Error");
                         }
                     },
-                    //headers: { 'X_METHODOVERRIDE': 'DELETE' },
                     error: function (xhr, ajaxOptions, thrownError) {
                         toastr.error("Error");
                     }
                 });
             }
         }
-    });
+    };
 
     //Notification controller
-    new MusetteApp({
-        el: '#notification-controller',
+    var notificationMixin = {
         data: {
             user: '',
             tot_notifications: 0,
@@ -268,5 +263,12 @@
                 });
             }
         }
+    };
+
+    //Base app
+    new MusetteApp({
+        el: '#app-musette',
+        mixins: [notificationMixin, topicFormMixin, topicMixin, forumMixin, commentMixim]
     });
+
 })();

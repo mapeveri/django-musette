@@ -15,90 +15,92 @@
 </head>
 
 <body class="body-default">
-    <div class="navbar navbar-default" style="border-radius: 0px">
+    <div id="app-musette">
+        <div class="navbar navbar-default" style="border-radius: 0px">
 
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+            <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 
-          <a class="navbar-brand" href="{% url 'forums' %}" style="margin-top: -10px; margin-bottom: 5px">
-              {% if configurations.logo  %}
-                  <img src="{{ MEDIA_URL }}{{ configurations.logo }}"
-                      width="{% if configurations.logo_width %}{{configurations.logo_width}}{% else %}160{% endif %}"
-                      height="{% if configurations.logo_height %}{{configurations.logo_height}}{% else %}160{% endif %}"
-                      class="img-responsive">
-              {% else %}
-                  <img src="{% static 'img/logo.png' %}" width="160" height="100" class="img-responsive">
-              {% endif %}
-          </a>
-        </div>
-
-        <div class="container">
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <!-- Notifications -->
-                <ul class="nav navbar-nav navbar-right">
-                    {% if user.id %}
-                      {% include "musette/notification.html" %}
-                    {% else %}
-                    <div style="margin-top: 10px; margin-bottom: 5px">
-                        <a href="{% url 'login' %}" class="btn btn-sm btn-default"><i class="fa fa-sign-in" aria-hidden="true"></i> {% trans "Log in" %}</a>
-                        <a href="{% url 'signup' %}" class="btn btn-sm btn-default"><i class="fa fa-user" aria-hidden="true"></i><i class="fa fa-plus" aria-hidden="true"></i> {% trans "Sign up" %}</a>
-                    </div>
-                    {% endif %}
-                </ul>
+            <a class="navbar-brand" href="{% url 'forums' %}" style="margin-top: -10px; margin-bottom: 5px">
+                {% if configurations.logo  %}
+                    <img src="{{ MEDIA_URL }}{{ configurations.logo }}"
+                        width="{% if configurations.logo_width %}{{configurations.logo_width}}{% else %}160{% endif %}"
+                        height="{% if configurations.logo_height %}{{configurations.logo_height}}{% else %}160{% endif %}"
+                        class="img-responsive">
+                {% else %}
+                    <img src="{% static 'img/logo.png' %}" width="160" height="100" class="img-responsive">
+                {% endif %}
+            </a>
             </div>
-        </div>
 
-    </div>
-
-    <section>
-        <noscript>
             <div class="container">
-                <p style="color: CornflowerBlue">{% trans "Your browser does not support JavaScript." %}
-                {% trans "Some features may not work correctly." %}</p>
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <!-- Notifications -->
+                    <ul class="nav navbar-nav navbar-right">
+                        {% if user.id %}
+                        {% include "musette/notification.html" %}
+                        {% else %}
+                        <div style="margin-top: 10px; margin-bottom: 5px">
+                            <a href="{% url 'login' %}" class="btn btn-sm btn-default"><i class="fa fa-sign-in" aria-hidden="true"></i> {% trans "Log in" %}</a>
+                            <a href="{% url 'signup' %}" class="btn btn-sm btn-default"><i class="fa fa-user" aria-hidden="true"></i><i class="fa fa-plus" aria-hidden="true"></i> {% trans "Sign up" %}</a>
+                        </div>
+                        {% endif %}
+                    </ul>
+                </div>
             </div>
-        </noscript>
-        {% block content %}
-        {% endblock %}
-    </section>
 
-    <hr>
-
-    <footer>
-        <div class="container">
-            <div class="pull-left">
-                <a href="/"><p class="text-muted"> {{ SETTINGS.SITE_NAME }} </p></a>
-            </div>
-            {% if SETTINGS.LANGUAGES|length > 1 %}
-            <div id="lenguage_sel" class="pull-right">
-                <form action="{% url 'set_language' %}" method="post" class="form-search">
-                    {% csrf_token %}
-                    <input name="next" type="hidden" value="{{ redirect_to }}" />
-                    <div class="input-group">
-                        <select class="form-control input-sm" name="language">
-                        {% get_current_language as LANGUAGE_CODE %}
-                        {% get_available_languages as LANGUAGES %}
-                        {% get_language_info_list for LANGUAGES as languages %}
-                        {% for language in languages %}
-                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
-                            {{ language.name_local }} ({{ language.code }})
-                        </option>
-                        {% endfor %}
-                        </select>
-                        <span class="input-group-btn">
-                            <input type="submit" class="btn btn-flat btn-default  btn-sm" value="Go" />
-                        </span>
-                    </div>
-                </form>
-            </div>
-            {% endif %}
         </div>
-        <br>
-    </footer>
+
+        <section>
+            <noscript>
+                <div class="container">
+                    <p style="color: CornflowerBlue">{% trans "Your browser does not support JavaScript." %}
+                    {% trans "Some features may not work correctly." %}</p>
+                </div>
+            </noscript>
+            {% block content %}
+            {% endblock %}
+        </section>
+
+        <hr>
+
+        <footer>
+            <div class="container">
+                <div class="pull-left">
+                    <a href="/"><p class="text-muted"> {{ SETTINGS.SITE_NAME }} </p></a>
+                </div>
+                {% if SETTINGS.LANGUAGES|length > 1 %}
+                <div id="lenguage_sel" class="pull-right">
+                    <form action="{% url 'set_language' %}" method="post" class="form-search">
+                        {% csrf_token %}
+                        <input name="next" type="hidden" value="{{ redirect_to }}" />
+                        <div class="input-group">
+                            <select class="form-control input-sm" name="language">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% get_language_info_list for LANGUAGES as languages %}
+                            {% for language in languages %}
+                            <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected="selected"{% endif %}>
+                                {{ language.name_local }} ({{ language.code }})
+                            </option>
+                            {% endfor %}
+                            </select>
+                            <span class="input-group-btn">
+                                <input type="submit" class="btn btn-flat btn-default  btn-sm" value="Go" />
+                            </span>
+                        </div>
+                    </form>
+                </div>
+                {% endif %}
+            </div>
+            <br>
+        </footer>
+    </div>
 
     {% block hitcount_javascript %}{% endblock %}
     <script src="{% static 'js/libs/jquery/jquery-2.1.3.min.js' %}"></script>
@@ -106,7 +108,6 @@
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script src="{% static 'hitcount/hitcount-jquery.js' %}"></script>
     <script src="{% static 'js/libs/toastr/build/toastr.min.js' %}"></script>
-    
     <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
     <script src="{% static 'js/modules/musette.module.js' %}"></script>
 
