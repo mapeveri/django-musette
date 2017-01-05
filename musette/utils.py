@@ -233,7 +233,7 @@ def get_photo_profile(iduser):
     """
     This method return photo profile
     """
-    default_photo = static("img/profile.png")
+    default_photo = static("musette/img/profile.png")
     ModelProfile = get_main_model_profile()
     profile = ModelProfile.objects.filter(iduser=iduser)
     if profile.count() > 0:

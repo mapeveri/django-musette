@@ -2,6 +2,7 @@ from django import forms
 from django.conf import settings
 from django.contrib.auth import authenticate, password_validation
 from django.contrib.auth.models import User
+from django.contrib.staticfiles import finders
 from django.forms.widgets import ClearableFileInput, CheckboxInput
 from django.utils import timezone
 from django.utils.html import conditional_escape
@@ -367,7 +368,7 @@ class FormAdminConfiguration(forms.ModelForm):
     """
     Form configuration
     """
-    name_file_custom = './musette/static/css/custom.css'
+    name_file_custom = finders.find('musette/css/custom.css')
 
     class Meta:
         model = models.Configuration
