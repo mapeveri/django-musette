@@ -14,6 +14,7 @@ from django.contrib.auth.views import (
     password_reset, password_reset_complete,
     password_reset_confirm
 )
+from django.contrib.contenttypes.models import ContentType
 from django.http import Http404, HttpResponse, HttpResponseRedirect, QueryDict
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import defaultfilters
@@ -22,7 +23,6 @@ from django.views.generic.edit import FormView
 from django.utils.crypto import get_random_string
 from django.utils import timezone
 from django.utils.html import conditional_escape
-from django.utils.text import Truncator
 from django.utils.translation import ugettext_lazy as _
 
 from musette import forms, models, utils
@@ -436,6 +436,44 @@ class NewTopicView(FormView):
 
             # Save topic
             obj.save()
+
+            # Get moderators forum
+            lista_us = []
+            for moderator in forum.moderators.all():
+                # Send notification to moderator
+                related_object = ContentType.objects.get_for_model(obj)
+                notification = models.Notification(
+                    iduser=moderator.id, is_view=False,
+                    idobject=obj.idtopic, date=now,
+                    is_topic=True, is_comment=False,
+                    content_type=related_object
+                )
+                notification.save()
+                lista_us.append(moderator.id)
+
+            # Get photo profile
+            username = request.user.username
+            photo = utils.get_photo_profile(request.user.id)
+
+            # Data necessary for realtime
+            data = {
+                "topic": obj.title,
+                "idtopic": obj.idtopic,
+                "slug": obj.slug,
+                "settings_static": settings.STATIC_URL,
+                "username": username,
+                "forum": forum.name,
+                "lista_us": lista_us,
+                "photo": photo
+            }
+
+            # Add to real time new notification
+            json_data = json.dumps(data)
+            # Redis instance
+            r = redis.StrictRedis()
+            # Publish
+            r.publish('notifications', json_data)
+
             messages.success(
                 request, _("The topic '%(topic)s' was successfully created")
                 % {'topic': obj.title}
@@ -632,27 +670,18 @@ class NewCommentView(View):
             now = timezone.now()
             user = User.objects.get(id=request.user.id)
             topic = get_object_or_404(models.Topic, idtopic=idtopic)
-
             obj.date = now
             obj.user = user
             obj.topic_id = topic.idtopic
-
             obj.save()
 
-            # Redis instance
-            r = redis.StrictRedis()
-
-            idcomment = obj.idcomment
-
             # Data for notification real time
+            idcomment = obj.idcomment
             comment = models.Comment.objects.get(idcomment=idcomment)
             username = request.user.username
 
             # Get photo profile
             photo = utils.get_photo_profile(request.user.id)
-
-            # Data for notification real time
-            description = Truncator(comment.description).chars(100)
 
             # Send notifications
             lista_us = utils.get_users_topic(topic, request.user.id)
@@ -668,12 +697,15 @@ class NewCommentView(View):
             else:
                 user_original_topic = None
 
+            # Get content type for comment model
+            related_object_type = ContentType.objects.get_for_model(comment)
             for user in lista_us:
                 if user_original_topic != request.user.id:
                     notification = models.Notification(
                         iduser=user, is_view=False,
                         idobject=idcomment, date=now,
-                        is_topic=False, is_comment=True
+                        is_topic=False, is_comment=True,
+                        content_type=related_object_type
                     )
                     notification.save()
 
@@ -688,7 +720,6 @@ class NewCommentView(View):
 
             # Data necessary for realtime
             data = {
-                "description": description,
                 "topic": comment.topic.title,
                 "idtopic": comment.topic.idtopic,
                 "slug": comment.topic.slug,
@@ -701,6 +732,9 @@ class NewCommentView(View):
 
             # Add to real time new notification
             json_data = json.dumps(data)
+            # Redis instance
+            r = redis.StrictRedis()
+            # Publish
             r.publish('notifications', json_data)
 
             messages.success(request, _("Added new comment"))
@@ -759,7 +793,6 @@ class DeleteCommentView(View):
             models.Comment.objects.filter(
                 idcomment=idcomment, user=iduser
             ).delete()
-            models.Notification.objects.filter(idobject=idcomment).delete()
 
             messages.success(request, _("Comment deleted"))
             return HttpResponseRedirect(url)
@@ -778,7 +811,9 @@ class AllNotification(View):
         iduser = request.user.id
 
         # Set all notification like view
-        models.Notification.objects.filter(iduser=iduser).update(is_view=True)
+        models.Notification.objects.filter(iduser=iduser).update(
+            is_view=True
+        )
 
         # Get all notification user
         notifications = utils.get_notifications(iduser)

@@ -129,35 +129,42 @@ def get_item_notification(notification):
     is_comment = notification.is_comment
 
     html = ""
-    if is_comment:
-        try:
+    try:
+        # If is comment notification
+        if is_comment:
             comment = Comment.objects.get(idcomment=idobject)
             forum = comment.topic.forum.name
             slug = comment.topic.slug
             idtopic = comment.topic.idtopic
             username = comment.user.username
+            title = comment.topic.title
+            userid = comment.user.id
+        else:
+            # Is topic notification
+            topic = Topic.objects.get(idtopic=idobject)
+            forum = topic.forum.name
+            slug = topic.slug
+            idtopic = topic.idtopic
+            username = topic.user.username
+            title = topic.title
+            userid = topic.user.id
 
-            url_topic = "/topic/" + forum + "/" + \
-                slug + "/" + str(idtopic) + "/"
+        url_topic = "/topic/" + forum + "/" + slug + "/" + str(idtopic) + "/"
+        title = "<h5><a href='" + url_topic + "'><u>" + title + "</u></a></h5>"
 
-            title = "<h5><a href='" + url_topic + "'><u>" + \
-                comment.topic.title + "</u></a></h5>"
+        # Data profile
+        photo = get_photo_profile(userid)
+        date = get_datetime_topic(notification.date)
 
-            # Data profile
-            photo = get_photo_profile(comment.user.id)
-            date = get_datetime_topic(notification.date)
-
-            # Notificacion
-            html += '<a class="content" href="' + url_topic + '">'
-            html += ' <h4 class="item-title">'
-            html += ' <img class="img-circle pull-left" src="' + photo + '"'
-            html += ' width=45 height=45 />'
-            html += title + '</h4>'
-            html += ' <p class="item-info"> ' + username + " - " + str(date)
-            html += '</p></a>'
-        except Comment.DoesNotExist:
-            html = ""
-    else:
+        # Notificacion
+        html += '<a class="content" href="' + url_topic + '">'
+        html += ' <h4 class="item-title">'
+        html += ' <img class="img-circle pull-left" src="' + photo + '"'
+        html += ' width=45 height=45 />'
+        html += title + '</h4>'
+        html += ' <p class="item-info"> ' + username + " - " + str(date)
+        html += '</p></a>'
+    except Comment.DoesNotExist:
         html = ""
 
     return html

@@ -1,6 +1,7 @@
-from django.db.models.signals import m2m_changed, post_save
+from django.db.models.signals import m2m_changed, pre_delete, post_save
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.contrib.contenttypes.models import ContentType
 from django.dispatch import receiver
 
 from musette import models, utils
@@ -56,3 +57,15 @@ def post_save_forum(sender, instance, **kwargs):
                 # Only remove permissions if moderator has one forum
                 if instance.tot_forums_moderators(old_moderator) <= 1:
                     instance.clear_permissions_moderator(old_moderator)
+
+
+@receiver(pre_delete, sender=models.Topic)
+@receiver(pre_delete, sender=models.Comment)
+def pre_delete_receiver_notification(sender, instance, **kwargs):
+    """
+    Delete notification comment or topic
+    """
+    ctype = ContentType.objects.get_for_model(instance)
+    models.Notification.objects.filter(
+        content_type=ctype, idobject=instance.pk
+    ).delete()

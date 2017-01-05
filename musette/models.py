@@ -2,6 +2,8 @@ import os
 
 from django.conf import settings
 from django.contrib.auth.models import User, Permission
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.db import models
@@ -320,9 +322,12 @@ class Notification(models.Model):
     """
     Model Notification
     """
-
     idnotification = models.AutoField(primary_key=True)
-    idobject = models.IntegerField(default=0)
+    content_type = models.ForeignKey(
+        ContentType, null=True, blank=True,
+    )
+    idobject = models.PositiveIntegerField(null=True)
+    content_object = GenericForeignKey('content_type', 'idobject')
     iduser = models.IntegerField(default=0)
     is_topic = models.BooleanField(default=0)
     is_comment = models.BooleanField(default=0)
