@@ -373,7 +373,7 @@ class NewTopicView(FormView):
         return '/forum/' + self.kwargs['forum']
 
     def get_context_data(self, **kwargs):
-        context = super(EditTopicView, self).get_context_data(**kwargs)
+        context = super(NewTopicView, self).get_context_data(**kwargs)
         context['forum'] = self.kwargs['forum']
         return context
 
