@@ -26,5 +26,6 @@ Roadmap Django-Musette
 1. [X] Issue #57 Can block url admin
 2. [X] Issue #58 Add model Profile like inline admin in model User
 3. [X] Issue #48 Migrate to vue.js
-4. [ ] Issue #40 Notifications and comments NoSQL
-5. [ ] Issue #17 Add message private between users
+4. [X] Issue #60 Generic Foreign Key for model Notification
+5. [ ] Issue #40 Notifications and comments NoSQL
+6. [ ] Issue #17 Add message private between users
