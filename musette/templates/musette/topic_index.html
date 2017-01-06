@@ -150,11 +150,11 @@
                 <div class="well" style="margin-top: 5px" v-html="comment.description">
                 </div>
                 <span>
-                    <a href="{% url 'profile' comment.username %}">
+                    <a v-bind:href="'/profile/' + comment.username">
                          <img class="img-circle" v-bind:src="comment.photo"
                          width="30" height="30" />
                     </a>
-                    <a href="{% url 'profile' comment.username %}">{{ comment.username }}</a>
+                    <a v-bind:href="'/profile/' + comment.username">{{ comment.username }}</a>
                     <br>
                     <div class="label label-success"><b>Online</b></div>
 

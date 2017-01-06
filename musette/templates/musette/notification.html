@@ -29,11 +29,11 @@
           <!-- Url fixed for verbatim -->
           <span v-for="not in notifications_socket">
             <li class="divider"></li>
-            <a class="content" href="/topic/{{ not.forum }}/{{ not.slug }}/{{ not.idtopic }}">
+            <a class="content" v-bind:href="'/topic/' + not.forum + '/' + not.slug + '/' + not.idtopic">
                 <h4 class="item-title">
                     <img class="img-circle pull-left" v-bind:src="not.photo" width=45 height=45 />
                 </h4>
-                <h5><a href="/topic/{{ not.forum }}/{{ not.slug }}/{{ not.idtopic }}"><u>{{ not.topic }}</u></a></h5>
+                <h5><a v-bind:href="'/topic/' + not.forum + '/' + not.slug + '/' + not.idtopic"><u>{{ not.topic }}</u></a></h5>
                 <p class="item-info">{{ not.username }} - {% endverbatim %} {% trans "Now" %} {% verbatim %}</p>
             </a>
           </span>

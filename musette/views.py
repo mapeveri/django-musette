@@ -720,6 +720,7 @@ class NewCommentView(View):
 
             # Data necessary for realtime
             data = {
+                "description": comment.description,
                 "topic": comment.topic.title,
                 "idtopic": comment.topic.idtopic,
                 "slug": comment.topic.slug,
