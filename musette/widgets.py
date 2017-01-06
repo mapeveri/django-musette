@@ -8,4 +8,4 @@ class TextareaWidget(forms.Textarea):
     class Media:
         # tiny_mce
         js = ('//cdn.tinymce.com/4/tinymce.min.js',
-              '/static/js/textareas.js')
+              '/static/musette/js/textareas.js')
