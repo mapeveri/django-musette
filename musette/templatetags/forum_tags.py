@@ -1,7 +1,6 @@
 from django import template
 from django.contrib.contenttypes.models import ContentType
 from django.utils import formats, timezone
-from django.utils.text import Truncator
 
 from hitcount.models import HitCount
 
@@ -155,6 +154,7 @@ def get_item_notification(notification):
         # Data profile
         photo = get_photo_profile(userid)
         date = get_datetime_topic(notification.date)
+        url_profile = "/profile/" + username
 
         # Notificacion
         html += '<a class="content" href="' + url_topic + '">'
@@ -162,7 +162,8 @@ def get_item_notification(notification):
         html += ' <img class="img-circle pull-left" src="' + photo + '"'
         html += ' width=45 height=45 />'
         html += title + '</h4>'
-        html += ' <p class="item-info"> ' + username + " - " + str(date)
+        html += ' <p class="item-info"><a href="' + url_profile + '">'
+        html += username + "</a> - " + str(date)
         html += '</p></a>'
     except Comment.DoesNotExist:
         html = ""
@@ -180,40 +181,20 @@ def get_pending_notifications(user):
 
 
 @register.filter
-def get_last_activity(idtopic):
+def get_last_activity(topic):
     """
     This method return last activity of topic
     """
-    try:
-        comment = Comment.objects.filter(
-            topic_id=idtopic).order_by("-date")
-    except Exception:
-        comment = None
+    # Get timezone for datetime
+    d_timezone = timezone.localtime(topic.last_activity)
+    # Format data
+    date = formats.date_format(d_timezone, "SHORT_DATETIME_FORMAT")
 
-    if comment:
-        # Get timezone for datetime
-        d_timezone = timezone.localtime(comment[0].date)
-        # Format data
-        date = formats.date_format(d_timezone, "SHORT_DATETIME_FORMAT")
-
-        # Return format data more user with tag <a>
-        html = ""
-        # html += get_path_profile(comment[0].user)
-        html += " <p>" + str(date) + "</p>"
-        return html
-    else:
-        topic = Topic.objects.get(idtopic=idtopic)
-
-        # Get timezone for datetime
-        d_timezone = timezone.localtime(topic.date)
-        # Format data
-        date = formats.date_format(d_timezone, "SHORT_DATETIME_FORMAT")
-
-        # Return format data more user with tag <a>
-        html = ""
-        # html += get_path_profile(topic.user)
-        html += " <p>" + str(date) + "</p>"
-        return html
+    # Return format data more user with tag <a>
+    html = ""
+    # html += get_path_profile(topic.user)
+    html += " <p>" + str(date) + "</p>"
+    return html
 
 
 @register.filter

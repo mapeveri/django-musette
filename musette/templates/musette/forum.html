@@ -31,7 +31,7 @@
                     </p>
                 </div>
             </td>
-            <td>{{ topic.idtopic|get_last_activity|safe }} </td>
+            <td>{{ topic|get_last_activity|safe }} </td>
             <td><span class="badge">{{topic.idtopic|get_tot_comments}}</span></td>
             <td><span class="badge">{% get_tot_views topic.idtopic %}</span></td>
         </tr>

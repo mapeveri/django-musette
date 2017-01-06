@@ -29,5 +29,6 @@ Roadmap Django-Musette
 4. [X] Issue #60 Generic Foreign Key for model Notification
 5. [X] Issue #62 Bug to read file custom.css configuration
 6. [X] Issue #61 Url notification realtime not working
-7. [ ] Issue #40 Notifications and comments NoSQL
-8. [ ] Issue #17 Add message private between users
+7. [X] Issue #59 Order topics for last_activity
+8. [ ] Issue #40 Notifications and comments NoSQL
+9. [ ] Issue #17 Add message private between users

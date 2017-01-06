@@ -270,7 +270,7 @@ class ForumView(View):
         forum = get_object_or_404(models.Forum, name=forum, hidden=False)
         topics = models.Topic.objects.filter(
             forum_id=forum.idforum
-        ).order_by("-is_top", "-date")
+        ).order_by("-is_top", "-last_activity", "-date")
 
         # Get forum childs
         forums_childs = models.Forum.objects.filter(parent=forum, hidden=False)
@@ -440,16 +440,18 @@ class NewTopicView(FormView):
             # Get moderators forum
             lista_us = []
             for moderator in forum.moderators.all():
-                # Send notification to moderator
-                related_object = ContentType.objects.get_for_model(obj)
-                notification = models.Notification(
-                    iduser=moderator.id, is_view=False,
-                    idobject=obj.idtopic, date=now,
-                    is_topic=True, is_comment=False,
-                    content_type=related_object
-                )
-                notification.save()
-                lista_us.append(moderator.id)
+                # If not is my user
+                if moderator.id != request.user.id:
+                    # Send notification to moderator
+                    related_object = ContentType.objects.get_for_model(obj)
+                    notification = models.Notification(
+                        iduser=moderator.id, is_view=False,
+                        idobject=obj.idtopic, date=now,
+                        is_topic=True, is_comment=False,
+                        content_type=related_object
+                    )
+                    notification.save()
+                    lista_us.append(moderator.id)
 
             # Get photo profile
             username = request.user.username
@@ -674,6 +676,11 @@ class NewCommentView(View):
             obj.user = user
             obj.topic_id = topic.idtopic
             obj.save()
+
+            # Update last activity TopicSearch
+            models.Topic.objects.filter(idtopic=idtopic).update(
+                last_activity=now
+            )
 
             # Data for notification real time
             idcomment = obj.idcomment

@@ -106,6 +106,7 @@
                   </div>
                   <div class="pull-right">
                     <p>{{topic.date}}</p>
+                    <span><strong>{% trans "Last activity" %}</strong> {{topic|get_last_activity|safe}}</span>
                     <a class="btn btn-default" style="cursor: pointer" data-toggle="modal" data-target="#modelTopicShared">
                       <i class="fa fa-share"></i> {% trans "Share" %}
                     </a>

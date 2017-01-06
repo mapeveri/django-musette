@@ -76,7 +76,7 @@ class Forum(models.Model):
     )
 
     class Meta(object):
-        ordering = ['category', 'position']
+        ordering = ['category', 'position', 'name']
         verbose_name = _('Forum')
         verbose_name_plural = _('Forums')
 
@@ -195,6 +195,9 @@ class Topic(models.Model):
     date = models.DateTimeField(
         _('Date'), blank=False, auto_now=True, db_index=False
     )
+    last_activity = models.DateTimeField(
+        _('Last activity'), blank=False, auto_now=True, db_index=False
+    )
     description = models.TextField(_('Description'), blank=False, null=False)
     id_attachment = models.CharField(max_length=200, null=True, blank=True)
     attachment = models.FileField(
@@ -215,7 +218,7 @@ class Topic(models.Model):
     )
 
     class Meta(object):
-        ordering = ['forum', 'date', 'title']
+        ordering = ['forum', 'last_activity', 'title', 'date']
         verbose_name = _('Topic')
         verbose_name_plural = _('Topics')
 
