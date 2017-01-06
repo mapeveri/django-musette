@@ -50,128 +50,14 @@ Features
 
 **Note 1:** When a new record is added to the user model automatically added to your model profile.
 
-Installing
-----------
 
-With pip::
+Configuration and installation
+------------------------------
 
-	pip install django-musette
+`Documentation`_ for installation and configuration
 
+.. _Documentation: https://github.com/mapeveri/django-musette/blob/master/docs/configuration.rst
 
-Quick start
------------
-
-1. Add application 'musette' and dependencies to INSTALLED_APPS::
-
-	INSTALLED_APPS = (
-		'django.contrib.admin',
-		'django.contrib.auth',
-		'django.contrib.contenttypes',
-		'django.contrib.sessions',
-		'django.contrib.messages',
-		'django.contrib.staticfiles',
-		'django.contrib.sites',
-		...
-		'hitcount',
-		'endless_pagination',
-		'rest_framework',
-		'musette',
-	)
-
-2. Add this urls to file urls.py::
-
-	url(r'^' , include('musette.urls')),
-
-	....
-
-	# And add this
-	from django.conf import settings
-	
-	if settings.DEBUG:
-	    from django.conf.urls.static import static
-	    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-	    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
-3. In settings.py configure LOGIN_URL, STATIC, MEDIA root, SITE_ID, SITE_NAME and SITE_URL. `Example config`_ of settings.py.
-
-.. _Example config: https://github.com/mapeveri/django-musette/blob/master/example/tests/settings.py	
-
-4. In settings.py in TEMPLATES check in context_processors this values::
-
-		'django.template.context_processors.debug',
-		'django.template.context_processors.request',
-		'django.contrib.auth.context_processors.auth',
-		'django.contrib.messages.context_processors.messages',
-		'django.template.context_processors.media',
-		'django.template.context_processors.static',
-		'django.template.context_processors.tz',
-		'django.template.context_processors.i18n',
-		'musette.context_processors.data_templates', # Necessary
-
-5. Configure in the settings.py the variable CACHES for redis. This is for real time support. Example::
-
-		CACHES = {
-			'default': {
-			    'BACKEND' : 'redis_cache.RedisCache',
-			    'LOCATION' : 'localhost:6379',
-			    'OPTIONS' : {
-			        'DB' : 1
-			        }
-			    }
-		}
-
-6. In MIDDLEWARE_CLASSES add this line::
-
-        MIDDLEWARE_CLASSES = (
-                ...
-				'musette.middleware.ActiveUserMiddleware', # Necessary
-				'musette.middleware.RestrictStaffToAdminMiddleware' # If you want block admin url add this middleware
-        )
-
-7. In your application must add the profile model do the following. For example your app is 'main', in models.py and admin.py add::
-	
-	# models.py
-	from musette.models import AbstractProfile
-
-	class Profile(AbstractProfile):
-
-		# This is in case you need to extend the profile model. If not use 'pass'
-		location = models.CharField("Label name", max_length=200, null=True, blank=True)
-		company = models.CharField("Label name", max_length=150, null=True, blank=True)
-
-	# NOTE: The model profile, will be in the admin in the model user like section 'profile'.
-
-	# If you need to extend so, you will create template profile.html indide your app and add this
-	# templates/main/profile.html
-
-	<h4>Location</h4>
-	<div class="panel panel-default">
-	    <div class="panel-body">
-	        {{ profile.location|safe }}
-	    </div>
-	</div>
-
-	<h4>Company</h4>
-	<div class="panel panel-default">
-	    <div class="panel-body">
-	        {{ profile.company|safe }}
-	    </div>
-	</div>
-
-8. Execute command migrate::
-
-	python manage.py makemigrations 
-	python manage.py migrate
-
-	python manage.py makemigrations musette
-	python manage.py migrate musette
-
-9. If you need to enable the `forum in spanish`_.
-
-.. _forum in spanish: https://github.com/mapeveri/django-musette/blob/master/internationalization.rst
-
-10. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
-	
 
 How to use?
 -----------
@@ -192,7 +78,7 @@ Field more importants:
 	- Topics count: Total forum topics.
 	- Check topics: If you need to review the topics by a moderator.
 
-3. Add record to Model Configuration and configurate the forum.
+3. Add record to Model Configuration and configurate the forum (Css styles, logo forum, etc).
 
 4. **Make sure that each user registration exist in the profile table.** Execute in the terminal::
 
@@ -219,6 +105,7 @@ Visit 127.0.0.1:8000/forums you should see the categories and forums.
 .. image:: https://github.com/mapeveri/django-musette/blob/master/images/new_topic.png
 
 .. image:: https://github.com/mapeveri/django-musette/blob/master/images/edit_topic.png
+
 
 Roadmap
 -------
