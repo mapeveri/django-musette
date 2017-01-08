@@ -1,18 +1,31 @@
 (function() {
     'use strict';
-
+    //Get params from server
+    try{
+        var params = JSON.parse($('#musette_module_js').html());
+        var user_auth = params.user_auth;
+    }catch(e) {
+        var user_auth = null;
+    }
+    
     //Base musette Methods
     var MusetteApp = Vue.extend({
         methods: {
             //Connection to websockets
-            connectionWs: function (url) {
+            connectionWs: function (is_user, id) {
                 var protocol;
                 if (window.location.protocol === "https:") {
                     protocol = "wss:";
                 } else {
                     protocol = "ws:";
                 }
-                return new WebSocket(protocol + "//" + window.location.hostname + ":8888/ws/");
+
+                if(is_user) {
+                    var url = protocol + "//" + window.location.hostname + ":8888/ws/?user=" + user_auth;
+                } else {
+                    var url = protocol + "//" + window.location.hostname + ":8888/ws/?topic=" + id;
+                }
+                return new WebSocket(url);
             },
             //Execute the loading ajax.gif
             loading: function() {
@@ -121,24 +134,22 @@
                 } catch(e) {} 
             }, 1000);
 
-            //Connection to websockets
-            var ws = this.connectionWs();
-            ws.onmessage = function (evt) {
-                $that.topic_id_ws = parseInt($("#topic_musette").val());
-
-                //Only add message when scroll end
-                var length = $("a.endless_more").length;
-                if (length == 0) {
-                    var json = evt.data;
-                    var obj = JSON.parse(json);
-                    var idtopic = parseInt(obj.idtopic);
-
-                    //Verify if the message is of topic
-                    if (idtopic == $that.topic_id_ws) {
+            //Check if is a topic
+            var idtopic = parseInt($("#topic_musette").val());
+            if (!isNaN(idtopic)) {
+                //Connection to websockets
+                var ws = this.connectionWs(false, idtopic);
+                ws.onmessage = function (evt) {
+                    //Only add message when scroll end
+                    var length = $("a.endless_more").length;
+                    if (length == 0) {
+                        var json = evt.data;
+                        var obj = JSON.parse(json);
+                        //Add new comment to model
                         $that.comments_socket.push(obj);
                     }
-                }
-            };
+                };    
+            }
         },
         methods: {
             //Open a topic close
@@ -221,30 +232,27 @@
             notifications_socket: [],
         },
         mounted: function () {
+            //Context
             var $that = this;
 
             //Socket for notifications
-            var ws = this.connectionWs();
+            var ws = this.connectionWs(true);
             ws.onmessage = function (evt) {
-                $that.user = parseInt($("#user_musette").val());
-
+                //Get object json message
                 var json = evt.data;
                 var obj = JSON.parse(json);
-                var lista_us = obj.lista_us;
 
-                //Verify if the message belongs to me
-                if (lista_us.indexOf($that.user) > -1) {
-                    $that.notifications_socket.unshift(obj);
-                    $that.tot_notifications++;
+                //Add new notification to model
+                $that.notifications_socket.unshift(obj);
+                $that.tot_notifications++;
 
-                    //Remove class hide
-                    $("#badge_notifications").text("0").removeClass("hide").html($that.tot_notifications);
+                //Remove class hide
+                $("#badge_notifications").text("0").removeClass("hide").html($that.tot_notifications);
 
-                    //Not notification hide
-                    try {
-                        $("#no_notifications").addClass("hide");
-                    }catch(e){}
-                }
+                //Not notification hide
+                try {
+                    $("#no_notifications").addClass("hide");
+                }catch(e){}
             };
         },
         methods: {

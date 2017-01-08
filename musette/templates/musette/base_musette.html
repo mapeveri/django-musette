@@ -109,7 +109,11 @@
     <script src="{% static 'hitcount/hitcount-jquery.js' %}"></script>
     <script src="{% static 'musette/js/libs/toastr/build/toastr.min.js' %}"></script>
     <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-    <script src="{% static 'musette/js/modules/musette.module.js' %}"></script>
+    <script id="musette_module_js" src="{% static 'musette/js/modules/musette.module.js' %}">
+        {
+            "user_auth": {{ user.id }}
+        }
+    </script>
 
     <script>
       $(document).ready(function() {

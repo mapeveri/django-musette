@@ -19,7 +19,7 @@ Roadmap Django-Musette
 4. [X] Issue #55 Suggested Topics in topic
 5. [X] Issue #41 Close topic
 6. [X] Issue #56 Add custom.css to model Configuration
-7. [ ] If errors are found in the previous version. They will be arranged
+7. [X] If errors are found in the previous version. They will be arranged
 
 **For version (0.2.4) complete the next issues:**
 
@@ -30,5 +30,11 @@ Roadmap Django-Musette
 5. [X] Issue #62 Bug to read file custom.css configuration
 6. [X] Issue #61 Url notification realtime not working
 7. [X] Issue #59 Order topics for last_activity
-8. [ ] Issue #40 Notifications and comments NoSQL
-9. [ ] Issue #17 Add message private between users
+8. [X] Issue #63 Improvements to websockets
+9. [X] If errors are found in the previous version. They will be arranged
+
+**For version (0.2.5) complete the next issues:**
+
+1. [ ] Issue #40 Notifications and comments NoSQL
+2. [ ] Issue #17 Add message private between users
+3. [ ] If errors are found in the previous version. They will be arranged

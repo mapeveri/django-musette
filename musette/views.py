@@ -438,7 +438,7 @@ class NewTopicView(FormView):
             obj.save()
 
             # Get moderators forum
-            lista_us = []
+            list_us = []
             for moderator in forum.moderators.all():
                 # If not is my user
                 if moderator.id != request.user.id:
@@ -451,7 +451,7 @@ class NewTopicView(FormView):
                         content_type=related_object
                     )
                     notification.save()
-                    lista_us.append(moderator.id)
+                    list_us.append(moderator.id)
 
             # Get photo profile
             username = request.user.username
@@ -465,16 +465,16 @@ class NewTopicView(FormView):
                 "settings_static": settings.STATIC_URL,
                 "username": username,
                 "forum": forum.name,
-                "lista_us": lista_us,
+                "list_us": list_us,
                 "photo": photo
             }
 
             # Add to real time new notification
-            json_data = json.dumps(data)
+            json_data_notification = json.dumps(data)
             # Redis instance
             r = redis.StrictRedis()
             # Publish
-            r.publish('notifications', json_data)
+            r.publish('notifications', json_data_notification)
 
             messages.success(
                 request, _("The topic '%(topic)s' was successfully created")
@@ -691,22 +691,22 @@ class NewCommentView(View):
             photo = utils.get_photo_profile(request.user.id)
 
             # Send notifications
-            lista_us = utils.get_users_topic(topic, request.user.id)
+            list_us = utils.get_users_topic(topic, request.user.id)
             lista_email = []
 
             # If not exists user that create topic, add
             user_original_topic = topic.user.id
             user_email = topic.user.email
 
-            if not (user_original_topic in lista_us):
-                lista_us.append(user_original_topic)
+            if not (user_original_topic in list_us):
+                list_us.append(user_original_topic)
                 lista_email.append(user_email)
             else:
                 user_original_topic = None
 
             # Get content type for comment model
             related_object_type = ContentType.objects.get_for_model(comment)
-            for user in lista_us:
+            for user in list_us:
                 if user_original_topic != request.user.id:
                     notification = models.Notification(
                         iduser=user, is_view=False,
@@ -727,23 +727,31 @@ class NewCommentView(View):
 
             # Data necessary for realtime
             data = {
-                "description": comment.description,
                 "topic": comment.topic.title,
                 "idtopic": comment.topic.idtopic,
                 "slug": comment.topic.slug,
                 "settings_static": settings.STATIC_URL,
                 "username": username,
                 "forum": forum,
-                "lista_us": lista_us,
                 "photo": photo
             }
 
+            # Add item for notification
+            data_notification = data
+            data_notification['list_us'] = list_us
+
             # Add to real time new notification
-            json_data = json.dumps(data)
+            json_data_notification = json.dumps(data_notification)
             # Redis instance
             r = redis.StrictRedis()
             # Publish
-            r.publish('notifications', json_data)
+            r.publish('notifications', json_data_notification)
+
+            # Publish new comment in topic
+            data_comment = data
+            data_comment['description'] = comment.description
+            json_data_comment = json.dumps(data_comment)
+            r.publish('comments', json_data_comment)
 
             messages.success(request, _("Added new comment"))
             return HttpResponseRedirect(url)
