@@ -17,8 +17,8 @@
     <div class="notification-heading">
         <h4 class="menu-title">{% trans "Notifications" %}</h4>
         <h4 class="menu-title pull-right">
-            <a href="{% url 'forum_all_notification' %}">
-            <strong>{% trans "All" %}</strong> <i class="fa fa-arrow-circle-right"></i>
+            <a href="{% url 'profile' user.username %}">
+            <strong>{{ user.username }}</strong> <i class="fa fa-user"></i>
             </a>
         </h4>
     </div>
