@@ -115,6 +115,9 @@ Quick start
 
 	python manage.py makemigrations musette
 	python manage.py migrate musette
+	
+	# If your super-admin user not contain the record in Profile model. Execute this command:
+	python manage.py create_profile_superadmin # New in version 0.2.5
 
 9. Configuration internationalization in English or `forum in spanish`_.
 

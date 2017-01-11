@@ -7,13 +7,13 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-md-3 bg_blur ">
+        <div class="col-md-2 bg_blur">
 
-            <img src="{{photo}}" class="img-thumbnail picture hidden-xs" width="150" hegiht="150" />
+            <img src="{{photo}}" class="img-thumbnail picture hidden-xs" width="200" hegiht="200" />
 
             <div class="header">
                 <h1>{{ profile.iduser.first_name }} {{ profile.iduser.last_name }}</h1>
-                <h5>{% trans "Joined" %} {{ profile.iduser.date_joined }}</h5>
+                <h5>{% trans "Joined" %} {{ profile.iduser.date_joined.date }}</h5>
                 <table>
                     <tr>
                         <td>
