@@ -176,8 +176,7 @@
   <!-- New comment-->
   {% if user.id != None and not topic.is_close %}
     <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8">
+        <div class="col-md-10 col-md-offset-1">
           <form action="{% url 'newcomment' topic.forum.name topic.slug topic.idtopic %}" name="formComment" method="POST" class="well">{% csrf_token%}
             <center>
             {% for field in form_comment %}
@@ -198,7 +197,6 @@
             </button> <img src="{% static 'musette/img/ajax.gif' %}" class="hide" />
           </form>
         </div>
-        <div class="col-md-2"></div>
     </div>
   {% endif %}
 

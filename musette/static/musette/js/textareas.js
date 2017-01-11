@@ -2,11 +2,13 @@ tinymce.init({
   selector: 'textarea',
   height: 250,
   theme: 'modern',
+  menubar:false,
+  statusbar: false,
   plugins: [
-    'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+    'advlist autolink lists link charmap print preview hr anchor pagebreak',
     'searchreplace wordcount visualblocks visualchars code fullscreen',
-    'insertdatetime media nonbreaking save table contextmenu directionality',
-    'emoticons template paste textcolor colorpicker textpattern imagetools codesample toc'
+    'insertdatetime nonbreaking save table contextmenu directionality',
+    'emoticons template paste textcolor colorpicker textpattern codesample toc'
   ],
   textpattern_patterns: [
      {start: '*', end: '*', format: 'italic'},
@@ -21,8 +23,7 @@ tinymce.init({
      {start: '* ', cmd: 'InsertUnorderedList'},
      {start: '- ', cmd: 'InsertUnorderedList'}
   ],
-  toolbar1: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
-  toolbar2: 'print preview media | forecolor backcolor emoticons | codesample',
+  toolbar1: 'undo redo | insert | styleselect | bold italic | bullist numlist outdent indent | print preview | forecolor backcolor emoticons | codesample',
   image_advtab: true,
   visualblocks_default_state: true,
   theme_advanced_toolbar_location : "top",
