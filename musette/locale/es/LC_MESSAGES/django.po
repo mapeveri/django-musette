@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-12-25 17:07-0300\n"
+"POT-Creation-Date: 2017-01-12 19:34-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,127 +40,127 @@ msgstr ""
 msgid "Profile"
 msgstr "Perfil"
 
-#: musette/forms.py:20 musette/forms.py:82
+#: musette/forms.py:21 musette/forms.py:83
 msgid "Username"
 msgstr "Usuario"
 
-#: musette/forms.py:49
+#: musette/forms.py:50
 msgid "Username or password incorrect."
 msgstr "Usuario o contraseña incorrecta"
 
-#: musette/forms.py:84 musette/templates/musette/password_reset_form.html:21
+#: musette/forms.py:85 musette/templates/musette/password_reset_form.html:21
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: musette/forms.py:86
+#: musette/forms.py:87
 msgid "Names"
 msgstr "Nombres"
 
-#: musette/forms.py:88
+#: musette/forms.py:89
 msgid "Surname"
 msgstr "Apellido"
 
-#: musette/forms.py:90
+#: musette/forms.py:91
 msgid "Password"
 msgstr "Contraseña"
 
-#: musette/forms.py:92
+#: musette/forms.py:93
 msgid "Repeat password"
 msgstr "Repita la contraseña"
 
-#: musette/forms.py:100
+#: musette/forms.py:101
 msgid "Passwords don't match"
 msgstr "Las contraseñas no coinciden"
 
-#: musette/forms.py:116
+#: musette/forms.py:117
 msgid "Email addresses must be unique."
 msgstr "El correo electrónico debe ser único"
 
-#: musette/forms.py:191
+#: musette/forms.py:194
 #, python-format
 msgid "New topic in %(site)s "
 msgstr "Nuevo tema en %(site)s"
 
-#: musette/forms.py:192
+#: musette/forms.py:195
 #, python-format
 msgid "You have one new topic to moderate: %(site)s"
 msgstr "Usted tiene un nuevo tema para moderar: %(site)s"
 
-#: musette/forms.py:316
+#: musette/forms.py:314
 #, python-format
 msgid "New comment in %(site)s"
 msgstr "Nuevo comentario en %(site)s"
 
-#: musette/forms.py:319
+#: musette/forms.py:318
 #, python-format
 msgid "You have one new comment in the topic: %(site)s"
 msgstr "Usted tiene un nuevo comentario en el tema: %(site)s"
 
-#: musette/models.py:29
+#: musette/models.py:31
 msgid "If checked, this category will be visible only for staff"
 msgstr "Si está marcada, esta categoría sólo será visible para el personal"
 
-#: musette/models.py:34 musette/models.py:49
+#: musette/models.py:36 musette/models.py:51
 msgid "Category"
 msgstr "Categoría"
 
-#: musette/models.py:35
+#: musette/models.py:37
 msgid "Categories"
 msgstr "Categorías"
 
-#: musette/models.py:52
+#: musette/models.py:54
 msgid "Parent forum"
 msgstr "Foro padre"
 
-#: musette/models.py:55
+#: musette/models.py:57
 msgid "Name"
 msgstr "Nombre"
 
-#: musette/models.py:56
+#: musette/models.py:58
 msgid "Position"
 msgstr "Posición"
 
-#: musette/models.py:57 musette/models.py:196 musette/models.py:307
+#: musette/models.py:59 musette/models.py:201 musette/models.py:312
 #: musette/templates/musette/edit_topic.html:44
 #: musette/templates/musette/new_topic.html:45
 msgid "Description"
 msgstr "Descripción"
 
-#: musette/models.py:59
+#: musette/models.py:61
 msgid "Moderators"
 msgstr "Moderadores"
 
-#: musette/models.py:62 musette/models.py:194 musette/models.py:305
-#: musette/models.py:354 musette/templates/musette/topic_index.html:275
+#: musette/models.py:64 musette/models.py:196 musette/models.py:310
+#: musette/models.py:362 musette/templates/musette/topic_index.html:270
 msgid "Date"
 msgstr "Fecha"
 
-#: musette/models.py:65
+#: musette/models.py:67
 msgid "Topics count"
 msgstr "Total de temas"
 
-#: musette/models.py:68
+#: musette/models.py:70
 msgid "Hidden"
 msgstr "Oculto"
 
-#: musette/models.py:69
+#: musette/models.py:71
 msgid "If hide the forum in the index page"
 msgstr "Si oculta el foro de la página principal"
 
-#: musette/models.py:72
+#: musette/models.py:74
 msgid "Check topics"
 msgstr "Chequear temas"
 
-#: musette/models.py:73
+#: musette/models.py:75
 msgid "If the forum is moderated"
 msgstr "Si el foro es moderado"
 
-#: musette/models.py:78 musette/models.py:143 musette/models.py:184
-#: musette/models.py:346 musette/templates/musette/topic_index.html:274
+#: musette/models.py:80 musette/models.py:145 musette/models.py:186
+#: musette/models.py:354 musette/templates/musette/topic_index.html:269
 msgid "Forum"
 msgstr "Foro"
 
-#: musette/models.py:79
+#: musette/models.py:81
 #: musette/templates/musette/all_notification_index.html:12
 #: musette/templates/musette/edit_topic.html:17
 #: musette/templates/musette/forum_index.html:25
@@ -173,126 +173,131 @@ msgstr "Foro"
 msgid "Forums"
 msgstr "Foros"
 
-#: musette/models.py:147
-msgid "Message of information"
-msgstr "Mensaje de información"
+#: musette/models.py:149
+msgid "Message to inform"
+msgstr "Mensaje a informar"
 
-#: musette/models.py:148
+#: musette/models.py:150
 msgid "If you want to report a message to a forum"
 msgstr "Si quiere reportar un mensaje al foro"
 
-#: musette/models.py:151
+#: musette/models.py:153
 msgid "Message expires from"
-msgstr "Caduca mensaje desde"
+msgstr "El mensaje expira desde"
 
-#: musette/models.py:152
+#: musette/models.py:154
 msgid "Date from message expired"
-msgstr "Fecha desde caduda mensaje"
+msgstr "Fecha de expiración del mensaje"
 
-#: musette/models.py:155
+#: musette/models.py:157
 msgid "Message expires to"
-msgstr "Caduda mensaje hasta"
+msgstr "El mensaje expira hasta"
 
-#: musette/models.py:156
+#: musette/models.py:158
 msgid "Date to message expired"
-msgstr "Fecha hasta caduda mensaje"
+msgstr "Fecha de expiración del mensaje"
 
-#: musette/models.py:160
+#: musette/models.py:162
 msgid "Message for forums"
 msgstr "Mensaje para foros"
 
-#: musette/models.py:161
+#: musette/models.py:163
 msgid "Messages for forums"
 msgstr "Mensajes para foros"
 
-#: musette/models.py:188 musette/models.py:301 musette/models.py:350
-#: musette/templates/musette/topic_index.html:277
+#: musette/models.py:190 musette/models.py:306 musette/models.py:358
+#: musette/templates/musette/topic_index.html:272
 #: musette/templates/musette/topic_search.html:21
 msgid "User"
 msgstr "Usuario"
 
-#: musette/models.py:192 musette/templates/musette/edit_topic.html:33
+#: musette/models.py:194 musette/templates/musette/edit_topic.html:33
 #: musette/templates/musette/forum_index.html:114
 #: musette/templates/musette/new_topic.html:34
-#: musette/templates/musette/topic_index.html:273
+#: musette/templates/musette/topic_index.html:268
 msgid "Title"
 msgstr "Título"
 
-#: musette/models.py:199
+#: musette/models.py:199 musette/templates/musette/forum_index.html:115
+#: musette/templates/musette/topic_index.html:109
+msgid "Last activity"
+msgstr "Última actividad"
+
+#: musette/models.py:204
 msgid "File"
 msgstr "Archivo"
 
-#: musette/models.py:203
+#: musette/models.py:208
 msgid "Closed topic"
 msgstr "Tema cerrado"
 
-#: musette/models.py:204
+#: musette/models.py:209
 msgid "If the topic is close"
 msgstr "Si el tema está cerrado"
 
-#: musette/models.py:207
+#: musette/models.py:212
 msgid "Moderate"
 msgstr "Moderado"
 
-#: musette/models.py:208
+#: musette/models.py:213
 msgid "If the topic is moderated"
 msgstr "Si el tema está moderado"
 
-#: musette/models.py:211
+#: musette/models.py:216
 msgid "Top"
 msgstr "Arriba"
 
-#: musette/models.py:212
+#: musette/models.py:217
 msgid "If the topic is important and it will go top"
 msgstr "Si el tema es importante y va a ir arriba"
 
-#: musette/models.py:217 musette/models.py:297
+#: musette/models.py:222 musette/models.py:302
 msgid "Topic"
 msgstr "Tema"
 
-#: musette/models.py:218 musette/templates/musette/forum_index.html:128
+#: musette/models.py:223 musette/templates/musette/forum_index.html:128
 #: musette/templates/musette/index.html:21
 msgid "Topics"
 msgstr "Temas"
 
-#: musette/models.py:311
+#: musette/models.py:316
 msgid "Comment"
 msgstr "Comentario"
 
-#: musette/models.py:312 musette/templates/musette/forum_index.html:116
-#: musette/templates/musette/topic_index.html:276
+#: musette/models.py:317 musette/templates/musette/forum_index.html:116
+#: musette/templates/musette/topic_index.html:271
 msgid "Comments"
 msgstr "Comentarios"
 
-#: musette/models.py:359
+#: musette/models.py:367
 msgid "Register"
 msgstr "Registrarse"
 
-#: musette/models.py:360
+#: musette/models.py:368
 msgid "Registers"
 msgstr "Registros"
 
-#: musette/models.py:430
+#: musette/models.py:438
 msgid "Logo width"
 msgstr "Ancho del logo"
 
-#: musette/models.py:431 musette/models.py:435
+#: musette/models.py:439 musette/models.py:443
 msgid "In pixels"
 msgstr "En pixels"
 
-#: musette/models.py:434
+#: musette/models.py:442
 msgid "Logo height"
 msgstr "Altura del logo"
 
-#: musette/models.py:438
+#: musette/models.py:446
 msgid "Custom design"
 msgstr "Diseño customizado"
 
-#: musette/models.py:442
+#: musette/models.py:450
 msgid "Configuration"
 msgstr "Configuración"
 
-#: musette/models.py:443
+#: musette/models.py:451
 msgid "Configurations"
 msgstr "Configuraciones"
 
@@ -335,7 +340,7 @@ msgstr ""
 msgid "Yes, I'm sure"
 msgstr ""
 
-#: musette/templates/musette/all_notification.html:16
+#: musette/templates/musette/all_notification.html:12
 #: musette/templates/musette/notification.html:51
 msgid "No notifications"
 msgstr "No hay notificaciones"
@@ -346,23 +351,23 @@ msgstr "No hay notificaciones"
 msgid "Notifications"
 msgstr "Notificaciones"
 
-#: musette/templates/musette/base_musette.html:48
+#: musette/templates/musette/base_musette.html:49
 #: musette/templates/musette/confirm_email.html:22
 #: musette/templates/musette/login.html:11
 #: musette/templates/musette/password_reset_complete.html:21
 msgid "Log in"
 msgstr "Iniciar sesión"
 
-#: musette/templates/musette/base_musette.html:49
+#: musette/templates/musette/base_musette.html:50
 #: musette/templates/musette/signup.html:12
 msgid "Sign up"
 msgstr "Regístrate"
 
-#: musette/templates/musette/base_musette.html:98
+#: musette/templates/musette/base_musette.html:62
 msgid "Your browser does not support JavaScript."
 msgstr "Tu navegador no soporta JavaScript."
 
-#: musette/templates/musette/base_musette.html:99
+#: musette/templates/musette/base_musette.html:63
 msgid "Some features may not work correctly."
 msgstr "Algunas funcionalidades pueden no funcionar correctamente."
 
@@ -475,10 +480,6 @@ msgstr "vistas"
 msgid "view"
 msgstr "vista"
 
-#: musette/templates/musette/forum_index.html:115
-msgid "Last activity"
-msgstr "Última actividad"
-
 #: musette/templates/musette/forum_index.html:127
 #: musette/templates/musette/index.html:23
 msgid "Created"
@@ -513,21 +514,20 @@ msgstr "¿Olvidó la contraseña?"
 
 #: musette/templates/musette/login.html:43
 msgid "Sign in"
-msgstr "Registrarse"
+msgstr "Ingresar"
 
 #: musette/templates/musette/new_topic.html:25
 msgid "Add"
 msgstr "Agregar"
 
-#: musette/templates/musette/notification.html:21
+#: musette/templates/musette/notification.html:38
+#: musette/templates/musette/topic_index.html:149
+msgid "Now"
+msgstr "Ahora"
+
 #: musette/templates/musette/notification.html:58
 msgid "All"
 msgstr "Todo"
-
-#: musette/templates/musette/notification.html:38
-#: musette/templates/musette/topic_index.html:148
-msgid "Now"
-msgstr "Ahora"
 
 #: musette/templates/musette/notification.html:61
 msgid "Logout"
@@ -623,7 +623,7 @@ msgid "Joined"
 msgstr "Registrado"
 
 #: musette/templates/musette/profile.html:20
-#: musette/templates/musette/topic.html:32
+#: musette/templates/musette/topic.html:42
 #: musette/templates/musette/topic_index.html:52
 #: musette/templates/musette/topic_index.html:163
 #: musette/templates/musette/users_forum.html:23
@@ -631,7 +631,7 @@ msgid "Last Seen"
 msgstr "Última conexión"
 
 #: musette/templates/musette/profile.html:24
-#: musette/templates/musette/topic.html:36
+#: musette/templates/musette/topic.html:46
 #: musette/templates/musette/topic_index.html:56
 #: musette/templates/musette/users_forum.html:28
 msgid "awhile ago"
@@ -657,26 +657,26 @@ msgstr ""
 msgid "Create my account"
 msgstr "Crear mi cuenta"
 
-#: musette/templates/musette/topic.html:43
+#: musette/templates/musette/topic.html:53
 #: musette/templates/musette/topic_index.html:102
 msgid "Edit"
 msgstr "Editar"
 
-#: musette/templates/musette/topic.html:46
+#: musette/templates/musette/topic.html:56
 msgid "Remove"
 msgstr "Eliminar"
 
-#: musette/templates/musette/topic.html:60
-#: musette/templates/musette/topic.html:73
+#: musette/templates/musette/topic.html:70
+#: musette/templates/musette/topic.html:83
 msgid "Edit comment"
 msgstr "Editar comentario"
 
-#: musette/templates/musette/topic.html:88
-#: musette/templates/musette/topic.html:96
+#: musette/templates/musette/topic.html:107
+#: musette/templates/musette/topic.html:115
 msgid "Remove comment"
 msgstr "Eliminar comentario"
 
-#: musette/templates/musette/topic.html:91
+#: musette/templates/musette/topic.html:110
 msgid "Do you want remove this comment?"
 msgstr "¿Desea eliminar el comentario?"
 
@@ -690,19 +690,19 @@ msgid "This topic has"
 msgstr "El tema tiene"
 
 #: musette/templates/musette/topic_index.html:104
-#: musette/templates/musette/topic_index.html:225
+#: musette/templates/musette/topic_index.html:219
 msgid "Delete"
 msgstr "Eliminar"
 
-#: musette/templates/musette/topic_index.html:110
+#: musette/templates/musette/topic_index.html:111
 msgid "Share"
 msgstr "Compartir"
 
-#: musette/templates/musette/topic_index.html:115
+#: musette/templates/musette/topic_index.html:116
 msgid "Close topic"
 msgstr "Cerrar tema"
 
-#: musette/templates/musette/topic_index.html:118
+#: musette/templates/musette/topic_index.html:119
 msgid "Open topic"
 msgstr "Abrir tema"
 
@@ -710,23 +710,23 @@ msgstr "Abrir tema"
 msgid "minutes"
 msgstr "minutos"
 
-#: musette/templates/musette/topic_index.html:198
+#: musette/templates/musette/topic_index.html:197
 msgid "New comment"
 msgstr "Nuevo comentario"
 
-#: musette/templates/musette/topic_index.html:217
+#: musette/templates/musette/topic_index.html:212
 msgid "Delete topic"
 msgstr "Eliminar tema"
 
-#: musette/templates/musette/topic_index.html:220
+#: musette/templates/musette/topic_index.html:215
 msgid "Do you want to remove the topic?"
 msgstr "¿Desea eliminar el tema?"
 
-#: musette/templates/musette/topic_index.html:241
+#: musette/templates/musette/topic_index.html:236
 msgid "Share topic"
 msgstr "Compartir tema"
 
-#: musette/templates/musette/topic_index.html:264
+#: musette/templates/musette/topic_index.html:259
 msgid "Suggested Topics"
 msgstr "Temas sugeridos"
 
@@ -772,8 +772,8 @@ msgstr "Archivos permitidos"
 msgid "The user is not active"
 msgstr "El usuario no está activo"
 
-#: musette/views.py:117 musette/views.py:440 musette/views.py:530
-#: musette/views.py:1020
+#: musette/views.py:117 musette/views.py:485 musette/views.py:580
+#: musette/views.py:1089
 msgid "Form invalid"
 msgstr "Formulario invalido"
 
@@ -781,46 +781,46 @@ msgstr "Formulario invalido"
 msgid "Please, check your email"
 msgstr "Por favor, revise su correo electrónico"
 
-#: musette/views.py:435
+#: musette/views.py:480
 #, python-format
 msgid "The topic '%(topic)s' was successfully created"
 msgstr "El tema '%(topic)s' se creó correctamente"
 
-#: musette/views.py:525
+#: musette/views.py:575
 #, python-format
 msgid "The topic '%(topic)s' was successfully edited"
 msgstr "El tema '%(topic)s' se editó correctamente"
 
-#: musette/views.py:555
+#: musette/views.py:614
 #, python-format
 msgid "The topic '%(topic)s' was successfully deleted"
 msgstr "El tema '%(topic)s' se eliminó correctamente"
 
-#: musette/views.py:658
+#: musette/views.py:756
 msgid "Added new comment"
 msgstr "Nuevo comentario añadido"
 
-#: musette/views.py:661
+#: musette/views.py:759
 msgid "Field required"
 msgstr "Campo requerido"
 
-#: musette/views.py:719
+#: musette/views.py:787
 msgid "Comment edited"
 msgstr "Comentario editado"
 
-#: musette/views.py:746
+#: musette/views.py:813
 msgid "Comment deleted"
 msgstr "Comentario eliminado"
 
-#: musette/views.py:808
+#: musette/views.py:877
 msgid "You have successfully registered"
 msgstr "Se ha registrado exitosamente"
 
-#: musette/views.py:832
+#: musette/views.py:901
 msgid "Registration was successfully canceled"
 msgstr "El registro se canceló correctamente"
 
-#: musette/views.py:1016
+#: musette/views.py:1085
 msgid "Your profile was successfully edited"
 msgstr "Su perfil se editó correctamente"
 

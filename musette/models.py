@@ -146,7 +146,7 @@ class MessageForum(models.Model):
         on_delete=models.CASCADE
     )
     message_information = models.TextField(
-        _('Message of information'), blank=False, null=False,
+        _('Message to inform'), blank=False, null=False,
         help_text=_('If you want to report a message to a forum')
     )
     message_expires_from = models.DateTimeField(
