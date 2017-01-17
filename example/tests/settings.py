@@ -23,6 +23,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '!4kd#=13u=eiz7zmu)a%$26$1xs*8+^#))30c)4fau7&*0n_0x'
 
+# AUTH_USER_MODEL = 'main.User'
+
 # Application definition
 INSTALLED_APPS = (
     'django.contrib.admin',
