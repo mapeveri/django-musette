@@ -47,6 +47,7 @@ Features
 25. Message for forums.
 26. Suggested Topics in topic.
 27. Close topic.
+28. Support to custom user model.
 
 **Note 1:** When a new record is added to the user model automatically added to your model profile.
 
