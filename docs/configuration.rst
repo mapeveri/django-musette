@@ -126,4 +126,5 @@ Quick start
 10. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
 
 NOTE: Before adding the superuser, make sure that the steps are executed correctly, so django-musette can create the super-user user profile automatically.
+
 NOTE2: For custom user model, add variable AUTH_USER_MODEL to settings.py
