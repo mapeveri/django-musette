@@ -17,6 +17,14 @@
                 </div>
                 
                 <div class="col-sm-11">
+                    {% if topic.is_close %} 
+                        <span style="color: red;">
+                            <i class="fa fa-times" aria-hidden="true"></i> 
+                            <strong>{% trans "This topic is close" %}</strong>
+                        </span>
+                        <br />
+                    {% endif %}
+                    
                     <a href="{% url 'topic' forum.name topic.slug topic.idtopic %}" data-toggle="tooltip" 
                         data-placement="bottom" title="{% trans 'Views' %}: {% get_tot_views topic.idtopic %}">
                     {{topic.title}}
