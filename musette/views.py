@@ -6,9 +6,8 @@ from itertools import chain
 from django.db.models import Q
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import login, logout
+from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.forms import PasswordResetForm, SetPasswordForm
-from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.auth.views import (
     password_reset, password_reset_complete,
@@ -147,6 +146,7 @@ class ConfirmEmailView(View):
             return render(request, "musette/confirm_email_expired.html", data)
 
         # Active user
+        User = get_user_model()
         user = get_object_or_404(User, username=username)
         user.is_active = True
         user.save()
@@ -163,6 +163,7 @@ class NewKeyActivationView(View):
         if request.user.is_authenticated():
             return redirect("forums")
 
+        User = get_user_model()
         user = get_object_or_404(User, username=username)
         email = user.email
 
@@ -393,6 +394,7 @@ class NewTopicView(FormView):
             obj = form.save(commit=False)
 
             now = timezone.now()
+            User = get_user_model()
             user = User.objects.get(id=request.user.id)
             forum = get_object_or_404(models.Forum, name=forum)
             title = conditional_escape(request.POST['title'])
@@ -670,6 +672,7 @@ class NewCommentView(View):
 
             # Save new comment
             now = timezone.now()
+            User = get_user_model()
             user = User.objects.get(id=request.user.id)
             topic = get_object_or_404(models.Topic, idtopic=idtopic)
             obj.date = now
@@ -971,6 +974,7 @@ class ProfileView(View):
         template_name = "musette/profile.html"
 
         # Get user param
+        User = get_user_model()
         user = get_object_or_404(User, username=username)
         iduser = user.id
 

@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from rest_framework import viewsets
@@ -12,6 +12,7 @@ from musette.api.permissions import ForumPermissions
 
 # ViewSets for user
 class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    User = get_user_model()
     queryset = User.objects.all()
     serializer_class = serializers.UserSerializer
     lookup_field = 'username'

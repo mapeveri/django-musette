@@ -1,7 +1,8 @@
 from django import forms
 from django.conf import settings
-from django.contrib.auth import authenticate, password_validation
-from django.contrib.auth.models import User
+from django.contrib.auth import (
+    authenticate, get_user_model, password_validation
+)
 from django.contrib.staticfiles import finders
 from django.forms.widgets import ClearableFileInput, CheckboxInput
 from django.utils import timezone
@@ -63,7 +64,7 @@ class FormSignUp(forms.ModelForm):
     pass_confirm = forms.CharField(max_length=128, widget=widget_pass)
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = [
             'username', 'email',
             'first_name', 'last_name',
@@ -109,6 +110,7 @@ class FormSignUp(forms.ModelForm):
         email = self.cleaned_data.get('email')
         username = self.cleaned_data.get('username')
 
+        User = get_user_model()
         count = User.objects.filter(
             email=email
         ).exclude(username=username).count()
@@ -127,6 +129,7 @@ class FormSignUp(forms.ModelForm):
         now = timezone.now()
 
         # Create user
+        User = get_user_model()
         us = User(
             username=username, email=email,
             first_name=first_name,

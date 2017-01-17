@@ -1,7 +1,7 @@
 import os
 
 from django.conf import settings
-from django.contrib.auth.models import User, Permission
+from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.sites.models import Site
@@ -58,7 +58,8 @@ class Forum(models.Model):
     position = models.IntegerField(_('Position'), blank=True, default=0)
     description = models.TextField(_('Description'), blank=True)
     moderators = models.ManyToManyField(
-        User, related_name='moderators', verbose_name=_('Moderators')
+        settings.AUTH_USER_MODEL, related_name='moderators',
+        verbose_name=_('Moderators')
     )
     date = models.DateTimeField(
         _('Date'), blank=True, null=True, auto_now_add=True, editable=False
@@ -187,7 +188,7 @@ class Topic(models.Model):
         on_delete=models.CASCADE
     )
     user = models.ForeignKey(
-        User, related_name='users', verbose_name=_('User'),
+        settings.AUTH_USER_MODEL, related_name='users', verbose_name=_('User'),
         on_delete=models.CASCADE
     )
     slug = models.SlugField(max_length=100)
@@ -303,8 +304,8 @@ class Comment(models.Model):
         on_delete=models.CASCADE
     )
     user = models.ForeignKey(
-        User, related_name='comment_users', verbose_name=_('User'),
-        on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, related_name='comment_users',
+        verbose_name=_('User'), on_delete=models.CASCADE
     )
     date = models.DateTimeField(
         _('Date'), blank=True, auto_now=True, db_index=True
@@ -355,8 +356,8 @@ class Register(models.Model):
         on_delete=models.CASCADE
     )
     user = models.ForeignKey(
-        User, related_name='register_users', verbose_name=_('User'),
-        on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, related_name='register_users',
+        verbose_name=_('User'), on_delete=models.CASCADE
     )
     date = models.DateTimeField(
         _('Date'), blank=True, auto_now=True, db_index=True
@@ -386,7 +387,8 @@ class AbstractProfile(models.Model):
 
     idprofile = models.AutoField(primary_key=True, unique=True)
     iduser = models.OneToOneField(
-        User, related_name="user", db_index=True, on_delete=models.CASCADE
+        settings.AUTH_USER_MODEL, related_name="user", db_index=True,
+        on_delete=models.CASCADE
     )
     photo = models.FileField(
         upload_to=generate_path_profile, null=True, blank=True,

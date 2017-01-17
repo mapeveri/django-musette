@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
 from musette.utils import get_main_model_profile, get_data_confirm_email
@@ -11,6 +11,7 @@ class Command(BaseCommand):
         # Get model profile
         Profile = get_main_model_profile()
         # Get users super-admin
+        User = get_user_model()
         users = User.objects.filter(is_superuser=True)
 
         # Create recrod profile

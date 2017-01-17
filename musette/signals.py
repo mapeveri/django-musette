@@ -1,6 +1,6 @@
 from django.db.models.signals import m2m_changed, pre_delete, post_save
 from django.conf import settings
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
 from django.dispatch import receiver
 
@@ -15,6 +15,7 @@ def post_save_user(sender, instance, **kwargs):
     if kwargs['created']:
         subclasses = models.AbstractProfile.__subclasses__()
         if len(subclasses) > 0:
+            User = get_user_model()
             user = User.objects.get(id=instance.id)
             Profile = subclasses[0]
 
@@ -51,6 +52,7 @@ def post_save_forum(sender, instance, **kwargs):
     elif kwargs['action'] == 'post_remove':
         ids_removed = kwargs['pk_set']
         for id in ids_removed:
+            User = get_user_model()
             old_moderator = User.objects.get(id=id)
             # Superuser not is necessary
             if not old_moderator.is_superuser:

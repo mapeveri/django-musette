@@ -1,5 +1,5 @@
 from django.db.models import Q
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
 from musette import models, utils
@@ -9,7 +9,7 @@ from musette import models, utils
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = User
+        model = get_user_model()
         fields = (
             'username', 'is_superuser', 'first_name', 'last_name',
             'email', 'is_staff', 'is_active', 'date_joined'
@@ -46,6 +46,7 @@ class TopicSerializer(serializers.ModelSerializer):
             )
 
             # Only my user
+            User = get_user_model()
             self.fields['user'].queryset = User.objects.filter(id=user.id)
 
     class Meta:
@@ -72,6 +73,7 @@ class RegisterSerializer(serializers.ModelSerializer):
             )
 
             # Only my user
+            User = get_user_model()
             self.fields['user'].queryset = User.objects.filter(id=user.id)
 
     class Meta:
@@ -87,6 +89,7 @@ class CommentSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         if not user.is_superuser:
             # Only my user
+            User = get_user_model()
             self.fields['user'].queryset = User.objects.filter(id=user.id)
 
     class Meta:

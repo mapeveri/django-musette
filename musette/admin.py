@@ -1,10 +1,9 @@
 from django.db import router
 from django.contrib import admin, messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
-from django.contrib.auth.models import User
 from django.contrib.admin import helpers
 from django.contrib.admin.utils import get_deleted_objects
-from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.template.response import TemplateResponse
 from django.utils.encoding import force_text
@@ -230,6 +229,7 @@ class CustomUserAdmin(UserAdmin):
         return super(CustomUserAdmin, self).get_inline_instances(request, obj)
 
 
+User = get_user_model()
 admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(models.Category)
