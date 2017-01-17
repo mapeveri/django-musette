@@ -230,7 +230,12 @@ class CustomUserAdmin(UserAdmin):
 
 
 User = get_user_model()
-admin.site.unregister(User)
+
+try:
+    admin.site.unregister(User)
+except Exception:
+    pass
+
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(models.Category)
 admin.site.register(models.Register)
