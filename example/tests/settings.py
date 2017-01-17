@@ -86,6 +86,7 @@ try:
 except ImportError:
     pass
 
+# For custom User model
 # AUTH_USER_MODEL = 'main.User'
 
 # Cache

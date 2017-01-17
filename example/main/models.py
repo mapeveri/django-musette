@@ -1,12 +1,11 @@
-import os
-
 from django.db import models
-# from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 
 from musette.models import AbstractProfile
 
 
+# For custom User model
 """class User(AbstractUser):
 
     middle_name = models.CharField(_('Middle Name'), max_length=40, default="")
