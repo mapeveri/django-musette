@@ -127,6 +127,6 @@ Quick start
 
 NOTE: Before adding the superuser, make sure that the steps are executed correctly, so django-musette can create the super-user user profile automatically.
 
-NOTE2: For `custom_user_model`_.
+NOTE2: For `custom user model`_.
 
-.. _custom user model: https://github.com/mapeveri/django-musette/blob/master/docs/internationalization.rst
+.. _custom user model: https://github.com/mapeveri/django-musette/blob/master/docs/custom-user-model.rst

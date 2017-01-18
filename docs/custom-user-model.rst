@@ -19,7 +19,7 @@ those fields. Example::
             blank=False, default='Y'
         )
 
-2. In admin.py, custom your model User::
+2. In admin.py, custom your model User (fieldsets)::
 
     from django.contrib.auth.admin import UserAdmin
     from django.utils.translation import ugettext_lazy as _
@@ -29,6 +29,7 @@ those fields. Example::
         'is_staff', 'middle_name'
     )
 
+    # Override fiels in form
     UserAdmin.fieldsets = (
             (None, {'fields': ('username', 'password')}),
             (_('Personal info'), {
