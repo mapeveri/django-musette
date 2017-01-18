@@ -29,18 +29,15 @@
         <li class="active">{{ forum }}</li>
     </ul>
 
-    {% if forums_childs|length > 0 %}
-        <span>Sub-{% trans "Forums" %}</span>
-    {% endif %}
-
-    {% for forum in forums_childs %}
-        <span class="label label-default"><a href="{% url 'forum' forum.name %}" style="color: white">{{ forum.name }}</a></span>
-    {% endfor %}
-
-    <hr />
-
-    <h1>{{ forum.name }}</h1>
+    <h4>{{ forum.name }}</h4>
     <small>{{forum.description|striptags}}</small>
+
+    {% if forums_childs|length > 0 %}
+        <br />
+        {% for forum in forums_childs %}
+            <span class="label label-default"><a href="{% url 'forum' forum.name %}" style="color: white">{{ forum.name }}</a></span>
+        {% endfor %}
+    {% endif %}
 
     <hr />
 
