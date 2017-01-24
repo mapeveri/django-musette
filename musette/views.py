@@ -108,10 +108,11 @@ class SignUpView(FormView):
         if not request.user.is_authenticated():
             if form.is_valid():
                 form.create_user()
-                msj = ""
-                msj += "Registration was successful. Please, check your email "
-                msj += "to validate the account."
-                messages.success(request, _(msj))
+                msj = _(
+                    "Registration was successful. Please, check your email "
+                    "to validate the account."
+                )
+                messages.success(request, msj)
                 return self.form_valid(form, **kwargs)
             else:
                 messages.error(request, _("Form invalid"))
@@ -347,6 +348,7 @@ class TopicView(View):
         condition = Q()
         for word in words:
             condition |= Q(title__icontains=word)
+
         suggest = models.Topic.objects.filter(condition).exclude(
             idtopic=topic.idtopic
         )[:10]
@@ -663,8 +665,9 @@ class NewCommentView(View):
         # Form new comment
         form = forms.FormAddComment(request.POST)
 
-        url = reverse_lazy('topic', kwargs={'forum': forum, 'slug': slug,
-                                       'idtopic': str(idtopic)})
+        url = reverse_lazy('topic', kwargs={
+            'forum': forum, 'slug': slug, 'idtopic': str(idtopic)
+        })
 
         if form.is_valid():
             obj = form.save(commit=False)
@@ -770,8 +773,9 @@ class EditCommentView(View):
         raise Http404()
 
     def post(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
-        url = reverse_lazy('topic', kwargs={'forum': forum, 'slug': slug,
-                                       'idtopic': str(idtopic)})
+        url = reverse_lazy('topic', kwargs={
+            'forum': forum, 'slug': slug, 'idtopic': str(idtopic)
+        })
 
         # Valid if has description
         description = request.POST.get('update_description')
@@ -798,8 +802,9 @@ class DeleteCommentView(View):
         raise Http404()
 
     def post(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
-        url = reverse_lazy('topic', kwargs={'forum': forum, 'slug': slug,
-                                       'idtopic': str(idtopic)})
+        url = reverse_lazy('topic', kwargs={
+            'forum': forum, 'slug': slug, 'idtopic': str(idtopic)
+        })
 
         # Delete comment and notification
         try:
@@ -1011,7 +1016,9 @@ class EditProfileView(FormView):
     form_class = forms.FormEditProfile
 
     def get_success_url(self):
-        return reverse_lazy('profile', kwargs={'username': self.kwargs['username']})
+        return reverse_lazy('profile', kwargs={
+            'username': self.kwargs['username']
+        })
 
     def get(self, request, username, *args, **kwargs):
 
