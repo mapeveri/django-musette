@@ -14,6 +14,7 @@ from django.contrib.auth.views import (
     password_reset_confirm
 )
 from django.contrib.contenttypes.models import ContentType
+from django.core.urlresolvers import reverse_lazy
 from django.http import Http404, HttpResponse, HttpResponseRedirect, QueryDict
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import defaultfilters
@@ -33,7 +34,7 @@ class LoginView(FormView):
     """
     template_name = "musette/login.html"
     form_class = forms.FormLogin
-    success_url = "/forums/"
+    success_url = reverse_lazy("forums")
 
     def get(self, request, *args, **kwargs):
         # Check if is logged, if is trur redirect to home
@@ -91,7 +92,7 @@ class SignUpView(FormView):
     """
     template_name = "musette/signup.html"
     form_class = forms.FormSignUp
-    success_url = '/join/'
+    success_url = reverse_lazy("signup")
 
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated():
@@ -371,7 +372,7 @@ class NewTopicView(FormView):
     form_class = forms.FormAddTopic
 
     def get_success_url(self):
-        return '/forum/' + self.kwargs['forum']
+        return reverse_lazy('forum', kwargs={'forum': self.kwargs['forum']})
 
     def get_context_data(self, **kwargs):
         context = super(NewTopicView, self).get_context_data(**kwargs)
@@ -496,7 +497,7 @@ class EditTopicView(FormView):
     form_class = forms.FormEditTopic
 
     def get_success_url(self):
-        return '/forum/' + self.kwargs['forum']
+        return reverse_lazy('forum', kwargs={'forum': self.kwargs['forum']})
 
     def get_context_data(self, **kwargs):
         context = super(EditTopicView, self).get_context_data(**kwargs)
@@ -662,10 +663,8 @@ class NewCommentView(View):
         # Form new comment
         form = forms.FormAddComment(request.POST)
 
-        param = ""
-        param = forum + "/" + slug
-        param = param + "/" + str(idtopic) + "/"
-        url = '/topic/' + param
+        url = reverse_lazy('topic', kwargs={'forum': forum, 'slug': slug,
+                                       'idtopic': str(idtopic)})
 
         if form.is_valid():
             obj = form.save(commit=False)
@@ -726,7 +725,7 @@ class NewCommentView(View):
                 site = settings.SITE_URL
 
             # Send email
-            form.send_mail_comment(site, url, lista_email)
+            form.send_mail_comment(site, str(url), lista_email)
 
             # Data necessary for realtime
             data = {
@@ -771,10 +770,8 @@ class EditCommentView(View):
         raise Http404()
 
     def post(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
-        param = ""
-        param = forum + "/" + slug
-        param = param + "/" + str(idtopic) + "/"
-        url = '/topic/' + param
+        url = reverse_lazy('topic', kwargs={'forum': forum, 'slug': slug,
+                                       'idtopic': str(idtopic)})
 
         # Valid if has description
         description = request.POST.get('update_description')
@@ -801,10 +798,8 @@ class DeleteCommentView(View):
         raise Http404()
 
     def post(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
-        param = ""
-        param = forum + "/" + slug
-        param = param + "/" + str(idtopic) + "/"
-        url = '/topic/' + param
+        url = reverse_lazy('topic', kwargs={'forum': forum, 'slug': slug,
+                                       'idtopic': str(idtopic)})
 
         # Delete comment and notification
         try:
@@ -863,7 +858,7 @@ class AddRegisterView(View):
         raise Http404()
 
     def post(self, request, forum, *args, **kwargs):
-        url = '/forum/' + forum + "/"
+        url = reverse_lazy('forum', kwargs={'forum': forum})
 
         # Get data
         forum = get_object_or_404(models.Forum, name=forum, hidden=False)
@@ -889,7 +884,7 @@ class UnregisterView(View):
         raise Http404()
 
     def post(self, request, forum, *args, **kwargs):
-        url = '/forum/' + forum + "/"
+        url = reverse_lazy('forum', kwargs={'forum': forum})
 
         # Get data
         forum = get_object_or_404(models.Forum, name=forum, hidden=False)
@@ -1016,7 +1011,7 @@ class EditProfileView(FormView):
     form_class = forms.FormEditProfile
 
     def get_success_url(self):
-        return '/profile/' + self.kwargs['username']
+        return reverse_lazy('profile', kwargs={'username': self.kwargs['username']})
 
     def get(self, request, username, *args, **kwargs):
 
