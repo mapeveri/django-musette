@@ -54,7 +54,7 @@ class Forum(models.Model):
         'self', related_name='parents', verbose_name=_('Parent forum'),
         blank=True, null=True, on_delete=models.CASCADE
     )
-    name = models.CharField(_('Name'), max_length=80, unique=True)
+    name = models.CharField(_('Name'), max_length=80)
     position = models.IntegerField(_('Position'), blank=True, default=0)
     description = models.TextField(_('Description'), blank=True)
     moderators = models.ManyToManyField(
@@ -77,6 +77,7 @@ class Forum(models.Model):
     )
 
     class Meta(object):
+        unique_together = ('category', 'name', )
         ordering = ['category', 'position', 'name']
         verbose_name = _('Forum')
         verbose_name_plural = _('Forums')
