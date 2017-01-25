@@ -39,6 +39,11 @@ Roadmap Django-Musette
 2. [X] Issue #66 Command for create profile record for super-user
 3. [X] Issue #64 Default MCE config is overly complex
 4. [X] Issue #67 Support to custom user model
-5. [ ] Issue #40 Notifications and comments NoSQL
-6. [ ] Issue #17 Add message private between users
-7. [ ] If errors are found in the previous version. They will be arranged
+5. [X] If errors are found in the previous version. They will be arranged
+
+**For version (0.2.6) complete the next issues:**
+
+1. [X] Issue #68 Same forum name with two different categories
+2. [ ] Issue #40 Notifications and comments NoSQL
+3. [ ] Issue #17 Add message private between users
+4. [ ] If errors are found in the previous version. They will be arranged
