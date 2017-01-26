@@ -42,8 +42,9 @@ class TopicViewSet(viewsets.ModelViewSet):
         if is_my_user or request.user.is_superuser:
             forum_id = request.data['forum']
             forum = get_object_or_404(models.Forum, pk=forum_id)
+            category = forum.category.name
             # If has permissions
-            if utils.user_can_create_topic(forum, request.user):
+            if utils.user_can_create_topic(category, forum, request.user):
                 return super(TopicViewSet, self).create(request, **kwargs)
             else:
                 raise PermissionDenied({

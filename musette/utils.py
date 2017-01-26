@@ -5,7 +5,6 @@ import random
 import shutil
 
 from django.conf import settings
-from django.core.paginator import Paginator
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -72,10 +71,16 @@ def remove_folder_attachment(idtopic):
     """
     # Subtract one topic
     topic = get_object_or_404(Topic, idtopic=idtopic)
-    forum = get_object_or_404(Forum, name=topic.forum, hidden=False)
+    forum = get_object_or_404(
+        Forum, category__name=topic.forum.category.name,
+        name=topic.forum, hidden=False
+    )
     tot = forum.topics_count
     tot = tot - 1
-    Forum.objects.filter(name=topic.forum, hidden=False).update(
+    Forum.objects.filter(
+        category__name=topic.forum.category.name,
+        name=topic.forum, hidden=False
+    ).update(
         topics_count=tot
     )
 
@@ -186,37 +191,6 @@ def basename(value):
     return os.path.basename(value)
 
 
-def helper_paginator(self, request, model, tot_record, nonRecPag):
-    """
-    This function is responsible of Pagination
-    """
-    result_list = Paginator(model, tot_record)
-    try:
-        page = int(request.GET.get('page'))
-    except:
-        page = 1
-
-    if page <= 0:
-        page = 1
-
-    if(page > result_list.num_pages):
-        page = result_list.num_pages
-
-    if (result_list.num_pages >= page):
-        pagina = result_list.page(page)
-        Contexto = {
-            nonRecPag: pagina.object_list,
-            'page': page,
-            'pages': result_list.num_pages,
-            'has_next': pagina.has_next(),
-            'has_prev': pagina.has_previous(),
-            'next_page': page + 1,
-            'prev_page': page - 1,
-            'firstPage': 1,
-        }
-        return Contexto
-
-
 def get_route_file(file_path, file_name):
     """
     This method build the path for a file MEDIA
@@ -283,22 +257,22 @@ def get_data_confirm_email(email):
     }
 
 
-def is_user_moderator_forum(forum, user):
+def is_user_moderator_forum(category, forum, user):
     """
     Check if user is moderator forum
     """
-    forum = get_object_or_404(Forum, name=forum)
+    forum = get_object_or_404(Forum, category__name=category, name=forum)
     if user in forum.moderators.all():
         return True
     else:
         return False
 
 
-def user_can_create_topic(forum, user):
+def user_can_create_topic(category, forum, user):
     """
     Check if user can create topic
     """
-    is_moderator = is_user_moderator_forum(forum, user)
+    is_moderator = is_user_moderator_forum(category, forum, user)
     is_register = Register.objects.filter(forum=forum, user=user).count()
     # If is superuser or moderator or is register in the forum
     if user.is_superuser or is_moderator or is_register > 0:

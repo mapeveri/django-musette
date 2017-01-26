@@ -15,7 +15,7 @@
 	<div class="mainbox col-md-10 col-sm-6 col-sm-offset-1">
 		<ul class="breadcrumb">
           	<li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
-          	<li><a href="{% url 'forum' forum %}">{{forum}}</a></li>
+          	<li><a href="{% url 'forum' category forum %}">{{forum}}</a></li>
           	<li class="active">{% trans "Edit topic" %}</li>
       	</ul>
 

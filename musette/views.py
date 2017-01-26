@@ -264,13 +264,15 @@ class ForumView(View):
     """
     This view display one forum registered
     """
-    def get(self, request, forum, *args, **kwargs):
+    def get(self, request, category, forum, *args, **kwargs):
 
         template_name = "musette/forum_index.html"
         page_template = "musette/forum.html"
 
         # Get topics forum
-        forum = get_object_or_404(models.Forum, name=forum, hidden=False)
+        forum = get_object_or_404(
+            models.Forum, category__name=category, name=forum, hidden=False
+        )
         topics = models.Topic.objects.filter(
             forum_id=forum.idforum
         ).order_by("-is_top", "-last_activity", "-date")
@@ -325,13 +327,15 @@ class TopicView(View):
     """
     This view display one Topic of forum
     """
-    def get(self, request, forum, slug, idtopic, *args, **kwargs):
+    def get(self, request, category, forum, slug, idtopic, *args, **kwargs):
 
         template_name = "musette/topic_index.html"
         page_template = "musette/topic.html"
 
         # Get topic
-        forum = get_object_or_404(models.Forum, name=forum, hidden=False)
+        forum = get_object_or_404(
+            models.Forum, category__name=category, name=forum, hidden=False
+        )
         topic = get_object_or_404(models.Topic, idtopic=idtopic, slug=slug)
 
         # Form for comments
@@ -374,22 +378,29 @@ class NewTopicView(FormView):
     form_class = forms.FormAddTopic
 
     def get_success_url(self):
-        return reverse_lazy('forum', kwargs={'forum': self.kwargs['forum']})
+        return reverse_lazy(
+            'forum', kwargs={
+                'category': self.kwargs['category'],
+                'forum': self.kwargs['forum']
+            }
+        )
 
     def get_context_data(self, **kwargs):
         context = super(NewTopicView, self).get_context_data(**kwargs)
         context['forum'] = self.kwargs['forum']
+        context['category'] = self.kwargs['category']
         return context
 
-    def get(self, request, forum, *args, **kwargs):
+    def get(self, request, category, forum, *args, **kwargs):
 
         data = {
             'form': self.form_class,
             'forum': forum,
+            'category': category,
         }
         return render(request, self.template_name, data)
 
-    def post(self, request, forum, *args, **kwargs):
+    def post(self, request, category, forum, *args, **kwargs):
         # Form new topic
         form = forms.FormAddTopic(request.POST, request.FILES)
 
@@ -399,7 +410,10 @@ class NewTopicView(FormView):
             now = timezone.now()
             User = get_user_model()
             user = User.objects.get(id=request.user.id)
-            forum = get_object_or_404(models.Forum, name=forum)
+            # Get forum
+            forum = get_object_or_404(
+                models.Forum, category__name=category, name=forum
+            )
             title = conditional_escape(request.POST['title'])
 
             obj.date = now
@@ -470,6 +484,7 @@ class NewTopicView(FormView):
                 "settings_static": settings.STATIC_URL,
                 "username": username,
                 "forum": forum.name,
+                "category": forum.category.name,
                 "list_us": list_us,
                 "photo": photo
             }
@@ -499,14 +514,20 @@ class EditTopicView(FormView):
     form_class = forms.FormEditTopic
 
     def get_success_url(self):
-        return reverse_lazy('forum', kwargs={'forum': self.kwargs['forum']})
+        return reverse_lazy(
+            'forum', kwargs={
+                'category': self.kwargs['category'],
+                'forum': self.kwargs['forum']
+            }
+        )
 
     def get_context_data(self, **kwargs):
         context = super(EditTopicView, self).get_context_data(**kwargs)
         context['forum'] = self.kwargs['forum']
+        context['category'] = self.kwargs['category']
         return context
 
-    def get(self, request, forum, idtopic, *args, **kwargs):
+    def get(self, request, category, forum, idtopic, *args, **kwargs):
         # Get topic
         topic = get_object_or_404(
             models.Topic, idtopic=idtopic, user_id=request.user.id
@@ -519,11 +540,12 @@ class EditTopicView(FormView):
             'form': form,
             'forum': forum,
             'topic': topic,
+            'category': category,
         }
 
         return render(request, self.template_name, data)
 
-    def post(self, request, forum, idtopic, *args, **kwargs):
+    def post(self, request, category, forum, idtopic, *args, **kwargs):
         # Get topic
         topic = get_object_or_404(
             models.Topic, idtopic=idtopic, user_id=request.user.id
@@ -549,7 +571,7 @@ class EditTopicView(FormView):
                 route_file = utils.get_route_file(file_path, file_name.name)
 
                 try:
-                    remove_file(route_file)
+                    utils.remove_file(route_file)
                 except Exception:
                     pass
 
@@ -568,7 +590,7 @@ class EditTopicView(FormView):
 
                 try:
                     # If a previous file exists it removed
-                    remove_file(route_file)
+                    utils.remove_file(route_file)
                 except Exception:
                     pass
 
@@ -658,15 +680,16 @@ class NewCommentView(View):
     """
     This view allowed add new comment to topic
     """
-    def get(self, request, forum, slug, idtopic, *args, **kwargs):
+    def get(self, request, category, forum, slug, idtopic, *args, **kwargs):
         raise Http404()
 
-    def post(self, request, forum, slug, idtopic, *args, **kwargs):
+    def post(self, request, category, forum, slug, idtopic, *args, **kwargs):
         # Form new comment
         form = forms.FormAddComment(request.POST)
 
         url = reverse_lazy('topic', kwargs={
-            'forum': forum, 'slug': slug, 'idtopic': str(idtopic)
+            'category': category, 'forum': forum,
+            'slug': slug, 'idtopic': str(idtopic)
         })
 
         if form.is_valid():
@@ -738,6 +761,7 @@ class NewCommentView(View):
                 "settings_static": settings.STATIC_URL,
                 "username": username,
                 "forum": forum,
+                "category": comment.topic.forum.category.name,
                 "photo": photo
             }
 
@@ -769,12 +793,16 @@ class EditCommentView(View):
     """
     This view allowed edit comment to topic
     """
-    def get(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
+    def get(self, request, category, forum, slug, idtopic, idcomment,
+            *args, **kwargs):
         raise Http404()
 
-    def post(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
+    def post(self, request, category, forum, slug, idtopic, idcomment,
+             *args, **kwargs):
+
         url = reverse_lazy('topic', kwargs={
-            'forum': forum, 'slug': slug, 'idtopic': str(idtopic)
+            'category': category, 'forum': forum,
+            'slug': slug, 'idtopic': str(idtopic)
         })
 
         # Valid if has description
@@ -798,12 +826,16 @@ class DeleteCommentView(View):
     """
     This view allowed remove comment to topic
     """
-    def get(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
+    def get(self, request, category, forum, slug, idtopic, idcomment,
+            *args, **kwargs):
         raise Http404()
 
-    def post(self, request, forum, slug, idtopic, idcomment, *args, **kwargs):
+    def post(self, request, category, forum, slug, idtopic, idcomment,
+             *args, **kwargs):
+
         url = reverse_lazy('topic', kwargs={
-            'forum': forum, 'slug': slug, 'idtopic': str(idtopic)
+            'category': category, 'forum': forum,
+            'slug': slug, 'idtopic': str(idtopic)
         })
 
         # Delete comment and notification
@@ -859,14 +891,18 @@ class AddRegisterView(View):
     """
     This view add register to forum
     """
-    def get(self, request, forum, *args, **kwargs):
+    def get(self, request, category, forum, *args, **kwargs):
         raise Http404()
 
-    def post(self, request, forum, *args, **kwargs):
-        url = reverse_lazy('forum', kwargs={'forum': forum})
+    def post(self, request, category, forum, *args, **kwargs):
+        url = reverse_lazy(
+            'forum', kwargs={'category': category, 'forum': forum}
+        )
 
         # Get data
-        forum = get_object_or_404(models.Forum, name=forum, hidden=False)
+        forum = get_object_or_404(
+            models.Forum, category__name=category, name=forum, hidden=False
+        )
         idforum = forum.idforum
         iduser = request.user.id
         date = timezone.now()
@@ -885,14 +921,18 @@ class UnregisterView(View):
     """
     This view remove register to forum
     """
-    def get(self, request, forum, *args, **kwargs):
+    def get(self, request, category, forum, *args, **kwargs):
         raise Http404()
 
-    def post(self, request, forum, *args, **kwargs):
-        url = reverse_lazy('forum', kwargs={'forum': forum})
+    def post(self, request, category, forum, *args, **kwargs):
+        url = reverse_lazy(
+            'forum', kwargs={'category': category, 'forum': forum}
+        )
 
         # Get data
-        forum = get_object_or_404(models.Forum, name=forum, hidden=False)
+        forum = get_object_or_404(
+            models.Forum, category__name=category, name=forum, hidden=False
+        )
         idforum = forum.idforum
         iduser = request.user.id
 
@@ -909,13 +949,15 @@ class UsersForumView(View):
     """
     This view display users register in forum
     """
-    def get(self, request, forum, *args, **kwargs):
+    def get(self, request, category, forum, *args, **kwargs):
 
         template_name = "musette/users_forum_index.html"
         page_template = "musette/users_forum.html"
 
         # Get register users
-        forum = get_object_or_404(models.Forum, name=forum, hidden=False)
+        forum = get_object_or_404(
+            models.Forum, category__name=category, name=forum, hidden=False
+        )
         moderators = forum.moderators.all()
         # Get registers, exclude moderators
         registers = forum.register_forums.filter(~Q(user__in=moderators))
@@ -940,7 +982,7 @@ class TopicSearch(View):
     """
     This view django, display results of search of topics
     """
-    def get(self, request, forum, *args, **kwargs):
+    def get(self, request, category, forum, *args, **kwargs):
         template_name = "musette/topic_search_index.html"
         page_template = "musette/topic_search.html"
 
@@ -948,7 +990,9 @@ class TopicSearch(View):
         search = request.GET.get('q')
 
         # Get id forum
-        forum = get_object_or_404(models.Forum, name=forum)
+        forum = get_object_or_404(
+            models.Forum, category__name=category, name=forum
+        )
         idforum = forum.idforum
 
         # Search topics

@@ -14,11 +14,18 @@ class ForumPermissions(permissions.BasePermission):
             # Get is moderator forum
             if hasattr(obj, 'forum'):
                 forum = obj.forum
+                category = obj.forum.category.name
             elif hasattr(obj, 'topic'):
                 forum = obj.topic.forum
+                category = obj.topic.forum.category.name
             else:
                 forum = None
-            is_moderator = utils.is_user_moderator_forum(forum, request.user)
+                category = None
+
+            # Get if is moderator
+            is_moderator = utils.is_user_moderator_forum(
+                category, forum, request.user
+            )
 
             # Only allow if is superuser or moderator or creted topic
             return (

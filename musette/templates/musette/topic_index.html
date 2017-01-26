@@ -23,7 +23,7 @@
         <div>
           <ul class="breadcrumb">
               <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
-              <li><a href="{% url 'forum' topic.forum.name %}">{{topic.forum.name}}</a></li>
+              <li><a href="{% url 'forum' topic.forum.category topic.forum.name %}">{{topic.forum.name}}</a></li>
               <li class="active">{{ topic.title }}</li>
           </ul>
         </div>
@@ -88,7 +88,7 @@
                     <hr>
                   </div>
                   <div class="pull-left">
-                    <p> <i class="fa fa-comments" aria-hidden="true"></i> {{ topic.idtopic|get_tot_comments }} </p>
+                    <p> <i class="fa fa-comments" aria-hidden="true"></i> <span id="total_comments_topic"> {{ topic.idtopic|get_tot_comments }} </span></p>
                     {% if total_hits|add:"0" > 1 %}
                       <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "views" %}</p>
                     {% else %}
@@ -98,7 +98,7 @@
 
                     {% if topic.user.id == user.id %}
                       <br>
-                      <button onclick="document.location ='{% url 'edittopic' topic.forum.name topic.idtopic %}'" class="btn btn-inverse btn-xs" style="min-width: 8em">
+                      <button onclick="document.location ='{% url 'edittopic' topic.forum.category topic.forum.name topic.idtopic %}'" class="btn btn-inverse btn-xs" style="min-width: 8em">
                         <i class="fa fa-hand-o-up"></i> {% trans "Edit" %}</button>
                       <a style="cursor: pointer; min-width: 8em; margin-top: 0em" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs">
                         <i class="fa fa-trash"></i> {% trans "Delete" %}</a>
@@ -177,7 +177,7 @@
   {% if user.id != None and not topic.is_close %}
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-          <form action="{% url 'newcomment' topic.forum.name topic.slug topic.idtopic %}" name="formComment" method="POST" class="well">{% csrf_token%}
+          <form action="{% url 'newcomment' topic.forum.category topic.forum.name topic.slug topic.idtopic %}" name="formComment" method="POST" class="well">{% csrf_token%}
             <center>
             {% for field in form_comment %}
               {% if field.name == "description" %}
@@ -214,7 +214,7 @@
             {% trans "Do you want to remove the topic?" %}
           </div>
           <div class="modal-footer">
-              <button type="button" class="btn btn-danger" v-on:click="delete_topic('{{topic.forum.name}}', {{topic.idtopic}})">
+              <button type="button" class="btn btn-danger" v-on:click="delete_topic('{{topic.forum.category.name}}', '{{topic.forum.name}}', {{topic.idtopic}})">
                   <i class="fa fa-trash"></i> {% trans "Delete" %}
               </button>
           </div>
@@ -274,8 +274,8 @@
                 <tbody>
                   {% for topic in suggest %}
                     <tr>
-                      <td> <a href="{% url 'topic' topic.forum topic.slug topic.pk %}"> {{ topic.title }} </a> </td>
-                      <td> <a href="{% url 'forum' topic.forum  %}">{{topic.forum.name }} </a></td>
+                      <td> <a href="{% url 'topic' topic.forum.category topic.forum topic.slug topic.pk %}"> {{ topic.title }} </a> </td>
+                      <td> <a href="{% url 'forum' topic.forum.category topic.forum  %}">{{topic.forum.name }} </a></td>
                       <td> {{topic.date.date }} </td>
                       <td> {{ topic.idtopic|get_tot_comments }} </td>
                       <td> {{topic.user|get_path_profile|safe}} </td>

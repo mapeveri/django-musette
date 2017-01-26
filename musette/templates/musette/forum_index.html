@@ -24,7 +24,7 @@
     <ul class="breadcrumb">
         <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
         {% if forum.parent %}
-            <li><a href="{% url 'forum' forum.parent %}">{{ forum.parent }}</a></li>
+            <li><a href="{% url 'forum' forum.category forum.parent %}">{{ forum.parent }}</a></li>
         {% endif %}
         <li class="active">{{ forum }}</li>
     </ul>
@@ -35,7 +35,7 @@
     {% if forums_childs|length > 0 %}
         <br />
         {% for forum in forums_childs %}
-            <span class="label label-default"><a href="{% url 'forum' forum.name %}" style="color: white">{{ forum.name }}</a></span>
+            <span class="label label-default"><a href="{% url 'forum' forum.category forum.name %}" style="color: white">{{ forum.name }}</a></span>
         {% endfor %}
     {% endif %}
 
@@ -59,18 +59,18 @@
         <div class="pull-left">
             {% if register or user.is_superuser or user in forum.moderators.all %}
                 <div class="col-md-5 text-left">
-                    <button onclick="window.location = '{% url 'newtopic' forum.name %}'" class="btn btn-inverse btn-sm"><i class="fa fa-plus"></i> {% trans "New topic" %}</button>
+                    <button onclick="window.location = '{% url 'newtopic' forum.category forum.name %}'" class="btn btn-inverse btn-sm"><i class="fa fa-plus"></i> {% trans "New topic" %}</button>
                 </div>
                 {% if not user.is_superuser and not user in forum.moderators.all %}
                 <div class="col-md-4 text-right">
-                    <form method="POST" action="{% url 'unregister' forum %}">
+                    <form method="POST" action="{% url 'unregister' forum.category forum %}">
                         {% csrf_token %}
                         <button type="submit" class="btn btn-inverse btn-sm"><i class="fa fa-hand-o-up"></i> {% trans "Unregister" %}</button>
                     </form>
                 </div>
                 {% endif %}
             {% else %}
-                <form method="POST" action="{% url 'new_register' forum %}" class="col-md-5 text-left">
+                <form method="POST" action="{% url 'new_register' forum.category forum %}" class="col-md-5 text-left">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-inverse btn-sm"><i class="fa fa-hand-o-up"></i> {% trans "Join to forum" %}</button>
                 </form>
@@ -81,11 +81,11 @@
                 <div class="inner-addon right-addon">
                     <i class="fa fa-search"></i>
                     <input type="text" class="form-control" v-model="search_text" placeholder="{% trans 'Find Topics' %}" 
-                        v-on:keyup.enter="search('{{forum.name}}')" />
+                        v-on:keyup.enter="search('{{forum.category.name}}','{{forum.name}}')" />
                 </div>
             </div>
             <div class="col-md-2">
-                <a href="{% url 'rss' forum %}"><img src="{% static 'musette/img/feed.png' %}" />
+                <a href="{% url 'rss' forum.category forum %}"><img src="{% static 'musette/img/feed.png' %}" />
                     <small>Rss</small>
                 </a>
             </div>
@@ -130,7 +130,7 @@
                 {% endif %}
             </div>
             <div class="pull-right">
-                <a href="{% url 'users_forum' forum %}"> <i class="fa fa-user"></i> {% trans "Forum members" %}</a>
+                <a href="{% url 'users_forum' forum.category forum %}"> <i class="fa fa-user"></i> {% trans "Forum members" %}</a>
             </div>
 
           </div>

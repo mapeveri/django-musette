@@ -29,12 +29,12 @@
                         <tr>
                             <td class="forum-name" title="No unread posts">
                                 <span class="pull-left forum-icon" style="margin-right: 5px">
-                                    <a href="{% url 'forum' forum.name %}" class="btn btn-lg btn-default tooltip-link">
+                                    <a href="{% url 'forum' forum.category forum.name %}" class="btn btn-lg btn-default tooltip-link">
                                         <i class="fa fa-tasks"></i>
                                     </a>
                                 </span>
                                
-                                <a href="{% url 'forum' forum.name %}" class="forumtitle"> {{ forum.name }}</a><br>
+                                <a href="{% url 'forum' forum.category forum.name %}" class="forumtitle"> {{ forum.name }}</a><br>
                                 <small>{{ forum.description|safe }}</small>
                             </td>
 

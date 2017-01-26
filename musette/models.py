@@ -253,15 +253,17 @@ class Topic(models.Model):
 
         if not self.idtopic:
             self.slug = defaultfilters.slugify(self.title)
-            self.update_forum_topics(self.forum, "sum")
+            self.update_forum_topics(
+                self.forum.category.name, self.forum, "sum"
+            )
 
         self.moderate = self.check_topic_moderate()
         self.generate_id_attachment(self.id_attachment)
         super(Topic, self).save(*args, **kwargs)
 
-    def update_forum_topics(self, forum, action):
+    def update_forum_topics(self, category, forum, action):
 
-        f = Forum.objects.get(name=forum)
+        f = Forum.objects.get(category__name=category, name=forum)
         tot_topics = f.topics_count
         if action == "sum":
             tot_topics = tot_topics + 1

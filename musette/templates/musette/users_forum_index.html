@@ -9,11 +9,11 @@
 <div class="container">
     <ul class="breadcrumb">
         <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
-        <li><a href="{% url 'forum' forum %}">{{ forum }}</a></li>
+        <li><a href="{% url 'forum' forum.category forum %}">{{ forum }}</a></li>
         <li class="active">{% trans "Forum members" %}</li>
     </ul>
 
-    <h4>{% trans "Forum members" %}: <a href="{% url 'forum' forum %}">{{forum}}</a></h4>
+    <h4>{% trans "Forum members" %}: <a href="{% url 'forum' forum.category forum %}">{{forum}}</a></h4>
 
     <div class="panel panel-default">
         <div class="panel-heading">

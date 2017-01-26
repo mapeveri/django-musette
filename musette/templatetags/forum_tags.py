@@ -1,5 +1,6 @@
 from django import template
 from django.contrib.contenttypes.models import ContentType
+from django.core.urlresolvers import reverse_lazy
 from django.utils import formats, timezone
 
 from hitcount.models import HitCount
@@ -62,7 +63,8 @@ def get_path_profile(user):
     Return tag a with profile
     """
     username = getattr(user, "username")
-    tag = "<a href='/profile/" + username + "'>" + username + " </a>"
+    url = str(reverse_lazy("profile", kwargs={'username': username}))
+    tag = "<a href='" + url + "'>" + username + " </a>"
 
     return tag
 
@@ -79,24 +81,27 @@ def get_tot_users_comments(topic):
     data = ""
     lista = []
     for user in users:
-        usuario = user.user.username
-        if not (usuario in lista):
-            lista.append(usuario)
+        username = user.user.username
+        url = str(reverse_lazy("profile", kwargs={'username': username}))
+
+        if not (username in lista):
+            lista.append(username)
 
             photo = get_photo(user.user.id)
 
             tooltip = "data-toggle='tooltip' data-placement='bottom' "
-            tooltip += "title='" + usuario + "'"
-            data += "<a href='/profile/" + usuario + "' " + tooltip + ">"
+            tooltip += "title='" + username + "'"
+            data += "<a href='" + url + "' " + tooltip + ">"
             data += "<img class='img-circle' src='" + str(photo) + "' "
             data += "width=30, height=30></a>"
 
     if len(users) == 0:
-        usuario = topic.user.username
+        username = topic.user.username
+        url = str(reverse_lazy("profile", kwargs={'username': username}))
         iduser = topic.user.id
 
         photo = get_photo(iduser)
-        data += "<a href='/profile/" + usuario + "'>"
+        data += "<a href='" + url + "'>"
         data += "<img class='img-circle' src='" + str(photo) + "' "
         data += "width=30, height=30></a>"
 
@@ -133,6 +138,7 @@ def get_item_notification(notification):
         if is_comment:
             comment = Comment.objects.get(idcomment=idobject)
             forum = comment.topic.forum.name
+            category = comment.topic.forum.category.name
             slug = comment.topic.slug
             idtopic = comment.topic.idtopic
             username = comment.user.username
@@ -142,19 +148,23 @@ def get_item_notification(notification):
             # Is topic notification
             topic = Topic.objects.get(idtopic=idobject)
             forum = topic.forum.name
+            category = topic.forum.category.name
             slug = topic.slug
             idtopic = topic.idtopic
             username = topic.user.username
             title = topic.title
             userid = topic.user.id
 
-        url_topic = "/topic/" + forum + "/" + slug + "/" + str(idtopic) + "/"
+        url_topic = str(reverse_lazy("topic", kwargs={
+            'category': category, 'forum': forum,
+            'slug': slug, 'idtopic': idtopic
+        }))
         title = "<h5><a href='" + url_topic + "'><u>" + title + "</u></a></h5>"
 
         # Data profile
         photo = get_photo_profile(userid)
         date = get_datetime_topic(notification.date)
-        url_profile = "/profile/" + username
+        url_profile = str(reverse_lazy("profile", kwargs={'username': username}))
 
         # Notificacion
         html += '<a class="content" href="' + url_topic + '">'

@@ -34,17 +34,18 @@ urlpatterns = [
         name='password_reset_complete'),
 
     url(r'^forums/$', views.ForumsView.as_view(), name='forums'),
-    url(r'^forum/(?P<forum>.+)/$', views.ForumView.as_view(), name='forum'),
+    url(r'^forum/(?P<category>.+)/(?P<forum>.+)/$', views.ForumView.as_view(),
+        name='forum'),
     url(
-        r'^topic/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/$',
+        r'^topic/(?P<category>.+)/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/$',
         views.TopicView.as_view(), name='topic'
     ),
     url(
-        r'^newtopic/(?P<forum>.+)/$',
+        r'^newtopic/(?P<category>.+)/(?P<forum>.+)/$',
         login_required(views.NewTopicView.as_view()), name='newtopic'
     ),
     url(
-        r'^edit_topic/(?P<forum>.+)/(?P<idtopic>\d+)/$',
+        r'^edit_topic/(?P<category>.+)/(?P<forum>.+)/(?P<idtopic>\d+)/$',
         login_required(views.EditTopicView.as_view()), name='edittopic'
     ),
     url(
@@ -56,15 +57,15 @@ urlpatterns = [
         name="open_close_topic"
     ),
     url(
-        r'^newcomment/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/$',
+        r'^newcomment/(?P<category>.+)/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/$',
         login_required(views.NewCommentView.as_view()), name='newcomment'
     ),
     url(
-        r'^updatecomment/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/(?P<idcomment>\d+)/$',
+        r'^updatecomment/(?P<category>.+)/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/(?P<idcomment>\d+)/$',
         login_required(views.EditCommentView.as_view()), name='updatecomment'
     ),
     url(
-        r'^removecomment/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/(?P<idcomment>\d+)/$',
+        r'^removecomment/(?P<category>.+)/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/(?P<idcomment>\d+)/$',
         login_required(views.DeleteCommentView.as_view()), name='removecomment'
     ),
     url(
@@ -77,22 +78,22 @@ urlpatterns = [
         login_required(views.SetNotifications), name='forum_set_notifications'
     ),
     url(
-        r'^new_register/(?P<forum>.+)/$', login_required(
+        r'^new_register/(?P<category>.+)/(?P<forum>.+)/$', login_required(
             views.AddRegisterView.as_view()), name='new_register'
     ),
     url(
-        r'^unregister/(?P<forum>.+)/$', login_required(
+        r'^unregister/(?P<category>.+)/(?P<forum>.+)/$', login_required(
             views.UnregisterView.as_view()), name='unregister'
     ),
     url(
-        r'^users_forum/(?P<forum>.+)/$',
+        r'^users_forum/(?P<category>.+)/(?P<forum>.+)/$',
         views.UsersForumView.as_view(), name='users_forum'
     ),
     url(
-        r'^search_topic/(?P<forum>.+)/$', views.TopicSearch.as_view(),
+        r'^search_topic/(?P<category>.+)/(?P<forum>.+)/$', views.TopicSearch.as_view(),
         name='search_topic'
     ),
-    url(r'^feed/(?P<forum>.+)/$', TopicFeed(), name='rss'),
+    url(r'^feed/(?P<category>.+)/(?P<forum>.+)/$', TopicFeed(), name='rss'),
     url(
         r'^profile/(?P<username>.+)/$',
         views.ProfileView.as_view(), name='profile'

@@ -40,10 +40,10 @@
             search_text: '',
         },
         methods: {
-            search: function(forum) {
+            search: function(category, forum) {
                 // Function that redirect to url for search topic of one forum
                 var search = this.search_text;
-                window.location = "/search_topic/" + forum + "/?q=" + search;
+                window.location = "/search_topic/" + category + "/" + forum + "/?q=" + search;
             }
         }
     };
@@ -147,6 +147,10 @@
                         var obj = JSON.parse(json);
                         //Add new comment to model
                         $that.comments_socket.push(obj);
+
+                        //Add new total comment
+                        var total = parseInt($("#total_comments_topic").text()) + 1;
+                        $("#total_comments_topic").text(total);
                     }
                 };    
             }
@@ -197,7 +201,7 @@
                 });
             },
             //Delete a topic
-            delete_topic: function(forum, idtopic) {
+            delete_topic: function(category, forum, idtopic) {
                 var csrf_token = $("[name='csrfmiddlewaretoken']").first().val();
                 var params = {
                     "idtopic": idtopic, "forum": forum, 
@@ -211,7 +215,7 @@
                     success: function( data, statusText, xhr){
                         var status = parseInt(xhr.status);
                         if(status==200) {
-                            window.location.href = "/forum/" + forum;
+                            window.location.href = "/forum/" + category + "/" + forum;
                         }else {
                             toastr.error("Error");
                         }

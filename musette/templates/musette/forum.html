@@ -10,7 +10,7 @@
             <td>
                 <div class="col-sm-1">
                     <span>
-                        <a href="{% url 'topic' forum.name topic.slug topic.idtopic %}" class="btn btn-sm btn-default">
+                        <a href="{% url 'topic' forum.category forum.name topic.slug topic.idtopic %}" class="btn btn-sm btn-default">
                             <i class="fa fa-map-o"></i>
                         </a>
                     </span>
@@ -25,7 +25,7 @@
                         <br />
                     {% endif %}
                     
-                    <a href="{% url 'topic' forum.name topic.slug topic.idtopic %}" data-toggle="tooltip" 
+                    <a href="{% url 'topic' forum.category forum.name topic.slug topic.idtopic %}" data-toggle="tooltip" 
                         data-placement="bottom" title="{% trans 'Views' %}: {% get_tot_views topic.idtopic %}">
                     {{topic.title}}
                     {% if topic.is_top %}
