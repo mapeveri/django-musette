@@ -363,6 +363,9 @@ class LikeTopic(models.Model):
         on_delete=models.CASCADE
     )
 
+    def __str__(self):
+        return str(self.topic.idtopic)
+
 
 @python_2_unicode_compatible
 class LikeComment(models.Model):
@@ -376,6 +379,9 @@ class LikeComment(models.Model):
         settings.AUTH_USER_MODEL, related_name='likes_comment_users',
         on_delete=models.CASCADE
     )
+
+    def __str__(self):
+        return str(self.comment.idcomment)
 
 
 @python_2_unicode_compatible
