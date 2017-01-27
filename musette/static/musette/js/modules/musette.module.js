@@ -103,6 +103,58 @@
                 descrip_comments: [],
             }
         },
+        methods: {
+            //Like comment
+            like_comment: function(idcomment) {
+                var csrf_token = $("[name='csrfmiddlewaretoken']").first().val();
+                var params = {
+                    "idcomment": idcomment, is_like: 1, 
+                    csrfmiddlewaretoken: csrf_token
+                };
+
+                $.ajax({
+                    url : "/like_unlike_comment/",
+                    type: "POST",
+                    data : params,
+                    success: function( data ){
+                        var total = parseInt($("#like_comment_button_" + idcomment).find("span").text()) + 1;
+                        $("#like_comment_button_" + idcomment).find("span").text(total);
+                        $("#unlike_comment_button_" + idcomment).find("span").text(total);
+
+                        $("#like_comment_button_" + idcomment).hide();
+                        $("#unlike_comment_button_" + idcomment).show();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error("Error");
+                    }
+                });
+            },
+            //Un-Like comment
+            unlike_comment: function(idcomment) {
+                var csrf_token = $("[name='csrfmiddlewaretoken']").first().val();
+                var params = {
+                    "idcomment": idcomment, is_like: 0, 
+                    csrfmiddlewaretoken: csrf_token
+                };
+
+                $.ajax({
+                    url : "/like_unlike_comment/",
+                    type: "POST",
+                    data : params,
+                    success: function( data ){
+                        var total = parseInt($("#unlike_comment_button_" + idcomment).find("span").text()) - 1;
+                        $("#unlike_comment_button_" + idcomment).find("span").text(total);
+                        $("#like_comment_button_" + idcomment).find("span").text(total);
+
+                        $("#unlike_comment_button_" + idcomment).hide();
+                        $("#like_comment_button_" + idcomment).show();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error("Error");
+                    }
+                });
+            },
+        }
     };
 
     //Topic controller
@@ -224,7 +276,57 @@
                         toastr.error("Error");
                     }
                 });
-            }
+            },
+            //Like topic
+            like_topic: function(idtopic) {
+                var csrf_token = $("[name='csrfmiddlewaretoken']").first().val();
+                var params = {
+                    "idtopic": idtopic, is_like: 1, 
+                    csrfmiddlewaretoken: csrf_token
+                };
+
+                $.ajax({
+                    url : "/like_unlike_topic/",
+                    type: "POST",
+                    data : params,
+                    success: function( data ){
+                        var total = parseInt($("#like_topic_button").find("span").text()) + 1;
+                        $("#like_topic_button").find("span").text(total);
+                        $("#unlike_topic_button").find("span").text(total);
+
+                        $("#like_topic_button").hide();
+                        $("#unlike_topic_button").show();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error("Error");
+                    }
+                });
+            },
+            //Un-Like topic
+            unlike_topic: function(idtopic) {
+                var csrf_token = $("[name='csrfmiddlewaretoken']").first().val();
+                var params = {
+                    "idtopic": idtopic, is_like: 0, 
+                    csrfmiddlewaretoken: csrf_token
+                };
+
+                $.ajax({
+                    url : "/like_unlike_topic/",
+                    type: "POST",
+                    data : params,
+                    success: function( data ){
+                        var total = parseInt($("#unlike_topic_button").find("span").text()) - 1;
+                        $("#unlike_topic_button").find("span").text(total);
+                        $("#like_topic_button").find("span").text(total);
+
+                        $("#unlike_topic_button").hide();
+                        $("#like_topic_button").show();
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                        toastr.error("Error");
+                    }
+                });
+            },
         }
     };
 

@@ -218,6 +218,7 @@ class Topic(models.Model):
         _('Top'), default=False,
         help_text=_('If the topic is important and it will go top')
     )
+    like = models.PositiveIntegerField(default=0, editable=False)
 
     class Meta(object):
         ordering = ['forum', 'last_activity', 'title', 'date']
@@ -314,6 +315,7 @@ class Comment(models.Model):
         _('Date'), blank=True, auto_now=True, db_index=True
     )
     description = models.TextField(_('Description'), blank=True)
+    like = models.PositiveIntegerField(default=0, editable=False)
 
     class Meta(object):
         ordering = ['date']
@@ -346,6 +348,34 @@ class Notification(models.Model):
 
     def __str__(self):
         return str(self.idnotification)
+
+
+@python_2_unicode_compatible
+class LikeTopic(models.Model):
+    """
+    Model LikeTopic
+    """
+    topic = models.ForeignKey(
+        Topic, related_name='likes_topic', on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='likes_topic_users',
+        on_delete=models.CASCADE
+    )
+
+
+@python_2_unicode_compatible
+class LikeComment(models.Model):
+    """
+    Model LikeComment
+    """
+    comment = models.ForeignKey(
+        Comment, related_name='likes_comment', on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, related_name='likes_comment_users',
+        on_delete=models.CASCADE
+    )
 
 
 @python_2_unicode_compatible

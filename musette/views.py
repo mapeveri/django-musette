@@ -3,7 +3,7 @@ import json
 import redis
 from itertools import chain
 
-from django.db.models import Q
+from django.db.models import F, Q
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import get_user_model, login, logout
@@ -674,6 +674,80 @@ class OpenCloseTopicView(View):
                 return HttpResponse(status=404)
         else:
             return HttpResponse(status=404)
+
+
+class LikeUnlikeTopicView(View):
+    """
+    This view like or unlike topic
+    """
+    def get(self, request, *args, **kwargs):
+        return Http404()
+
+    def post(self, request, *args, **kwargs):
+        idtopic = int(request.POST.get("idtopic"))
+        is_like = int(request.POST.get("is_like"))
+
+        # Get topic
+        topic = get_object_or_404(models.Topic, idtopic=idtopic)
+
+        # If is like
+        if is_like == 1:
+            # Like topic
+            models.Topic.objects.filter(idtopic=idtopic).update(
+                like=F('like') + 1
+            )
+            # Add reference
+            models.LikeTopic.objects.create(
+                topic=topic, user=request.user
+            )
+        else:
+            # Like topic
+            models.Topic.objects.filter(idtopic=idtopic).update(
+                like=F('like') - 1
+            )
+            # Delete reference
+            models.LikeTopic.objects.filter(
+                topic=topic, user=request.user
+            ).delete()
+
+        return HttpResponse(status=200)
+
+
+class LikeUnlikeCommentView(View):
+    """
+    This view like or unlike comment
+    """
+    def get(self, request, *args, **kwargs):
+        return Http404()
+
+    def post(self, request, *args, **kwargs):
+        idcomment = int(request.POST.get("idcomment"))
+        is_like = int(request.POST.get("is_like"))
+
+        # Get comment
+        comment = get_object_or_404(models.Comment, idcomment=idcomment)
+
+        # If is like
+        if is_like == 1:
+            # Like comment
+            models.Comment.objects.filter(idcomment=idcomment).update(
+                like=F('like') + 1
+            )
+            # Add reference
+            models.LikeComment.objects.create(
+                comment=comment, user=request.user
+            )
+        else:
+            # Like comment
+            models.Comment.objects.filter(idcomment=idcomment).update(
+                like=F('like') - 1
+            )
+            # Delete reference
+            models.LikeComment.objects.filter(
+                comment=comment, user=request.user
+            ).delete()
+
+        return HttpResponse(status=200)
 
 
 class NewCommentView(View):

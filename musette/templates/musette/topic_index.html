@@ -88,7 +88,41 @@
                     <hr>
                   </div>
                   <div class="pull-left">
-                    <p> <i class="fa fa-comments" aria-hidden="true"></i> <span id="total_comments_topic"> {{ topic.idtopic|get_tot_comments }} </span></p>
+                    <span> 
+                      <i class="fa fa-comments" aria-hidden="true"></i> 
+                      <span id="total_comments_topic"> {{ topic.idtopic|get_tot_comments }} </span>
+                    </span>
+                    
+                    {% if user.id %}
+                      {% if topic|check_like_topic:user %}
+                        <span id="like_topic_button" style="margin-left: 1em; cursor: pointer;" v-on:click="like_topic({{topic.idtopic}})"> 
+                          <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                          <span> {{ topic.like }}</span>
+                        </span>
+
+                        <span id="unlike_topic_button" style="margin-left: 1em; cursor: pointer;font-weight: bold;display:none" v-on:click="unlike_topic({{topic.idtopic}})"> 
+                          <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                          <span><u> {{ topic.like }} </u></span>
+                        </span>
+                      {% else %}
+                        <span id="like_topic_button" style="margin-left: 1em; cursor: pointer;display:none" v-on:click="like_topic({{topic.idtopic}})"> 
+                          <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                          <span> {{ topic.like }}</span>
+                        </span>
+
+                        <span id="unlike_topic_button" style="margin-left: 1em; cursor: pointer;font-weight: bold;" v-on:click="unlike_topic({{topic.idtopic}})"> 
+                          <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                          <span><u> {{ topic.like }} </u></span>
+                        </span>
+                      {% endif %}
+                       
+                    {% else %}
+                      <span style="margin-left: 1em; cursor: pointer"> 
+                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                        <span> {{ topic.like }}</span>
+                      </span>
+                    {% endif %}
+
                     {% if total_hits|add:"0" > 1 %}
                       <p style="margin-top: 5px;">{% trans "This topic has" %} {{ total_hits }} {% trans "views" %}</p>
                     {% else %}

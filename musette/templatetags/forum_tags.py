@@ -226,3 +226,23 @@ def get_tot_users_forum(forum):
     users_registers = forum.register_forums.all().count()
     moderators = forum.moderators.all().count()
     return users_registers + moderators
+
+
+@register.filter
+def check_like_comment(comment, user):
+    """
+    Check if like comment is checked
+    """
+    return user.likes_comment_users.filter(
+        user=user, comment=comment
+    ).count() == 0
+
+
+@register.filter
+def check_like_topic(topic, user):
+    """
+    Check if like topic is checked
+    """
+    return user.likes_topic_users.filter(
+        user=user, topic=topic
+    ).count() == 0

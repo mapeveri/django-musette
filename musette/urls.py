@@ -57,6 +57,14 @@ urlpatterns = [
         name="open_close_topic"
     ),
     url(
+        r'^like_unlike_topic', views.LikeUnlikeTopicView.as_view(),
+        name="like_unlike_topic"
+    ),
+    url(
+        r'^like_unlike_comment', views.LikeUnlikeCommentView.as_view(),
+        name="like_unlike_comment"
+    ),
+    url(
         r'^newcomment/(?P<category>.+)/(?P<forum>.+)/(?P<slug>[-\w]+)/(?P<idtopic>\d+)/$',
         login_required(views.NewCommentView.as_view()), name='newcomment'
     ),
