@@ -48,6 +48,7 @@ Features
 26. Suggested Topics in topic.
 27. Close topic.
 28. Support to custom user model.
+29. Support to likes in topics and comments.
 
 **Note 1:** When a new record is added to the user model automatically added to your model profile.
 
