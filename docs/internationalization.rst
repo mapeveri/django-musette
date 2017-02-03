@@ -26,7 +26,8 @@
 	# Lenguage support
 	LANGUAGES = (
 	    ('en', _('English')),
-	    ('es', _('Spanish')),
+	    ('es', _('Spanish')), # For Spanish
+		('it', _('Italian')), # For Italian
 	)
 
 	# Path of the folder locale

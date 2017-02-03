@@ -37,7 +37,7 @@ Features
 15. Easy integration with other applications Django of your project.
 16. Models registered in admin django for administrators.
 17. Support check user online.
-18. Support to English and Spanish languages.
+18. Support to English, Italian and Spanish languages.
 19. Validation of forms in real time with VueJs.
 20. API REST with django-rest-framework.
 21. Support Python 3.

@@ -119,9 +119,9 @@ Quick start
 	# If your super-admin user not contain the record in Profile model. Execute this command:
 	python manage.py create_profile_superadmin # New in version 0.2.5
 
-9. Configuration internationalization in English or `forum in spanish`_.
+9. Configuration internationalization in English or `forum in spanish or italian`_.
 
-.. _forum in spanish: https://github.com/mapeveri/django-musette/blob/master/docs/internationalization.rst
+.. _forum in spanish or italian: https://github.com/mapeveri/django-musette/blob/master/docs/internationalization.rst
 
 10. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
 
