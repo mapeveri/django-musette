@@ -1115,10 +1115,14 @@ class ProfileView(View):
 
         photo = utils.get_photo_profile(iduser)
 
+        # Get last topic of the profile
+        topics = models.Topic.objects.filter(user=user)[:5]
+
         data = {
             'profile': profile,
             'photo': photo,
             'user': request.user,
+            'topics': topics,
             'app': app,
             'model_profile_is_extend': model_profile_is_extend
         }

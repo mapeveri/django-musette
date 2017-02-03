@@ -45,6 +45,7 @@ Roadmap Django-Musette
 
 1. [X] Issue #68 Same forum name with two different categories
 2. [X] Issue #43 Likes to topic and comment
-3. [X] Issue #73 Add translations in Italian 
-4. [ ] Issue #17 Add message private between users
-5. [ ] If errors are found in the previous version. They will be arranged
+3. [X] Issue #73 Add translations in Italian
+4. [X] Issue #75 In profile show last topics of a user
+5. [ ] Issue #17 Add message private between users
+6. [ ] If errors are found in the previous version. They will be arranged

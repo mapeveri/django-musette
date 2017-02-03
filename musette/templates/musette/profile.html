@@ -60,7 +60,30 @@
         </div>
     </div>
 
-</div>
+    <br />
 
+    {% if topics %}
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                <th><i class="fa fa-map-o" aria-hidden="true"></i> {% trans "Title" %}</th>
+                <th><i class="fa fa-square"></i> {% trans "Forum" %}</th>
+                <th><i class="fa fa-history" aria-hidden="true"></i> {% trans "Date" %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for topic in topics %}
+                <tr>
+                    <td> <a href="{% url 'topic' topic.forum.category topic.forum topic.slug topic.pk %}"> {{ topic.title }} </a> </td>
+                    <td> <a href="{% url 'forum' topic.forum.category topic.forum  %}">{{topic.forum.name }} </a></td>
+                    <td> {{topic.date.date }} </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div> 
 
 {% endblock %}
