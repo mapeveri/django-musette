@@ -208,7 +208,7 @@ class Topic(models.Model):
     )
     is_close = models.BooleanField(
         _('Closed topic'), default=False,
-        help_text=_('If the topic is close')
+        help_text=_('If the topic is closed')
     )
     moderate = models.BooleanField(
         _('Moderate'), default=False,

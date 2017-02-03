@@ -115,7 +115,7 @@ class SignUpView(FormView):
                 messages.success(request, msj)
                 return self.form_valid(form, **kwargs)
             else:
-                messages.error(request, _("Form invalid"))
+                messages.error(request, _("Invalid form"))
                 return self.form_invalid(form, **kwargs)
         else:
             return redirect("forums")
@@ -502,7 +502,7 @@ class NewTopicView(FormView):
             )
             return self.form_valid(form, **kwargs)
         else:
-            messages.error(request, _("Form invalid"))
+            messages.error(request, _("Invalid form"))
             return self.form_invalid(form, **kwargs)
 
 
@@ -604,7 +604,7 @@ class EditTopicView(FormView):
             )
             return self.form_valid(form, **kwargs)
         else:
-            messages.error(request, _("Form invalid"))
+            messages.error(request, _("Invalid form"))
             return self.form_invalid(form, **kwargs)
 
 
@@ -1210,5 +1210,5 @@ class EditProfileView(FormView):
             )
             return self.form_valid(form, **kwargs)
         else:
-            messages.error(request, _("Form invalid"))
+            messages.error(request, _("Invalid form"))
             return self.form_invalid(form, **kwargs)
