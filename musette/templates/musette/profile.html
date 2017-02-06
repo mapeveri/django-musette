@@ -2,6 +2,7 @@
 
 {% load i18n %}
 {% load static %}
+{% load forum_tags %}
 
 {% block content %}
 
@@ -10,6 +11,32 @@
         <div class="col-md-2 bg_blur">
 
             <img src="{{photo}}" class="img-thumbnail picture hidden-xs" width="200" hegiht="200" />
+
+            {% if user != profile.iduser %}
+                {% if not profile.iduser.is_superuser and profile.iduser|get_total_forum_moderator == 0 %}
+                    {% if user|get_total_forum_moderator > 0 or user.is_superuser %}
+                        {% if not profile.is_troll %}
+                            <form method="POST" action="{% url 'profile_is_troll' %}">{% csrf_token %}
+                                <input type="hidden" name="username" value="{{ profile.iduser }}" />
+                                <input type="hidden" name="check" value="1" />
+                                <button type="submit" class="btn btn-sm btn-default" style="margin-top: 10px">{% trans "Is troll" %}</button>
+                            </form>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
+            {% if profile.is_troll %}
+                <p style="margin-top: 10px"> <strong><u>{% trans "It is a troll" %}</u></strong> </p>
+
+                {% if user != profile.iduser %}
+                    <form method="POST" action="{% url 'profile_is_troll' %}">{% csrf_token %}
+                        <input type="hidden" name="username" value="{{ profile.iduser }}" />
+                        <input type="hidden" name="check" value="0" />
+                        <button type="submit" class="btn btn-sm btn-default" style="margin-top: 10px">{% trans "It is not a troll" %}</button>
+                    </form>
+                {% endif %}
+            {% endif %}
 
             <div class="header">
                 <h1>{{ profile.iduser.first_name }} {{ profile.iduser.last_name }}</h1>

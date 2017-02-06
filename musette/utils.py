@@ -279,3 +279,12 @@ def user_can_create_topic(category, forum, user):
         return True
     else:
         return False
+
+
+def get_total_forum_moderate_user(user):
+    """
+    Get total of forums that moderate one user
+    """
+    return Forum.objects.filter(
+        moderators=user
+    ).count()

@@ -443,6 +443,10 @@ class AbstractProfile(models.Model):
     about = models.TextField(blank=True, null=True)
     activation_key = models.CharField(max_length=100, null=False, blank=False)
     key_expires = models.DateTimeField(auto_now=False)
+    is_troll = models.BooleanField(
+        _('Is troll'), default=False,
+        help_text=_('If the user is troll')
+    )
 
     def __str__(self):
         return str(self.iduser.username)

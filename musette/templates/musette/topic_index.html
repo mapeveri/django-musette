@@ -45,6 +45,11 @@
                   <figure class="thumbnail">
                         <img src="{{ photo }}" class="img-responsive" width="150" hegiht="150" />
                       <figcaption class="text-center">{{topic.user|get_path_profile|safe}}</figcaption>
+                      {% if topic.user.user.is_troll %}
+                          <center>
+                            <p> <strong><u>{% trans "It is a troll" %}</u></strong> </p>
+                          </center>
+                      {% endif %}
                   </figure>
                   <table>
                     <tr>

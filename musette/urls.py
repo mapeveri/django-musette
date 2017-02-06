@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^join/', views.SignUpView.as_view(), name='signup'),
     url(r'^confirm_email/(?P<username>.+)/(?P<activation_key>\w+)',
         views.ConfirmEmailView.as_view(), name='config_email'),
-    url(r'^new_key_activation/(?P<username>\w+)',
+    url(r'^new_key_activation/(?P<username>.+)',
         views.NewKeyActivationView.as_view(), name='new_key_activation'),
     url(r'^reset_password/$', views.reset_password, name='password_reset'),
     url(
@@ -53,15 +53,18 @@ urlpatterns = [
         login_required(views.DeleteTopicView.as_view()), name='deletetopic'
     ),
     url(
-        r'^open_close_topic/$', views.OpenCloseTopicView.as_view(),
+        r'^open_close_topic/$',
+        login_required(views.OpenCloseTopicView.as_view()),
         name="open_close_topic"
     ),
     url(
-        r'^like_unlike_topic', views.LikeUnlikeTopicView.as_view(),
+        r'^like_unlike_topic',
+        login_required(views.LikeUnlikeTopicView.as_view()),
         name="like_unlike_topic"
     ),
     url(
-        r'^like_unlike_comment', views.LikeUnlikeCommentView.as_view(),
+        r'^like_unlike_comment',
+        login_required(views.LikeUnlikeCommentView.as_view()),
         name="like_unlike_comment"
     ),
     url(
@@ -98,8 +101,8 @@ urlpatterns = [
         views.UsersForumView.as_view(), name='users_forum'
     ),
     url(
-        r'^search_topic/(?P<category>.+)/(?P<forum>.+)/$', views.TopicSearch.as_view(),
-        name='search_topic'
+        r'^search_topic/(?P<category>.+)/(?P<forum>.+)/$',
+        views.TopicSearch.as_view(), name='search_topic'
     ),
     url(r'^feed/(?P<category>.+)/(?P<forum>.+)/$', TopicFeed(), name='rss'),
     url(
@@ -107,7 +110,11 @@ urlpatterns = [
         views.ProfileView.as_view(), name='profile'
     ),
     url(
-        r'^edit_profile/(?P<username>[-\w]+)/$',
-        views.EditProfileView.as_view(), name='edit_profile'
+        r'^edit_profile/(?P<username>.+)/$',
+        login_required(views.EditProfileView.as_view()), name='edit_profile'
+    ),
+    url(
+        r'profile_is_troll/$',
+        login_required(views.IsTrollView.as_view()), name='profile_is_troll'
     ),
 ]

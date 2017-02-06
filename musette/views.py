@@ -1216,3 +1216,30 @@ class EditProfileView(FormView):
         else:
             messages.error(request, _("Invalid form"))
             return self.form_invalid(form, **kwargs)
+
+
+class IsTrollView(View):
+    """
+    Set if a user is troll
+    """
+    def get(self, request, *args, **kwargs):
+        raise Http404()
+
+    def post(self, request, *args, **kwargs):
+        user_post = request.POST.get('username')
+        check = True if int(request.POST.get('check')) == 1 else False
+
+        # Get troll
+        User = get_user_model()
+        username = get_object_or_404(User, username=user_post)
+
+        # Check if is user correct
+        total = utils.get_total_forum_moderate_user(username)
+        if not username.is_superuser and total == 0:
+            # Is a troll
+            ModelProfile = utils.get_main_model_profile()
+            ModelProfile.objects.filter(iduser=username).update(is_troll=check)
+
+        return redirect(
+            "profile", username=user_post
+        )

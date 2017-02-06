@@ -8,7 +8,8 @@ from hitcount.models import HitCount
 from ..models import Comment, Forum, Topic, Notification
 from .photo import get_photo
 from ..utils import (
-    get_photo_profile, get_datetime_topic
+    get_photo_profile, get_datetime_topic,
+    get_total_forum_moderate_user
 )
 
 register = template.Library()
@@ -246,3 +247,11 @@ def check_like_topic(topic, user):
     return user.likes_topic_users.filter(
         user=user, topic=topic
     ).count() == 0
+
+
+@register.filter
+def get_total_forum_moderator(user):
+    """
+    Get total of forums that moderate one user
+    """
+    return get_total_forum_moderate_user(user)

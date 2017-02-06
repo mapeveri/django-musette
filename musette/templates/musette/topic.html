@@ -32,7 +32,10 @@
                      <img class="img-circle" src="{{comment.user.id|get_photo}}"
                      width="30" height="30" />
                 </a>
-                {{comment.user|get_path_profile|safe}}
+                {{comment.user|get_path_profile|safe}} 
+                {% if comment.user.user.is_troll %}
+                      <span> <strong><u>({% trans "It is a troll" %})</u></strong> </span>
+                {% endif %}
                 <br>
                 {% if comment.user.user.online %}
                     <div class="label label-success"><b>Online</b></div>

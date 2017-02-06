@@ -48,5 +48,6 @@ Roadmap Django-Musette
 3. [X] Issue #73 Add translations in Italian
 4. [X] Issue #75 In profile show last topics of a user
 5. [X] Issue #76 Improve permission moderators forum
-6. [ ] Issue #17 Add message private between users
-7. [ ] If errors are found in the previous version. They will be arranged
+6. [X] Issue #74 Being able to mark a user as a troll
+7. [ ] Issue #17 Add message private between users
+8. [ ] If errors are found in the previous version. They will be arranged

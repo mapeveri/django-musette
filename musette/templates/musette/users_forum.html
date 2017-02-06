@@ -11,7 +11,12 @@
             <img src="{{profile.user.username|get_object_user:profile|get_photo}}" class="img-thumbnail picture" width="150" height="150" />
             <div class="caption">
                 <span>{{ profile.user.username|get_object_user:profile|get_path_profile|safe }}</span>
-                <br>
+                {% if profile.user.user.is_troll %}
+                    <p> <strong><u>{% trans "It is a troll" %}</u></strong> </p>
+                {% else %}
+                    <br>
+                {% endif %}
+                
                 {% if profile.date %}
                     <p>{% trans "Joined" %} {{profile.date.date}}</p>
                 {% else %}
