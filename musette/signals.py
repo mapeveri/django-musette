@@ -57,7 +57,7 @@ def post_save_forum(sender, instance, **kwargs):
             # Superuser not is necessary
             if not old_moderator.is_superuser:
                 # Only remove permissions if moderator has one forum
-                if instance.tot_forums_moderators(old_moderator) <= 1:
+                if instance.tot_forums_moderators(old_moderator) < 1:
                     instance.clear_permissions_moderator(old_moderator)
 
 

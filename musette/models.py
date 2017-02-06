@@ -103,9 +103,17 @@ class Forum(models.Model):
         moderator.user_permissions.add(permission2)
         moderator.user_permissions.add(permission3)
 
+        # Add permission is_staff
+        moderator.is_staff = True
+        moderator.save()
+
     # Clear permissions to moderator
     def clear_permissions_moderator(self, moderator):
         moderator.user_permissions.clear()
+
+        # Remove permission is_staff
+        moderator.is_staff = False
+        moderator.save()
 
     # Remove permission in user moderators
     def remove_user_permissions_moderator(self):
@@ -116,14 +124,14 @@ class Forum(models.Model):
                 tot_forum_moderator = self.tot_forums_moderators(moderator)
 
                 # Only remove permissions if is moderator one forum
-                if tot_forum_moderator <= 1:
+                if tot_forum_moderator < 1:
                     self.clear_permissions_moderator(moderator)
 
     def delete(self, *args, **kwargs):
         for moderator in self.moderators.all():
             if not moderator.is_superuser:
                 # Only remove permissions if is moderator has one forum
-                if self.tot_forums_moderators(moderator) <= 1:
+                if self.tot_forums_moderators(moderator) < 1:
                     # Remove permissions to user
                     self.clear_permissions_moderator(moderator)
 

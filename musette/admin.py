@@ -112,11 +112,14 @@ class TopicAdmin(admin.ModelAdmin):
 class ForumAdmin(admin.ModelAdmin):
     list_display = (
         'name', 'category', 'forum_description',
-        'topics_count', 'is_moderate'
+        'topics_count', 'is_moderate', 'get_moderators'
     )
     list_filter = ['name', 'category']
     search_fields = ['name']
     actions = ['delete_forum']
+
+    def get_moderators(self, obj):
+        return "\n".join([p.username for p in obj.moderators.all()])
 
     def get_actions(self, request):
         actions = super(ForumAdmin, self).get_actions(request)
