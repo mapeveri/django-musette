@@ -49,5 +49,10 @@ Roadmap Django-Musette
 4. [X] Issue #75 In profile show last topics of a user
 5. [X] Issue #76 Improve permission moderators forum
 6. [X] Issue #74 Being able to mark a user as a troll
-7. [ ] Issue #17 Add message private between users
-8. [ ] If errors are found in the previous version. They will be arranged
+7. [X] If errors are found in the previous version. They will be arranged
+
+**For version (0.2.7) complete the next issues:**
+
+1. [ ] Issue #17 Add message private between users
+2. [ ] If errors are found in the previous version. They will be arranged
+
