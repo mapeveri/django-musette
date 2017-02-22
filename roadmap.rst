@@ -53,6 +53,7 @@ Roadmap Django-Musette
 
 **For version (0.2.7) complete the next issues:**
 
-1. [ ] Issue #17 Add message private between users
-2. [ ] If errors are found in the previous version. They will be arranged
+1. [X] Issue #78 Error in form profile #78
+2. [ ] Issue #17 Add message private between users
+3. [ ] If errors are found in the previous version. They will be arranged
 

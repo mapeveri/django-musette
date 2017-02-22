@@ -352,7 +352,7 @@ class FormEditProfile(forms.ModelForm):
         model = utils.get_main_model_profile()
         exclude = (
             'idprofile', 'iduser', 'activation_key',
-            'key_expires'
+            'key_expires', 'is_troll',
         )
         widgets = {
             'about': widgets.TextareaWidget,
