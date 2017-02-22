@@ -120,6 +120,7 @@ class ForumAdmin(admin.ModelAdmin):
 
     def get_moderators(self, obj):
         return "\n".join([p.username for p in obj.moderators.all()])
+    get_moderators.short_description = _("Moderators")
 
     def get_actions(self, request):
         actions = super(ForumAdmin, self).get_actions(request)
@@ -199,7 +200,7 @@ class CommentAdmin(admin.ModelAdmin):
     def forum(self, obj):
         return obj.topic.forum
 
-    forum.short_description = 'Forum'
+    forum.short_description = _("Forum")
     forum.admin_order_field = 'topic__forum'
 
 

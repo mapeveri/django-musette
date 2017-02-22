@@ -55,6 +55,6 @@ Roadmap Django-Musette
 
 1. [X] Issue #78 Error in form profile #78
 2. [X] Issue #77 Current status of user- Online or Offline
-3. [ ] Issue #17 Add message private between users
-4. [ ] If errors are found in the previous version. They will be arranged
-
+3. [X] Issue #79 Improvements translation in columns crud admin
+4. [ ] Issue #17 Add message private between users
+5. [ ] If errors are found in the previous version. They will be arranged

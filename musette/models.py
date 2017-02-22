@@ -144,6 +144,7 @@ class Forum(models.Model):
     def forum_description(obj):
         return obj.description
     forum_description.allow_tags = True
+    forum_description.short_description = _("Description")
 
 
 class MessageForum(models.Model):
