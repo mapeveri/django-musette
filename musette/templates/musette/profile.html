@@ -40,7 +40,7 @@
 
             <div class="header">
                 <h1>{{ profile.iduser.first_name }} {{ profile.iduser.last_name }}</h1>
-                <h5>{% trans "Joined" %} {{ profile.iduser.date_joined.date }}</h5>
+                <h5><b>{% trans "Joined" %}</b> {{ profile.iduser.date_joined.date }}</h5>
                 <table>
                     <tr>
                         <td>
@@ -75,7 +75,7 @@
             <h4>{% trans "About me" %}</h4>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    {{ profile.about|safe }}
+                    {{ profile.about|default_if_none:''|safe }}
                 </div>
             </div>
 

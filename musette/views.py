@@ -1,6 +1,4 @@
 import base64
-import json
-import redis
 from itertools import chain
 
 from django.db.models import F, Q
@@ -25,7 +23,7 @@ from django.utils import timezone
 from django.utils.html import conditional_escape
 from django.utils.translation import ugettext_lazy as _
 
-from musette import forms, models, utils
+from musette import forms, models, realtime, utils
 
 
 class LoginView(FormView):
@@ -477,25 +475,12 @@ class NewTopicView(FormView):
             photo = utils.get_photo_profile(request.user.id)
 
             # Data necessary for realtime
-            data = {
-                "topic": obj.title,
-                "idtopic": obj.idtopic,
-                "slug": obj.slug,
-                "settings_static": settings.STATIC_URL,
-                "username": username,
-                "forum": forum.name,
-                "category": forum.category.name,
-                "list_us": list_us,
-                "photo": photo
-            }
+            data = realtime.data_base_realtime(obj, photo, forum.name, username)
 
             # Add to real time new notification
-            json_data_notification = json.dumps(data)
-            # Redis instance
-            r = redis.StrictRedis()
-            # Publish
-            r.publish('notifications', json_data_notification)
+            realtime.new_notification(data, list_us)
 
+            # Message for user. Form success
             messages.success(
                 request, _("The topic '%(topic)s' was successfully created")
                 % {'topic': obj.title}
@@ -828,33 +813,15 @@ class NewCommentView(View):
             form.send_mail_comment(site, str(url), lista_email)
 
             # Data necessary for realtime
-            data = {
-                "topic": comment.topic.title,
-                "idtopic": comment.topic.idtopic,
-                "slug": comment.topic.slug,
-                "settings_static": settings.STATIC_URL,
-                "username": username,
-                "forum": forum,
-                "category": comment.topic.forum.category.name,
-                "photo": photo
-            }
+            data = realtime.data_base_realtime(
+                comment.topic, photo, forum, username
+            )
 
-            # Add item for notification
-            data_notification = data
-            data_notification['list_us'] = list_us
+            # Send new notification realtime
+            realtime.new_notification(data, list_us)
 
-            # Add to real time new notification
-            json_data_notification = json.dumps(data_notification)
-            # Redis instance
-            r = redis.StrictRedis()
-            # Publish
-            r.publish('notifications', json_data_notification)
-
-            # Publish new comment in topic
-            data_comment = data
-            data_comment['description'] = comment.description
-            json_data_comment = json.dumps(data_comment)
-            r.publish('comments', json_data_comment)
+            # Send new comment in realtime
+            realtime.new_comment(data, comment.description)
 
             messages.success(request, _("Added new comment"))
             return HttpResponseRedirect(url)
