@@ -2,6 +2,15 @@ from rest_framework import permissions
 from musette import utils
 
 
+class IsReadOnly(permissions.BasePermission):
+    """
+    Readonly permissions
+    """
+    def has_permission(self, request, view):
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+
 class ForumPermissions(permissions.BasePermission):
     """
     Check if is superuser for can crete, remove, etc.
@@ -33,5 +42,4 @@ class ForumPermissions(permissions.BasePermission):
                 is_moderator or
                 obj.user == request.user
             )
-
 

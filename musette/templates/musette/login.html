@@ -10,7 +10,7 @@
             <legend>{{ SETTINGS.SITE_NAME }}</legend>
             <h4>{% trans "Log in" %}</h4>
             {% if form.hidden_error.errors %}
-                    <div style="color: red">{{ form.hidden_error.errors|safe }}</div>
+                    <div style="color: red">{{ form.hidden_error.errors|safe|striptags }}</div>
             {% endif %}
             <form class="form-horizontal" method="POST" action="{% url 'login' %}" role="form">
                 {% csrf_token %}

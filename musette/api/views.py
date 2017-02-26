@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from musette import models, realtime, utils
 from musette.api import serializers
-from musette.api.permissions import ForumPermissions
+from musette.api.permissions import ForumPermissions, IsReadOnly
 
 
 # ViewSets for user
@@ -35,11 +35,21 @@ class ForumViewSet(viewsets.ReadOnlyModelViewSet):
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = models.Topic.objects.all()
     serializer_class = serializers.TopicSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, ForumPermissions,)
+    permission_classes = (
+        IsAuthenticatedOrReadOnly, ForumPermissions,
+    )
+
+    def get_permissions(self):
+        # If is troll then only is read only
+        if self.request.user.is_authenticated():
+            if self.request.user.user.is_troll:
+                self.permission_classes = [IsReadOnly, ]
+        return super(TopicViewSet, self).get_permissions()
 
     def perform_create(self, serializer):
         request = self.request
         is_my_user = int(request.data['user']) == request.user.id
+
         # If is my user or is superuser can create
         if is_my_user or request.user.is_superuser:
             forum_id = request.data['forum']
@@ -95,14 +105,22 @@ class RegisterViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.RegisterSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, ForumPermissions,)
 
+    def get_permissions(self):
+        # If is troll then only is read only
+        if self.request.user.is_authenticated():
+            if self.request.user.user.is_troll:
+                self.permission_classes = [IsReadOnly, ]
+        return super(RegisterViewSet, self).get_permissions()
+
     def create(self, request, **kwargs):
         is_my_user = int(request.data['user']) == request.user.id
         # If is my user or is superuser can create
         if is_my_user or request.user.is_superuser:
             forum_id = request.data['forum']
             exists_register = models.Register.objects.filter(
-                pk=forum_id, user=request.user
+                forum_id=forum_id, user=request.user
             )
+
             # If the register not exists
             if exists_register.count() == 0:
                 return super(RegisterViewSet, self).create(request, **kwargs)
@@ -121,6 +139,13 @@ class CommentViewSet(viewsets.ModelViewSet):
     queryset = models.Comment.objects.all()
     serializer_class = serializers.CommentSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, ForumPermissions,)
+
+    def get_permissions(self):
+            # If is troll then only is read only
+        if self.request.user.is_authenticated():
+            if self.request.user.user.is_troll:
+                self.permission_classes = [IsReadOnly, ]
+        return super(CommentViewSet, self).get_permissions()
 
     def create(self, request, **kwargs):
         is_my_user = int(request.data['user']) == request.user.id

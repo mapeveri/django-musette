@@ -216,6 +216,12 @@ class MessageForumAdmin(admin.ModelAdmin):
     )
 
 
+class RegisterAdmin(admin.ModelAdmin):
+    list_display = (
+        'forum', 'user',
+    )
+
+
 class ProfileInline(admin.StackedInline):
     model = utils.get_main_model_profile()
     can_delete = False
@@ -242,7 +248,7 @@ except Exception:
 
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(models.Category)
-admin.site.register(models.Register)
+admin.site.register(models.Register, RegisterAdmin)
 admin.site.register(models.Forum, ForumAdmin)
 admin.site.register(models.Topic, TopicAdmin)
 admin.site.register(models.Comment, CommentAdmin)

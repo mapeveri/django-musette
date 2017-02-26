@@ -122,7 +122,7 @@
                       {% endif %}
                        
                     {% else %}
-                      <span style="margin-left: 1em; cursor: pointer"> 
+                      <span style="margin-left: 1em;"> 
                         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                         <span> {{ topic.like }}</span>
                       </span>
@@ -135,7 +135,7 @@
                     {% endif %}
                     <p><b><u>{% trans "Users" %}</u></b> {{topic|get_tot_users_comments|safe}} </p>
 
-                    {% if topic.user.id == user.id %}
+                    {% if topic.user.id == user.id and not user.user.is_troll %}
                       <br>
                       <button onclick="document.location ='{% url 'edittopic' topic.forum.category topic.forum.name topic.idtopic %}'" class="btn btn-inverse btn-xs" style="min-width: 8em">
                         <i class="fa fa-hand-o-up"></i> {% trans "Edit" %}</button>
@@ -150,7 +150,7 @@
                       <i class="fa fa-share"></i> {% trans "Share" %}
                     </a>
 
-                    {% if topic.user == user %}
+                    {% if topic.user == user and not user.user.is_troll %}
                       <a class="btn btn-default" id="close_topic_button" {% if topic.is_close %} style="display: none" {% endif %} v-on:click="close_topic({{ topic.idtopic }}, {{user.id}})">
                         <i class="fa fa-times"></i> {% trans "Close topic" %}
                       </a>
@@ -213,7 +213,7 @@
   {% endif %}
 
   <!-- New comment-->
-  {% if user.id != None and not topic.is_close %}
+  {% if user.id != None and not topic.is_close and not user.user.is_troll %}
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
           <form action="{% url 'newcomment' topic.forum.category topic.forum.name topic.slug topic.idtopic %}" name="formComment" method="POST" class="well">{% csrf_token%}

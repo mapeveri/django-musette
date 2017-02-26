@@ -29,7 +29,7 @@
             {% if profile.is_troll %}
                 <p style="margin-top: 10px"> <strong><u>{% trans "It is a troll" %}</u></strong> </p>
 
-                {% if user != profile.iduser %}
+                {% if user != profile.iduser and user.is_superuser %}
                     <form method="POST" action="{% url 'profile_is_troll' %}">{% csrf_token %}
                         <input type="hidden" name="username" value="{{ profile.iduser }}" />
                         <input type="hidden" name="check" value="0" />
@@ -64,7 +64,7 @@
                 </table>
             </div>
 
-            {% if profile.iduser.id == user.id %}
+            {% if profile.iduser.id == user.id and not profile.is_troll %}
                 <br>
                 <button onclick="document.location = '{% url 'edit_profile' profile.iduser.username %}'" class="btn btn btn-inverse">{% trans "Edit profile" %}</button>
             {% endif %}

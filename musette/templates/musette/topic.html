@@ -81,7 +81,7 @@
                 </span>
               {% endif %}
 
-              {% if comment.user.id == user.id %}
+              {% if comment.user.id == user.id and not user.user.is_troll %}
               <button data-toggle="modal" data-target="#myModal_{{comment.idcomment}}" class="btn btn-inverse btn-sm">
                 <i class="fa fa-hand-o-up"></i> {% trans "Edit" %}</button>
 

@@ -23,7 +23,7 @@ from django.utils import timezone
 from django.utils.html import conditional_escape
 from django.utils.translation import ugettext_lazy as _
 
-from musette import forms, models, realtime, utils
+from musette import forms, mixins, models, realtime, utils
 
 
 class LoginView(FormView):
@@ -368,7 +368,7 @@ class TopicView(View):
         return render(request, template_name, data)
 
 
-class NewTopicView(FormView):
+class NewTopicView(mixins.UserTrollMixin, FormView):
     """
     This view allowed add new topic
     """
@@ -491,7 +491,7 @@ class NewTopicView(FormView):
             return self.form_invalid(form, **kwargs)
 
 
-class EditTopicView(FormView):
+class EditTopicView(mixins.UserTrollMixin, FormView):
     """
     This view allowed edit topic
     """
@@ -593,7 +593,7 @@ class EditTopicView(FormView):
             return self.form_invalid(form, **kwargs)
 
 
-class DeleteTopicView(View):
+class DeleteTopicView(mixins.UserTrollMixin, View):
     """
     This view will delete one topic
     """
@@ -632,7 +632,7 @@ class DeleteTopicView(View):
         return HttpResponse(status=200)
 
 
-class OpenCloseTopicView(View):
+class OpenCloseTopicView(mixins.UserTrollMixin, View):
     """
     This view close or re-open topic
     """
@@ -735,7 +735,7 @@ class LikeUnlikeCommentView(View):
         return HttpResponse(status=200)
 
 
-class NewCommentView(View):
+class NewCommentView(mixins.UserTrollMixin, View):
     """
     This view allowed add new comment to topic
     """
@@ -830,7 +830,7 @@ class NewCommentView(View):
             return HttpResponseRedirect(url)
 
 
-class EditCommentView(View):
+class EditCommentView(mixins.UserTrollMixin, View):
     """
     This view allowed edit comment to topic
     """
@@ -863,7 +863,7 @@ class EditCommentView(View):
             return HttpResponseRedirect(url)
 
 
-class DeleteCommentView(View):
+class DeleteCommentView(mixins.UserTrollMixin, View):
     """
     This view allowed remove comment to topic
     """
@@ -928,7 +928,7 @@ def SetNotifications(request):
     return HttpResponse("Ok")
 
 
-class AddRegisterView(View):
+class AddRegisterView(mixins.UserTrollMixin, View):
     """
     This view add register to forum
     """
@@ -958,7 +958,7 @@ class AddRegisterView(View):
         return HttpResponseRedirect(url)
 
 
-class UnregisterView(View):
+class UnregisterView(mixins.UserTrollMixin, View):
     """
     This view remove register to forum
     """
@@ -1097,7 +1097,7 @@ class ProfileView(View):
         return render(request, template_name, data)
 
 
-class EditProfileView(FormView):
+class EditProfileView(mixins.UserTrollMixin, FormView):
     """
     This view allowed edit profile
     """
@@ -1185,7 +1185,7 @@ class EditProfileView(FormView):
             return self.form_invalid(form, **kwargs)
 
 
-class IsTrollView(View):
+class IsTrollView(mixins.UserTrollMixin, View):
     """
     Set if a user is troll
     """

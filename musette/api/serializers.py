@@ -38,8 +38,9 @@ class TopicSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(TopicSerializer, self).__init__(*args, **kwargs)
         user = self.context['request'].user
+
         # If no is superuser, only forum register or is moderator
-        if not user.is_superuser:
+        if not user.is_superuser and user.is_authenticated():
             registers = models.Register.objects.filter(user=user)
             self.fields['forum'].queryset = models.Forum.objects.filter(
                 Q(moderators__in=[user.id]) | Q(register_forums__in=registers)
@@ -64,7 +65,7 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = self.context['request'].user
         # If no is superuser, get forum that
         # not is register or not is moderator
-        if not user.is_superuser:
+        if not user.is_superuser and user.is_authenticated():
             registers = models.Register.objects.filter(user=user)
             self.fields['forum'].queryset = models.Forum.objects.filter(
                 ~Q(moderators__in=[user.id]), ~Q(
@@ -87,10 +88,15 @@ class CommentSerializer(serializers.ModelSerializer):
     def __init__(self, *args, **kwargs):
         super(CommentSerializer, self).__init__(*args, **kwargs)
         user = self.context['request'].user
-        if not user.is_superuser:
+        if not user.is_superuser and user.is_authenticated():
             # Only my user
             User = get_user_model()
             self.fields['user'].queryset = User.objects.filter(id=user.id)
+
+            # Topic not is close and is moderate not show
+            self.fields['topic'].queryset = models.Topic.objects.filter(
+                is_close=False, moderate=True
+            )
 
     class Meta:
         model = models.Comment

@@ -57,23 +57,25 @@
     
     <div class="row">
         <div class="pull-left">
-            {% if register or user.is_superuser or user in forum.moderators.all %}
-                <div class="col-md-5 text-left">
-                    <button onclick="window.location = '{% url 'newtopic' forum.category forum.name %}'" class="btn btn-inverse btn-sm"><i class="fa fa-plus"></i> {% trans "New topic" %}</button>
-                </div>
-                {% if not user.is_superuser and not user in forum.moderators.all %}
-                <div class="col-md-4 text-right">
-                    <form method="POST" action="{% url 'unregister' forum.category forum %}">
+            {% if not user.user.is_troll %}
+                {% if register or user.is_superuser or user in forum.moderators.all %}
+                    <div class="col-md-5 text-left">
+                        <button onclick="window.location = '{% url 'newtopic' forum.category forum.name %}'" class="btn btn-inverse btn-sm"><i class="fa fa-plus"></i> {% trans "New topic" %}</button>
+                    </div>
+                    {% if not user.is_superuser and not user in forum.moderators.all %}
+                    <div class="col-md-4 text-right">
+                        <form method="POST" action="{% url 'unregister' forum.category forum %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-inverse btn-sm"><i class="fa fa-hand-o-up"></i> {% trans "Unregister" %}</button>
+                        </form>
+                    </div>
+                    {% endif %}
+                {% else %}
+                    <form method="POST" action="{% url 'new_register' forum.category forum %}" class="col-md-5 text-left">
                         {% csrf_token %}
-                        <button type="submit" class="btn btn-inverse btn-sm"><i class="fa fa-hand-o-up"></i> {% trans "Unregister" %}</button>
+                        <button type="submit" class="btn btn-inverse btn-sm"><i class="fa fa-hand-o-up"></i> {% trans "Join to forum" %}</button>
                     </form>
-                </div>
                 {% endif %}
-            {% else %}
-                <form method="POST" action="{% url 'new_register' forum.category forum %}" class="col-md-5 text-left">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-inverse btn-sm"><i class="fa fa-hand-o-up"></i> {% trans "Join to forum" %}</button>
-                </form>
             {% endif %}
         </div>
         <div class="pull-right">

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-02-23 22:33-0300\n"
+"POT-Creation-Date: 2017-02-26 19:56-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,7 +46,7 @@ msgstr ""
 msgid "Forum"
 msgstr ""
 
-#: musette/admin.py:222
+#: musette/admin.py:228
 msgid "Profile"
 msgstr ""
 
@@ -213,14 +213,14 @@ msgid "User"
 msgstr ""
 
 #: musette/models.py:205 musette/templates/musette/edit_topic.html:33
-#: musette/templates/musette/forum_index.html:111
+#: musette/templates/musette/forum_index.html:113
 #: musette/templates/musette/new_topic.html:34
 #: musette/templates/musette/profile.html:97
 #: musette/templates/musette/topic_index.html:307
 msgid "Title"
 msgstr ""
 
-#: musette/models.py:210 musette/templates/musette/forum_index.html:112
+#: musette/models.py:210 musette/templates/musette/forum_index.html:114
 #: musette/templates/musette/topic_index.html:148
 msgid "Last activity"
 msgstr ""
@@ -257,7 +257,7 @@ msgstr ""
 msgid "Topic"
 msgstr ""
 
-#: musette/models.py:235 musette/templates/musette/forum_index.html:125
+#: musette/models.py:235 musette/templates/musette/forum_index.html:127
 #: musette/templates/musette/index.html:21
 msgid "Topics"
 msgstr ""
@@ -266,7 +266,7 @@ msgstr ""
 msgid "Comment"
 msgstr ""
 
-#: musette/models.py:332 musette/templates/musette/forum_index.html:113
+#: musette/models.py:332 musette/templates/musette/forum_index.html:115
 #: musette/templates/musette/topic_index.html:310
 msgid "Comments"
 msgstr ""
@@ -351,8 +351,8 @@ msgid "Yes, I'm sure"
 msgstr ""
 
 #: musette/templates/musette/all_notification.html:12
-#: musette/templates/musette/notification.html:51
-msgid "No notifications"
+#: musette/templates/musette/notification.html:52
+msgid "You have no notifications"
 msgstr ""
 
 #: musette/templates/musette/all_notification_index.html:13
@@ -443,7 +443,7 @@ msgid "This topic is closed"
 msgstr "No loaded topics"
 
 #: musette/templates/musette/forum.html:29
-#: musette/templates/musette/forum_index.html:114
+#: musette/templates/musette/forum_index.html:116
 msgid "Views"
 msgstr ""
 
@@ -459,50 +459,50 @@ msgstr ""
 msgid "is pending moderation"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:62
+#: musette/templates/musette/forum_index.html:63
 #: musette/templates/musette/new_topic.html:20
 msgid "New topic"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:68
+#: musette/templates/musette/forum_index.html:69
 msgid "Unregister"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:75
+#: musette/templates/musette/forum_index.html:76
 msgid "Join to forum"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:83
+#: musette/templates/musette/forum_index.html:85
 #: musette/templates/musette/topic_search_index.html:14
 #: musette/templates/musette/topic_search_index.html:21
 msgid "Find Topics"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:100
 #: musette/templates/musette/forum_index.html:102
+#: musette/templates/musette/forum_index.html:104
 msgid "This forum has"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:100
+#: musette/templates/musette/forum_index.html:102
 #: musette/templates/musette/topic_index.html:132
 msgid "views"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:102
+#: musette/templates/musette/forum_index.html:104
 #: musette/templates/musette/topic_index.html:134
 msgid "view"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:124
+#: musette/templates/musette/forum_index.html:126
 #: musette/templates/musette/index.html:23
 msgid "Created"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:128
+#: musette/templates/musette/forum_index.html:130
 msgid "Missing for moderate"
 msgstr ""
 
-#: musette/templates/musette/forum_index.html:133
+#: musette/templates/musette/forum_index.html:135
 #: musette/templates/musette/users_forum_index.html:13
 #: musette/templates/musette/users_forum_index.html:16
 msgid "Forum members"
@@ -538,11 +538,11 @@ msgstr ""
 msgid "Now"
 msgstr ""
 
-#: musette/templates/musette/notification.html:58
+#: musette/templates/musette/notification.html:60
 msgid "All"
 msgstr ""
 
-#: musette/templates/musette/notification.html:61
+#: musette/templates/musette/notification.html:63
 msgid "Logout"
 msgstr ""
 
@@ -775,65 +775,65 @@ msgstr ""
 msgid "Files allowed"
 msgstr ""
 
-#: musette/views.py:67
+#: musette/views.py:65
 msgid "The user is not active"
 msgstr ""
 
-#: musette/views.py:112
+#: musette/views.py:110
 msgid ""
 "Registration was successful. Please, check your email to validate the "
 "account."
 msgstr ""
 
-#: musette/views.py:118 musette/views.py:505 musette/views.py:607
-#: musette/views.py:1217
+#: musette/views.py:116 musette/views.py:490 musette/views.py:592
+#: musette/views.py:1184
 msgid "Invalid form"
 msgstr ""
 
-#: musette/views.py:199
+#: musette/views.py:197
 msgid "Please, check your email"
 msgstr ""
 
-#: musette/views.py:500
+#: musette/views.py:485
 #, python-format
 msgid "The topic '%(topic)s' was successfully created"
 msgstr ""
 
-#: musette/views.py:602
+#: musette/views.py:587
 #, python-format
 msgid "The topic '%(topic)s' was successfully edited"
 msgstr ""
 
-#: musette/views.py:641
+#: musette/views.py:626
 #, python-format
 msgid "The topic '%(topic)s' was successfully deleted"
 msgstr ""
 
-#: musette/views.py:859
+#: musette/views.py:826
 msgid "Added new comment"
 msgstr ""
 
-#: musette/views.py:862
+#: musette/views.py:829
 msgid "Field required"
 msgstr ""
 
-#: musette/views.py:893
+#: musette/views.py:860
 msgid "Comment edited"
 msgstr ""
 
-#: musette/views.py:922
+#: musette/views.py:889
 msgid "Comment deleted"
 msgstr ""
 
-#: musette/views.py:990
+#: musette/views.py:957
 msgid "You have successfully registered"
 msgstr ""
 
-#: musette/views.py:1018
+#: musette/views.py:985
 msgid "Registration was successfully canceled"
 msgstr ""
 
-#: musette/views.py:1213
+#: musette/views.py:1180
 msgid "Your profile was successfully edited"
 msgstr ""
 
@@ -848,6 +848,3 @@ msgstr ""
 #: tests/settings.py:117
 msgid "Italian"
 msgstr ""
-
-#~ msgid "No topics"
-#~ msgstr "No loaded topics"
