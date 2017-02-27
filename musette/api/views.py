@@ -71,12 +71,10 @@ class TopicViewSet(viewsets.ModelViewSet):
                 username = request.user.username
                 forum_name = forum.name
 
-                # Get moderators forum
-                list_us = []
-                for moderator in forum.moderators.all():
-                    # If not is my user
-                    if moderator.id != request.user.id:
-                        list_us.append(moderator.id)
+                # Get moderators forum and send notification
+                list_us = utils.get_moderators_and_send_notification_topic(
+                    request, forum, topic
+                )
 
                 # Data necessary for realtime
                 data = realtime.data_base_realtime(
@@ -147,10 +145,20 @@ class CommentViewSet(viewsets.ModelViewSet):
                 self.permission_classes = [IsReadOnly, ]
         return super(CommentViewSet, self).get_permissions()
 
-    def create(self, request, **kwargs):
+    def perform_create(self, serializer):
+        request = self.request
         is_my_user = int(request.data['user']) == request.user.id
         # If is my user or is superuser can create
         if is_my_user or request.user.is_superuser:
+            # Save the record comment
+            if serializer.is_valid():
+                comment = serializer.save()
+            else:
+                return Response(
+                    serializer.errors,
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
             topic_id = request.data['topic']
             topic = get_object_or_404(models.Topic, pk=topic_id)
 
@@ -158,12 +166,12 @@ class CommentViewSet(viewsets.ModelViewSet):
             photo = utils.get_photo_profile(request.user.id)
             username = request.user.username
             forum = topic.forum.name
-            list_us = utils.get_users_topic(topic, request.user.id)
 
-            # If not exists user that create topic, add
-            user_original_topic = topic.user.id
-            if not (user_original_topic in list_us):
-                list_us.append(user_original_topic)
+            # Send notifications comment
+            params = utils.get_users_and_send_notification_comment(
+                request, topic, comment
+            )
+            list_us = params['list_us']
 
             # Data necessary for realtime
             data = realtime.data_base_realtime(topic, photo, forum, username)
@@ -174,7 +182,10 @@ class CommentViewSet(viewsets.ModelViewSet):
             # Send new comment in realtime
             comment_description = request.data['description']
             realtime.new_comment(data, comment_description)
-            return super(CommentViewSet, self).create(request, **kwargs)
+
+            return Response(
+                serializer.data, status=status.HTTP_201_CREATED
+            )
         else:
             raise PermissionDenied({
                     "message": "Not your user"

@@ -454,21 +454,10 @@ class NewTopicView(mixins.UserTrollMixin, FormView):
             # Save topic
             obj.save()
 
-            # Get moderators forum
-            list_us = []
-            for moderator in forum.moderators.all():
-                # If not is my user
-                if moderator.id != request.user.id:
-                    # Send notification to moderator
-                    related_object = ContentType.objects.get_for_model(obj)
-                    notification = models.Notification(
-                        iduser=moderator.id, is_view=False,
-                        idobject=obj.idtopic, date=now,
-                        is_topic=True, is_comment=False,
-                        content_type=related_object
-                    )
-                    notification.save()
-                    list_us.append(moderator.id)
+            # Get moderators forum and send notification
+            list_us = utils.get_moderators_and_send_notification_topic(
+                request, forum, obj
+            )
 
             # Get photo profile
             username = request.user.username
@@ -767,9 +756,9 @@ class NewCommentView(mixins.UserTrollMixin, View):
             obj.save()
 
             # Update last activity TopicSearch
-            models.Topic.objects.filter(idtopic=idtopic).update(
-                last_activity=now
-            )
+            models.Topic.objects.filter(
+                idtopic=idtopic
+            ).update(last_activity=now)
 
             # Data for notification real time
             idcomment = obj.idcomment
@@ -779,31 +768,12 @@ class NewCommentView(mixins.UserTrollMixin, View):
             # Get photo profile
             photo = utils.get_photo_profile(request.user.id)
 
-            # Send notifications
-            list_us = utils.get_users_topic(topic, request.user.id)
-            lista_email = []
-
-            # If not exists user that create topic, add
-            user_original_topic = topic.user.id
-            user_email = topic.user.email
-
-            if not (user_original_topic in list_us):
-                list_us.append(user_original_topic)
-                lista_email.append(user_email)
-            else:
-                user_original_topic = None
-
-            # Get content type for comment model
-            related_object_type = ContentType.objects.get_for_model(comment)
-            for user in list_us:
-                if user_original_topic != user:
-                    notification = models.Notification(
-                        iduser=user, is_view=False,
-                        idobject=idcomment, date=now,
-                        is_topic=False, is_comment=True,
-                        content_type=related_object_type
-                    )
-                    notification.save()
+            # Send notifications comment
+            params = utils.get_users_and_send_notification_comment(
+                request, topic, comment
+            )
+            list_us = params['list_us']
+            list_email = params['list_email']
 
             # Send email notification
             if settings.SITE_URL.endswith("/"):
@@ -812,7 +782,7 @@ class NewCommentView(mixins.UserTrollMixin, View):
                 site = settings.SITE_URL
 
             # Send email
-            form.send_mail_comment(site, str(url), lista_email)
+            form.send_mail_comment(site, str(url), list_email)
 
             # Data necessary for realtime
             data = realtime.data_base_realtime(

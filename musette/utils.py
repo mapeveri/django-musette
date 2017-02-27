@@ -5,6 +5,7 @@ import random
 import shutil
 
 from django.conf import settings
+from django.contrib.contenttypes.models import ContentType
 from django.contrib.staticfiles.templatetags.staticfiles import static
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
@@ -288,3 +289,80 @@ def get_total_forum_moderate_user(user):
     return Forum.objects.filter(
         moderators=user
     ).count()
+
+
+def save_notification_model(related_object, idobject, iduser, is_topic):
+    """
+    Save new notificaiton
+    """
+    if is_topic:
+        is_comment = False
+    else:
+        is_comment = True
+
+    now = timezone.now()
+    notification = Notification(
+        iduser=iduser, is_view=False,
+        idobject=idobject, date=now,
+        is_topic=is_topic, is_comment=is_comment,
+        content_type=related_object
+    )
+    notification.save()
+
+
+def get_moderators_and_send_notification_topic(request, forum, topic):
+    """
+    Get list moderators to send notification for realtime
+    and send notificaiton to model Notification for topic
+    """
+    # Get moderators forum
+    list_us = []
+
+    related_object = ContentType.objects.get_for_model(topic)
+    for moderator in forum.moderators.all():
+        # If not is my user
+        if moderator.id != request.user.id:
+            # Send notification to moderator
+            save_notification_model(
+                related_object, topic.idtopic, moderator.id, True
+            )
+            list_us.append(moderator.id)
+
+    return list_us
+
+
+def get_users_and_send_notification_comment(request, topic, comment):
+    """
+    Get list users to send notification for realtime
+    and send notificaiton to model Notification for comment
+    """
+    now = timezone.now()
+
+    # Send notifications
+    list_us = get_users_topic(topic, request.user.id)
+    list_email = []
+
+    # If not exists user that create topic, add
+    user_original_topic = topic.user.id
+    user_email = topic.user.email
+
+    # Only add if the user comment not is my user
+    if (not (user_original_topic in list_us) and
+            user_original_topic != request.user.id):
+        list_us.append(user_original_topic)
+        list_email.append(user_email)
+    else:
+        user_original_topic = None
+
+    # Get content type for comment model
+    related_object_type = ContentType.objects.get_for_model(comment)
+    for user in list_us:
+        if user_original_topic != user:
+            save_notification_model(
+                related_object_type, comment.idcomment, user, False
+            )
+
+    return {
+        'list_us': list_us,
+        'list_email': list_email
+    }
