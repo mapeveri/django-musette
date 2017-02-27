@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status, viewsets
@@ -59,6 +60,11 @@ class TopicViewSet(viewsets.ModelViewSet):
             if utils.user_can_create_topic(category, forum, request.user):
                 # Save the record topic
                 if serializer.is_valid():
+                    # If the forum is moderate send email
+                    serializer = utils.check_moderate_topic_email(
+                        request, forum, serializer
+                    )
+                    # Save record
                     topic = serializer.save()
                 else:
                     return Response(
@@ -172,6 +178,16 @@ class CommentViewSet(viewsets.ModelViewSet):
                 request, topic, comment
             )
             list_us = params['list_us']
+            list_email = params['list_email']
+
+            # Get url for email
+            url = reverse_lazy('topic', kwargs={
+                'category': topic.forum.category, 'forum': forum,
+                'slug': topic.slug, 'idtopic': str(topic.idtopic)
+            })
+
+            # Send e    mail
+            utils.send_mail_comment(str(url), list_email)
 
             # Data necessary for realtime
             data = realtime.data_base_realtime(topic, photo, forum, username)

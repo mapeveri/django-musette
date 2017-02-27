@@ -42,9 +42,10 @@ class TopicSerializer(serializers.ModelSerializer):
         # If no is superuser, only forum register or is moderator
         if not user.is_superuser and user.is_authenticated():
             registers = models.Register.objects.filter(user=user)
+            self.fields['forum'].queryset = None
             self.fields['forum'].queryset = models.Forum.objects.filter(
                 Q(moderators__in=[user.id]) | Q(register_forums__in=registers)
-            )
+            ).distinct()
 
             # Only my user
             User = get_user_model()

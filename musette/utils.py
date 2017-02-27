@@ -243,6 +243,55 @@ def send_welcome_email(email, username, activation_key):
     )
 
 
+def send_mail_comment(url, list_email):
+    """
+    Send email comment
+    """
+    if settings.SITE_URL.endswith("/"):
+        site = settings.SITE_URL[:-1]
+    else:
+        site = settings.SITE_URL
+
+    title_email = _("New comment in %(site)s") % {
+        'site': settings.SITE_NAME
+    }
+
+    message = _("You have one new comment in the topic: %(site)s") % {
+        'site': site + url
+    }
+
+    email_from = settings.EMAIL_MUSETTE
+    if email_from:
+        send_mail(
+            title_email, message, email_from,
+            list_email, fail_silently=False
+        )
+
+
+def send_mail_topic(email_moderator, forum):
+    """
+    Send email topic
+    """
+    # Send email to moderator
+    if settings.SITE_URL.endswith("/"):
+        site = settings.SITE_URL + "forum/" + forum.name
+    else:
+        site = settings.SITE_URL + "/forum/" + forum.name
+
+    site_name = settings.SITE_NAME
+    title_email = _("New topic in %(site)s ") % {'site': site_name}
+    message = _("You have one new topic to moderate: %(site)s") % {
+        'site': site
+    }
+    email_from = settings.EMAIL_MUSETTE
+
+    if email_from:
+        send_mail(
+            title_email, message, email_from,
+            [email_moderator], fail_silently=False
+        )
+
+
 def get_data_confirm_email(email):
     """
     This method return info for email confir
@@ -338,31 +387,80 @@ def get_users_and_send_notification_comment(request, topic, comment):
     """
     now = timezone.now()
 
+    myuser = request.user.id
     # Send notifications
-    list_us = get_users_topic(topic, request.user.id)
+    list_us = get_users_topic(topic, myuser)
     list_email = []
 
     # If not exists user that create topic, add
     user_original_topic = topic.user.id
     user_email = topic.user.email
+    comment_user = comment.user.id
 
-    # Only add if the user comment not is my user
-    if (not (user_original_topic in list_us) and
-            user_original_topic != request.user.id):
+    # If the notificacion is mine send to all but not to me
+    if user_original_topic == myuser and comment_user == myuser:
+        # Not make nothing but list_user is already
+        # Not send email
+        pass
+    # If the notificacion is mine send to all but not to create to comment
+    elif user_original_topic == myuser and comment_user != myuser:
+        # The user comment not exists in list_us
+        # Add user that created topic
         list_us.append(user_original_topic)
+        # Add user for send email
         list_email.append(user_email)
-    else:
-        user_original_topic = None
+    # If the notificacion not is mine send to all but not to me
+    elif user_original_topic != myuser and comment_user == myuser:
+        # Check if exists the created topic
+        if not(user_original_topic in list_us):
+            # Send to created topic
+            list_us.append(user_original_topic)
+
+        # Add user for send email to created topic
+        list_email.append(user_email)
+    # If the notificacion not is mine send to all but not to create to comment
+    elif user_original_topic != myuser and comment_user != myuser:
+        # Check if exists the created topic
+        if not(user_original_topic in list_us):
+            # Send to created topic
+            list_us.append(user_original_topic)
+
+        # Add user for send email to created topic
+        list_email.append(user_email)
 
     # Get content type for comment model
     related_object_type = ContentType.objects.get_for_model(comment)
     for user in list_us:
-        if user_original_topic != user:
-            save_notification_model(
-                related_object_type, comment.idcomment, user, False
-            )
+        save_notification_model(
+            related_object_type, comment.idcomment, user, False
+        )
 
     return {
         'list_us': list_us,
         'list_email': list_email
     }
+
+
+def check_moderate_topic_email(request, forum, obj):
+    """
+    Check if moderate topic and is moderate
+    send email to moderators
+    """
+    # If the forum is moderate
+    if forum.is_moderate:
+        # If is moderator, so the topic is moderate
+        if request.user in forum.moderators.all():
+            obj.moderate = True
+        elif request.user.is_superuser:
+            obj.moderate = True
+        else:
+            obj.moderate = False
+
+            # Get moderators forum
+            for moderator in forum.moderators.all():
+                # Send email
+                send_mail_topic(moderator.email, forum)
+    else:
+        obj.moderate = True
+
+    return obj

@@ -192,20 +192,6 @@ class FormAddTopic(forms.ModelForm):
             else:
                 self.fields[key].required = False
 
-    def send_mail_topic(self, site, email_moderator):
-        site_name = settings.SITE_NAME
-        title_email = _("New topic in %(site)s ") % {'site': site_name}
-        message = _("You have one new topic to moderate: %(site)s") % {
-            'site': site
-        }
-        email_from = settings.EMAIL_MUSETTE
-
-        if email_from:
-            send_mail(
-                title_email, message, email_from,
-                [email_moderator], fail_silently=False
-            )
-
 
 class CustomClearableFileInput(ClearableFileInput):
     """
@@ -313,21 +299,9 @@ class FormAddComment(forms.ModelForm):
                 self.fields[key].widget.attrs['v-model'] = key
                 self.fields[key].widget.attrs['required'] = 'required'
 
-    def send_mail_comment(self, site, url, lista_email):
-        title_email = _("New comment in %(site)s") % {
-            'site': settings.SITE_NAME
-        }
-
-        message = _("You have one new comment in the topic: %(site)s") % {
-            'site': site + url
-        }
-
-        email_from = settings.EMAIL_MUSETTE
-        if email_from:
-            send_mail(
-                title_email, message, email_from,
-                lista_email, fail_silently=False
-            )
+    def send_mail_comment(self, url, list_email):
+        # Send to email
+        utils.send_mail_comment(url, list_email)
 
 
 class FormAdminProfile(forms.ModelForm):

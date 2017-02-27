@@ -11,7 +11,6 @@ from django.contrib.auth.views import (
     password_reset, password_reset_complete,
     password_reset_confirm
 )
-from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse_lazy
 from django.http import Http404, HttpResponse, HttpResponseRedirect, QueryDict
 from django.shortcuts import render, get_object_or_404, redirect
@@ -428,29 +427,8 @@ class NewTopicView(mixins.UserTrollMixin, FormView):
                 file_name = request.FILES['attachment']
                 obj.attachment = file_name
 
-            # If the forum is moderate
-            if forum.is_moderate:
-                # If is moderator, so the topic is moderate
-                if request.user in forum.moderators.all():
-                    obj.moderate = True
-                elif request.user.is_superuser:
-                    obj.moderate = True
-                else:
-                    obj.moderate = False
-
-                    # Get moderators forum
-                    for moderator in forum.moderators.all():
-                        # Send email to moderator
-                        if settings.SITE_URL.endswith("/"):
-                            site = settings.SITE_URL + "forum/" + forum.name
-                        else:
-                            site = settings.SITE_URL + "/forum/" + forum.name
-
-                        # Send email
-                        form.send_mail_topic(site, moderator.email)
-            else:
-                obj.moderate = True
-
+            # If the forum is moderate send email
+            obj = utils.check_moderate_topic_email(request, forum, obj)
             # Save topic
             obj.save()
 
@@ -775,14 +753,8 @@ class NewCommentView(mixins.UserTrollMixin, View):
             list_us = params['list_us']
             list_email = params['list_email']
 
-            # Send email notification
-            if settings.SITE_URL.endswith("/"):
-                site = settings.SITE_URL[:-1]
-            else:
-                site = settings.SITE_URL
-
             # Send email
-            form.send_mail_comment(site, str(url), list_email)
+            form.send_mail_comment(str(url), list_email)
 
             # Data necessary for realtime
             data = realtime.data_base_realtime(
