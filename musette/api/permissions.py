@@ -42,4 +42,3 @@ class ForumPermissions(permissions.BasePermission):
                 is_moderator or
                 obj.user == request.user
             )
-

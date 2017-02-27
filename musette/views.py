@@ -475,7 +475,9 @@ class NewTopicView(mixins.UserTrollMixin, FormView):
             photo = utils.get_photo_profile(request.user.id)
 
             # Data necessary for realtime
-            data = realtime.data_base_realtime(obj, photo, forum.name, username)
+            data = realtime.data_base_realtime(
+                obj, photo, forum.name, username
+            )
 
             # Add to real time new notification
             realtime.new_notification(data, list_us)
@@ -794,7 +796,7 @@ class NewCommentView(mixins.UserTrollMixin, View):
             # Get content type for comment model
             related_object_type = ContentType.objects.get_for_model(comment)
             for user in list_us:
-                if user_original_topic != request.user.id:
+                if user_original_topic != user:
                     notification = models.Notification(
                         iduser=user, is_view=False,
                         idobject=idcomment, date=now,

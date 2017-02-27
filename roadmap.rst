@@ -58,5 +58,6 @@ Roadmap Django-Musette
 3. [X] Issue #79 Improvements translation in columns crud admin
 4. [X] Issue #70 Add notifications in API
 5. [X] Issue #80 Check segurity in API Rest
-6. [ ] Issue #17 Add message private between users
-7. [ ] If errors are found in the previous version. They will be arranged
+6. [X] Issue #82 Bug in notifications comment
+7. [ ] Issue #17 Add message private between users
+8. [ ] If errors are found in the previous version. They will be arranged
