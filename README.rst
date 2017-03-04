@@ -50,6 +50,7 @@ Features
 28. Support to custom user model.
 29. Support to likes in topics and comments.
 30. Check if a user is a troll.
+31. Support Open Graph.
 
 **Note 1:** When a new record is added to the user model automatically added to your model profile.
 

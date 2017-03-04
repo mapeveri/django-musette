@@ -61,4 +61,5 @@ Roadmap Django-Musette
 6. [X] Issue #82 Bug in notifications comment
 7. [X] Issue #83 Create notification in API
 8. [X] Issue #84 Send email in topic and comment API
-9. [X] If errors are found in the previous version. They will be arranged
+9. [X] Issue #86 Add Open Graph
+10. [X] If errors are found in the previous version. They will be arranged

@@ -499,6 +499,7 @@ class Configuration(models.Model):
     custom_css = models.TextField(
         _("Custom design"), null=True, blank=True
     )
+    description = models.TextField(_('Description'), blank=True)
 
     class Meta(object):
         verbose_name = _('Configuration')

@@ -1,9 +1,28 @@
 <!DOCTYPE HTML>
-<html lang="en">
+<html lang="en" prefix="og: http://ogp.me/ns#">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     {% load i18n %}
     {% load static %}
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta property="og:title" content="{{ SETTINGS.SITE_NAME }}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="website">
+    <meta name="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ SETTINGS.SITE_NAME }}">
+    {% if configurations.logo  %}
+    <meta property="og:image" content="{{request.scheme}}://{{ request.get_host }}{{ MEDIA_URL }}{{ configurations.logo }}" />
+    <meta name="twitter:image" content="{{request.scheme}}://{{ request.get_host }}{{ MEDIA_URL }}{{ configurations.logo }}">
+    {% else %}
+    <meta property="og:image" content="{{request.scheme}}://{{ request.get_host }}{% static 'musette/img/logo.png' %}" />
+    <meta name="twitter:image" content="{{request.scheme}}://{{ request.get_host }}{% static 'musette/img/logo.png' %}">
+    {% endif %}
+
+    {% if configurations.description  %}
+    <meta name="description" content="{{ configurations.description }}">
+    <meta property="og:description" content="{{ configurations.description }}">
+    <meta name="twitter:description" content="{{ configurations.description }}">
+    {% endif %}
 
     <title> {{ SETTINGS.SITE_NAME }} </title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
