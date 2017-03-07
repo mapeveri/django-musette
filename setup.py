@@ -17,7 +17,7 @@ setup(
     name='django-musette',
     version=get_version(),
     packages=[
-        'musette', 'musette.templatetags',
+        'musette', 'musette.templatetags', 'musette.migrations',
         'musette.websockets', 'musette.management',
         'musette.management.commands', 'musette.api',
     ],
