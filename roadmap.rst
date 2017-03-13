@@ -63,3 +63,11 @@ Roadmap Django-Musette
 8. [X] Issue #84 Send email in topic and comment API
 9. [X] Issue #86 Add Open Graph
 10. [X] If errors are found in the previous version. They will be arranged
+
+**For version (0.2.8) complete the next issues:**
+
+1. [] Issue #85 Improve the sending of emails
+2. [] Issue #87 Migrate web sockets to django-channels
+3. [] Issue #81 Add docker container  
+4. [] If errors are found in the previous version. They will be arranged
+
