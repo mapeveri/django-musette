@@ -641,30 +641,44 @@ class LikeUnlikeTopicView(View):
         idtopic = int(request.POST.get("idtopic"))
         is_like = int(request.POST.get("is_like"))
 
+        # Status response default
+        status = 200
+
         # Get topic
         topic = get_object_or_404(models.Topic, idtopic=idtopic)
 
+        # Check if exists LikeTopic
+        exists = models.LikeTopic.objects.filter(
+            topic=topic, user=request.user
+        ).exists()
+
         # If is like
         if is_like == 1:
-            # Like topic
-            models.Topic.objects.filter(idtopic=idtopic).update(
-                like=F('like') + 1
-            )
-            # Add reference
-            models.LikeTopic.objects.create(
-                topic=topic, user=request.user
-            )
+            if not exists:
+                # Like topic
+                models.Topic.objects.filter(idtopic=idtopic).update(
+                    like=F('like') + 1
+                )
+                # Add reference
+                models.LikeTopic.objects.create(
+                    topic=topic, user=request.user
+                )
+            else:
+                status = 100
         else:
-            # Like topic
-            models.Topic.objects.filter(idtopic=idtopic).update(
-                like=F('like') - 1
-            )
-            # Delete reference
-            models.LikeTopic.objects.filter(
-                topic=topic, user=request.user
-            ).delete()
+            if exists:
+                # Like topic
+                models.Topic.objects.filter(idtopic=idtopic).update(
+                    like=F('like') - 1
+                )
+                # Delete reference
+                models.LikeTopic.objects.filter(
+                    topic=topic, user=request.user
+                ).delete()
+            else:
+                status = 100
 
-        return HttpResponse(status=200)
+        return HttpResponse(status=status)
 
 
 class LikeUnlikeCommentView(View):
@@ -678,30 +692,44 @@ class LikeUnlikeCommentView(View):
         idcomment = int(request.POST.get("idcomment"))
         is_like = int(request.POST.get("is_like"))
 
+        # Status response default
+        status = 200
+
         # Get comment
         comment = get_object_or_404(models.Comment, idcomment=idcomment)
 
+        # Check if exists LikeComment
+        exists = models.LikeComment.objects.filter(
+            comment=comment, user=request.user
+        ).exists()
+
         # If is like
         if is_like == 1:
-            # Like comment
-            models.Comment.objects.filter(idcomment=idcomment).update(
-                like=F('like') + 1
-            )
-            # Add reference
-            models.LikeComment.objects.create(
-                comment=comment, user=request.user
-            )
+            if not exists:
+                # Like comment
+                models.Comment.objects.filter(idcomment=idcomment).update(
+                    like=F('like') + 1
+                )
+                # Add reference
+                models.LikeComment.objects.create(
+                    comment=comment, user=request.user
+                )
+            else:
+                status = 100
         else:
-            # Like comment
-            models.Comment.objects.filter(idcomment=idcomment).update(
-                like=F('like') - 1
-            )
-            # Delete reference
-            models.LikeComment.objects.filter(
-                comment=comment, user=request.user
-            ).delete()
+            if exists:
+                # Like comment
+                models.Comment.objects.filter(idcomment=idcomment).update(
+                    like=F('like') - 1
+                )
+                # Delete reference
+                models.LikeComment.objects.filter(
+                    comment=comment, user=request.user
+                ).delete()
+            else:
+                status = 100
 
-        return HttpResponse(status=200)
+        return HttpResponse(status=status)
 
 
 class NewCommentView(mixins.UserTrollMixin, View):

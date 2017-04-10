@@ -116,13 +116,15 @@
                     url : "/like_unlike_comment/",
                     type: "POST",
                     data : params,
-                    success: function( data ){
-                        var total = parseInt($("#like_comment_button_" + idcomment).find("span").text()) + 1;
-                        $("#like_comment_button_" + idcomment).find("span").text(total);
-                        $("#unlike_comment_button_" + idcomment).find("span").text(total);
+                    success: function( data, textStatus, xhr){
+                        if (xhr.status == 200) {
+                            var total = parseInt($("#like_comment_button_" + idcomment).find("span").text()) + 1;
+                            $("#like_comment_button_" + idcomment).find("span").text(total);
+                            $("#unlike_comment_button_" + idcomment).find("span").text(total);
 
-                        $("#like_comment_button_" + idcomment).hide();
-                        $("#unlike_comment_button_" + idcomment).show();
+                            $("#like_comment_button_" + idcomment).hide();
+                            $("#unlike_comment_button_" + idcomment).show();
+                        }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         toastr.error("Error");
@@ -141,13 +143,15 @@
                     url : "/like_unlike_comment/",
                     type: "POST",
                     data : params,
-                    success: function( data ){
-                        var total = parseInt($("#unlike_comment_button_" + idcomment).find("span").text()) - 1;
-                        $("#unlike_comment_button_" + idcomment).find("span").text(total);
-                        $("#like_comment_button_" + idcomment).find("span").text(total);
+                    success: function( data, textStatus, xhr){
+                        if (xhr.status == 200) {
+                            var total = parseInt($("#unlike_comment_button_" + idcomment).find("span").text()) - 1;
+                            $("#unlike_comment_button_" + idcomment).find("span").text(total);
+                            $("#like_comment_button_" + idcomment).find("span").text(total);
 
-                        $("#unlike_comment_button_" + idcomment).hide();
-                        $("#like_comment_button_" + idcomment).show();
+                            $("#unlike_comment_button_" + idcomment).hide();
+                            $("#like_comment_button_" + idcomment).show();
+                        }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         toastr.error("Error");
@@ -289,13 +293,15 @@
                     url : "/like_unlike_topic/",
                     type: "POST",
                     data : params,
-                    success: function( data ){
-                        var total = parseInt($("#like_topic_button").find("span").text()) + 1;
-                        $("#like_topic_button").find("span").text(total);
-                        $("#unlike_topic_button").find("span").text(total);
+                    success: function(data, textStatus, xhr){
+                        if (xhr.status == 200) {
+                            var total = parseInt($("#like_topic_button").find("span").text()) + 1;
+                            $("#like_topic_button").find("span").text(total);
+                            $("#unlike_topic_button").find("span").text(total);
 
-                        $("#like_topic_button").hide();
-                        $("#unlike_topic_button").show();
+                            $("#like_topic_button").hide();
+                            $("#unlike_topic_button").show();
+                        }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         toastr.error("Error");
@@ -314,13 +320,15 @@
                     url : "/like_unlike_topic/",
                     type: "POST",
                     data : params,
-                    success: function( data ){
-                        var total = parseInt($("#unlike_topic_button").find("span").text()) - 1;
-                        $("#unlike_topic_button").find("span").text(total);
-                        $("#like_topic_button").find("span").text(total);
+                    success: function( data, textStatus, xhr){
+                        if (xhr.status == 200) {
+                            var total = parseInt($("#unlike_topic_button").find("span").text()) - 1;
+                            $("#unlike_topic_button").find("span").text(total);
+                            $("#like_topic_button").find("span").text(total);
 
-                        $("#unlike_topic_button").hide();
-                        $("#like_topic_button").show();
+                            $("#unlike_topic_button").hide();
+                            $("#like_topic_button").show();
+                        }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
                         toastr.error("Error");
