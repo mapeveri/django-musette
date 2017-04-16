@@ -8,6 +8,6 @@ example/media/
 /build/
 /dist/
 /django_musette.egg-info/
-
+/.vscode/
 
 !/musette/migrations/
