@@ -68,8 +68,9 @@ Roadmap Django-Musette
 
 1. [X] Issue #88 Like count is increasing by two on double click
 2. [X] Issue #92 Update django-rest-framework
-3. [] Issue #85 Improve the sending of emails
-4. [] Issue #87 Migrate web sockets to django-channels
-5. [] Issue #81 Add docker container  
-6. [] If errors are found in the previous version. They will be arranged
+3. [X] Issue #96 Minified file javascript and css 
+4. [] Issue #85 Improve the sending of emails
+5. [] Issue #87 Migrate web sockets to django-channels
+6. [] Issue #81 Add docker container  
+7. [] If errors are found in the previous version. They will be arranged
 

@@ -27,8 +27,7 @@
     <title> {{ SETTINGS.SITE_NAME }} </title>
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'musette/css/styles.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'musette/css/custom.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'musette/css/style.min.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'musette/js/libs/toastr/build/toastr.min.css' %}">
     {% block extra_css %}{% endblock %}
 </head>
@@ -128,7 +127,7 @@
     <script src="{% static 'hitcount/hitcount-jquery.js' %}"></script>
     <script src="{% static 'musette/js/libs/toastr/build/toastr.min.js' %}"></script>
     <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-    <script id="musette_module_js" src="{% static 'musette/js/modules/musette.module.js' %}">
+    <script id="musette_module_js" src="{% static 'musette/js/modules/musette.module.min.js' %}">
         {
             "user_auth": {{ user.id }}
         }

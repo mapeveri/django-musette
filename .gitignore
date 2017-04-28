@@ -9,5 +9,6 @@ example/media/
 /dist/
 /django_musette.egg-info/
 /.vscode/
+/node_modules/
 
 !/musette/migrations/

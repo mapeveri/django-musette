@@ -1,0 +1,26 @@
+{
+  "name": "django_musette",
+  "version": "0.2.8",
+  "description": "Forum for django framework",
+  "main": "gulpfile.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mapeveri/django-musette.git"
+  },
+  "author": "Martín Peveri",
+  "license": "MIT License",
+  "bugs": {
+    "url": "https://github.com/mapeveri/django-musette/issues"
+  },
+  "homepage": "https://github.com/mapeveri/django-musette#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-uglify": "^2.1.2"
+  }
+}

@@ -50,7 +50,7 @@
     
     //Topic Form controller
     var topicFormMixin = {
-        data() {
+        data: function() {
             return window.__FORM__ || {
                 //Title model form add/edit topic
                 title: '',
@@ -62,7 +62,7 @@
                 touchDescription: false,
             }
         },
-        mounted () {
+        mounted: function() {
             //Context
             var $that = this;
 
@@ -97,7 +97,7 @@
      
     //Comment forms controller
     var commentMixim = {
-        data() {
+        data: function() {
             return window.__FORM__ || {
                 description: '',
                 descrip_comments: [],
@@ -169,7 +169,7 @@
             //Comments array for websockets
             comments_socket: [],
         },
-        mounted () {
+        mounted: function() {
             //Context
             var $that = this;
 
