@@ -12,6 +12,20 @@
 </script>
 {% endblock %}
 
+{% block meta %}
+    <meta property="og:title" content="{{ SETTINGS.SITE_NAME }} - {{ forum.name }}" />
+    <meta property="og:url" content="{{ request.build_absolute_uri }}" />
+    <meta property="og:type" content="website">
+    <meta name="twitter:url" content="{{ request.build_absolute_uri }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ SETTINGS.SITE_NAME }} - {{ forum.name }}">
+    <meta name="description" content="{{ forum.description }}">
+    <meta property="og:description" content="{{ forum.description }}">
+    <meta name="twitter:description" content="{{ forum.description }}">
+
+    <title> {{ SETTINGS.SITE_NAME }} - {{ forum.name }} </title>
+{% endblock %}
+
 {% block content %}
 
 <div class="container" id="forum-controller">

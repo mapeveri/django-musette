@@ -488,6 +488,9 @@ class Configuration(models.Model):
     logo = models.FileField(
         upload_to=generate_path_configuration, null=True, blank=True,
     )
+    favicon = models.FileField(
+        upload_to=generate_path_configuration, null=True, blank=True,
+    )
     logo_width = models.PositiveIntegerField(
         _("Logo width"), null=True, blank=True,
         help_text=_('In pixels')
@@ -500,6 +503,7 @@ class Configuration(models.Model):
         _("Custom design"), null=True, blank=True
     )
     description = models.TextField(_('Description'), blank=True)
+    keywords = models.TextField(_('Keywords'), blank=True)
 
     class Meta(object):
         verbose_name = _('Configuration')
