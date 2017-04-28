@@ -20,8 +20,13 @@ from musette.email import send_mail
 
 def exists_folder(route):
     """
-    This method verify that exists
-    folder in base to route
+    This method verify that exists folder in base to route.
+
+    Args:
+        route (str): Path to check if exists.
+
+    Returns:
+        bool: Return if exists.
     """
     if os.path.exists(route):
         return True
@@ -31,7 +36,10 @@ def exists_folder(route):
 
 def remove_folder(route_folder):
     """
-    This method remove one folder
+    This method remove one folder.
+
+    Args:
+        route_folder (str): Path folder to remove.
     """
     try:
         shutil.rmtree(route_folder)
@@ -41,18 +49,25 @@ def remove_folder(route_folder):
 
 def remove_file(route_file):
     """
-    This method remove one file
-    in base to route and image
+    This method remove one file in base to route and image.
+
+    Args:
+        route_file (str): Path file to remove.
     """
-    if route_file != "" and not route_file is None:
+    if route_file != "" and route_file is not None:
         if os.path.exists(route_file):
             os.remove(route_file)
 
 
 def get_folder_attachment(topic):
     """
-    This method return the path of one
-    folder attachment for app forum
+    This method return the path of one folder attachment for app forum.
+
+    Args:
+        topic (obj): Topic object.
+
+    Returns:
+        str: Path attachment.
     """
     folder = ""
     folder = "forum_" + str(topic.forum_id)
@@ -67,8 +82,10 @@ def get_folder_attachment(topic):
 
 def remove_folder_attachment(idtopic):
     """
-    This method remove folder attachment
-    and subtract one topic.
+    This method remove folder attachment and subtract one topic.
+
+    Args:
+        idtopic (int): Identification topic.
     """
     # Subtract one topic
     topic = get_object_or_404(Topic, idtopic=idtopic)
@@ -94,7 +111,7 @@ def remove_folder_attachment(idtopic):
 
 def get_main_model_profile():
     """
-    This method return the model profile defined by user
+    This method return the model profile defined by user.
     """
     subclasses = AbstractProfile.__subclasses__()
     if len(subclasses) > 0:
@@ -108,21 +125,39 @@ def get_main_model_profile():
 
 def get_app_model(instance):
     """
-    This method get app_label from model instance
+    This method get app_label from model instance.
+
+    Args:
+        instance (obj): Instance class model.
+
+    Returns:
+        str: Name app_label of the model.
     """
     return instance._meta.app_label
 
 
 def get_count_fields_model(instance):
     """
-    This method get count fields from model instance
+    This method get count fields from model instance.
+
+    Args:
+        instance (obj): instance class model.
+
+    Returns:
+        int: Total fields of model.
     """
     return len(instance._meta.fields)
 
 
 def get_id_profile(iduser):
     """
-    This method return one id of model profile
+    This method return one id of model profile.
+
+    Args:
+        iduser (int): Identification user.
+
+    Returns:
+        obj: Object profile.
     """
     ModelProfile = get_main_model_profile()
     profile = get_object_or_404(ModelProfile, iduser=iduser)
@@ -132,7 +167,14 @@ def get_id_profile(iduser):
 
 def get_users_topic(topic, myuser):
     """
-    This method return all users of one topic, else my user
+    This method return all users of one topic, else my user.
+
+    Args:
+        topic (object): Topic object.
+        myuser (int): Identification user logged.
+
+    Returns:
+        list(int): List users that commented in the topic.
     """
     comments = Comment.objects.filter(topic_id=topic.idtopic)
     lista_us = []
@@ -146,7 +188,13 @@ def get_users_topic(topic, myuser):
 
 def get_notifications(iduser):
     """
-    This method return Notification of one user
+    This method return Notification of one user.
+
+    Args:
+        iduser (int): Identification user.
+
+    Returns:
+        list(Notification): Notification of user.
     """
     try:
         notif = Notification.objects.filter(
@@ -159,7 +207,13 @@ def get_notifications(iduser):
 
 def get_datetime_topic(date):
     """
-    This method return info one datetime for topic or notification
+    This method return info one datetime for topic or notification.
+
+    Args:
+        date (datetime): Datetime topic.
+
+    Returns:
+        ste: Time elapsed.
     """
     flag = True
     now = timezone.now()
@@ -187,14 +241,27 @@ def get_datetime_topic(date):
 
 def basename(value):
     """
-    This method return basename of one path
+    This method return basename of one path.
+
+    Args:
+        value (str): Path.
+
+    Returns:
+        string: Basename path.
     """
     return os.path.basename(value)
 
 
 def get_route_file(file_path, file_name):
     """
-    This method build the path for a file MEDIA
+    This method build the path for a file MEDIA.
+
+    Args:
+        file_path (str): File path.
+        file_name (str): File name.
+
+    Returns:
+        str: Concatenate file path + file name.
     """
     try:
         route_file = file_path + "/" + file_name
@@ -206,7 +273,13 @@ def get_route_file(file_path, file_name):
 
 def get_photo_profile(iduser):
     """
-    This method return photo profile
+    This method return photo profile.
+
+    Args:
+        iduser (int): Identification user.
+
+    Returns:
+        str: Path photo profile.
     """
     default_photo = static("musette/img/profile.png")
     ModelProfile = get_main_model_profile()
@@ -224,7 +297,12 @@ def get_photo_profile(iduser):
 
 def send_welcome_email(email, username, activation_key):
     """
-    This method send email for confirm user
+    This method send email for confirm user.
+
+    Args:
+        email (str): Email user.
+        username (str): Username.
+        activation_key (str): Activation Key user.
     """
     username = base64.b64encode(username.encode("utf-8")).decode("ascii")
     content = _(
@@ -245,7 +323,11 @@ def send_welcome_email(email, username, activation_key):
 
 def send_mail_comment(url, list_email):
     """
-    Send email comment
+    Send email comment.
+
+    Args:
+        url (str): Url site.
+        list_email (list(str): List email to send mail.
     """
     if settings.SITE_URL.endswith("/"):
         site = settings.SITE_URL[:-1]
@@ -270,7 +352,11 @@ def send_mail_comment(url, list_email):
 
 def send_mail_topic(email_moderator, forum):
     """
-    Send email topic
+    Send email topic.
+
+    Args:
+        email_moderator (str): Email moderator.
+        forum (obj): Forum object.
     """
     # Send email to moderator
     if settings.SITE_URL.endswith("/"):
@@ -294,7 +380,13 @@ def send_mail_topic(email_moderator, forum):
 
 def get_data_confirm_email(email):
     """
-    This method return info for email confir
+    This method return info for email confirm.
+
+    Args:
+        email (str): Email user.
+
+    Returns:
+        dict: Activation key and key expires user.
     """
     salt = hashlib.sha1(str(random.random()).encode("utf-8")).hexdigest()[:5]
     key = salt.encode("utf-8") + email.encode("utf-8")
@@ -309,7 +401,15 @@ def get_data_confirm_email(email):
 
 def is_user_moderator_forum(category, forum, user):
     """
-    Check if user is moderator forum
+    Check if user is moderator forum.
+
+    Args:
+        category (str): Category name.
+        forum (obj): Object forum.
+        user (obj): Object user.
+
+    Returns:
+        bool: If the user is moderator forum.
     """
     forum = get_object_or_404(Forum, category__name=category, name=forum)
     if user in forum.moderators.all():
@@ -320,7 +420,15 @@ def is_user_moderator_forum(category, forum, user):
 
 def user_can_create_topic(category, forum, user):
     """
-    Check if user can create topic
+    Check if user can create topic.
+
+    Args:
+        category (str): Category name.
+        forum (obj): Object forum.
+        user (obj): Object user.
+
+    Returns:
+        bool: If the user can create topic.
     """
     is_moderator = is_user_moderator_forum(category, forum, user)
     is_register = Register.objects.filter(forum=forum, user=user).count()
@@ -333,7 +441,13 @@ def user_can_create_topic(category, forum, user):
 
 def get_total_forum_moderate_user(user):
     """
-    Get total of forums that moderate one user
+    Get total of forums that moderate one user.
+
+    Args:
+        user (obj): Object user.
+
+    Returns:
+        int: Total forum that user moderate.
     """
     return Forum.objects.filter(
         moderators=user
@@ -342,7 +456,13 @@ def get_total_forum_moderate_user(user):
 
 def save_notification_model(related_object, idobject, iduser, is_topic):
     """
-    Save new notificaiton
+    Save new notificaiton.
+
+    Args:
+        related_object (obj): Object related (Topic or Comment).
+        idobject (int): Id object.
+        iduser (int): Identification user.
+        is_topic (bool): If is a topic.
     """
     if is_topic:
         is_comment = False
@@ -362,7 +482,15 @@ def save_notification_model(related_object, idobject, iduser, is_topic):
 def get_moderators_and_send_notification_topic(request, forum, topic):
     """
     Get list moderators to send notification for realtime
-    and send notificaiton to model Notification for topic
+    and send notificaiton to model Notification for topic.
+
+    Args:
+        request (obj): Object request.
+        forum (obj): Object forum.
+        topic (obj): Object topic.
+
+    Returns:
+        list(int): List users.
     """
     # Get moderators forum
     list_us = []
@@ -383,7 +511,15 @@ def get_moderators_and_send_notification_topic(request, forum, topic):
 def get_users_and_send_notification_comment(request, topic, comment):
     """
     Get list users to send notification for realtime
-    and send notificaiton to model Notification for comment
+    and send notificaiton to model Notification for comment.
+
+    Args:
+        request (obj): Object request.
+        forum (obj): Object forum.
+        comment (obj): Object comment.
+
+    Returns:
+        dict: List users and list_email.
     """
     now = timezone.now()
 
@@ -443,8 +579,15 @@ def get_users_and_send_notification_comment(request, topic, comment):
 
 def check_moderate_topic_email(request, forum, obj):
     """
-    Check if moderate topic and is moderate
-    send email to moderators
+    Check if moderate topic and is moderate send email to moderators.
+
+    Args:
+        request (obj): Object request.
+        forum (obj): Object forum.
+        obj (obj): Object topic.
+
+    Returns:
+        obj: Object topic updated.
     """
     # If the forum is moderate
     if forum.is_moderate:
