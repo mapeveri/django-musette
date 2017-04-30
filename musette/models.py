@@ -21,7 +21,13 @@ from .validators import valid_extension
 @python_2_unicode_compatible
 class Category(models.Model):
     """
-    Model Category
+    Model Category.
+
+    - **parameters**:
+        :param idcategory: Identification category.
+        :param name: Name category.
+        :postion: Order position category.
+        :hidden: If a hidden category.
     """
     idcategory = models.AutoField(primary_key=True)
     name = models.CharField(max_length=80)
@@ -43,7 +49,20 @@ class Category(models.Model):
 @python_2_unicode_compatible
 class Forum(models.Model):
     """
-    Model Forum
+    Model Forum.
+
+    - **parameters**:
+        :param idforum: Identification forum.
+        :param category: Category relation forum.
+        :param parent: Parent forum.
+        :param name: Name forum.
+        :param postion: Order position forum.
+        :param description: Description forum.
+        :param moderadors: Moderators of the forum.
+        :param date: Date created forum.
+        :param topic_count: Total topics that contains the forum.
+        :param hidden: If a hidden forum.
+        :param is_moderate: If the forum is moderated.
     """
     idforum = models.AutoField(primary_key=True)
     category = models.ForeignKey(
@@ -149,7 +168,14 @@ class Forum(models.Model):
 
 class MessageForum(models.Model):
     """
-    Message forum model
+    Message forum model.
+
+    - **parameters**:
+        :param idmessage_forum: Identification message forum.
+        :param forum: Forum relation.
+        :param message_information: Message to inform the forum.
+        :param message_expire_from: Date expire 'from'.
+        :param message_expire_to: Date expire 'to'.
     """
     idmessage_forum = models.AutoField(primary_key=True)
     forum = models.ForeignKey(
@@ -180,7 +206,23 @@ class MessageForum(models.Model):
 @python_2_unicode_compatible
 class Topic(models.Model):
     """
-    Model Topic
+    Model Topic.
+
+    - **parameters**:
+        :param idtopic: Identification topic.
+        :param forum: Forum that contains the topic.
+        :param user: User that created the topic.
+        :param slug: Slug url.
+        :param title: Title topic.
+        :param date: Date created the topic.
+        :param last_activity: Last activity topic.
+        :param description: Content of the topic.
+        :param id_attachment: Identification attchment file.
+        :param attachment: Path attchment file.
+        :param is_close: If the topic is closed.
+        :param moderate: If the topic is moderated.
+        :param is_top: If the topic go to top in the forum.
+        :param: like: Total likes of the topic.
     """
     def generate_path(instance, filename):
         """
@@ -308,9 +350,16 @@ class Topic(models.Model):
 @python_2_unicode_compatible
 class Comment(models.Model):
     """
-    Model Comment
-    """
+    Model Comment.
 
+    - **parameters**:
+        :param idcomment: Identification Comment.
+        :param topic: Topic to which the commentary belongs.
+        :param user: User that created the comment.
+        :param date: Date that created the comment.
+        :param description: Content comment.
+        :param like: Total likes of the comment.
+    """
     idcomment = models.AutoField(primary_key=True)
     topic = models.ForeignKey(
         Topic, related_name='topics', verbose_name=_('Topic'),
@@ -338,7 +387,15 @@ class Comment(models.Model):
 @python_2_unicode_compatible
 class Notification(models.Model):
     """
-    Model Notification
+    Model Notification.
+
+    - **parameters**:
+        :param idnotification: Identification notification.
+        :param content_object: Relation topic or comment.
+        :param iduser: Identification user that belong the notification.
+        :param is_topic: If is a topic.
+        :param is_comment: If is a comment.
+        :param date: Date notification.
     """
     idnotification = models.AutoField(primary_key=True)
     content_type = models.ForeignKey(
@@ -362,7 +419,11 @@ class Notification(models.Model):
 @python_2_unicode_compatible
 class LikeTopic(models.Model):
     """
-    Model LikeTopic
+    Model LikeTopic.
+
+    - **parameters**:
+        :param topic: Topic that gave it 'like'.
+        :param user: User that created the 'like'.
     """
     topic = models.ForeignKey(
         Topic, related_name='likes_topic', on_delete=models.CASCADE
@@ -379,7 +440,11 @@ class LikeTopic(models.Model):
 @python_2_unicode_compatible
 class LikeComment(models.Model):
     """
-    Model LikeComment
+    Model LikeComment.
+
+    - **parameters**:
+        :param comment: Coment that gave it 'like'.
+        :param user: User that created the 'like'.
     """
     comment = models.ForeignKey(
         Comment, related_name='likes_comment', on_delete=models.CASCADE
@@ -396,7 +461,13 @@ class LikeComment(models.Model):
 @python_2_unicode_compatible
 class Register(models.Model):
     """
-    Model Register
+    Model Register.
+
+    - **parameters**:
+        :param idregister: Identification register.
+        :param forum: Forum to which it was registered.
+        :param user: User that registered.
+        :param date: Date that registered.
     """
     idregister = models.AutoField(primary_key=True)
     forum = models.ForeignKey(
@@ -423,7 +494,16 @@ class Register(models.Model):
 @python_2_unicode_compatible
 class AbstractProfile(models.Model):
     """
-    Model AbstractProfile
+    Model AbstractProfile.
+
+    - **parameters**:
+        :param idprofile: Identification profile.
+        :param iduser: User that belong to profile.
+        :param photo: Photo profile.
+        :param about: Content 'about' the of profile.
+        :param activation_key: Activation key authentication.
+        :param key_expire: Key activate expire authentication.
+        :param is_troll: If the user is troll.
     """
     def generate_path_profile(instance, filename):
         """
@@ -473,7 +553,18 @@ class AbstractProfile(models.Model):
 @python_2_unicode_compatible
 class Configuration(models.Model):
     """
-    Model configuration mussete like logo and class css
+    Model configuration mussete like logo and class css.
+
+    - **parameters**:
+        :param idconfig: Identification configuration.
+        :param site: Site relation.
+        :param logo: Logo forum.
+        :param favicon: Favicon forum.
+        :param logo_width: Width logo forum.
+        :param logo_height: Height logo forum.
+        :param custom_css: Personalization css of the forum.
+        :description: Description main forum site.
+        :keyword: Keywords words if the site for the SEO.
     """
     def generate_path_configuration(instance, filename):
         """

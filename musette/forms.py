@@ -16,7 +16,13 @@ from musette.email import send_mail
 
 class FormLogin(forms.Form):
     """
-    Form of login
+    Form of login.
+
+    - **parameters**:
+        :param widgetUser: Widget for the field user.
+        :param widgetPass: Widget for the field password.
+        :param username: Username field.
+        :param password: Password field.
     """
     widgetUser = forms.TextInput(attrs={
         'class': 'form-control', 'placeholder': _("Username")
@@ -57,7 +63,12 @@ class FormLogin(forms.Form):
 
 class FormSignUp(forms.ModelForm):
     """
-    Form for create one new user
+    Form for create one new user.
+
+    - **parameters**:
+        :param widget_pass: Widget for the field password.
+        :password: Password field.
+        :pass_confirm: Confirm password field.
     """
     widget_pass = forms.PasswordInput(attrs={'class': 'form-control'})
     password = forms.CharField(max_length=128, widget=forms.PasswordInput)
@@ -143,7 +154,7 @@ class FormSignUp(forms.ModelForm):
 
 class FormAdminTopic(forms.ModelForm):
     """
-    Form for topic cadmin
+    Form for topic cadmin.
     """
     def __init__(self, *args, **kwargs):
         self.request = kwargs.pop('request', None)
@@ -165,7 +176,7 @@ class FormAdminTopic(forms.ModelForm):
 
 class FormAddTopic(forms.ModelForm):
     """
-    Form for create one new topic
+    Form for create one new topic.
     """
     class Meta:
         model = models.Topic
@@ -195,7 +206,12 @@ class FormAddTopic(forms.ModelForm):
 
 class CustomClearableFileInput(ClearableFileInput):
     """
-    Changes order fields
+    Changes order fields for to ClearableFileInput.
+
+    - **parameters**:
+        :param template_with_initial: Content main that contains the input file
+            and link with the current file.
+        :param template_with_clear: Content checkbox for clear the current file.
     """
     template_with_initial = (
         '%(initial_text)s: <a href="%(initial_url)s">%(initial)s</a> '
@@ -245,7 +261,7 @@ class CustomClearableFileInput(ClearableFileInput):
 
 class FormEditTopic(forms.ModelForm):
     """
-    Form for edit one new topic
+    Form for edit one new topic.
     """
     class Meta:
         model = models.Topic
@@ -280,7 +296,7 @@ class FormEditTopic(forms.ModelForm):
 
 class FormAddComment(forms.ModelForm):
     """
-    Form for add comment to topic
+    Form for add comment to topic.
     """
     class Meta:
         model = models.Comment
@@ -306,7 +322,7 @@ class FormAddComment(forms.ModelForm):
 
 class FormAdminProfile(forms.ModelForm):
     """
-    Form for admin profile
+    Form for admin profile.
     """
     class Meta:
         model = utils.get_main_model_profile()
@@ -320,7 +336,7 @@ class FormAdminProfile(forms.ModelForm):
 
 class FormEditProfile(forms.ModelForm):
     """
-    Form for edit one profile
+    Form for edit one profile.
     """
     class Meta:
         model = utils.get_main_model_profile()
@@ -343,7 +359,10 @@ class FormEditProfile(forms.ModelForm):
 
 class FormAdminConfiguration(forms.ModelForm):
     """
-    Form configuration
+    Form configuration.
+
+    - **parameters**:
+        :param name_file_custom: Custom css file for the configuration.
     """
     name_file_custom = finders.find('musette/css/custom.css')
 

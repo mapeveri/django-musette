@@ -3,7 +3,7 @@ from django.apps import AppConfig
 
 class MusetteConfig(AppConfig):
     """
-    App configuration
+    Musette app configuration.
     """
     name = 'musette'
 

@@ -6,6 +6,13 @@ from .models import Category, Forum, Topic
 
 
 class TopicFeed(Feed):
+    """
+    Topic feed for rss and atom.
+
+    - **parameters**:
+        :param title: Tittle feed.
+        :param description: Description feed.
+    """
     # attr basic of feed
     title = 'Forum rss'
     description = 'Feed for forums'

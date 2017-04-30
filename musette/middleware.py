@@ -8,7 +8,7 @@ from . import settings
 
 class ActiveUserMiddleware(object):
     """
-    Set user authenticate
+    Set user authenticate.
     """
     def process_request(self, request):
         current_user = request.user
@@ -22,8 +22,7 @@ class ActiveUserMiddleware(object):
 
 class RestrictStaffToAdminMiddleware(object):
     """
-    A middleware that restricts staff members
-    access to administration panels
+    A middleware that restricts staff members access to administration panels.
     """
     def process_request(self, request):
         if request.path.startswith(reverse('admin:index')):

@@ -6,7 +6,7 @@ from django.core.mail import EmailMultiAlternatives
 
 class EmailThread(threading.Thread):
     """
-    Class for send email async with thread
+    Class for send email async with thread.
     """
     def __init__(self, subject, body, from_email, recipient_list,
                  fail_silently, html):
@@ -30,7 +30,7 @@ class EmailThread(threading.Thread):
 def send_mail(subject, body, from_email, recipient_list, fail_silently=False,
               html=None, *args, **kwargs):
     """
-    Send email async
+    Send email async.
     """
     EmailThread(
         subject, body, from_email, recipient_list, 

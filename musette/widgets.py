@@ -3,7 +3,7 @@ from django import forms
 
 class TextareaWidget(forms.Textarea):
     """
-    Widget rich textarea
+    Widget rich textarea.
     """
     class Media:
         # tiny_mce

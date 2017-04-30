@@ -4,7 +4,7 @@ from musette import utils
 
 class IsReadOnly(permissions.BasePermission):
     """
-    Readonly permissions
+    Readonly permissions.
     """
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:

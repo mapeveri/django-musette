@@ -18,7 +18,13 @@ register = template.Library()
 @register.filter
 def in_category(category):
     """
-    This tag filter the forum for category
+    This tag filter the forum for category.
+
+    Args:
+        category (int): Category id to filter.
+
+    Returns:
+        list(object): Total forums the belong to the category id.
     """
     return Forum.objects.filter(
         category_id=category,
@@ -29,8 +35,13 @@ def in_category(category):
 @register.filter
 def get_tot_comments(idtopic):
     """
-    This tag filter return the total
-    comments of one topic
+    This tag filter return the total comments of one topic.
+
+    Args:
+        idtopic (int): Identification topic to filter.
+
+    Returns:
+        int: Total comments that filter idtopic.
     """
     return Comment.objects.filter(
         topic_id=idtopic,
@@ -40,8 +51,13 @@ def get_tot_comments(idtopic):
 @register.simple_tag
 def get_tot_views(idtopic):
     """
-    This tag filter return the total
-    views for topic or forum
+    This tag filter return the total views for topic or forum.
+
+    Arrgs:
+        idtopic (int): Identification topic to filter.
+
+    Returns:
+        int: Total views topic.
     """
     try:
         content = Topic.objects.get(idtopic=idtopic)
@@ -61,7 +77,13 @@ def get_tot_views(idtopic):
 @register.filter
 def get_path_profile(user):
     """
-    Return tag a with profile
+    Return tag a with profile.
+
+    Args:
+        user (object): User to get path profile.
+
+    Returns:
+        str: Path profile.
     """
     username = getattr(user, "username")
     url = str(reverse_lazy("profile", kwargs={'username': username}))
@@ -73,8 +95,13 @@ def get_path_profile(user):
 @register.filter
 def get_tot_users_comments(topic):
     """
-    This tag filter return the total
-    users of one topic
+    This tag filter return the total users of one topic.
+
+    Args:
+        topic (object): Object topic.
+
+    Returns:
+        str: String html with the all users comments.
     """
     idtopic = topic.idtopic
     users = Comment.objects.filter(topic_id=idtopic)
@@ -112,23 +139,33 @@ def get_tot_users_comments(topic):
 @register.filter
 def get_tot_topics_moderate(forum):
     """
-    This filter return info about
-    Few topics missing for moderate
+    This filter return info about few topics missing for moderate.
+
+    Args:
+        forum (object): Forum object.
+
+    Returns:
+        int: If it is 0 there are no topics to moderate.
     """
     topics_count = forum.topics_count
     idforum = forum.idforum
 
     moderates = Topic.objects.filter(
-        forum_id=idforum,
-        moderate=True).count()
+        forum_id=idforum, moderate=True
+    ).count()
     return topics_count - moderates
 
 
 @register.filter
 def get_item_notification(notification):
     """
-    This filter return info about
-    one notification of one user
+    This filter return info about one notification of one user.
+
+    Args:
+        notification (object): Notification object.
+
+    Returns:
+        str: String html with the full content item notification.
     """
     idobject = notification.idobject
     is_comment = notification.is_comment
@@ -185,16 +222,29 @@ def get_item_notification(notification):
 @register.filter
 def get_pending_notifications(user):
     """
-    This method return total pending notifications
+    This method return total pending notifications.
+
+    Args:
+        user (object): User object.
+
+    Returns:
+        int: Total notification pending.
     """
     return Notification.objects.filter(
-        is_view=False, iduser=user).count()
+        is_view=False, iduser=user
+    ).count()
 
 
 @register.filter
 def get_last_activity(topic):
     """
-    This method return last activity of topic
+    This method return last activity of topic.
+
+    Args:
+        topic (object): Topic object.
+
+    Returns:
+        st: String html with the last activity formated.
     """
     # Get timezone for datetime
     d_timezone = timezone.localtime(topic.last_activity)
@@ -211,7 +261,14 @@ def get_last_activity(topic):
 @register.filter
 def get_object_user(obj, user):
     """
-    Get object user
+    Get object user.
+
+    Args:
+        obj (object): Object that contains the user
+        user (object): User object.
+
+    Returns:
+        object: Object user.
     """
     if obj:
         return user.user
@@ -222,7 +279,13 @@ def get_object_user(obj, user):
 @register.filter
 def get_tot_users_forum(forum):
     """
-    Get total users register and moderators
+    Get total users register and moderators.
+
+    Args:
+        forum (object): Forum object.
+
+    Returns:
+        int: Total users the belong to forum.
     """
     users_registers = forum.register_forums.all().count()
     moderators = forum.moderators.all().count()
@@ -232,7 +295,14 @@ def get_tot_users_forum(forum):
 @register.filter
 def check_like_comment(comment, user):
     """
-    Check if like comment is checked
+    Check if like comment is checked.
+
+    Args:
+        comment (object): Comment object.
+        user (object): User object
+
+    Returns:
+        bool: Check if already gave like to the comment.
     """
     return user.likes_comment_users.filter(
         user=user, comment=comment
@@ -242,7 +312,14 @@ def check_like_comment(comment, user):
 @register.filter
 def check_like_topic(topic, user):
     """
-    Check if like topic is checked
+    Check if like topic is checked.
+
+    Args:
+        topic (object): Topic object.
+        user (object): User object
+
+    Returns:
+        bool: Check if already gave like to the topic.
     """
     return user.likes_topic_users.filter(
         user=user, topic=topic
@@ -252,6 +329,12 @@ def check_like_topic(topic, user):
 @register.filter
 def get_total_forum_moderator(user):
     """
-    Get total of forums that moderate one user
+    Get total of forums that moderate one user.
+
+    Args:
+        user (object): User object
+
+    Returns:
+        int: Total forum that user moderate.
     """
     return get_total_forum_moderate_user(user)

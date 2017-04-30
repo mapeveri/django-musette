@@ -10,7 +10,7 @@ from musette import models, utils
 @receiver(post_save, sender=settings.AUTH_USER_MODEL)
 def post_save_user(sender, instance, **kwargs):
     """
-    This signal is event of model user for create new profile
+    This signal is event of model user for create new profile.
     """
     if kwargs['created']:
         subclasses = models.AbstractProfile.__subclasses__()
@@ -39,7 +39,7 @@ def post_save_user(sender, instance, **kwargs):
 @receiver(m2m_changed, sender=models.Forum.moderators.through)
 def post_save_forum(sender, instance, **kwargs):
     """
-    This signal is event of model forum for add permissions
+    This signal is event of model forum for add permissions.
     """
     # If add moderator
     if kwargs['action'] == 'post_add':
@@ -65,7 +65,7 @@ def post_save_forum(sender, instance, **kwargs):
 @receiver(pre_delete, sender=models.Comment)
 def pre_delete_receiver_notification(sender, instance, **kwargs):
     """
-    Delete notification comment or topic
+    Delete notification comment or topic.
     """
     ctype = ContentType.objects.get_for_model(instance)
     models.Notification.objects.filter(

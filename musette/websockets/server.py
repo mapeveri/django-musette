@@ -18,7 +18,7 @@ clients_comments = []
 def redis_listener_notification():
     """
     This method subscribe to redis and send message
-    to handler websocket notifications
+    to handler websocket notifications.
     """
     r = redis.Redis()
     ps = r.pubsub()
@@ -41,7 +41,7 @@ def redis_listener_notification():
 def redis_listener_comment():
     """
     This method subscribe to redis and send message
-    to handler websocket comments
+    to handler websocket comments.
     """
     r = redis.Redis()
     ps = r.pubsub()
@@ -63,7 +63,7 @@ def redis_listener_comment():
 
 class RealtimeHandler(tornado.websocket.WebSocketHandler):
     """
-    Handler websocket
+    Handler websocket.
     """
     def check_origin(self, origin):
         return True
