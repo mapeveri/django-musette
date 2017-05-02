@@ -66,7 +66,7 @@
 
             {% if profile.iduser.id == user.id and not profile.is_troll %}
                 <br>
-                <button onclick="document.location = '{% url 'edit_profile' profile.iduser.username %}'" class="btn btn btn-inverse">{% trans "Edit profile" %}</button>
+                <a href="{% url 'edit_profile' profile.iduser.username %}" class="btn btn btn-inverse">{% trans "Edit profile" %}</a>
             {% endif %}
 
         </div>

@@ -70,8 +70,9 @@ Roadmap Django-Musette
 2. [X] Issue #92 Update django-rest-framework
 3. [X] Issue #96 Minified file javascript and css 
 4. [X] Issue #94 Improve SEO tags
-5. [] Issue #85 Improve the sending of emails
-6. [] Issue #87 Migrate web sockets to django-channels
-7. [] Issue #81 Add docker container  
-8. [] If errors are found in the previous version. They will be arranged
+5. [X] Issue #98 Bug in CustomClearableFileInput
+6. [] Issue #85 Improve the sending of emails
+7. [] Issue #87 Migrate web sockets to django-channels
+8. [] Issue #81 Add docker container  
+9. [] If errors are found in the previous version. They will be arranged
 
