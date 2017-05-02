@@ -2,6 +2,8 @@ import os
 
 from django.conf import settings
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 settings.configure(
     DEBUG = False,
     ALLOWED_HOSTS = ['*'],
@@ -45,4 +47,11 @@ settings.configure(
     SITE_NAME = 'Musette Forum',
     SITE_URL = 'http://localhost:800/',
     EMAIL_MUSETTE = '',
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles'),
+    STATIC_URL = '/static/',
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'static'),
+)
+
+
 )
