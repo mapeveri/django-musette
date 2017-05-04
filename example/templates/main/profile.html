@@ -1,11 +1,13 @@
-<h4>Location</h4>
+{% load i18n %}
+
+<h4>{% trans "location" %}</h4>
 <div class="panel panel-default">
     <div class="panel-body">
         {{ profile.location|default_if_none:''|safe }}
     </div>
 </div>
 
-<h4>Company</h4>
+<h4>{% trans "company" %}</h4>
 <div class="panel panel-default">
     <div class="panel-body">
         {{ profile.company|default_if_none:''|safe }}

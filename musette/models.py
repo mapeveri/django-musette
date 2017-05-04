@@ -519,9 +519,9 @@ class AbstractProfile(models.Model):
         on_delete=models.CASCADE
     )
     photo = models.FileField(
-        upload_to=generate_path_profile, null=True, blank=True,
+        _("Photo"), upload_to=generate_path_profile, null=True, blank=True,
     )
-    about = models.TextField(blank=True, null=True)
+    about = models.TextField(_("About me"), blank=True, null=True)
     activation_key = models.CharField(max_length=100, null=False, blank=False)
     key_expires = models.DateTimeField(auto_now=False)
     is_troll = models.BooleanField(

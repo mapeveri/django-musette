@@ -6,7 +6,7 @@
 
 {% block content %}
 
-<div class="container">
+<div class="container well">
     <div class="row">
         <div class="col-md-2 bg_blur">
 
@@ -66,7 +66,7 @@
 
             {% if profile.iduser.id == user.id and not profile.is_troll %}
                 <br>
-                <a href="{% url 'edit_profile' profile.iduser.username %}" class="btn btn btn-inverse">{% trans "Edit profile" %}</a>
+                <a href="{% url 'edit_profile' profile.iduser.username %}" class="btn btn-default">{% trans "Edit profile" %}</a>
             {% endif %}
 
         </div>
