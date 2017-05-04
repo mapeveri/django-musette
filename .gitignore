@@ -10,5 +10,6 @@ example/media/
 /django_musette.egg-info/
 /.vscode/
 /node_modules/
+webpack-stats.json
 
 !/musette/migrations/
