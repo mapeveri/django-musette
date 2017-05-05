@@ -1,8 +1,7 @@
 from django import forms
 from django.conf import settings
 from django.contrib.staticfiles.templatetags.staticfiles import static
-from django.forms.widgets import ClearableFileInput, CheckboxInput
-from django.utils.html import conditional_escape
+from django.forms.widgets import ClearableFileInput
 from django.utils.safestring import mark_safe
 
 from musette import utils
@@ -53,24 +52,5 @@ class CustomClearableFileInput(ClearableFileInput):
         template = '%(input)s'
         substitutions['input'] = super(
             ClearableFileInput, self).render(name, value, attrs)
-
-        if self.is_initial(value):
-            template = self.template_with_initial
-
-            if not self.is_required:
-                checkbox_name = self.clear_checkbox_name(name)
-                checkbox_id = self.clear_checkbox_id(checkbox_name)
-
-                substitutions['clear_checkbox_name'] = conditional_escape(
-                    checkbox_name)
-
-                substitutions['clear_checkbox_id'] = conditional_escape(
-                    checkbox_id)
-
-                substitutions['clear'] = CheckboxInput().render(
-                    checkbox_name, False, attrs={'id': checkbox_id})
-
-                clear_template = self.template_with_clear % substitutions
-                substitutions['clear_template'] = clear_template
 
         return mark_safe(template % substitutions)
