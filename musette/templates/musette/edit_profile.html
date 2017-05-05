@@ -3,11 +3,6 @@
 {% load i18n %}
 {% load static %}
 
-{% block extra_js %}
-	<!-- For TinyMce -->
-    {{ form.media.js }}
-{% endblock %}
-
 {% block content %}
 
 <div class="container">
@@ -33,5 +28,23 @@
 
 </div>
 
+{% endblock %}
+
+{% block extra_js %}
+<!-- For TinyMce -->
+{{ form.media.js }}
+
+<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD-B8ODbRMMBnm5mLNAR4_PyZMNHJmP_Hk" type="text/javascript"></script>
+
+<script type="text/javascript">
+    function initialize() {
+        var options = {
+            types: ['(regions)']
+        };
+        var input = document.getElementById('id_location');
+        var autocomplete = new google.maps.places.Autocomplete(input , options);
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
 
 {% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-03 21:19-0300\n"
+"POT-Creation-Date: 2017-05-05 10:19-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,11 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: main/models.py:23
-msgid "location"
-msgstr ""
-
-#: main/models.py:26
+#: main/models.py:23 templates/main/profile.html:3
 msgid "company"
 msgstr ""
 
@@ -111,7 +107,7 @@ msgid "Position"
 msgstr ""
 
 #: musette/models.py:78 musette/models.py:166 musette/models.py:254
-#: musette/models.py:375 musette/models.py:596
+#: musette/models.py:375 musette/models.py:599
 #: musette/templates/musette/edit_topic.html:44
 #: musette/templates/musette/new_topic.html:45
 msgid "Description"
@@ -264,39 +260,47 @@ msgstr ""
 msgid "Photo"
 msgstr ""
 
-#: musette/models.py:528 musette/templates/musette/profile.html:22
+#: musette/models.py:524 musette/templates/musette/profile.html:75
+msgid "About me"
+msgstr ""
+
+#: musette/models.py:526
+msgid "Location"
+msgstr ""
+
+#: musette/models.py:531 musette/templates/musette/profile.html:22
 msgid "Is troll"
 msgstr ""
 
-#: musette/models.py:529
+#: musette/models.py:532
 msgid "If the user is troll"
 msgstr ""
 
-#: musette/models.py:586
+#: musette/models.py:589
 msgid "Logo width"
 msgstr ""
 
-#: musette/models.py:587 musette/models.py:591
+#: musette/models.py:590 musette/models.py:594
 msgid "In pixels"
 msgstr ""
 
-#: musette/models.py:590
+#: musette/models.py:593
 msgid "Logo height"
 msgstr ""
 
-#: musette/models.py:594
+#: musette/models.py:597
 msgid "Custom design"
 msgstr ""
 
-#: musette/models.py:597
+#: musette/models.py:600
 msgid "Keywords"
 msgstr ""
 
-#: musette/models.py:600
+#: musette/models.py:603
 msgid "Configuration"
 msgstr ""
 
-#: musette/models.py:601
+#: musette/models.py:604
 msgid "Configurations"
 msgstr ""
 
@@ -639,10 +643,6 @@ msgstr ""
 #: musette/templates/musette/topic_index.html:75
 #: musette/templates/musette/users_forum.html:33
 msgid "a while ago"
-msgstr ""
-
-#: musette/templates/musette/profile.html:75
-msgid "About me"
 msgstr ""
 
 #: musette/templates/musette/signup.html:13

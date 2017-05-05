@@ -522,6 +522,9 @@ class AbstractProfile(models.Model):
         _("Photo"), upload_to=generate_path_profile, null=True, blank=True,
     )
     about = models.TextField(_("About me"), blank=True, null=True)
+    location = models.CharField(
+        _("Location"), max_length=200, null=True, blank=True
+    )
     activation_key = models.CharField(max_length=100, null=False, blank=False)
     key_expires = models.DateTimeField(auto_now=False)
     is_troll = models.BooleanField(

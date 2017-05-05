@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-05-03 21:19-0300\n"
+"POT-Creation-Date: 2017-05-05 10:19-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,11 +18,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: main/models.py:23
-msgid "location"
-msgstr "luogo"
-
-#: main/models.py:26
+#: main/models.py:23 templates/main/profile.html:3
 msgid "company"
 msgstr "azienda"
 
@@ -112,7 +108,7 @@ msgid "Position"
 msgstr "Posizione"
 
 #: musette/models.py:78 musette/models.py:166 musette/models.py:254
-#: musette/models.py:375 musette/models.py:596
+#: musette/models.py:375 musette/models.py:599
 #: musette/templates/musette/edit_topic.html:44
 #: musette/templates/musette/new_topic.html:45
 msgid "Description"
@@ -265,39 +261,47 @@ msgstr "Registri"
 msgid "Photo"
 msgstr "Fotografia "
 
-#: musette/models.py:528 musette/templates/musette/profile.html:22
+#: musette/models.py:524 musette/templates/musette/profile.html:75
+msgid "About me"
+msgstr "A proposito di me"
+
+#: musette/models.py:526
+msgid "Location"
+msgstr "luogo"
+
+#: musette/models.py:531 musette/templates/musette/profile.html:22
 msgid "Is troll"
 msgstr "Se sei un troll"
 
-#: musette/models.py:529
+#: musette/models.py:532
 msgid "If the user is troll"
 msgstr "Se l'utente è un troll"
 
-#: musette/models.py:586
+#: musette/models.py:589
 msgid "Logo width"
 msgstr "Larghezza logo"
 
-#: musette/models.py:587 musette/models.py:591
+#: musette/models.py:590 musette/models.py:594
 msgid "In pixels"
 msgstr "In pixels"
 
-#: musette/models.py:590
+#: musette/models.py:593
 msgid "Logo height"
 msgstr "Altezza logo"
 
-#: musette/models.py:594
+#: musette/models.py:597
 msgid "Custom design"
 msgstr "Design personalizzato"
 
-#: musette/models.py:597
+#: musette/models.py:600
 msgid "Keywords"
 msgstr ""
 
-#: musette/models.py:600
+#: musette/models.py:603
 msgid "Configuration"
 msgstr "Configurazione"
 
-#: musette/models.py:601
+#: musette/models.py:604
 msgid "Configurations"
 msgstr "Configurazioni"
 
@@ -653,10 +657,6 @@ msgstr "Ultima visualizzazione"
 #: musette/templates/musette/users_forum.html:33
 msgid "a while ago"
 msgstr "un po 'di tempo fa"
-
-#: musette/templates/musette/profile.html:75
-msgid "About me"
-msgstr "A proposito di me"
 
 #: musette/templates/musette/signup.html:13
 msgid "Create a free account."
