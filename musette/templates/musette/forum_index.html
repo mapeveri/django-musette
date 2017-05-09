@@ -35,22 +35,32 @@
             {{ message_forum|safe }}
         </div>
     {% endif %}
-    <ul class="breadcrumb">
-        <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
-        {% if forum.parent %}
-            <li><a href="{% url 'forum' forum.category forum.parent %}">{{ forum.parent }}</a></li>
-        {% endif %}
-        <li class="active">{{ forum }}</li>
-    </ul>
 
-    <h4>{{ forum.name }}</h4>
-    <small>{{forum.description|striptags}}</small>
-
+    <div class="btn-group show-on-hover">
+        <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+            {{ forum }} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
+            <li role="separator" class="divider"></li>    
+            {% if forum.parent %}
+                <li><a href="{% url 'forum' forum.category forum.parent %}">{{ forum.parent }}</a></li>
+            {% endif %}
+            <li class="active"><a href="#">{{ forum }}</a></li>
+        </ul>
+    </div>
+    
     {% if forums_childs|length > 0 %}
-        <br />
-        {% for forum in forums_childs %}
-            <span class="label label-default"><a href="{% url 'forum' forum.category forum.name %}" style="color: white">{{ forum.name }}</a></span>
-        {% endfor %}
+        <div class="btn-group show-on-hover">
+            <button type="button" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown">
+                Sub-{% trans "Forums" %} <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">    
+                {% for forum in forums_childs %}
+                    <li><a href="{% url 'forum' forum.category forum.name %}">{{ forum.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
     {% endif %}
 
     <hr />
@@ -67,14 +77,15 @@
             {% endif %}
         {% endif %}
     {% endif %}
-
-    
+ 
     <div class="row">
         <div class="pull-left">
             {% if not user.user.is_troll %}
                 {% if register or user.is_superuser or user in forum.moderators.all %}
                     <div class="col-md-5 text-left">
-                        <button onclick="window.location = '{% url 'newtopic' forum.category forum.name %}'" class="btn btn-inverse btn-sm"><i class="fa fa-plus"></i> {% trans "New topic" %}</button>
+                        {% with 'newtopic' as name_url %}
+                        <button onclick="window.location = '{% url name_url forum.category forum.name %}'" class="btn btn-inverse btn-sm"><i class="fa fa-plus"></i> {% trans "New topic" %}</button>
+                        {% endwith %}
                     </div>
                     {% if not user.is_superuser and not user in forum.moderators.all %}
                     <div class="col-md-4 text-right">
@@ -109,48 +120,47 @@
     </div>
     <br>
 
-    <div class="panel panel-default">
-        <div class="panel-heading" style="height: 2.8em">
-            <p>
-                {% if total_hits|add:"0" > 1 %}
-                    <span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "views" %})</span>
-                {% else %}
-                    <span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "view" %})</span>
-                {% endif %}
-            </p>
-        </div>
-          <div class="panel-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered">
-                    <thead>
-                      <tr>
-                        <th><i class="fa fa-square" aria-hidden="true"></i> {% trans "Title" %}</th>
-                        <th><i class="fa fa-history"></i> {% trans "Last activity" %}</th>
-                        <th><i class="fa fa-comments" aria-hidden="true"></i> {% trans "Comments" %}</th>
-                        <th><i class="fa fa-eye" aria-hidden="true"></i> {% trans "Views" %}</th>
-                      </tr>
-                    </thead>
-                    <tbody id="forums-items" v-endless-pagination="{'paginateOnScroll': true, 'paginateOnScrollMargin': 180}">
-                        {% include "musette/forum.html" %}
-                    </tbody>
-                </table>
-            </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                <th><i class="fa fa-square" aria-hidden="true"></i> {% trans "Title" %}</th>
+                <th><i class="fa fa-history"></i> {% trans "Last activity" %}</th>
+                <th><i class="fa fa-comments" aria-hidden="true"></i> {% trans "Comments" %}</th>
+                <th><i class="fa fa-eye" aria-hidden="true"></i> {% trans "Views" %}</th>
+                </tr>
+            </thead>
+            <tbody id="forums-items" v-endless-pagination="{'paginateOnScroll': true, 'paginateOnScrollMargin': 180}">
+                {% include "musette/forum.html" %}
+            </tbody>
+        </table>
+    </div>
 
-            <div class="pull-left">
-                <p><i class="fa fa-history"></i> {% trans "Created" %}: {{forum.date.date}}</p>
-                <p><strong><i class="fa fa-map-o"></i> {% trans "Topics" %}: {{forum.topics_count}}</strong></p>
-                {% if forum.is_moderate %}
+    <div class="pull-left">
+        <p><i class="fa fa-history"></i> {% trans "Created" %}: {{forum.date.date}}</p>
+        <p>
+            {% if total_hits|add:"0" > 1 %}
+                <span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "views" %})</span>
+            {% else %}
+                <span style="font-size: 0.8em">({% trans "This forum has" %} {{ total_hits }} {% trans "view" %})</span>
+            {% endif %}
+        </p>
+    </div>
+    <div class="pull-right">
+        <p><a href="{% url 'users_forum' forum.category forum %}"> <i class="fa fa-user"></i> {% trans "Forum members" %}</a></p>
+        <strong><i class="fa fa-map-o"></i><small> {% trans "Topics" %}: {{forum.topics_count}}</small></strong>
+        {% if forum.is_moderate %}
+            {% for moderate in forum.moderators.all %}
+                {% if moderate == user %}
                     {% if forum|get_tot_topics_moderate > 0 %}
-                        <p><strong> ({% trans "Missing for moderate" %}: {{forum|get_tot_topics_moderate}})</strong></p>
+                        <strong><small> ({% trans "Missing for moderate" %}: {{forum|get_tot_topics_moderate}})</small></strong>
                     {% endif %}
                 {% endif %}
-            </div>
-            <div class="pull-right">
-                <a href="{% url 'users_forum' forum.category forum %}"> <i class="fa fa-user"></i> {% trans "Forum members" %}</a>
-            </div>
-
-          </div>
+            {% endfor %}
+        {% endif %}
     </div>
+
+
 
 </div>
 
@@ -158,4 +168,5 @@
 
 {% block hitcount_javascript %}
 {% insert_hit_count_js_variables for forum %}
+
 {% endblock %}

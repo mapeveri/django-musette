@@ -13,24 +13,22 @@
         <li class="active">{% trans "Forum members" %}</li>
     </ul>
 
-    <h4>{% trans "Forum members" %}: <a href="{% url 'forum' forum.category forum %}">{{forum}}</a></h4>
+    <div class="well">
+        <h4>{% trans "Forum members" %}: <a href="{% url 'forum' forum.category forum %}">{{forum}}</a></h4>
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                <h5>
-                    {% trans "Moderator" %}:
-                    <span>
-                        {% for moderator in forum.moderators.all %}
-                            {{ moderator|get_path_profile|safe }}
-                        {% endfor %}
-                    </span>
-                </h5>
-            </h3>
-        </div>
-        <div id="users-items" class="panel-body" v-endless-pagination="{'paginateOnScroll': true}">
-            {% include 'musette/users_forum.html' %}
-        </div>
+        {% if forum.moderators.all.count > 1 %}
+            {% trans "Moderators" %}:
+        {% else %}
+            {% trans "Moderator" %}:
+        {% endif %}
+        <p>
+            {% for moderator in forum.moderators.all %}
+                {{ moderator|get_path_profile|safe }}
+            {% endfor %}
+        </p>
+    </div>
+    <div id="users-items"  v-endless-pagination="{'paginateOnScroll': true}">
+        {% include 'musette/users_forum.html' %}
     </div>
 </div>
 

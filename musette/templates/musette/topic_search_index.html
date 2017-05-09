@@ -6,21 +6,16 @@
 {% block content %}
 
 <div class="container">
-
-	<div class="row">
-      <ul class="breadcrumb">
-          <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
-          <li><a href="{% url 'forum' forum.category forum %}">{{forum}}</a></li>
-          <li class="active">{% trans "Find Topics" %}</li>
-      </ul>
-    </div>
+	<ul class="breadcrumb">
+		<li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
+		<li><a href="{% url 'forum' forum.category forum %}">{{forum}}</a></li>
+		<li class="active">{% trans "Find Topics" %}</li>
+	</ul>
 
 	<div class="endless_page_template">
-		<div class="panel panel-default" >
-	        <div class="panel-heading">
-	            <div class="panel-title">{% trans "Find Topics" %}</div>
-	        </div>
-	        <div id="search-items" class="panel-body" v-endless-pagination="{'paginateOnScroll': true, 'paginateOnScrollMargin': 180}">
+		<div class="well">
+	        <h5>{% trans "Find Topics" %}</h5>
+	        <div id="search-items" style="padding: 0px" class="panel-body" v-endless-pagination="{'paginateOnScroll': true, 'paginateOnScrollMargin': 180}">
 	        	{% include "musette/topic_search.html" %}
 	        </div>
 	    </div>

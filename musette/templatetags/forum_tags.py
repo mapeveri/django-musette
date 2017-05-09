@@ -202,7 +202,9 @@ def get_item_notification(notification):
         # Data profile
         photo = get_photo_profile(userid)
         date = get_datetime_topic(notification.date)
-        url_profile = str(reverse_lazy("profile", kwargs={'username': username}))
+        url_profile = str(reverse_lazy(
+            "profile", kwargs={'username': username}
+        ))
 
         # Notificacion
         html += '<a class="content" href="' + url_topic + '">'

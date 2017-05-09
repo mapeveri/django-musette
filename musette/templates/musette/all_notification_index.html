@@ -6,20 +6,15 @@
 {% block content %}
 
 <div class="container">
-
-    <div class="row">
-      <ul class="breadcrumb">
-          <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
-          <li class="active">{% trans "Notifications" %}</li>
-      </ul>
-    </div>
+    <ul class="breadcrumb">
+        <li><a href="{% url 'forums' %}">{% trans "Forums" %}</a></li>
+        <li class="active">{% trans "Notifications" %}</li>
+    </ul>
 
     <div class="endless_page_template">
-        <div class="panel panel-default" >
-            <div class="panel-heading">
-                <div class="panel-title">{% trans "Notifications" %}</div>
-            </div>
-            <div id="notifications-items" class="panel-body" v-endless-pagination="{'paginateOnScroll': true}">
+        <div class="well">
+            <h5>{% trans "Notifications" %}</h5>
+            <div id="notifications-items" style="padding: 0px" class="panel-body" v-endless-pagination="{'paginateOnScroll': true}">
                 {% include "musette/all_notification.html" %}
             </div>
         </div>

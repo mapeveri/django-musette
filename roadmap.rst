@@ -75,8 +75,11 @@ Roadmap Django-Musette
 7. [X] Issue #91 Separete in multiple files the module module.musette.js
 8. [X] Issue #101 Add field location to Profile model
 9. [X] Issue #102 Configuration variable for google api key
-10. [] Issue #85 Improve the sending of emails
-11. [] Issue #87 Migrate web sockets to django-channels
-12. [] Issue #81 Add docker container  
-13. [] If errors are found in the previous version. They will be arranged
+10. [X] If errors are found in the previous version. They will be arranged
 
+**For version (0.2.9) complete the next issues:**
+
+1. [] Issue #85 Improve the sending of emails
+2. [] Issue #87 Migrate web sockets to django-channels
+3. [] Issue #81 Add docker container  
+4. [] If errors are found in the previous version. They will be arranged
