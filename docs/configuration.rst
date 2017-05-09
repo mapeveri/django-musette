@@ -125,8 +125,12 @@ Quick start
 
 10. Config variables to send email and variable EMAIL_MUSETTE with email from in settings.py.
 
+11. Set variable GOOGLE_MAPS_API_KEY with API_KEY value of `Google maps`_. (New in version 0.2.8)
+
 NOTE: Before adding the superuser, make sure that the steps are executed correctly, so django-musette can create the super-user user profile automatically.
 
 NOTE2: For `custom user model`_.
 
-.. _custom user model: https://github.com/mapeveri/django-musette/blob/master/docs/custom-user-model.rst
+.. _custom user model: https://github.com/mapeveri/django-musette/blob/master/docs/custom-user-model.RestrictStaffToAdminMiddleware
+
+.. _Google maps: https://developers.google.com/maps/faq?hl=es-419#new-key

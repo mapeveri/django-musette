@@ -34,7 +34,7 @@
 <!-- For TinyMce -->
 {{ form.media.js }}
 
-<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyD-B8ODbRMMBnm5mLNAR4_PyZMNHJmP_Hk" type="text/javascript"></script>
+<script src="http://maps.googleapis.com/maps/api/js?libraries=places&key={{ SETTINGS.GOOGLE_MAPS_API_KEY}}" type="text/javascript"></script>
 
 <script type="text/javascript">
     function initialize() {
