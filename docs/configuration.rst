@@ -131,6 +131,6 @@ NOTE: Before adding the superuser, make sure that the steps are executed correct
 
 NOTE2: For `custom user model`_.
 
-.. _custom user model: https://github.com/mapeveri/django-musette/blob/master/docs/custom-user-model.RestrictStaffToAdminMiddleware
+.. _custom user model: https://github.com/mapeveri/django-musette/blob/master/docs/custom-user-model.rst
 
 .. _Google maps: https://developers.google.com/maps/faq?hl=es-419#new-key

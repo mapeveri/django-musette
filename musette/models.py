@@ -15,7 +15,7 @@ from django.utils.crypto import get_random_string
 from django.utils.translation import ugettext_lazy as _
 
 from . import settings as localSettings
-from .validators import valid_extension
+from .validators import valid_extension_image
 
 
 @python_2_unicode_compatible
@@ -255,7 +255,7 @@ class Topic(models.Model):
     id_attachment = models.CharField(max_length=200, null=True, blank=True)
     attachment = models.FileField(
         _('File'), blank=True, null=True, upload_to=generate_path,
-        validators=[valid_extension]
+        validators=[valid_extension_image]
     )
     is_close = models.BooleanField(
         _('Closed topic'), default=False,

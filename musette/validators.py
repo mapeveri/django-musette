@@ -2,7 +2,7 @@ from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
 
 
-def valid_extension(value):
+def valid_extension_image(value):
     """
     Function that valid extension when upload file in form.
 
