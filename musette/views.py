@@ -247,6 +247,14 @@ class ForumsView(View):
     template_name = "musette/index.html"
 
     def get(self, request, *args, **kwargs):
+        forums = models.Forum.objects.all()
+        total_forums = forums.count()
+
+        # If has only forum, redirect direct to forum
+        if(total_forums == 1):
+            forum = forums[0]
+            return redirect("forum", category=forum.category, forum=forum)
+
         # Get categories that not hidden
         categories = models.Category.objects.filter(hidden=False)
 

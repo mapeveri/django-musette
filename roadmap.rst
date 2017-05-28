@@ -80,7 +80,8 @@ Roadmap Django-Musette
 **For version (0.2.9) complete the next issues:**
 
 1. [X] Issue #106 Rename validator
-2. [] Issue #85 Improve the sending of emails
-3. [] Issue #87 Migrate web sockets to django-channels
-4. [] Issue #81 Add docker container  
-5. [] If errors are found in the previous version. They will be arranged
+2. [X] Issue #104 Not show screen forums if has a one forum
+3. [] Issue #85 Improve the sending of emails
+4. [] Issue #87 Migrate web sockets to django-channels
+5. [] Issue #81 Add docker container  
+6. [] If errors are found in the previous version. They will be arranged
