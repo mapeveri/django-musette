@@ -91,7 +91,7 @@ Quick start
 
 	# NOTE: The model profile, will be in the admin in the model user like section 'profile'.
 
-	# If you need to extend so, you will create template profile.html indide your app and add this
+	# If you need to extend so, you will create template profile.html inside your app and add this
 	# templates/main/profile.html
 
 	<h4>Location</h4>
