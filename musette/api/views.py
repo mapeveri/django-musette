@@ -210,5 +210,5 @@ class CommentViewSet(viewsets.ModelViewSet):
 
 # ViewSets for profile
 class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = utils.get_main_model_profile().objects.all()
+    queryset = models.Profile.objects.all()
     serializer_class = serializers.ProfileSerializer

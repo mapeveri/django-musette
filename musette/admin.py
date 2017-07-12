@@ -223,7 +223,7 @@ class RegisterAdmin(admin.ModelAdmin):
 
 
 class ProfileInline(admin.StackedInline):
-    model = utils.get_main_model_profile()
+    model = models.Profile
     can_delete = False
     verbose_name_plural = _('Profile')
     fk_name = 'iduser'

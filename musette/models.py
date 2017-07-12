@@ -492,9 +492,9 @@ class Register(models.Model):
 
 
 @python_2_unicode_compatible
-class AbstractProfile(models.Model):
+class Profile(models.Model):
     """
-    Model AbstractProfile.
+    Model Profile.
 
     - **parameters**:
         :param idprofile: Identification profile.
@@ -548,9 +548,6 @@ class AbstractProfile(models.Model):
                 return True
         else:
             return False
-
-    class Meta:
-        abstract = True
 
 
 @python_2_unicode_compatible

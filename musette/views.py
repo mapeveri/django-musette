@@ -133,12 +133,9 @@ class ConfirmEmailView(View):
         # Parameters for template
         data = {'username': username}
 
-        # Get model profile
-        ModelProfile = utils.get_main_model_profile()
-
         # Check if not expired key
         user_profile = get_object_or_404(
-            ModelProfile, activation_key=activation_key
+            models.Profile, activation_key=activation_key
         )
 
         if user_profile.key_expires < timezone.now():
@@ -169,11 +166,8 @@ class NewKeyActivationView(View):
         # For confirm email
         data = utils.get_data_confirm_email(email)
 
-        # Get model profile
-        ModelProfile = utils.get_main_model_profile()
-
         # Update activation key
-        profile = get_object_or_404(ModelProfile, iduser=user)
+        profile = get_object_or_404(models.Profile, iduser=user)
         profile.activation_key = data['activation_key']
         profile.key_expires = data['key_expires']
         profile.save()
@@ -1043,22 +1037,7 @@ class ProfileView(View):
         user = get_object_or_404(User, username=username)
         iduser = user.id
 
-        # Get model extend Profile
-        ModelProfile = utils.get_main_model_profile()
-
-        # Get name app of the extend model Profile
-        app = utils.get_app_model(ModelProfile)
-
-        # Check if the model profile is extended
-        count_fields_model = utils.get_count_fields_model(ModelProfile)
-        count_fields_abstract = utils.get_count_fields_model(
-            models.AbstractProfile
-        )
-        if count_fields_model > count_fields_abstract:
-            model_profile_is_extend = True
-        else:
-            model_profile_is_extend = False
-        profile = get_object_or_404(ModelProfile, iduser=iduser)
+        profile = get_object_or_404(models.Profile, iduser=iduser)
 
         photo = utils.get_photo_profile(iduser)
 
@@ -1069,9 +1048,7 @@ class ProfileView(View):
             'profile': profile,
             'photo': photo,
             'user': request.user,
-            'topics': topics,
-            'app': app,
-            'model_profile_is_extend': model_profile_is_extend
+            'topics': topics
         }
 
         return render(request, template_name, data)
@@ -1090,10 +1067,8 @@ class EditProfileView(mixins.UserTrollMixin, FormView):
         })
 
     def get(self, request, username, *args, **kwargs):
-
-        ModelProfile = utils.get_main_model_profile()
         profile = get_object_or_404(
-            ModelProfile, iduser=request.user.id
+            models.Profile, iduser=request.user.id
         )
 
         # Init fields form
@@ -1106,10 +1081,8 @@ class EditProfileView(mixins.UserTrollMixin, FormView):
         return render(request, self.template_name, data)
 
     def post(self, request, username, *args, **kwargs):
-
-        ModelProfile = utils.get_main_model_profile()
         profile = get_object_or_404(
-            ModelProfile, iduser=request.user.id
+            models.Profile, iduser=request.user.id
         )
 
         file_name = profile.photo
@@ -1184,8 +1157,9 @@ class IsTrollView(mixins.UserTrollMixin, View):
         total = utils.get_total_forum_moderate_user(username)
         if not username.is_superuser and total == 0:
             # Is a troll
-            ModelProfile = utils.get_main_model_profile()
-            ModelProfile.objects.filter(iduser=username).update(is_troll=check)
+            models.Profile.objects.filter(
+                iduser=username
+            ).update(is_troll=check)
 
         return redirect(
             "profile", username=user_post

@@ -267,7 +267,7 @@ class FormAdminProfile(forms.ModelForm):
     Form for admin profile.
     """
     class Meta:
-        model = utils.get_main_model_profile()
+        model = models.Profile
         exclude = (
             'idprofile', 'iduser',
         )
@@ -281,7 +281,7 @@ class FormEditProfile(forms.ModelForm):
     Form for edit one profile.
     """
     class Meta:
-        model = utils.get_main_model_profile()
+        model = models.Profile
         exclude = (
             'idprofile', 'iduser', 'activation_key',
             'key_expires', 'is_troll',

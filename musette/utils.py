@@ -13,7 +13,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from musette.models import (
     Forum, Topic, Comment, Register,
-    Notification, AbstractProfile
+    Notification, Profile
 )
 from musette.email import send_mail
 
@@ -109,33 +109,6 @@ def remove_folder_attachment(idtopic):
         remove_folder(path)
 
 
-def get_main_model_profile():
-    """
-    This method return the model profile defined by user.
-    """
-    subclasses = AbstractProfile.__subclasses__()
-    if len(subclasses) > 0:
-        try:
-            return subclasses[0]
-        except Exception:
-            raise BaseException("Occurs one error to get model profile")
-    else:
-        raise BaseException("It is not defined profile model")
-
-
-def get_app_model(instance):
-    """
-    This method get app_label from model instance.
-
-    Args:
-        instance (obj): Instance class model.
-
-    Returns:
-        str: Name app_label of the model.
-    """
-    return instance._meta.app_label
-
-
 def get_count_fields_model(instance):
     """
     This method get count fields from model instance.
@@ -159,8 +132,7 @@ def get_id_profile(iduser):
     Returns:
         obj: Object profile.
     """
-    ModelProfile = get_main_model_profile()
-    profile = get_object_or_404(ModelProfile, iduser=iduser)
+    profile = get_object_or_404(Profile, iduser=iduser)
 
     return profile
 
@@ -282,8 +254,7 @@ def get_photo_profile(iduser):
         str: Path photo profile.
     """
     default_photo = static("musette/img/profile.png")
-    ModelProfile = get_main_model_profile()
-    profile = ModelProfile.objects.filter(iduser=iduser)
+    profile = Profile.objects.filter(iduser=iduser)
     if profile.count() > 0:
         photo = profile[0].photo
         if photo:

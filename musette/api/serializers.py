@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.contrib.auth import get_user_model
 
 from rest_framework import serializers
-from musette import models, utils
+from musette import models
 
 
 # Serializers Users
@@ -108,5 +108,5 @@ class CommentSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = utils.get_main_model_profile()
+        model = models.Profile
         fields = '__all__'

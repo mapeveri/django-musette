@@ -85,12 +85,6 @@
                     {{ profile.location|default_if_none:''|safe }}
                 </div>
             </div>
-
-            {% if model_profile_is_extend %}
-                {% with app|add:"/profile.html" as template %}
-                    {% include template %}
-                {% endwith %}
-            {% endif %}
         </div>
     </div>
 
