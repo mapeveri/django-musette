@@ -32,7 +32,7 @@ Features
 10. Infinite scroll for comments of one topic.
 11. Notifications and email notifications.
 12. Notifications and comments in real time.
-13. Integrated model profile, but can be extended.
+13. Integrated model profile.
 14. Avatar profile.
 15. Easy integration with other applications Django of your project.
 16. Models registered in admin django for administrators.

@@ -3,7 +3,7 @@ from django.test import TestCase
 from django.utils import timezone
 
 from musette.models import (
-    Category, Comment, Forum,
+    Category, Comment, Forum, Profile,
     Notification, Topic, Register
 )
 

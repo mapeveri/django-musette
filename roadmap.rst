@@ -81,7 +81,8 @@ Roadmap Django-Musette
 
 1. [X] Issue #106 Rename validator
 2. [X] Issue #104 Not show screen forums if has a one forum
-3. [] Issue #85 Improve the sending of emails
-4. [] Issue #87 Migrate web sockets to django-channels
-5. [] Issue #81 Add docker container  
-6. [] If errors are found in the previous version. They will be arranged
+3. [X] Issue #107 Remove Abstract model in Profile
+4. [] Issue #85 Improve the sending of emails
+5. [] Issue #87 Migrate web sockets to django-channels
+6. [] Issue #81 Add docker container  
+7. [] If errors are found in the previous version. They will be arranged

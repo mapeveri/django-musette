@@ -78,44 +78,10 @@ Quick start
 				'musette.middleware.RestrictStaffToAdminMiddleware' # If you want block admin url add this middleware
         )
 
-7. In your application must add the profile model do the following. For example if your app is 'main', in models.py add::
-	
-	# models.py
-	from musette.models import AbstractProfile
+7. Execute command migrate::
 
-	class Profile(AbstractProfile):
-
-		# This is in case you need to extend the profile model. If not use 'pass'
-		location = models.CharField("Label name", max_length=200, null=True, blank=True)
-		company = models.CharField("Label name", max_length=150, null=True, blank=True)
-
-	# NOTE: The model profile, will be in the admin in the model user like section 'profile'.
-
-	# If you need to extend so, you will create template profile.html inside your app and add this
-	# templates/main/profile.html
-
-	<h4>Location</h4>
-	<div class="panel panel-default">
-	    <div class="panel-body">
-	        {{ profile.location|safe }}
-	    </div>
-	</div>
-
-	<h4>Company</h4>
-	<div class="panel panel-default">
-	    <div class="panel-body">
-	        {{ profile.company|safe }}
-	    </div>
-	</div>
-
-8. Execute command migrate::
-
-	python manage.py makemigrations 
 	python manage.py migrate
 
-	python manage.py makemigrations musette
-	python manage.py migrate musette
-	
 	# If your super-admin user not contain the record in Profile model. Execute this command:
 	python manage.py create_profile_superadmin # New in version 0.2.5
 
