@@ -13,7 +13,6 @@
   </a>
   <input type="hidden" name="user" id="user_musette" value="{{user.id}}" />
   <ul class="dropdown-menu notifications" role="menu" aria-labelledby="dLabel">
-
     <div class="notification-heading">
         <h4 class="menu-title">{% trans "Notifications" %}</h4>
         <h4 class="menu-title pull-right">
@@ -30,12 +29,15 @@
           <span v-for="not in notifications_socket">
             <li class="divider"></li>
             <a class="content" v-bind:href="'/topic/' + not.category + '/' + not.forum + '/' + not.slug + '/' + not.idtopic">
-                <h4 class="item-title">
-                    <img class="img-circle pull-left" v-bind:src="not.photo" width=45 height=45 />
-                </h4>
-                <h5><a v-bind:href="'/topic/' + not.category + '/' + not.forum + '/' + not.slug + '/' + not.idtopic"><u>{{ not.topic }}</u></a></h5>
-                <p class="item-info"><a v-bind:href="'/profile/' + not.username">{{ not.username }}</a> - {% endverbatim %} {% trans "Now" %} {% verbatim %}</p>
+                <img class="img-circle pull-left" v-bind:src="not.photo" width=45 height=45 />
+                <div v-if=not.is_topic>
+                   {{ not.username }} {% endverbatim %} {% trans "created the topic:" %} {% verbatim %} {{ not.topic }}
+                </div>
+                <div v-if="not.is_comment">
+                    {{ not.username }} {% endverbatim %} {% trans "commented on:" %} {% verbatim %} {{ not.topic }}
+                </div>
             </a>
+            <p class="item-info">{% endverbatim %} {% trans "Now" %} {% verbatim %}</p>
           </span>
         {% endverbatim %}
         {% for notification in notifications|slice:"5" %}
@@ -47,19 +49,22 @@
             <li class="divider"></li>
             {% endif %}
         {% empty %}
-            <center>
-                <p>{% trans "You have no notifications"%}</p>
-            </center>
+            <div id="no_notifications">
+                <li class="divider"></li>
+                <center>
+                    <p>{% trans "You have no notifications"%}</p>
+                </center>
+            </div>
         {% endfor %}
      </div>
     <li class="divider"></li>
     <div class="notification-footer">
-        <h4 class="menu-title" class="pull-left">
-            <a href="{% url 'forum_all_notification' %}">
+        <a href="{% url 'forum_all_notification' %}" class="menu-title pull-left" style="margin-bottom: 1em">
             <strong><span>{% trans "All" %} </span><i class="fa fa-arrow-circle-right"></i></strong>
-            </a>
-        </h4>
-        <a href="{% url 'logout' %}" class="pull-right"><strong><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans "Logout" %}</strong></a>
+        </a>
+        <a href="{% url 'logout' %}" class="menu-title pull-right" style="margin-bottom: 1em">
+            <strong><i class="fa fa-sign-out" aria-hidden="true"></i> {% trans "Logout" %}</strong>
+        </a>
     </div>
   </ul>
 

@@ -447,6 +447,8 @@ class NewTopicView(mixins.UserTrollMixin, FormView):
             data = realtime.data_base_realtime(
                 obj, photo, forum.name, username
             )
+            data['is_topic'] = True
+            data['is_comment'] = False
 
             # Add to real time new notification
             realtime.new_notification(data, list_us)
@@ -790,6 +792,8 @@ class NewCommentView(mixins.UserTrollMixin, View):
             data = realtime.data_base_realtime(
                 comment.topic, photo, forum, username
             )
+            data['is_topic'] = False
+            data['is_comment'] = True
 
             # Send new notification realtime
             realtime.new_notification(data, list_us)

@@ -2,6 +2,7 @@ from django import template
 from django.contrib.contenttypes.models import ContentType
 from django.core.urlresolvers import reverse_lazy
 from django.utils import formats, timezone
+from django.utils.translation import ugettext_lazy as _
 
 from hitcount.models import HitCount
 
@@ -182,6 +183,7 @@ def get_item_notification(notification):
             username = comment.user.username
             title = comment.topic.title
             userid = comment.user.id
+            content = username + " " + str(_("commented on:")) + " " + title
         else:
             # Is topic notification
             topic = Topic.objects.get(idtopic=idobject)
@@ -192,12 +194,13 @@ def get_item_notification(notification):
             username = topic.user.username
             title = topic.title
             userid = topic.user.id
+            translate = str(_("created the topic:"))
+            content = username + " " + translate + " " + title
 
         url_topic = str(reverse_lazy("topic", kwargs={
             'category': category, 'forum': forum,
             'slug': slug, 'idtopic': idtopic
         }))
-        title = "<h5><a href='" + url_topic + "'><u>" + title + "</u></a></h5>"
 
         # Data profile
         photo = get_photo_profile(userid)
@@ -208,13 +211,10 @@ def get_item_notification(notification):
 
         # Notificacion
         html += '<a class="content" href="' + url_topic + '">'
-        html += ' <h4 class="item-title">'
         html += ' <img class="img-circle pull-left" src="' + photo + '"'
-        html += ' width=45 height=45 />'
-        html += title + '</h4>'
-        html += ' <p class="item-info"><a href="' + url_profile + '">'
-        html += username + "</a> - " + str(date)
-        html += '</p></a>'
+        html += ' width=45 height=45 />' + content
+        html += '</a>'
+        html += '<p class="item-title">' + str(date) + '</p>'
     except Comment.DoesNotExist:
         html = ""
 

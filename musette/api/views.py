@@ -86,6 +86,8 @@ class TopicViewSet(viewsets.ModelViewSet):
                 data = realtime.data_base_realtime(
                     topic, photo, forum_name, username
                 )
+                data['is_topic'] = True
+                data['is_comment'] = False
 
                 # Send new notification realtime
                 realtime.new_notification(data, list_us)
@@ -191,6 +193,8 @@ class CommentViewSet(viewsets.ModelViewSet):
 
             # Data necessary for realtime
             data = realtime.data_base_realtime(topic, photo, forum, username)
+            data['is_topic'] = False
+            data['is_comment'] = True
 
             # Send new notification realtime
             realtime.new_notification(data, list_us)
