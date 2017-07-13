@@ -66,7 +66,7 @@
 			              	</div>
 			            {% endif %}
 			        {% endfor %}
-			        <button type="submit" class="btn btn-inverse btn-sm" :disabled="!title || !description" v-on:click="loading()">
+			        <button type="submit" class="btn btn-inverse btn-sm" :disabled="(!title || !description) || (title.trim() == '' || description.replace(/<(?:.|\n)*?>/gm, '').replace(/&nbsp;/gi,'').trim() == '')" v-on:click="loading()">
 			        	<i class="fa fa-floppy-o"></i>
 			        	{% trans "Save" %}
 			        </button> <img src="{% static 'musette/img/ajax.gif' %}" class="hide" />
