@@ -86,14 +86,14 @@ Roadmap Django-Musette
 5. [X] Issue #100 Improve validations in forms
 6. [X] If errors are found in the previous version. They will be arranged
 
-**For version (0.3.0) complete the next issues:**
+**For version (0.3.1) complete the next issues:**
 
 1. [X] Issue #110 Middleware error
 2. [X] Issue #85 Improve the sending of emails
 3. [X] Issue #111 Error moderates topic
 4. [X] If errors are found in the previous version. They will be arranged
 
-**For version (0.3.1) complete the next issues:**
+**For version (0.3.2) complete the next issues:**
 
 1. [] Issue #87 Migrate web sockets to django-channels
 2. [] Issue #81 Add docker container  
