@@ -49,6 +49,11 @@ class TopicAdmin(admin.ModelAdmin):
             del actions['delete_selected']
         return actions
 
+    def save_model(self, request, obj, form, change):
+        instance = form.save(commit=False)
+        instance.moderate = utils.check_topic_moderate(request.user, obj.forum)
+        instance.save()
+
     def delete_topic(self, request, queryset):
         """
         This method remove topic's selected in the admin django.

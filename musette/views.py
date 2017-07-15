@@ -337,6 +337,12 @@ class TopicView(View):
         )
         topic = get_object_or_404(models.Topic, idtopic=idtopic, slug=slug)
 
+        # Check if the topis is enable
+        moderators = forum.moderators.all()
+        if not(request.user in moderators):
+            if(not topic.moderate):
+                raise Http404
+
         # Form for comments
         form_comment = forms.FormAddComment()
 
@@ -420,6 +426,7 @@ class NewTopicView(mixins.UserTrollMixin, FormView):
             obj.forum = forum
             obj.title = title
             obj.slug = defaultfilters.slugify(request.POST['title'])
+            obj.moderate = utils.check_topic_moderate(user, forum)
 
             # If has attachment
             if 'attachment' in request.FILES:

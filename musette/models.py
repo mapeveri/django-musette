@@ -299,7 +299,9 @@ class Topic(models.Model):
             remove_folder(path)
 
         Topic.objects.filter(idtopic=idtopic).delete()
-        self.update_forum_topics(self.forum, "subtraction")
+        self.update_forum_topics(
+            self.forum.category.name, self.forum, "subtraction"
+        )
 
     def save(self, *args, **kwargs):
 
@@ -309,7 +311,6 @@ class Topic(models.Model):
                 self.forum.category.name, self.forum, "sum"
             )
 
-        self.moderate = self.check_topic_moderate()
         self.generate_id_attachment(self.id_attachment)
         super(Topic, self).save(*args, **kwargs)
 
@@ -325,22 +326,6 @@ class Topic(models.Model):
         Forum.objects.filter(name=forum).update(
             topics_count=tot_topics
         )
-
-    def check_topic_moderate(self):
-        """
-        Check if one topic is mark like moderate
-        """
-        # If is superuser
-        if self.user.is_superuser:
-            return True
-        # If the forum not is moderate
-        elif not self.forum.is_moderate:
-            return True
-        # If user is moderator
-        elif self.user in self.forum.moderators.all():
-            return True
-        else:
-            return False
 
     def generate_id_attachment(self, value):
         if not value:

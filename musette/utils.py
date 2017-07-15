@@ -582,3 +582,20 @@ def check_moderate_topic_email(request, forum, obj):
         obj.moderate = True
 
     return obj
+
+
+def check_topic_moderate(user, forum):
+    """
+    Check if one topic is mark like moderate
+    """
+    # If is superuser
+    if user.is_superuser:
+        return True
+    # If the forum not is moderate
+    elif not forum.is_moderate:
+        return True
+    # If user is moderator
+    elif user in forum.moderators.all():
+        return True
+    else:
+        return False
