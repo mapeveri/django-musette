@@ -2,11 +2,12 @@ from django.core.cache import cache
 from django.core.urlresolvers import reverse
 from django.http import Http404
 from django.utils import timezone
+from django.utils.deprecation import MiddlewareMixin
 
 from . import settings
 
 
-class ActiveUserMiddleware(object):
+class ActiveUserMiddleware(MiddlewareMixin):
     """
     Set user authenticate.
     """
@@ -20,7 +21,7 @@ class ActiveUserMiddleware(object):
             )
 
 
-class RestrictStaffToAdminMiddleware(object):
+class RestrictStaffToAdminMiddleware(MiddlewareMixin):
     """
     A middleware that restricts staff members access to administration panels.
     """

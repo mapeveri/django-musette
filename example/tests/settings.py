@@ -39,7 +39,7 @@ INSTALLED_APPS = (
     'main',
 )
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -51,7 +51,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.locale.LocaleMiddleware',
     'musette.middleware.ActiveUserMiddleware',
     'musette.middleware.RestrictStaffToAdminMiddleware'
-)
+]
 
 ROOT_URLCONF = 'tests.urls'
 
