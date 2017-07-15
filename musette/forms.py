@@ -296,7 +296,8 @@ class FormEditProfile(forms.ModelForm):
         class_css = 'form-control'
 
         for key in self.fields:
-            self.fields[key].widget.attrs['class'] = class_css
+            if key != "receive_emails":
+                self.fields[key].widget.attrs['class'] = class_css
 
 
 class FormAdminConfiguration(forms.ModelForm):

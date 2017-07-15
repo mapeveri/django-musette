@@ -531,6 +531,10 @@ class Profile(models.Model):
         _('Is troll'), default=False,
         help_text=_('If the user is troll')
     )
+    receive_emails = models.BooleanField(
+        _('Receive Emails'), default=True,
+        help_text=_('If receive Emails')
+    )
 
     def __str__(self):
         return str(self.iduser.username)

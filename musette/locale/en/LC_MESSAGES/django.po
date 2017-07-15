@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-07-12 22:53-0300\n"
+"POT-Creation-Date: 2017-07-14 22:50-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -104,7 +104,7 @@ msgid "Position"
 msgstr ""
 
 #: musette/models.py:78 musette/models.py:166 musette/models.py:254
-#: musette/models.py:375 musette/models.py:596
+#: musette/models.py:375 musette/models.py:600
 #: musette/templates/musette/edit_topic.html:44
 #: musette/templates/musette/new_topic.html:45
 msgid "Description"
@@ -273,31 +273,39 @@ msgstr ""
 msgid "If the user is troll"
 msgstr ""
 
-#: musette/models.py:586
-msgid "Logo width"
+#: musette/models.py:535
+msgid "Receive Emails"
 msgstr ""
 
-#: musette/models.py:587 musette/models.py:591
-msgid "In pixels"
+#: musette/models.py:536
+msgid "If receive Emails"
 msgstr ""
 
 #: musette/models.py:590
-msgid "Logo height"
+msgid "Logo width"
+msgstr ""
+
+#: musette/models.py:591 musette/models.py:595
+msgid "In pixels"
 msgstr ""
 
 #: musette/models.py:594
+msgid "Logo height"
+msgstr ""
+
+#: musette/models.py:598
 msgid "Custom design"
 msgstr ""
 
-#: musette/models.py:597
+#: musette/models.py:601
 msgid "Keywords"
 msgstr ""
 
-#: musette/models.py:600
+#: musette/models.py:604
 msgid "Configuration"
 msgstr ""
 
-#: musette/models.py:601
+#: musette/models.py:605
 msgid "Configurations"
 msgstr ""
 

@@ -147,15 +147,19 @@ def get_users_topic(topic, myuser):
 
     Returns:
         list(int): List users that commented in the topic.
+        list(int): List emails that commented in the topic.
     """
     comments = Comment.objects.filter(topic_id=topic.idtopic)
-    lista_us = []
+    list_us = []
+    list_emails = []
     for comment in comments:
         if comment.user_id != myuser:
-            if not (comment.user_id in lista_us):
-                lista_us.append(comment.user_id)
+            if not (comment.user_id in list_us):
+                list_us.append(comment.user_id)
+                if comment.user.user.receive_emails:
+                    list_emails.append(comment.user.email)
 
-    return lista_us
+    return list_us, list_emails
 
 
 def get_notifications(iduser):
@@ -490,14 +494,13 @@ def get_users_and_send_notification_comment(request, topic, comment):
         comment (obj): Object comment.
 
     Returns:
-        dict: List users and list_email.
+        dict: List users and list_emails.
     """
     now = timezone.now()
 
     myuser = request.user.id
     # Send notifications
-    list_us = get_users_topic(topic, myuser)
-    list_email = []
+    list_us, list_emails = get_users_topic(topic, myuser)
 
     # If not exists user that create topic, add
     user_original_topic = topic.user.id
@@ -515,7 +518,7 @@ def get_users_and_send_notification_comment(request, topic, comment):
         # Add user that created topic
         list_us.append(user_original_topic)
         # Add user for send email
-        list_email.append(user_email)
+        list_emails.append(user_email)
     # If the notificacion not is mine send to all but not to me
     elif user_original_topic != myuser and comment_user == myuser:
         # Check if exists the created topic
@@ -524,7 +527,7 @@ def get_users_and_send_notification_comment(request, topic, comment):
             list_us.append(user_original_topic)
 
         # Add user for send email to created topic
-        list_email.append(user_email)
+        list_emails.append(user_email)
     # If the notificacion not is mine send to all but not to create to comment
     elif user_original_topic != myuser and comment_user != myuser:
         # Check if exists the created topic
@@ -533,7 +536,7 @@ def get_users_and_send_notification_comment(request, topic, comment):
             list_us.append(user_original_topic)
 
         # Add user for send email to created topic
-        list_email.append(user_email)
+        list_emails.append(user_email)
 
     # Get content type for comment model
     related_object_type = ContentType.objects.get_for_model(comment)
@@ -544,7 +547,7 @@ def get_users_and_send_notification_comment(request, topic, comment):
 
     return {
         'list_us': list_us,
-        'list_email': list_email
+        'list_email': list_emails
     }
 
 
@@ -572,8 +575,9 @@ def check_moderate_topic_email(request, forum, obj):
 
             # Get moderators forum
             for moderator in forum.moderators.all():
-                # Send email
-                send_mail_topic(moderator.email, forum)
+                if moderator.user.receive_emails:
+                    # Send email
+                    send_mail_topic(moderator.email, forum)
     else:
         obj.moderate = True
 

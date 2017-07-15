@@ -89,7 +89,7 @@ Roadmap Django-Musette
 **For version (0.3.0) complete the next issues:**
 
 1. [X] Issue #110 Middleware error
-1. [] Issue #85 Improve the sending of emails
+1. [X] Issue #85 Improve the sending of emails
 2. [] Issue #87 Migrate web sockets to django-channels
 3. [] Issue #81 Add docker container  
 4. [] If errors are found in the previous version. They will be arranged
