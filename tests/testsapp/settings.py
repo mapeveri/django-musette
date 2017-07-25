@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'endless_pagination',
     'rest_framework',
     'musette',
+    'musette_tests',
 )
 
 MIDDLEWARE = [
@@ -52,7 +53,7 @@ MIDDLEWARE = [
     'musette.middleware.RestrictStaffToAdminMiddleware'
 ]
 
-ROOT_URLCONF = 'tests.urls'
+ROOT_URLCONF = 'testsapp.urls'
 
 TEMPLATES = [
     {
@@ -75,18 +76,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'tests.wsgi.application'
-
 LOGIN_URL = "/"
-
-# Import local settings
-try:
-    from .settings_local import *
-except ImportError:
-    pass
-
-# For custom User model
-# AUTH_USER_MODEL = 'main.User'
 
 # Cache
 CACHES = {
@@ -131,3 +121,27 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DEBUG = True
+ALLOWED_HOSTS = ['*']
+
+# Site data
+SITE_ID = 1
+SITE_NAME = "Musette Forum"
+SITE_URL = "http://127.0.0.1:8000/"
+
+# Email data
+EMAIL_MUSETTE = ''
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = EMAIL_MUSETTE
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_FROM = EMAIL_MUSETTE
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}

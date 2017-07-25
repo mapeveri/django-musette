@@ -2,8 +2,6 @@ language: python
 
 python:
   - "2.7"
-  - "3.2"
-  - "3.3"
   - "3.4"
   - "3.5"
 
@@ -22,7 +20,7 @@ install:
 
 before_script:
   - cd tests
-  - export DJANGO_SETTINGS_MODULE=tests.settings
+  - export DJANGO_SETTINGS_MODULE=testsapp.settings
 
 script:
   - coverage run manage.py test
