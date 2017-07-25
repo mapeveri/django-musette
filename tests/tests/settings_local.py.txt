@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+
+# Database
+# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = ['*']
+
+# Site data
+SITE_ID = 1
+SITE_NAME = "Musette Forum"
+SITE_URL = "http://127.0.0.1:8000/"
+
+# Email data
+EMAIL_MUSETTE = ''
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = EMAIL_MUSETTE
+EMAIL_HOST_PASSWORD = ''
+EMAIL_PORT = 587
+EMAIL_FROM = EMAIL_MUSETTE
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
+    }
+}
