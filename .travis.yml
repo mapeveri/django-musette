@@ -1,15 +1,19 @@
 language: python
 
 python:
-  - "3.4"
   - "2.7"
+  - "3.2"
+  - "3.3"
+  - "3.4"
+  - "3.5"
+
+env:
+  - DJANGO=1.10
+  - DJANGO=1.11
 
 branches:
   only:
     - master
-
-before_install:
-  - pip install -U pip
 
 install:
   - pip install -r requirements.txt
@@ -21,7 +25,7 @@ before_script:
   - export DJANGO_SETTINGS_MODULE=tests.settings
 
 script:
-  - python manage.py test
+  - coverage run manage.py test
 
 after_success:
   coveralls
