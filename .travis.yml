@@ -23,7 +23,7 @@ before_script:
   - export DJANGO_SETTINGS_MODULE=testsapp.settings
 
 script:
-  - coverage run manage.py test
+  - coverage run --source=musette manage.py test
 
 after_success:
   coveralls
