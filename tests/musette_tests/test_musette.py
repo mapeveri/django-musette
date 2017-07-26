@@ -1,11 +1,15 @@
+from django.db.models import F
 from django.contrib.auth import get_user_model
+from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse_lazy
+from django.shortcuts import get_object_or_404
 from django.test import Client, TestCase
 from django.utils import timezone
 
 from musette.models import (
     Category, Comment, Forum, Profile,
-    Notification, Topic, Register
+    Notification, Topic, Register,
+    Configuration
 )
 
 from . import utils
@@ -198,3 +202,81 @@ class UnRegisterTopicTestCase(TestCase):
         Register.objects.filter(
             user_id=1, forum_id=1,
         ).delete()
+
+
+class LikeTopicTestCase(TestCase):
+    """
+    Test like topic
+    """
+    def test_hard_no_more_than(self):
+        Topic.objects.filter(idtopic=1).update(
+            like=F('like') + 1
+        )
+
+
+class UnLikeTopicTestCase(TestCase):
+    """
+    Test Unlike topic
+    """
+    def test_hard_no_more_than(self):
+        Topic.objects.filter(idtopic=1).update(
+            like=F('like') - 1
+        )
+
+
+class IsTrollTestCase(TestCase):
+    """
+    Test Check user is troll
+    """
+    def test_hard_no_more_than(self):
+        # Get troll
+        utils.create_user(
+            "userexample", "userexample@admin.com", "userexample123456"
+        )
+        User = get_user_model()
+        username = get_object_or_404(User, username="userexample")
+
+        total = Forum.objects.filter(
+            moderators=username
+        ).count()
+
+        # Check if is user correct
+        if not username.is_superuser and total == 0:
+            # Is a troll
+            Profile.objects.filter(
+                iduser=username
+            ).update(is_troll=True)
+
+
+class EditProfileTestCase(TestCase):
+    """
+    Test Edit profile
+    """
+    def test_hard_no_more_than(self):
+        utils.create_user(
+            "userexample", "userexample@admin.com", "userexample123456"
+        )
+        User = get_user_model()
+        username = get_object_or_404(User, username="userexample")
+        Profile.objects.filter(iduser=username).update(
+            photo="", about="Example about", location="this.location",
+            activation_key="", key_expires=timezone.now(),
+            is_troll=False, receive_emails=True
+        )
+
+
+class ConfigurationTestCase(TestCase):
+    """
+    Test configuration
+    """
+    def test_hard_no_more_than(self):
+        mysite = Site.objects.get_current()
+        mysite.domain = 'mysite.com'
+        mysite.name = 'My Site'
+        mysite.save()
+
+        Configuration.objects.create(
+            site=mysite, logo=None, favicon=None,
+            logo_width=200, logo_height=200, custom_css="",
+            description="Test", keywords="test, django"
+        )
