@@ -1,15 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 
-from musette.utils import get_main_model_profile, get_data_confirm_email
+from musette.models import Profile
+from musette.utils import get_data_confirm_email
 
 
 class Command(BaseCommand):
     help = "Create record profile for SuperAdmin users."
 
     def handle(self, *args, **options):
-        # Get model profile
-        Profile = get_main_model_profile()
         # Get users super-admin
         User = get_user_model()
         users = User.objects.filter(is_superuser=True)
