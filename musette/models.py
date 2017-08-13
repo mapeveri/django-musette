@@ -1,5 +1,6 @@
 import os
 
+from django.db.models import F
 from django.conf import settings
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.fields import GenericForeignKey
@@ -118,9 +119,7 @@ class Forum(models.Model):
         permission2 = Permission.objects.get(codename='change_topic')
         permission3 = Permission.objects.get(codename='delete_topic')
 
-        moderator.user_permissions.add(permission1)
-        moderator.user_permissions.add(permission2)
-        moderator.user_permissions.add(permission3)
+        moderator.user_permissions.add(permission1, permission2, permission3)
 
         # Add permission is_staff
         moderator.is_staff = True
@@ -304,7 +303,6 @@ class Topic(models.Model):
         )
 
     def save(self, *args, **kwargs):
-
         if not self.idtopic:
             self.slug = defaultfilters.slugify(self.title)
             self.update_forum_topics(
@@ -315,19 +313,24 @@ class Topic(models.Model):
         super(Topic, self).save(*args, **kwargs)
 
     def update_forum_topics(self, category, forum, action):
-
+        """
+        Update topic count
+        """
         f = Forum.objects.get(category__name=category, name=forum)
         tot_topics = f.topics_count
         if action == "sum":
-            tot_topics = tot_topics + 1
+            Forum.objects.filter(name=forum).update(
+                topics_count=F('topics_count') + 1
+            )
         elif action == "subtraction":
-            tot_topics = tot_topics - 1
-
-        Forum.objects.filter(name=forum).update(
-            topics_count=tot_topics
-        )
+            Forum.objects.filter(name=forum).update(
+                topics_count=F('topics_count') - 1
+            )
 
     def generate_id_attachment(self, value):
+        """
+        Generate id for attchments files
+        """
         if not value:
             self.id_attachment = get_random_string(length=32)
 
@@ -525,9 +528,15 @@ class Profile(models.Model):
         return str(self.iduser.username)
 
     def last_seen(self):
+        """
+        Get last seen
+        """
         return cache.get('seen_%s' % self.iduser.username)
 
     def online(self):
+        """
+        Check if is online profile
+        """
         if self.last_seen():
             now = timezone.now()
             if now > self.last_seen() + timezone.timedelta(

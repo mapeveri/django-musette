@@ -12,8 +12,8 @@
 
             <img src="{{photo}}" class="img-thumbnail picture hidden-xs" width="200" hegiht="200" />
 
-            {% if user != profile.iduser %}
-                {% if not profile.iduser.is_superuser and profile.iduser|get_total_forum_moderator == 0 %}
+            {% if user != profile.user_id %}
+                {% if not profile.iduser.is_superuser and profile.user_id|get_total_forum_moderator == 0 %}
                     {% if user|get_total_forum_moderator > 0 or user.is_superuser %}
                         {% if not profile.is_troll %}
                             <form method="POST" action="{% url 'profile_is_troll' %}">{% csrf_token %}
@@ -29,7 +29,7 @@
             {% if profile.is_troll %}
                 <p style="margin-top: 10px"> <strong><u>{% trans "It is a troll" %}</u></strong> </p>
 
-                {% if user != profile.iduser and user.is_superuser %}
+                {% if user != profile.user_id and user.is_superuser %}
                     <form method="POST" action="{% url 'profile_is_troll' %}">{% csrf_token %}
                         <input type="hidden" name="username" value="{{ profile.iduser }}" />
                         <input type="hidden" name="check" value="0" />
@@ -64,7 +64,7 @@
                 </table>
             </div>
 
-            {% if profile.iduser.id == user.id and not profile.is_troll %}
+            {% if profile.user_id == user.id and not profile.is_troll %}
                 <br>
                 <a href="{% url 'edit_profile' profile.iduser.username %}" class="btn btn-default">{% trans "Edit profile" %}</a>
             {% endif %}

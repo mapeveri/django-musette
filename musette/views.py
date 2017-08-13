@@ -264,7 +264,6 @@ class ForumView(View):
     This view display one forum registered
     """
     def get(self, request, category, forum, *args, **kwargs):
-
         template_name = "musette/forum_index.html"
         page_template = "musette/forum.html"
 
@@ -327,7 +326,6 @@ class TopicView(View):
     This view display one Topic of forum
     """
     def get(self, request, category, forum, slug, idtopic, *args, **kwargs):
-
         template_name = "musette/topic_index.html"
         page_template = "musette/topic.html"
 
@@ -350,7 +348,7 @@ class TopicView(View):
         comments = models.Comment.objects.filter(topic_id=idtopic)
 
         # Get photo of created user topic
-        photo = utils.get_photo_profile(topic.user.id)
+        photo = utils.get_photo_profile(topic.user_id)
 
         # Get suggest topic
         words = topic.title.split(" ")

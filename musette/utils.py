@@ -503,9 +503,9 @@ def get_users_and_send_notification_comment(request, topic, comment):
     list_us, list_emails = get_users_topic(topic, myuser)
 
     # If not exists user that create topic, add
-    user_original_topic = topic.user.id
+    user_original_topic = topic.user_id
     user_email = topic.user.email
-    comment_user = comment.user.id
+    comment_user = comment.user_id
 
     # If the notificacion is mine send to all but not to me
     if user_original_topic == myuser and comment_user == myuser:

@@ -127,7 +127,7 @@ def get_tot_users_comments(topic):
     if len(users) == 0:
         username = topic.user.username
         url = str(reverse_lazy("profile", kwargs={'username': username}))
-        iduser = topic.user.id
+        iduser = topic.user_id
 
         photo = get_photo(iduser)
         data += "<a href='" + url + "'>"
@@ -179,10 +179,10 @@ def get_item_notification(notification):
             forum = comment.topic.forum.name
             category = comment.topic.forum.category.name
             slug = comment.topic.slug
-            idtopic = comment.topic.idtopic
+            idtopic = comment.topic_id
             username = comment.user.username
             title = comment.topic.title
-            userid = comment.user.id
+            userid = comment.user_id
             content = username + " " + str(_("commented on:")) + " " + title
         else:
             # Is topic notification
@@ -193,7 +193,7 @@ def get_item_notification(notification):
             idtopic = topic.idtopic
             username = topic.user.username
             title = topic.title
-            userid = topic.user.id
+            userid = topic.user_id
             translate = str(_("created the topic:"))
             content = username + " " + translate + " " + title
 
