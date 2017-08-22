@@ -39,7 +39,9 @@ const MusetteApp = Vue.extend({
 });
 
 //Base app
-new MusetteApp({
+const vm = new MusetteApp({
     el: '#app-musette',
     mixins: [notificationMixin, topicFormMixin, topicMixin, forumMixin, commentMixim]
 });
+
+window.vm = vm;

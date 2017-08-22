@@ -54,22 +54,22 @@
           <div class="span4 offset4 text-right">
               {% if user.id %}
                 {% if comment|check_like_comment:user %}
-                  <span class="btn btn-default" id="like_comment_button_{{comment.idcomment}}" style="margin-left: 1em; cursor: pointer;" v-on:click="like_comment({{comment.idcomment}})"> 
+                  <span class="btn btn-default" id="like_comment_button_{{comment.idcomment}}" style="margin-left: 1em; cursor: pointer;" onClick="window.vm.like_comment({{comment.idcomment}})"> 
                     <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                     <span> {{  comment.like }}</span>
                   </span>
 
-                  <span class="btn btn-default" id="unlike_comment_button_{{comment.idcomment}}" style="margin-left: 1em; cursor: pointer;font-weight: bold;display:none" v-on:click="unlike_comment({{comment.idcomment}})"> 
+                  <span class="btn btn-default" id="unlike_comment_button_{{comment.idcomment}}" style="margin-left: 1em; cursor: pointer;font-weight: bold;display:none" onClick="window.vm.unlike_comment({{comment.idcomment}})"> 
                     <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                     <span><u> {{ comment.like }} </u></span>
                   </span>
                 {% else %}
-                  <span class="btn btn-default" id="like_comment_button_{{comment.idcomment}}" style="margin-left: 1em; cursor: pointer;display:none" v-on:click="like_comment({{comment.idcomment}})"> 
+                  <span class="btn btn-default" id="like_comment_button_{{comment.idcomment}}" style="margin-left: 1em; cursor: pointer;display:none" onClick="window.vm.like_comment({{comment.idcomment}})"> 
                     <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                     <span> {{ comment.like }}</span>
                   </span>
 
-                  <span class="btn btn-default" id="unlike_comment_button_{{comment.idcomment}}" style="margin-left: 1em; cursor: pointer;font-weight: bold;" v-on:click="unlike_comment({{comment.idcomment}})"> 
+                  <span class="btn btn-default" id="unlike_comment_button_{{comment.idcomment}}" style="margin-left: 1em; cursor: pointer;font-weight: bold;" onClick="window.vm.unlike_comment({{comment.idcomment}})"> 
                     <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                     <span><u> {{ comment.like }} </u></span>
                   </span>

@@ -34,7 +34,7 @@ setup(
         'tornado==4.2',
         'django-redis-cache==1.6.5',
         'djangorestframework',
-        'django-endless-pagination-vue==1.3',
+        'django-endless-pagination-vue==1.4',
         'django-hitcount==1.2.2'
     ],
     classifiers=[
