@@ -120,7 +120,7 @@
           <script>
                 setTimeout(function() {
                   tinymce.init({ selector:'#textarea_comment_{{comment.idcomment}}' });
-                }, 1000)
+                }, 500)
                 
                 //Load comment
                 window.__FORM__['descrip_comments'][{{comment.idcomment}}] = '{{comment.description|safe|escapejs}}';

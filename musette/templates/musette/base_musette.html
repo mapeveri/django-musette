@@ -135,13 +135,19 @@
     </div>
 
     {% block hitcount_javascript %}{% endblock %}
+    <script>
+        var user_auth_musette = {
+            "user_auth": {{ user.id|default_if_none:'null' }}
+        }
+    </script>
     <script src="{% static 'musette/js/libs/jquery/jquery-2.1.3.min.js' %}"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
     <script src="{% static 'hitcount/hitcount-jquery.js' %}"></script>
     <script src="{% static 'musette/js/libs/toastr/build/toastr.min.js' %}"></script>
     <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-
+    <script src="{% static 'musette/js/modules/musette.module.min.js' %}"></script>
+    
     <script>
         $(document).ready(function() {
             {% for message in messages %}
@@ -156,12 +162,7 @@
                 {% endif %}
             {% endfor %}
         });
-
-        var user_auth_musette = {
-            "user_auth": {{ user.id|default_if_none:'null' }}
-        }
     </script>
-    <script src="{% static 'musette/js/modules/musette.module.min.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>
