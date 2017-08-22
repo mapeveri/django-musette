@@ -97,6 +97,7 @@ Roadmap Django-Musette
 
 1. [X] Issue #114 Bug in command create_profile_superadmin
 2. [X] Issue #115 Improve code in general
-3. [] Issue #87 Migrate web sockets to django-channels
-4. [] Issue #81 Add docker container  
-5. [] If errors are found in the previous version. They will be arranged
+3. [X] Issue #117 Search filter with field moderate in True
+4. [] Issue #87 Migrate web sockets to django-channels
+5. [] Issue #81 Add docker container  
+6. [] If errors are found in the previous version. They will be arranged

@@ -141,27 +141,27 @@
     <script src="{% static 'hitcount/hitcount-jquery.js' %}"></script>
     <script src="{% static 'musette/js/libs/toastr/build/toastr.min.js' %}"></script>
     <script src="{% static 'endless_pagination/js/module.endless.js' %}"></script>
-    <script id="musette_module_js" src="{% static 'musette/js/modules/musette.module.min.js' %}">
-        {
-            "user_auth": {{ user.id }}
-        }
-    </script>
 
     <script>
-      $(document).ready(function() {
-        {% for message in messages %}
-            {% if message.tags == 'success' %}
-                toastr.success("{{ message|safe }}");
-            {% else %}
-                {% if message.tags == 'error' %}
-                    toastr.error("{{ message|safe }}");
+        $(document).ready(function() {
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    toastr.success("{{ message|safe }}");
                 {% else %}
-                    toastr.info("{{ message|safe }}");
+                    {% if message.tags == 'error' %}
+                        toastr.error("{{ message|safe }}");
+                    {% else %}
+                        toastr.info("{{ message|safe }}");
+                    {% endif %}
                 {% endif %}
-            {% endif %}
-        {% endfor %}
-      });
-   </script>
+            {% endfor %}
+        });
+
+        var user_auth_musette = {
+            "user_auth": {{ user.id|default_if_none:'null' }}
+        }
+    </script>
+    <script src="{% static 'musette/js/modules/musette.module.min.js' %}"></script>
 
     {% block extra_js %}{% endblock %}
 </body>

@@ -6,8 +6,7 @@ import commentMixim from './comment';
 
 //Get params from server
 try{
-    let params = JSON.parse($('#musette_module_js').html());
-    var user_auth = params.user_auth;
+    var user_auth = user_auth_musette['user_auth'];
 }catch(e) {
     var user_auth = null;
 }

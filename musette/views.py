@@ -1021,7 +1021,8 @@ class TopicSearch(View):
 
         # Search topics
         topics = models.Topic.objects.filter(
-            forum_id=idforum, title__icontains=search
+            forum_id=idforum, title__icontains=search,
+            moderate=True
         )
 
         data = {
