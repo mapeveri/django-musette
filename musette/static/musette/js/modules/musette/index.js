@@ -14,8 +14,8 @@ try{
 //Base musette Methods
 const MusetteApp = Vue.extend({
     methods: {
-        //Connection to websockets
-        connectionWs: (is_user, id) => {
+        //Get data for connection to websockets
+        getDataConnectionWs: () => {
             let protocol;
             if (window.location.protocol === "https:") {
                 protocol = "wss:";
@@ -23,13 +23,12 @@ const MusetteApp = Vue.extend({
                 protocol = "ws:";
             }
 
-            let url;
-            if(is_user) {
-                 url = protocol + "//" + window.location.hostname + ":8888/ws/?user=" + user_auth;
-            } else {
-                url = protocol + "//" + window.location.hostname + ":8888/ws/?topic=" + id;
+            let url = protocol + "//" + window.location.hostname + ":8000/ws/";
+
+            return {
+                'url': url,
+                'user_auth': user_auth
             }
-            return new WebSocket(url);
         },
         //Execute the loading ajax.gif
         loading: () => {

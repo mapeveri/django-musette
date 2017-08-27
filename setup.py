@@ -18,8 +18,8 @@ setup(
     version=get_version(),
     packages=[
         'musette', 'musette.templatetags', 'musette.migrations',
-        'musette.websockets', 'musette.management',
-        'musette.management.commands', 'musette.api',
+        'musette.management', 'musette.api',
+        'musette.management.commands',
     ],
     include_package_data=True,
     license='BSD License',
@@ -31,8 +31,7 @@ setup(
     author_email='martinpeveri@gmail.com',
     install_requires=[
         'Django>=1.10',
-        'tornado==4.2',
-        'django-redis-cache==1.6.5',
+        'channels==1.1.6',
         'djangorestframework',
         'django-endless-pagination-vue==1.4',
         'django-hitcount==1.2.2'

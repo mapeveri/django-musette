@@ -23,6 +23,7 @@ Quick start
 		'hitcount',
 		'endless_pagination',
 		'rest_framework',
+		'channels',
 		'musette',
 		...
 		# Your local apps
@@ -58,16 +59,17 @@ Quick start
 		'django.template.context_processors.i18n',
 		'musette.context_processors.data_templates', # Necessary
 
-5. Configure in the settings.py the variable CACHES for redis. This is for real time support. Example::
+5. Configure in the settings.py the variable CHANNEL_LAYERS for django-channels. This is for real time support. Example::
 
-		CACHES = {
-			'default': {
-			    'BACKEND' : 'redis_cache.RedisCache',
-			    'LOCATION' : 'localhost:6379',
-			    'OPTIONS' : {
-			        'DB' : 1
-			        }
-			    }
+		# Django channels
+		CHANNEL_LAYERS = {
+			"default": {
+				"BACKEND": "asgi_redis.RedisChannelLayer",
+				"CONFIG": {
+					"hosts": [("localhost", 6379)],
+				},
+				"ROUTING": "musette.routing.channel_routing",
+			},
 		}
 
 6. In MIDDLEWARE_CLASSES add this line::

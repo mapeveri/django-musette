@@ -31,7 +31,9 @@ const topicMixin = {
         let idtopic = parseInt($("#topic_musette").val());
         if (!isNaN(idtopic)) {
             //Connection to websockets
-            let ws = this.connectionWs(false, idtopic);
+            let data_ws = this.getDataConnectionWs();
+            let url = data_ws['url'] + "comment?topic=" + idtopic;
+            let ws = new WebSocket(url);
             ws.onmessage = (evt) => {
                 //Only add message when scroll end
                 let length = $("a.endless_more").length;

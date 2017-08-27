@@ -35,6 +35,7 @@ INSTALLED_APPS = (
     'hitcount',
     'endless_pagination',
     'rest_framework',
+    'channels',
     'musette',
     'main',
 )
@@ -89,18 +90,6 @@ except ImportError:
 # For custom User model
 # AUTH_USER_MODEL = 'main.User'
 
-# Cache
-CACHES = {
-    'default': {
-        'BACKEND': 'redis_cache.RedisCache',
-        'LOCATION': 'localhost:6379',
-        'OPTIONS': {
-            'DB': 1
-            # 'PASSWORD' :'asdas6d87sf6tsd8f',
-            }
-        }
-}
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
@@ -132,3 +121,14 @@ STATICFILES_DIRS = (
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Django channels
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgi_redis.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("localhost", 6379)],
+        },
+        "ROUTING": "musette.routing.channel_routing",
+    },
+}

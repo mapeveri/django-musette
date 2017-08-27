@@ -86,10 +86,6 @@ Field more importants:
 
 	python manage.py runserver
 
-5. In other terminal execute this command for run server tornado for web sockets::
-
-	python manage.py musette_run_server_ws
-
 Visit 127.0.0.1:8000/forums you should see the categories and forums.
 
 .. image:: https://github.com/mapeveri/django-musette/blob/master/images/index.png

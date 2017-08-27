@@ -10,24 +10,29 @@ const notificationMixin = {
         let $that = this;
 
         //Socket for notifications
-        let ws = this.connectionWs(true);
-        ws.onmessage = (evt) => {
-            //Get object json message
-            let json = evt.data;
-            let obj = JSON.parse(json);
+        let data_ws = this.getDataConnectionWs();
+        let user_auth = data_ws['user_auth'];
+        if(user_auth != null && user_auth !== undefined) {
+            let url = data_ws['url'] + "notification?user=" + user_auth;
+            let ws = new WebSocket(url);
+            ws.onmessage = (evt) => {
+                //Get object json message
+                let json = evt.data;
+                let obj = JSON.parse(json);
 
-            //Add new notification to model
-            $that.notifications_socket.unshift(obj);
-            $that.tot_notifications++;
+                //Add new notification to model
+                $that.notifications_socket.unshift(obj);
+                $that.tot_notifications++;
 
-            //Remove class hide
-            $("#badge_notifications").text("0").removeClass("hide").html($that.tot_notifications);
+                //Remove class hide
+                $("#badge_notifications").text("0").removeClass("hide").html($that.tot_notifications);
 
-            //Not notification hide
-            try {
-                $("#no_notifications").addClass("hide");
-            }catch(e){}
-        };
+                //Not notification hide
+                try {
+                    $("#no_notifications").addClass("hide");
+                }catch(e){}
+            };
+        }
     },
     methods: {
         //Set in true all notifications
