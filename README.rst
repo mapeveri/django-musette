@@ -2,16 +2,7 @@
 Django-Musette
 ==============
 
-
-.. image:: https://coveralls.io/repos/mapeveri/django-musette/badge.svg
-  :target: https://coveralls.io/r/mapeveri/django-musette
-
-.. image:: https://travis-ci.org/mapeveri/django-musette.svg?branch=master
-    :target: https://travis-ci.org/mapeveri/django-musette
-
-.. image:: https://badge.fury.io/py/django-musette.svg
-    :target: http://badge.fury.io/py/django-musette
-
+**THIS REPO IS DEPRECATED.**
 
 Forum for Django framework. This reusable application it is designed to be easily integrated into an existing Django application.
 
