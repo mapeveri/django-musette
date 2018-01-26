@@ -2,7 +2,9 @@
 Django-Musette
 ==============
 
-**THIS REPO IS DEPRECATED.**
+**THIS REPO IS DEPRECATED.** Check the `Muss project`_, it is the replacement.
+
+.. _Muss project: https://github.com/mapeveri/muss
 
 Forum for Django framework. This reusable application it is designed to be easily integrated into an existing Django application.
 
